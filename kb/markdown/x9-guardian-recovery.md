@@ -12,7 +12,13 @@ boundary pair + §22.2 guardian-epoch answer." This is that design: guardians at
 correlator moves from issuer to guardian set, and every trade that move creates is stated in §2.4 form.*
 
 **Register:** X5 pattern 3 (deferred) · §29 recovery research item, social leg · leverage 🟠
-**Ladder:** reference built 2026-07-18 — [Lab — guardian-recovery](lab-guardian-recovery.md) 12/12:
+**Ladder:** **CIRCUIT BUILT 2026-07-18** — [Lab — circom-gadget](lab-circom-gadget.md) guardian-threshold 8/8:
+GuardianThreshold(20, 3), **16,078 constraints** (= 3 membership legs + 3 distinctness + 1 claim
+binding; 306 headroom under ptau 2^14 — t=4 needs pot15), ~790 ms prove; duplicate seat =
+unsatisfiable witness; seat nullifiers claim-independent in-context (rival-claim double-vouch
+detectable) + cross-context unlinkable; GUARDIAN_TAG pinned. Out-of-circuit: set-commitment↔Merkle
+reconciliation (the promote-lane task), epoch lapse, personhood gating, contest/freeze, t as profile
+parameter. Reference: [Lab — guardian-recovery](lab-guardian-recovery.md) 12/12:
 committed sets with personhood-gated seats, t-of-n → authorization input (never completion),
 contest-freeze provably leaves issuer state untouched, signer-set hiding audited for all n,
 guardian-attestation epoch as its own clock, rt07-candidates demo. Boundary pair drafted in its

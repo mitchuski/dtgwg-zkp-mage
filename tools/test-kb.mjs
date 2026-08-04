@@ -68,6 +68,9 @@ if (report) {
     /^dtgwg-cred-spec-main\//,                                    // vendored upstream spec
     /^SPEC-DRAFT-proof-of-understanding-trust-task\.md$/,          // root drafts kept out of scope
     /^TRUST-TASKS-FIT-MAP-2026-07-18\.md$/,
+    /^MY-CALLS-\d{4}-\d{2}-\d{2}\.md$/,                            // call working docs (Mitch's), not KB scope
+    /^CALL-PREP-\d{4}-\d{2}-\d{2}\.md$/,
+    /^runtimes\//,                                                 // in-repo lab copy; KB projects the workbench original
     /^\.\.\/dtgwg-zkp-tf-mage\/runtimes\/(CRED-SPEC-COHERENCE|CRED-SPEC-OPPORTUNITIES|STRAWMAN-COHERENCE-EDITS)\.md$/,
     /^\.\.\/dtgwg-zkp-tf-mage\/runtimes\/[^/]+\/STUB\.md$/,        // stub predicates (no evidence yet)
     /^\.\.\/agentprivacy_master\/docs\/chronicles\/(?!2026-07-16_trust-graph-formation-dream-cycle\.md$|2026-07-18_the-first-circuit\.md$).+\.md$/,

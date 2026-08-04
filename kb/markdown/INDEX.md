@@ -2,7 +2,7 @@
 
 ## Root — workflow, integration map, briefing
 
-- [DTG Research Root](./dtg-research-root.md) — THE RESEARCH ROOT — exploration of the DTG credential/ZKP ideas across the board, and their
+- [DTG Research Root](./dtg-research-root.md) — Working lab + explorations for the ToIP DTG ZKP Task Force
 - [Workflow — Workbench and Research Root](./workflow.md) — 2026-07-17. The two roots are related, not separated: one is the workbench for direct working-group
 - [Integration Map](./integration-map.md) — 2026-07-16, status refreshed 2026-07-17. Mage layer. The display-surface rows (master, skills,
 - [Briefing 2026-07-18 — ZKP Explorations](./briefing-2026-07-18-zkp-explorations.md) — Since the Credentials Core Specification (WD v1.0) and the Predicate & Assurance-Boundary Decision

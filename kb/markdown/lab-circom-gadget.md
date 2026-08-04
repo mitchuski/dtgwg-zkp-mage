@@ -279,3 +279,143 @@ only; the shipped O1 artifacts are not regenerated).
   `issuerNullifierField`, `makeDualInput`; reuses `harness.mjs` helpers read-only.
 - `setup-dual.mjs` — compile (`--O2`) + groth16 setup, ptau cache reused; `build/o2-ref/`.
 - `test-dual.mjs` — D1–D7; run `node setup-dual.mjs` then `node test-dual.mjs`.
+
+## Third circuit: guardian threshold (X9 t-of-n)
+
+**What it is:** `circuits/guardian_threshold.circom` realizes X9's threshold-recovery mitigation
+IN-CIRCUIT for t=3: *three pairwise-distinct guardians from the committed guardian set each
+attest THIS continuity claim in THIS recovery context — without revealing which guardians* (X9
+"guardian-set commitments" + "k-out-of-n distinctness discipline"; the circuit leg the
+guardian-recovery reference model `runtimes/guardian-recovery/guardians.mjs` deferred by name).
+New files only (`setup-guardian.mjs`, `harness-guardian.mjs`, `test-guardian.mjs` — G1c–G8c,
+8/8); single (10/10) and dual (7/7) re-verified untouched.
+
+### The statement (exactly as proved)
+
+```
+public:   recoveryContext — the §6.2 RECOVERY-DOMAIN descriptor digest mod p; the guardian
+                            EPOCH lives INSIDE the descriptor (its `epoch` field) — epoch
+                            rollover = new digest = fresh seat nullifiers (§22.2 behaviour)
+          guardianRoot    — Merkle root over guardian commitments Poseidon(secret, blinding):
+                            the COMMITTED set. ONE root for all three legs.
+          claimDigest     — the continuity claim (newCommitment + revokedRef + §15.2 ceremony
+                            transcript, hashed harness-side under 'dtg-zkp/recovery-claim/v0',
+                            reduced mod p)
+          nullifiers[3]   — per-guardian recovery-seat pseudonyms
+private:  secret_i, blinding_i, pathElements_i[20], pathIndices_i[20]   (i ∈ {1..3})
+statement: Poseidon(secret_i, blinding_i) ∈ guardianRoot                       (all i)
+         ∧ nullifier_i = Poseidon(GUARDIAN_TAG, secret_i, recoveryContext)     (all i)
+         ∧ nullifier_i ≠ nullifier_j  ∀ i<j     (C(3,2)=3 inverse constraints, in-circuit)
+         ∧ claimSquare = claimDigest²           (dummy-square binding, 1 constraint)
+```
+
+**Public signal order:** `[recoveryContext, guardianRoot, claimDigest, nullifiers[0..2]]`
+(asserted in G4c). Template is `GuardianThreshold(depth, t)` with
+`main = GuardianThreshold(20, 3)` — t is FIXED at 3 in this artifact; the parameter shows the
+generalization (legs scale linearly in t, distinctness as C(t,2)).
+
+### GUARDIAN_TAG derivation (same sha256-mod-p pattern as DOMAIN_TAG / ISSUER_TAG)
+
+```
+tag         = 'dtg-zkp/guardian-seat-nullifier/v0'
+sha256(tag) = 73b6cd8dbb162c686520d25d94d5b3daf378f4e32d817fabd0de983f2517339b
+GUARDIAN_TAG= sha256(tag) mod p
+            = 8562476688242842477897907163240902665687518953395242745930442724180399436697
+```
+
+Hardcoded in the circuit, re-derived + asserted in `harness-guardian.mjs`. This is the
+**circuit-level pin of the reference model's string-domain convention** — guardians.mjs scopes
+the seat as `nullifier(secret, 'guardian/' + descriptorDigest + '/' + epoch)`; here the same
+governed scope (recovery context + epoch) enters a Poseidon preimage as
+`(GUARDIAN_TAG, secret, recoveryContext)` with the epoch inside the descriptor digest. One
+governed name, two hash pins (SHA-256 string domain there, Poseidon field preimage here) —
+the same move as ISSUER_TAG / rt01 NOTES item 2.
+
+### The two bindings, kept distinct (the seat property)
+
+- **Seat nullifier binds the RECOVERY CONTEXT** — claim-independent: the same guardian in the
+  same recovery context+epoch produces the SAME nullifier under two rival claims (G4c), so
+  double-vouching across competing replacement commitments is DETECTABLE registry-side (§6.5
+  intentional in-context linkage; feeds the reference model's contested-recovery path). Across
+  recovery contexts the nullifiers are unrelated (G6c, §6.6).
+- **claimDigest binds the PROOF** (dummy-square, the ratified pattern) — a guardian bundle
+  proved for claim A fails verification against public claim B in both directions (G5c): the
+  bundle cannot be transplanted to authorize a different replacement.
+
+### Signer-set hiding, said precisely
+
+The verifier of a threshold proof learns: the committed set (by `guardianRoot`), that t=3
+distinct members of it signed (by the circuit shape + 3 distinct nullifiers), the recovery
+context (with epoch), and the continuity claim — **never which guardians signed**, never a
+guardian secret or commitment. The seat nullifiers are pseudonyms scoped to the recovery
+context: they expose reuse WITHIN the context, nothing across contexts, and no leaf position.
+This is the circuit-grade version of the reference model's `auditSignerSetHidden` (which is
+structural: it checks guardian material is absent from the authorization object; here the
+hiding is cryptographic).
+
+### What stays OUT of the circuit (reference-model / promote-lane territory)
+
+- **Set commitment vs Merkle root — two representations, unreconciled.** guardians.mjs commits
+  the set as a FLAT hash (`setCommitment` = H over sorted commitments + descriptor + epoch +
+  t + n); the circuit needs provable inclusion, so it uses a Merkle root over the same guardian
+  commitments. A verifier holding a reference-model `setCommitment` cannot check it against
+  this circuit's `guardianRoot` without the registry publishing both against one enrolment
+  event. **Reconciling the two representations (or replacing the flat hash with the root) is
+  the promote-lane task.**
+- **Epoch lapse checking** — the circuit proves against whatever descriptor digest it is
+  handed; that the epoch inside it is the LIVE guardian epoch (`guardian-epoch-lapsed`) is a
+  registry-side check against the live clock (guardians.mjs steps 0/2, GUARDIAN_CLOCKS/§22.2).
+- **Personhood-gating of guardians at set-commit time** — the rt01 leg
+  (`guardian-not-personhood-anchored`): the Sybil-self-guardian kill happens when the set is
+  COMMITTED, not when the proof is made. Reference model's job.
+- **Contest/freeze semantics** — rival claims in one epoch (`contested-recovery`, the ceremony
+  freeze, §13.6 challenge route) are registry state above the proof; the circuit's contribution
+  is that the seat nullifiers make rival-claim double-vouching visible (G4c).
+- **t as a profile parameter** — fixed 3 in this artifact; who sets t/n and whether a
+  below-floor t is a conformance failure stays a §6.7/profile question (X9 open questions).
+- Also inherited from the reference model: threshold-met-is-not-completion (the issuer's
+  re-issuance record is the outcome artifact), and n (the committed-set size) — the circuit
+  exposes t, never n.
+
+### Measurements (test G8c, same machine)
+
+| metric | guardian (--O2) | vs | ratio |
+|---|---|---|---|
+| constraints (r1cs) | **16,078** (16,145 vars, 6 public) | 5,358 single --O2 | **3.001×** |
+| | | 11,523 single --O1 (as shipped) | 1.395× |
+| | | 10,717 dual --O2 | 1.500× |
+| overhead | **+4 constraints** over 3× the O2 single (3 distinctness + 1 claim binding — exactly as designed) | | |
+| ptau headroom | 306 constraints under the 2^14 cap (16,384) | | |
+| proving time | ~790 ms | single ~640 ms | ~1.2× |
+| verification time | ~11 ms | | |
+| proof size | 723 bytes (flat, groth16) | | |
+| zkey | ~8.6 MB · wasm ~2.2 MB | | |
+
+**Compile-flag note:** compiled `--O2` like dual — under `--O1` the tripled circuit would be
+~34k constraints and overflow the cached 2^14 ptau; at `--O2` the non-linear core
+(3×5,358 + 3 + 1 = 16,078) fits with **306 constraints of headroom**, so `build/pot14_final.ptau`
+is REUSED unchanged. This is the ceiling: **t=4 at depth 20 does NOT fit 2^14** (~21.4k) — a
+larger t (or a deeper tree) needs a pot15 ceremony, which is the natural break point at which
+t stops being "add a leg" and becomes a real profile/setup decision.
+
+### The fixture-story note (same pattern as dual, one hop over)
+
+The reference model refuses a duplicate guardian BY NAME (`'duplicate-guardian-seat'`, a
+checker-side rejection with a code); the circuit makes the duplicate **UNSATISFIABLE** — with
+two legs on one guardian secret some nullifier difference is 0, zero has no inverse, and
+`diff * inv === 1` cannot be witnessed (G2c asserts the witness-generation throw). There is no
+artifact to reject and no name attached. Circuit negative fixtures must therefore encode
+**unprovability** ("no valid proof exists for these inputs"), not a rejection code — the same
+X1 fixture-format consequence the dual circuit recorded for `'duplicate-issuer-in-show'`.
+
+### Guardian files
+
+- `circuits/guardian_threshold.circom` — GuardianLeg ×3 + pairwise inverse-distinctness +
+  claim dummy-square (MerkleInclusion re-declared verbatim; the originals end in their own
+  `component main`, so they cannot be `include`d).
+- `harness-guardian.mjs` — guardian enrolment, `recoveryContextField` (descriptor digest,
+  epoch inside), `claimDigestField`, `guardianNullifierField`, `makeGuardianInput`; reuses
+  `harness.mjs` helpers read-only.
+- `setup-guardian.mjs` — compile (`--O2`) + groth16 setup, staleness-aware like `setup.mjs`;
+  ptau cache reused.
+- `test-guardian.mjs` — G1c–G8c; run `node setup-guardian.mjs` then `node test-guardian.mjs`.

@@ -5,72 +5,66 @@ source: "README.md"
 built_from_commitish: "working-tree"
 order: 0
 ---
-# dtgwg-cred-spec-main_mage
+# dtgwg-zkp-mage
 
-**THE RESEARCH ROOT** — exploration of the DTG credential/ZKP ideas across the board, and their
-integration into the agentprivacy system.
+Working lab + explorations for the [ToIP **DTG ZKP Task Force**](http`s://github.com/trustoverip/dtgwg-zkp-tf`)
+(Decentralized Trust Graph WG, ToIP/LFDT) — maintained by Mitchell Travers (co-chair, Soulbis).
 
-Related, not separate: `~/dtgwg-zkp-tf-mage` is **the workbench** — Mitch's direct work on the ToIP DTG
-ZKP working group (co-chair). This root *draws from* the workbench (runtimes, coherence registers) and
-*feeds* it (explorations promote to TF work when they mature); the workbench alone talks to upstream.
-The full loop — draw from · promote · upstream · integrate — is in [Workflow — Workbench and Research Root](workflow.md).
+This is **evidence, not spec**: runnable reference models, real circuits with benchmark numbers,
+cross-language interop proofs, and design explorations — each anchored to the task force's
+[Decision — Overview](decision-overview.md) and the
+[DTG Credentials Core Specification](http`s://trustoverip.github.io/dtgwg-cred-spec/`). Spec text goes
+through the upstream repo and TF process; this repo is the bench the proposals were tested on.
+
+**Browse it as a wiki:** `./kb/markdown/INDEX.md` — the whole corpus
+(decision document §-split, explorations, lab notes, chronicles) as a deterministic, manifest-first
+knowledge-base projection. Same content also ships as FedWiki page JSON in `kb/fedwiki/`.
+
+## The lab — `runtimes/`
+
+17 suites, 170 properties, all green. 14 suites are **zero-dependency** (Node stdlib + Python stdlib) —
+clone and run, nothing to install:
+
+```sh
+cd runtimes/canonical      && node test.mjs   # §6.2 descriptor + §15.2 transcript encodings, 11/11
+cd runtimes/fixtures       && node test.mjs   # 26-code rejection register + 39 vectors, 13/13
+cd runtimes/consumer-py    && python test.py  # second-language consumer: 29/29 digests byte-exact
+```
+
+| Area | Suites | What it proves |
+| --- | --- | --- |
+| Predicates | `01-uniqueness-nullifier` · `07-trust-graph-formation` (+ stubs 02–06) | scoped nullifier w/ self-Sybil rejection; graph formation = collision→edge→propagation |
+| Canonical layer | `canonical` | context descriptor + transcript digests; bare nonce insufficient is a *failing test* |
+| Conformance | `fixtures` · `consumer-py` | byte-deterministic vectors; register v2 (95 entries, all triggered live); Python consumer = interop existence proof |
+| Presentation | `context-card` · `show-composition` · `quiet-presentation` | context legibility; atomic bundle shows; observer leakage budget |
+| Lifecycle | `rotation` · `guardian-recovery` · `erosion-record` · `multi-issuer` · `mediator` · `witness-seat` | key rotation w/o re-enrolment; t-of-n guardian recovery; assurance horizons; issuer independence collapse; mediated proving tiers; VWC witness seat |
+| Circuits | `circom-gadget` (needs `npm install` + `node setup.mjs`) | **real Groth16**: nullifier+membership+transcript-binding 11,523 constraints / ~640 ms prove / 722 B proof; dual-issuer k=2 (10,717); guardian t=3 (16,078). Lab-only trusted setup — stated, not hidden. |
+
+## The decision layer
+
+- [Decision — Overview](decision-overview.md) — the
+  decision baseline (adopted as the TF's first-work-item frame): MLP/EPP profile split, PR-* predicate
+  register with paired assurance/disclosure boundaries, context as governed linkability domain,
+  nullifier = scoped reuse detection *not* "one unique human", construction-selection gate.
+- [Explorations Index](explorations.md) — O-series (charter register), VWC witness seat, and
+  X1–X9 (conformance fixtures, context legibility, show composition, observable-event minimisation,
+  recovery/rotation, assurance horizons, mediated proving, multi-issuer aggregation, guardian
+  recovery) — every §-anchor of the decision doc has an exploration, and every exploration that
+  matured has a runnable suite in `runtimes/`.
+- [Workflow — Workbench and Research Root](workflow.md) — how this repo relates to the upstream task force: draw-from ·
+  promote · upstream · integrate. Only the TF process talks to upstream.
 
 ## Attribution
 
-- `dtgwg-cred-spec-main/` — **vendored upstream, others' work**: the ToIP DTG Working Group
-  Credentials Core Specification (`trustoverip/dtgwg-cred-spec`, main branch snapshot,
-  vendored 2026-07-16). Not edited here; spec changes go through the upstream repo / TF process.
-- Everything else in this directory — the **mage method layer**: integration maps, coherence
-  notes, and working documents that read the spec and route it into the agentprivacy system.
+- The **DTG Credentials Core Specification** is the ToIP DTG WG's work
+  (`trustoverip/dtgwg-cred-spec`); a vendored reading copy lives locally but is **not republished
+  here** (git-excluded). All spec text: upstream.
+- The **ZKP TF upstream** (`trustoverip/dtgwg-zkp-tf`) carries the requirements draft, drafting
+  rules, and discussions this repo's evidence feeds into.
+- Everything committed here is the mage method layer: reference models, circuits, registers,
+  explorations, and working documents.
 
-## What the spec defines (one screen)
+## License
 
-Six W3C VC types under `DTGCredential`, three functional categories:
-
-| Category | Type | Issuer → Subject | Role |
-| --- | --- | --- | --- |
-| Edge | **VRC** RelationshipCredential | R-DID/M-DID → R-DID/M-DID | peer relationship; 2 VRCs = 1 DTG edge |
-| Edge | **VMC** MembershipCredential | C-DID → M-DID (or C-DID) | community membership; PHC = governance-qualified VMC |
-| Invitation | **VIC** InvitationCredential | C-DID or M-DID (per policy) | authorizes onboarding via VTA/PEP |
-| Annotation | **VPC** PersonaCredential | P-DID → counterparty DID | intentional correlation under holder control |
-| Annotation | **VEC** EndorsementCredential | endorser DID → endorsed DID | community-governed reputation/skill |
-| Annotation | **VWC** WitnessCredential | witness M-DID/VTA DID → observed DID | edge-formation attestation; `taskContext` REQUIRED |
-
-Four official DID roles: **R-DID** (relationship, unique per counterparty), **M-DID** (membership),
-**C-DID** (community), **P-DID** (persona). No W-DID.
-
-Two ZK constructions (ZKP presentation SHOULD be the default):
-
-1. **Pairwise ZKP** — any two VRC holders; disclose P-DIDs, hide R-DIDs; no community assurance.
-2. **Community-anchored ZKP** — VRC + VMC + same-C-DID proof; carries the community's assurances
-   (personhood, when the VMCs are PHCs) into the relationship proof.
-
-Trust-task boundary: **credential** = true standing alone; **artifact** = only meaningful inside its
-exchange (`threadId`-correlated). `taskContext` binds a credential to its ceremony; verifiers MUST NOT
-read it as completion evidence without the reachable outcome artifact.
-
-Detailed ZK protocols and registry-ZK interaction are **explicitly deferred by this spec** — that is
-the DTG ZKP Task Force charter (our seat).
-
-## Working documents (mage layer)
-
-- `dtgwg-cred-spec-main/CONTEXT.md` — language crib for the spec's terms (coherence-pass vocabulary,
-  `_Avoid_` list). Travels with the vendored copy so the terms stay next to their source.
-- [Integration Map](integration-map.md) — where each spec concept lands across the agentprivacy system
-  (master /model, harness runtimes, spellweb KG, docs canon, guide wiki). Status per surface tracked
-  in the doc; the master/skills/spellweb rows executed 2026-07-16/17.
-- [Decision — Overview](decision-overview.md) — **the decision baseline** (v0.1.0-draft, 2026-07-17,
-  first-draft-for-task-force-review): MLP/EPP profile split, PR-* predicate register with paired
-  assurance/disclosure boundaries, context as governed linkability domain, construction-selection gate.
-  Binds everything in `explorations/`.
-- `explorations/` — the expansion ideas built into design docs (O-series + VWC witness seat + the
-  X-series), each aligned to the decision baseline. Start at [Explorations Index](explorations.md).
-- [Briefing 2026-07-18 — ZKP Explorations](briefing-2026-07-18-zkp-explorations.md) — **DRAFT TF briefing note** (findings + runnable evidence
-  + candidate contributions + open questions), prepared for Mitch's review; he circulates, or not.
-
-## Related local work
-
-- `dtgwg-zkp-tf` clone — ZKP-TF repo: runtimes 01–07 lab (local-only), predicate↔anchor matrix,
-  CRED-SPEC-COHERENCE / OPPORTUNITIES / STRAWMAN-COHERENCE-EDITS docs.
-- `dual-agent-harness` runtime 07 `trust-graph-formation` — models graph formation
-  (collision→edge→propagation), reuses runtime 01 nullifier.
+Code: Apache-2.0 · Documents: CC-BY-4.0 — matching the task force's IPR posture
+(W3C-mode patents / Apache-2.0 code / CC-BY-4.0 docs).
