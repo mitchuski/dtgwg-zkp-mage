@@ -1,0 +1,86 @@
+{
+  "title": "Lab — multi-issuer",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "8c1a16b67fbd15ff",
+      "text": "# multi-issuer — X8 M3 reference model\n\nRunnable reference for **X8 — multi-issuer confidence aggregation**\n([[X8 — Multi-Issuer Aggregation]]):\n§12.5's non-normative aggregation mechanism made mechanical, with its four\nassumptions enforced structurally rather than assumed. Zero-dep Node ESM,\noffline, deterministic (`now` is always an explicit argument; no `Date.now`).\n\nRun: `node test.mjs` → 10 properties (A1–A10), exit 1 on failure."
+    },
+    {
+      "type": "markdown",
+      "id": "9957d6f726f66d62",
+      "text": "## What it demonstrates — §12.5 made mechanical\n\nThe §12.5 claim: k honest, **independent** issuers attesting the same\nproposition bound residual mis-issuance by **∏ ε_i**; a corrupted issuer\ndegrades only its own factor. The model enforces X8's A1–A4 in code:\n\n- **A1 (one-sided ε)** — `registry.mjs` carries ε as the mis-issuance bound\n  only; nothing else is derived from it.\n- **A2 (independence)** — never assumed: the **independence register**\n  (dependency classes per issuer) is consulted on every bound. Issuers\n  transitively sharing any class collapse into one group; a group's ε is the\n  **max** ε in the group (the shared-dependency bound), so collapsing always\n  *weakens* the bound — tested as the honesty property (A2: collapsed bound >\n  naive product).\n- **A3 (distinctness)** — per-issuer, per-show nullifiers\n  `H('dtg-zkp/issuer-show-nullifier/v0', issuerId, transcriptDigest)`: k\n  distinct nullifiers prove k distinct issuers while naming none (§5.12\n  scoped-reuse at the issuer level); a duplicate issuer is a nullifier\n  collision (A3), and transcript scoping prevents cross-show issuer\n  correlation (A7).\n- **A4 (same proposition)** — one subject commitment and one predicate across\n  all members, else rejection (A10); different predicates are composition\n  (X3), not aggregation.\n\nThe verified statement reports **{effectiveK, bound, root}** — the collapsed\nnumber of independence classes, **never raw k as confidence** — and contains\nno issuer identifiers (A8 scans it structurally; §12.3 concealment mode 4).\nk itself is confined to the governed tier vocabulary `K_TIERS = [1, 2, 3]`\nbecause k is a disclosure (§10.4/§18.4: a rare k fingerprints the verifier\nand narrows the holder population); k outside the tiers is a §26.1-style\nrejection. The §12.5 degradation clause is executable: `aggregateBound(...,\n{corrupted: [j]})` replaces ε_j with 1 and the bound remains the product of\nthe others (A9)."
+    },
+    {
+      "type": "markdown",
+      "id": "f6b45487df3563ce",
+      "text": "## M2 registry data model — as implemented shapes\n\n`makeIssuerRegistry({epoch, effectiveTime, issuers})` → frozen snapshot with\n`root = H('dtg-zkp/issuer-registry/v0', canonicalize({epoch, effectiveTime,\nmembers}))`, so naming the root names the whole register contents — ε values\nand dependency classes included — and the aggregation claim is evaluable at a\nnamed time (§12.4). Per-issuer member shape (the §27.3 registry-profile\nfields, drafted here as code):\n\n```\n{\n  id:                   'iss:alpha',\n  epsilon:              0.01,                    // 0 < ε < 1, one-sided; set by the\n                                                // accreditation authority from audit\n                                                // evidence, never self-asserted (§18.2)\n  epsilonEffectiveTime: '2026-07-01T00:00:00Z', // when the audit established ε\n  epsilonHorizon:       '2027-01-01T00:00:00Z', // X6 certification clock: past this,\n                                                // ε is stale and supports no bound\n  dependencyClasses:    ['pipeline:alpha', 'vendor:acme', 'jurisdiction:AA', ...]\n}\n```\n\n`effectiveK(issuerIds, snapshot)` → `{effectiveK, groups}` (connected\ncomponents over shared classes). `aggregateBound(issuerIds, snapshot, now,\n{corrupted})` → `{bound, effectiveK, groups, staleMembers}`."
+    },
+    {
+      "type": "markdown",
+      "id": "48029dc5988ecbe4",
+      "text": "## Named failure codes (fixture-register candidates → X1)\n\n| code | property | meaning |\n| --- | --- | --- |\n| `duplicate-issuer-in-show` | A3 | nullifier collision — same issuer twice |\n| `mixed-registry-roots` | A4 | members proved against different named roots (§12.4/§26.1) |\n| `k-outside-tier` | A5 | k not in the governed tier vocabulary {1,2,3} |\n| `stale-epsilon:<issuerId>` | A6 | member ε past its assurance horizon at `now` |\n| `issuer-not-in-registry` | — | member's issuer outside the snapshot |\n| `subject-commitment-mismatch` | A10 | members bind different subjects (A4-same-proposition) |\n| `invalid-membership-proof` · `k-member-mismatch` · `nullifier-mismatch` · `predicate-mismatch` | — | supporting structural rejections |"
+    },
+    {
+      "type": "markdown",
+      "id": "67fd8dd181aab9f0",
+      "text": "## Honest limits\n\n- **This models the accounting, not the ZK.** Members carry `issuerId` as a\n  modelled private witness that the verifier function (playing the circuit)\n  sees; the real build is k instances of the Poseidon-Merkle membership\n  gadget (O2/O4) against one root plus in-circuit nullifier derivation.\n  **Concealed k-of-n membership and threshold hiding (k-of-m held, k shown)\n  are the circuit's future work.**\n- **ε values are governance inputs, never measured here.** Who audits ε, and\n  whether two accreditation frameworks' ε values are comparable at all,\n  stays an X8 open question.\n- The register itself is asserted governance data: a shared dependency\n  nobody declared still correlates failures — the register makes A2\n  *checkable*, not *true*.\n- Aggregation is worth it where issuers make independent determinations\n  (PR-PER); countersigning one determination leaves effective k = 1 (PR-LIV)."
+    },
+    {
+      "type": "markdown",
+      "id": "2018f463013c6b25",
+      "text": "## Pointers\n\n- Design doc: [[X8 — Multi-Issuer Aggregation]]\n  (M1 boundary record, M2 registry-profile note, M4 decision memo remain\n  design-doc work; this runtime is M3).\n- Decision doc: [[Decision — Overview]] §12 (esp. 12.4,\n  12.5), §2.4, §10.4/§18.4, §26.1.\n- Shared spine: `../canonical/canonical.mjs` (transcripts/descriptors),\n  `../01-uniqueness-nullifier/src/nullifier.mjs` (H, enrolment commitment)."
+    },
+    {
+      "type": "markdown",
+      "id": "c9c6f4aefe9e06b5",
+      "text": "## Upstream surface\n\nDecision input for the §12.5 open issue, answered as options priced by this\nmodel's trade curve (M4): **not-required** / **MAY per profile** / **SHOULD\nfor EPP PR-PER**; plus the registry-field proposal (ε + dependency classes +\nhorizons) to the Credentials TF along the §27.3 boundary — they own the\nregister's institutional legitimacy; we own the statement, the bound, and\nthese fixtures."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Lab — multi-issuer",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "8c1a16b67fbd15ff",
+            "text": "# multi-issuer — X8 M3 reference model\n\nRunnable reference for **X8 — multi-issuer confidence aggregation**\n([[X8 — Multi-Issuer Aggregation]]):\n§12.5's non-normative aggregation mechanism made mechanical, with its four\nassumptions enforced structurally rather than assumed. Zero-dep Node ESM,\noffline, deterministic (`now` is always an explicit argument; no `Date.now`).\n\nRun: `node test.mjs` → 10 properties (A1–A10), exit 1 on failure."
+          },
+          {
+            "type": "markdown",
+            "id": "9957d6f726f66d62",
+            "text": "## What it demonstrates — §12.5 made mechanical\n\nThe §12.5 claim: k honest, **independent** issuers attesting the same\nproposition bound residual mis-issuance by **∏ ε_i**; a corrupted issuer\ndegrades only its own factor. The model enforces X8's A1–A4 in code:\n\n- **A1 (one-sided ε)** — `registry.mjs` carries ε as the mis-issuance bound\n  only; nothing else is derived from it.\n- **A2 (independence)** — never assumed: the **independence register**\n  (dependency classes per issuer) is consulted on every bound. Issuers\n  transitively sharing any class collapse into one group; a group's ε is the\n  **max** ε in the group (the shared-dependency bound), so collapsing always\n  *weakens* the bound — tested as the honesty property (A2: collapsed bound >\n  naive product).\n- **A3 (distinctness)** — per-issuer, per-show nullifiers\n  `H('dtg-zkp/issuer-show-nullifier/v0', issuerId, transcriptDigest)`: k\n  distinct nullifiers prove k distinct issuers while naming none (§5.12\n  scoped-reuse at the issuer level); a duplicate issuer is a nullifier\n  collision (A3), and transcript scoping prevents cross-show issuer\n  correlation (A7).\n- **A4 (same proposition)** — one subject commitment and one predicate across\n  all members, else rejection (A10); different predicates are composition\n  (X3), not aggregation.\n\nThe verified statement reports **{effectiveK, bound, root}** — the collapsed\nnumber of independence classes, **never raw k as confidence** — and contains\nno issuer identifiers (A8 scans it structurally; §12.3 concealment mode 4).\nk itself is confined to the governed tier vocabulary `K_TIERS = [1, 2, 3]`\nbecause k is a disclosure (§10.4/§18.4: a rare k fingerprints the verifier\nand narrows the holder population); k outside the tiers is a §26.1-style\nrejection. The §12.5 degradation clause is executable: `aggregateBound(...,\n{corrupted: [j]})` replaces ε_j with 1 and the bound remains the product of\nthe others (A9)."
+          },
+          {
+            "type": "markdown",
+            "id": "f6b45487df3563ce",
+            "text": "## M2 registry data model — as implemented shapes\n\n`makeIssuerRegistry({epoch, effectiveTime, issuers})` → frozen snapshot with\n`root = H('dtg-zkp/issuer-registry/v0', canonicalize({epoch, effectiveTime,\nmembers}))`, so naming the root names the whole register contents — ε values\nand dependency classes included — and the aggregation claim is evaluable at a\nnamed time (§12.4). Per-issuer member shape (the §27.3 registry-profile\nfields, drafted here as code):\n\n```\n{\n  id:                   'iss:alpha',\n  epsilon:              0.01,                    // 0 < ε < 1, one-sided; set by the\n                                                // accreditation authority from audit\n                                                // evidence, never self-asserted (§18.2)\n  epsilonEffectiveTime: '2026-07-01T00:00:00Z', // when the audit established ε\n  epsilonHorizon:       '2027-01-01T00:00:00Z', // X6 certification clock: past this,\n                                                // ε is stale and supports no bound\n  dependencyClasses:    ['pipeline:alpha', 'vendor:acme', 'jurisdiction:AA', ...]\n}\n```\n\n`effectiveK(issuerIds, snapshot)` → `{effectiveK, groups}` (connected\ncomponents over shared classes). `aggregateBound(issuerIds, snapshot, now,\n{corrupted})` → `{bound, effectiveK, groups, staleMembers}`."
+          },
+          {
+            "type": "markdown",
+            "id": "48029dc5988ecbe4",
+            "text": "## Named failure codes (fixture-register candidates → X1)\n\n| code | property | meaning |\n| --- | --- | --- |\n| `duplicate-issuer-in-show` | A3 | nullifier collision — same issuer twice |\n| `mixed-registry-roots` | A4 | members proved against different named roots (§12.4/§26.1) |\n| `k-outside-tier` | A5 | k not in the governed tier vocabulary {1,2,3} |\n| `stale-epsilon:<issuerId>` | A6 | member ε past its assurance horizon at `now` |\n| `issuer-not-in-registry` | — | member's issuer outside the snapshot |\n| `subject-commitment-mismatch` | A10 | members bind different subjects (A4-same-proposition) |\n| `invalid-membership-proof` · `k-member-mismatch` · `nullifier-mismatch` · `predicate-mismatch` | — | supporting structural rejections |"
+          },
+          {
+            "type": "markdown",
+            "id": "67fd8dd181aab9f0",
+            "text": "## Honest limits\n\n- **This models the accounting, not the ZK.** Members carry `issuerId` as a\n  modelled private witness that the verifier function (playing the circuit)\n  sees; the real build is k instances of the Poseidon-Merkle membership\n  gadget (O2/O4) against one root plus in-circuit nullifier derivation.\n  **Concealed k-of-n membership and threshold hiding (k-of-m held, k shown)\n  are the circuit's future work.**\n- **ε values are governance inputs, never measured here.** Who audits ε, and\n  whether two accreditation frameworks' ε values are comparable at all,\n  stays an X8 open question.\n- The register itself is asserted governance data: a shared dependency\n  nobody declared still correlates failures — the register makes A2\n  *checkable*, not *true*.\n- Aggregation is worth it where issuers make independent determinations\n  (PR-PER); countersigning one determination leaves effective k = 1 (PR-LIV)."
+          },
+          {
+            "type": "markdown",
+            "id": "2018f463013c6b25",
+            "text": "## Pointers\n\n- Design doc: [[X8 — Multi-Issuer Aggregation]]\n  (M1 boundary record, M2 registry-profile note, M4 decision memo remain\n  design-doc work; this runtime is M3).\n- Decision doc: [[Decision — Overview]] §12 (esp. 12.4,\n  12.5), §2.4, §10.4/§18.4, §26.1.\n- Shared spine: `../canonical/canonical.mjs` (transcripts/descriptors),\n  `../01-uniqueness-nullifier/src/nullifier.mjs` (H, enrolment commitment)."
+          },
+          {
+            "type": "markdown",
+            "id": "c9c6f4aefe9e06b5",
+            "text": "## Upstream surface\n\nDecision input for the §12.5 open issue, answered as options priced by this\nmodel's trade curve (M4): **not-required** / **MAY per profile** / **SHOULD\nfor EPP PR-PER**; plus the registry-field proposal (ε + dependency classes +\nhorizons) to the Credentials TF along the §27.3 boundary — they own the\nregister's institutional legitimacy; we own the statement, the bound, and\nthese fixtures."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "fixture": "PR-TGF/reject/self-edge-forbidden/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§13",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "other community members and the community verifier set; the counterparty is assumed adversarial (user-as-adversary stance); proposer/prover non-collusion per the Gap",
+    "forHowLong": "the life of the VRC edge within epoch:2026-07; membership pseudonyms roll with the community epoch policy",
+    "alongsideWhat": "the serialized candidate and prior signed edges only; encounter timing and out-of-band channels are out of model (§2.6)"
+  },
+  "inputs": {
+    "communityDescriptor": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:community-membership/1",
+      "purpose": "purpose:trust-graph-formation",
+      "scope": "scope:vtc-alpha",
+      "verifierSet": "verifiers:vtc-alpha-swordsmen",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "rosterHumanIds": [
+      "human:fixture-1",
+      "human:fixture-2",
+      "human:fixture-3"
+    ],
+    "candidate": {
+      "a": "6376b6320bbcc6bbcdc147116aa5776c26f1ecf5ecb96e6fb8d21149c0bc0190",
+      "b": "6376b6320bbcc6bbcdc147116aa5776c26f1ecf5ecb96e6fb8d21149c0bc0190",
+      "rdidA": "b77df94830e20250dafb17563bec1df89fbde71ff9ad1b4d2bba2f962b00d3d4",
+      "rdidB": "b77df94830e20250dafb17563bec1df89fbde71ff9ad1b4d2bba2f962b00d3d4",
+      "shared": "efca0bfc14b926cd8473eb650e5d87e3ee43c0c7c3a2bbbb2a97e0538858e580",
+      "consentA": true,
+      "consentB": true,
+      "claimedVrc": "b5d5edf8572dc4d8cf716aa46d0c0a2ffd265d2a63777a98e526b2fc5891afb2"
+    }
+  },
+  "expect": {
+    "outcome": "reject",
+    "reason": "self-edge-forbidden"
+  }
+}

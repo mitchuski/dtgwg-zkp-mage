@@ -1,0 +1,24 @@
+{
+  "fixture": "PR-LIV/lint/overclaim-verifier-output/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§9",
+      "§10.2",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "any reader of the verifier output — end users, auditors, downstream relying parties who inherit the overclaim",
+    "forHowLong": "for as long as the output text is displayed, logged, or quoted",
+    "alongsideWhat": "the §9 \"must not infer\" register and the §24 prohibited-claims list the text is linted against (lint list v0, English only — §27.4 shared artefact)"
+  },
+  "inputs": {
+    "verifierOutput": "Proof verified: the subject is present and the biometric determination was correct."
+  },
+  "expect": {
+    "outcome": "lint-fail",
+    "reason": "overclaim-verifier-output",
+    "claimCeiling": "PR-LIV establishes possession of a qualifying attestation under named policy and assurance predicates — never correctness of the underlying biometric determination (§10.2)"
+  }
+}

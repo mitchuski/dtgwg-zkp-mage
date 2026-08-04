@@ -1,0 +1,458 @@
+[
+  {
+    "slug": "dtg-research-root",
+    "title": "DTG Research Root",
+    "synopsis": "THE RESEARCH ROOT — exploration of the DTG credential/ZKP ideas across the board, and their",
+    "date": 0
+  },
+  {
+    "slug": "workflow",
+    "title": "Workflow — Workbench and Research Root",
+    "synopsis": "2026-07-17. The two roots are related, not separated: one is the workbench for direct working-group",
+    "date": 0
+  },
+  {
+    "slug": "integration-map",
+    "title": "Integration Map",
+    "synopsis": "2026-07-16, status refreshed 2026-07-17. Mage layer. The display-surface rows (master, skills,",
+    "date": 0
+  },
+  {
+    "slug": "briefing-2026-07-18-zkp-explorations",
+    "title": "Briefing 2026-07-18 — ZKP Explorations",
+    "synopsis": "Since the Credentials Core Specification (WD v1.0) and the Predicate & Assurance-Boundary Decision",
+    "date": 0
+  },
+  {
+    "slug": "decision-overview",
+    "title": "Decision — Overview",
+    "synopsis": "Predicate & Assurance-Boundary Decision Document",
+    "date": 0
+  },
+  {
+    "slug": "decision-document-status",
+    "title": "Decision — Document status",
+    "synopsis": "This document is a decision document, not a survey of zero-knowledge proof systems and not a retrospective description of choices already made. It defines th...",
+    "date": 0
+  },
+  {
+    "slug": "decision-01-executive-decision",
+    "title": "Decision §1 — Executive decision",
+    "synopsis": "The Task Force should adopt the following system model for V1:",
+    "date": 0
+  },
+  {
+    "slug": "decision-02-decision-drivers",
+    "title": "Decision §2 — Decision drivers",
+    "synopsis": "This document is driven by six constraints.",
+    "date": 0
+  },
+  {
+    "slug": "decision-03-scope",
+    "title": "Decision §3 — Scope",
+    "synopsis": "This document decides or structures decisions concerning:",
+    "date": 0
+  },
+  {
+    "slug": "decision-04-normative-language",
+    "title": "Decision §4 — Normative language",
+    "synopsis": "The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL are to be interpreted as requirement-strength in...",
+    "date": 0
+  },
+  {
+    "slug": "decision-05-core-terminology",
+    "title": "Decision §5 — Core terminology",
+    "synopsis": "A signed issuer statement containing or committing to facts, determinations, policy references, assurance metadata, subject-binding material, status informat...",
+    "date": 0
+  },
+  {
+    "slug": "decision-06-foundational-context-decision",
+    "title": "Decision §6 — Foundational context decision",
+    "synopsis": "For V1, a context SHALL be defined as:",
+    "date": 0
+  },
+  {
+    "slug": "decision-07-profile-architecture",
+    "title": "Decision §7 — Profile architecture",
+    "synopsis": "The MLP establishes that the presenter possesses a qualifying, current liveness attestation issued under an accepted policy and assurance class, controls the...",
+    "date": 0
+  },
+  {
+    "slug": "decision-08-assurance-allocation-model",
+    "title": "Decision §8 — Assurance allocation model",
+    "synopsis": "The system allocates assurance across five layers.",
+    "date": 0
+  },
+  {
+    "slug": "decision-09-predicate-decision-register",
+    "title": "Decision §9 — Predicate decision register",
+    "synopsis": "The following sections provide the required paired boundary analysis.",
+    "date": 0
+  },
+  {
+    "slug": "decision-10-pr-liv-qualifying-liveness-attestation-possession",
+    "title": "Decision §10 — PR-LIV: qualifying liveness-attestation possession",
+    "synopsis": "The prover possesses an attestation that:",
+    "date": 0
+  },
+  {
+    "slug": "decision-11-pr-per-personhood-policy-satisfaction",
+    "title": "Decision §11 — PR-PER: personhood-policy satisfaction",
+    "synopsis": "The attested subject satisfies a named personhood policy under the policy's stated evidence, enrolment, issuer, and governance assumptions.",
+    "date": 0
+  },
+  {
+    "slug": "decision-12-pr-iss-issuer-qualification",
+    "title": "Decision §12 — PR-ISS: issuer qualification",
+    "synopsis": "The issuer that signed the attestation belongs to an accepted, current issuer set or satisfies an accepted accreditation predicate under a named governance f...",
+    "date": 0
+  },
+  {
+    "slug": "decision-13-pr-unq-scoped-reuse-detection",
+    "title": "Decision §13 — PR-UNQ: scoped reuse detection",
+    "synopsis": "For a specified enrolled secret, context, scope, purpose, and epoch, the proof derives a deterministic nullifier such that a verifier or governed verifier se...",
+    "date": 0
+  },
+  {
+    "slug": "decision-14-pr-hld-holder-secret-control",
+    "title": "Decision §14 — PR-HLD: holder-secret control",
+    "synopsis": "The prover demonstrates knowledge or control of the holder secret bound to the attestation and the current transcript.",
+    "date": 0
+  },
+  {
+    "slug": "decision-15-pr-fre-freshness-and-canonical-transcript-binding",
+    "title": "Decision §15 — PR-FRE: freshness and canonical transcript binding",
+    "synopsis": "The proof is bound to a current, verifier-authorised, domain-separated transcript and cannot be replayed or transplanted into a materially different request ...",
+    "date": 0
+  },
+  {
+    "slug": "decision-16-pr-rng-attested-range-predicate",
+    "title": "Decision §16 — PR-RNG: attested range predicate",
+    "synopsis": "A hidden, issuer-attested value falls within the requested range or satisfies the specified comparison.",
+    "date": 0
+  },
+  {
+    "slug": "decision-17-pr-del-delegated-authority-evidence",
+    "title": "Decision §17 — PR-DEL: delegated authority evidence",
+    "synopsis": "Where separately supported, the evidence establishes that a named agent is authorised by a principal to perform the current action under declared scope, purp...",
+    "date": 0
+  },
+  {
+    "slug": "decision-18-issuer-attestation-schema-as-the-shared-boundary-determinant",
+    "title": "Decision §18 — Issuer attestation schema as the shared boundary determinant",
+    "synopsis": "The issuer attestation schema SHALL be governed as the shared determinant of both assurance and disclosure boundaries.",
+    "date": 0
+  },
+  {
+    "slug": "decision-19-disclosure-boundary-model",
+    "title": "Decision §19 — Disclosure-boundary model",
+    "synopsis": "For each predicate and profile, the implementation SHALL analyse at least the following observers:",
+    "date": 0
+  },
+  {
+    "slug": "decision-20-observable-event-and-behavioural-leakage",
+    "title": "Decision §20 — Observable event and behavioural leakage",
+    "synopsis": "The specification claims unlinkability, not undetectability. A presentation event remains observable. The request pattern can itself disclose behaviour, incl...",
+    "date": 0
+  },
+  {
+    "slug": "decision-21-mediated-proving-and-fallback",
+    "title": "Decision §21 — Mediated proving and fallback",
+    "synopsis": "A profile MAY support mediated proving when a holder device cannot generate the required proof, but the mediated path MUST be explicit and separately assessed.",
+    "date": 0
+  },
+  {
+    "slug": "decision-22-lifecycle-decisions",
+    "title": "Decision §22 — Lifecycle decisions",
+    "synopsis": "The profile MUST distinguish:",
+    "date": 0
+  },
+  {
+    "slug": "decision-23-accountability-and-redress-matrix",
+    "title": "Decision §23 — Accountability and redress matrix",
+    "synopsis": "A proof profile MUST define not only who is responsible but how a wrong decision is contested and how corrections propagate to verifiers, registries, logs, a...",
+    "date": 0
+  },
+  {
+    "slug": "decision-24-prohibited-claims-and-constructions",
+    "title": "Decision §24 — Prohibited claims and constructions",
+    "synopsis": "V1 MUST NOT:",
+    "date": 0
+  },
+  {
+    "slug": "decision-25-construction-selection-gate",
+    "title": "Decision §25 — Construction-selection gate",
+    "synopsis": "A cryptographic construction SHALL NOT be ratified for a predicate until the Task Force has approved:",
+    "date": 0
+  },
+  {
+    "slug": "decision-26-conformance-requirements",
+    "title": "Decision §26 — Conformance requirements",
+    "synopsis": "A conformant profile or implementation MUST provide:",
+    "date": 0
+  },
+  {
+    "slug": "decision-27-cross-workstream-dependencies",
+    "title": "Decision §27 — Cross-workstream dependencies",
+    "synopsis": "The Credentials workstream needs the context and disclosure decisions before stabilising attestation fields. Credential fields can defeat context separation ...",
+    "date": 0
+  },
+  {
+    "slug": "decision-28-open-decisions-for-task-force-ratification",
+    "title": "Decision §28 — Open decisions for Task Force ratification",
+    "synopsis": "The following points should be explicitly ratified or revised at the working call:",
+    "date": 0
+  },
+  {
+    "slug": "decision-29-conjectures-and-research-items",
+    "title": "Decision §29 — Conjectures and research items",
+    "synopsis": "The following should remain labelled as conjecture or open research until supported by evidence:",
+    "date": 0
+  },
+  {
+    "slug": "decision-30-decision-record",
+    "title": "Decision §30 — Decision record",
+    "synopsis": "30. Decision record",
+    "date": 0
+  },
+  {
+    "slug": "decision-31-recommended-repository-disposition",
+    "title": "Decision §31 — Recommended repository disposition",
+    "synopsis": "This document should be maintained in the implementation-guide workspace as the authoritative synthesis that precedes and binds the existing boundary templat...",
+    "date": 0
+  },
+  {
+    "slug": "decision-appendix-a-per-predicate-review-checklist",
+    "title": "Decision — Appendix A. Per-predicate review checklist",
+    "synopsis": "For each predicate, reviewers should be able to answer:",
+    "date": 0
+  },
+  {
+    "slug": "decision-appendix-b-compact-boundary-record-example-for-pr-unq",
+    "title": "Decision — Appendix B. Compact boundary-record example for PR-UNQ",
+    "synopsis": "Appendix B. Compact boundary-record example for PR-UNQ",
+    "date": 0
+  },
+  {
+    "slug": "decision-appendix-c-source-discussions-and-repository-artefacts",
+    "title": "Decision — Appendix C. Source discussions and repository artefacts",
+    "synopsis": "This draft is based on the Task Force launch discussion, the proof-construction and assurance-boundary discussion, the context-definition discussion, and the...",
+    "date": 0
+  },
+  {
+    "slug": "explorations",
+    "title": "Explorations Index",
+    "synopsis": "Status: Local design docs in the research root (~/dtgwg-cred-spec-main_mage). Not upstream, never",
+    "date": 0
+  },
+  {
+    "slug": "o1-deferred-zk-layer",
+    "title": "O1 — Deferred ZK Layer",
+    "synopsis": "DTG ZKP V1.0 is the conformant binding for the Credentials Core Spec's two ZK constructions — the missing",
+    "date": 0
+  },
+  {
+    "slug": "o2-phc-by-nullifier",
+    "title": "O2 — PHC by Nullifier",
+    "synopsis": "The nullifier is the cryptographic leg of a Personhood Credential — it enforces scoped reuse detection",
+    "date": 0
+  },
+  {
+    "slug": "o3-idvc-assurance-profile",
+    "title": "O3 — IDVC Assurance Profile",
+    "synopsis": "\"Valid IDVC at assurance ≥ L from a registry-listed IDVP\" — the standard liveness input contract, now",
+    "date": 0
+  },
+  {
+    "slug": "o4-registry-zk-revocation",
+    "title": "O4 — Registry ZK Revocation",
+    "synopsis": "How a zero-knowledge proof reads a trust registry: snapshot semantics, issuer-set membership, revocation,",
+    "date": 0
+  },
+  {
+    "slug": "o5-o6-o8-supporting",
+    "title": "O5 O6 O8 — Supporting Notes",
+    "synopsis": "Three lower-cost lines: the freshness/transcript conformance harness, the pools cross-pollination, and the",
+    "date": 0
+  },
+  {
+    "slug": "o7-agent-card-zk",
+    "title": "O7 — Agent Card ZK",
+    "synopsis": "An agent proves capability and authority from its Agent card without revealing the principal or the full",
+    "date": 0
+  },
+  {
+    "slug": "o9-vrc-promise-bundle",
+    "title": "O9 — VRC Promise Bundle",
+    "synopsis": "The spec's VRC is deliberately minimal. Agentprivacy's VRC carries promise-theoretic and economic",
+    "date": 0
+  },
+  {
+    "slug": "semaphore-v4-crosscheck",
+    "title": "Semaphore v4 Crosscheck",
+    "synopsis": "Register: O2 · Milestone: M5 (Semaphore v4 cross-check) · Ladder: research note",
+    "date": 0
+  },
+  {
+    "slug": "vwc-witness-seat",
+    "title": "VWC — Witness Seat",
+    "synopsis": "A third party attesting the collision: the Verifiable Witness Credential joins runtime 07 as the third",
+    "date": 0
+  },
+  {
+    "slug": "x1-conformance-fixtures",
+    "title": "X1 — Conformance Fixtures",
+    "synopsis": "The fixtures are the interop layer. §26 already requires every conformant profile to ship positive,",
+    "date": 0
+  },
+  {
+    "slug": "x2-context-legibility-instrument",
+    "title": "X2 — Context Legibility Instrument",
+    "synopsis": "The §6.8 six-question test made runnable: a context card derived from the canonical descriptor itself,",
+    "date": 0
+  },
+  {
+    "slug": "x3-trust-task-composition",
+    "title": "X3 — Trust Task Composition",
+    "synopsis": "A real trust task never requests one predicate. It composes several PR- predicates into a single",
+    "date": 0
+  },
+  {
+    "slug": "x4-observable-event-minimisation",
+    "title": "X4 — Observable Event Minimisation",
+    "synopsis": "The specification claims unlinkability, not undetectability (§20): a presentation event remains",
+    "date": 0
+  },
+  {
+    "slug": "x5-recovery-rotation",
+    "title": "X5 — Recovery and Rotation",
+    "synopsis": "Enrolled secrets get lost, compromised, and time-bounded — §22.2 makes rotation mandatory, not",
+    "date": 0
+  },
+  {
+    "slug": "x6-assurance-horizons-erosion-clocks",
+    "title": "X6 — Assurance Horizons and Erosion Clocks",
+    "synopsis": "The decision doc's assurance horizon (§5.9) is structurally the Privacy Value Model's erosion clock: a",
+    "date": 0
+  },
+  {
+    "slug": "x7-mediated-proving-profile",
+    "title": "X7 — Mediated Proving Profile",
+    "synopsis": "§21 permits mediated proving only as an explicit, separately assessed path: \"A profile MAY support",
+    "date": 0
+  },
+  {
+    "slug": "x8-multi-issuer-aggregation",
+    "title": "X8 — Multi-Issuer Aggregation",
+    "synopsis": "§12.5 records, non-normatively, that when a show combines attestations from multiple issuers, \"a",
+    "date": 0
+  },
+  {
+    "slug": "x9-guardian-recovery",
+    "title": "X9 — Guardian Recovery",
+    "synopsis": "X5 named it pattern 3 and deferred it; the rotation build (10/10) deferred it again — \"needs its own",
+    "date": 0
+  },
+  {
+    "slug": "lab-runtimes",
+    "title": "Lab — Runtimes",
+    "synopsis": "Status: Local experimental lab. Not part of the upstream trustoverip/dtgwg-zkp-tf repo — excluded via .git/info/exclude, never pushed. Spec-doc edits go upst...",
+    "date": 0
+  },
+  {
+    "slug": "lab-01-uniqueness-nullifier",
+    "title": "Lab — 01-uniqueness-nullifier",
+    "synopsis": "Predicate (Section 4): Uniqueness within a context — \"Nullifier-based scheme (deterministic per-context pseudonym) for duplicate / Sybil resistance without a...",
+    "date": 0
+  },
+  {
+    "slug": "lab-07-trust-graph-formation",
+    "title": "Lab — 07-trust-graph-formation",
+    "synopsis": "What this runtime is. An agentprivacy-harness runtime that models how the DTG trust graph forms, run as",
+    "date": 0
+  },
+  {
+    "slug": "lab-circom-gadget",
+    "title": "Lab — circom-gadget",
+    "synopsis": "What this is: the lab's first real circuit — the SHARED GADGET that O2 (PHC-by-nullifier,",
+    "date": 0
+  },
+  {
+    "slug": "lab-consumer-py",
+    "title": "Lab — consumer-py",
+    "synopsis": "Python 3, stdlib only (hashlib, json, re, pathlib) — the fixtures lab's",
+    "date": 0
+  },
+  {
+    "slug": "lab-context-card",
+    "title": "Lab — context-card",
+    "synopsis": "What this is. The decision document's six-question human-legibility test (§6.8) made runnable:",
+    "date": 0
+  },
+  {
+    "slug": "lab-erosion-record",
+    "title": "Lab — erosion-record",
+    "synopsis": "The lightest of the X-builds: a record format + validator + one worked",
+    "date": 0
+  },
+  {
+    "slug": "lab-fixtures",
+    "title": "Lab — fixtures",
+    "synopsis": "Implements the X1 exploration (X1 — Conformance Fixtures)",
+    "date": 0
+  },
+  {
+    "slug": "lab-guardian-recovery",
+    "title": "Lab — guardian-recovery",
+    "synopsis": "Implements the X9 exploration",
+    "date": 0
+  },
+  {
+    "slug": "lab-mediator",
+    "title": "Lab — mediator",
+    "synopsis": "Runnable reference for the mediated-proving profile — §21 of the",
+    "date": 0
+  },
+  {
+    "slug": "lab-multi-issuer",
+    "title": "Lab — multi-issuer",
+    "synopsis": "Runnable reference for X8 — multi-issuer confidence aggregation",
+    "date": 0
+  },
+  {
+    "slug": "lab-quiet-presentation",
+    "title": "Lab — quiet-presentation",
+    "synopsis": "Lab model of X4's design layer (research root: X4 — Observable Event Minimisation). Reference model of the decision rules over event traces — not real networ...",
+    "date": 0
+  },
+  {
+    "slug": "lab-rotation",
+    "title": "Lab — rotation",
+    "synopsis": "Implements the X5 exploration",
+    "date": 0
+  },
+  {
+    "slug": "lab-show-composition",
+    "title": "Lab — show-composition",
+    "synopsis": "Runnable reference for X3 — trust-task composition",
+    "date": 0
+  },
+  {
+    "slug": "lab-witness-seat",
+    "title": "Lab — witness-seat",
+    "synopsis": "The third seat on the dream cycle: a VWC (Verifiable Witness Credential) attesting the",
+    "date": 0
+  },
+  {
+    "slug": "chronicle-2026-07-16-trust-graph-formation-dream-cycle",
+    "title": "Chronicle 2026-07-16 — Trust-Graph Formation Dream Cycle",
+    "synopsis": "The ToIP trust graph named our objects and left the ZK layer open. We cohered to its names and contributed a",
+    "date": 0
+  },
+  {
+    "slug": "chronicle-2026-07-18-the-first-circuit",
+    "title": "Chronicle 2026-07-18 — The First Circuit",
+    "synopsis": "The lab crossed from reference models into real cryptography — and the interesting part is not the",
+    "date": 0
+  }
+]

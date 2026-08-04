@@ -1,0 +1,86 @@
+{
+  "title": "O4 — Registry ZK Revocation",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "efafe7dc36cf0c9e",
+      "text": "# O4 — Registry-ZK interaction and revocation\n\n*How a zero-knowledge proof reads a trust registry: snapshot semantics, issuer-set membership, revocation,\nand the edge-admissibility rule — the deferred interaction, by name.*\n\n**Register:** O4 · leverage 🟠 · **Ladder:** design doc (+ rt 07's edge-admissibility rule, 11/11)\n**Anchor (cred-spec):** trust registry (issuer/role/revocation authority) · \"registry-ZK interactions\ndeferred to future work.\"\n**Anchor (decision doc):** **PR-ISS** (§12) · §22 lifecycle clocks · §12.4 registry and snapshot semantics.\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "936203d1e80f0c7a",
+      "text": "## What the spec defers and the decision doc structures\n\nThe cred-spec names the trust registry as the governance object (acceptable issuers, roles, revocations)\nand defers how a ZK proof interacts with it. The decision doc supplies the missing requirements without\npicking a construction:\n\n- **PR-ISS is a snapshot statement** (§12.4): issuer qualification is evaluated against \"a named registry,\n  set commitment, or governance snapshot with explicit effective time, cache rules, update semantics, and\n  failure behaviour.\" Not \"the registry\" in the abstract — a versioned root at a time.\n- **Issuer concealment is profile-specific** (§12.3): explicit disclosure, concealment within a named set,\n  coarse issuer class, or threshold/multi-issuer assurance — chosen per relying purpose + correlation\n  analysis, never hard-coded.\n- **Registry traffic is a disclosure surface** (§12.4, §19): status lookups and network patterns can reveal\n  the issuer or holder even when the proof reveals nothing — the interaction design carries its own\n  disclosure-boundary record.\n- **Lifecycle clocks are separate** (§22.1): status freshness ≠ attestation validity ≠ nullifier epoch ≠\n  enrolment-root cryptoperiod. \"Registry snapshot no older than 24 hours\" (Appendix B) is the shape of a\n  conformant freshness rule."
+    },
+    {
+      "type": "markdown",
+      "id": "4aeffa7d6416db12",
+      "text": "## The design sketch\n\n**Registry as epoch-rooted commitments.** The registry authority publishes, per epoch, signed roots over its\ngoverned sets — accepted-issuer set, membership set(s), revocation set — each with effective time and epoch\npolicy. Proofs are made **against a named root**, and the verifier's relying policy states the maximum\nacceptable root age.\n\n**Membership** = the shared Poseidon-Merkle gadget (one circuit with O2): `commitment ∈ root(epoch)`.\n\n**Revocation** — three candidate patterns, to be selected through the §25 gate:\n1. **Short epochs, positive membership only** — the set is re-rooted often enough that removal *is*\n   revocation. Simplest; cost = re-issuance of paths each epoch.\n2. **Accumulator / vector-commitment non-membership** — prove absence from the revocation set at a named\n   root. Stronger freshness; heavier circuits.\n3. **Privacy-preserving status mechanism** (§18.2's \"status reference\" row) — bounded-cache status checks\n   outside the circuit, with the lookup pattern itself minimised (batching, coarse timing — §20).\n\n**The edge-admissibility rule** (runtime 07's contribution): registry interaction is not only *reading* —\nit governs when the graph may *grow*. Runtime 07's Swordsman checks (both endpoints personhood-anchored in\nthe registry-governed set, mutual consent, fresh R-DIDs, non-collusion recompute) are a candidate profile\nfor \"when may an edge be minted against a registry snapshot\" — the write-side of the deferred interaction."
+    },
+    {
+      "type": "markdown",
+      "id": "f7a73278d7ad4347",
+      "text": "## What exists\n\n- rt 03 STUB (set-membership over the accredited set) + rt 07 (11/11, the admissibility rule).\n- The coherence reconciliation: \"accredited set\" = the cryptographic Merkle object; **trust registry** = the\n  governance object. The proof's set-membership is a ZK *view* of the registry's authorized list.\n- §12.5's multi-issuer aggregation note — independent honest issuers multiply confidence — gives the\n  registry a purpose beyond list-keeping; composable with concealment-within-a-set."
+    },
+    {
+      "type": "markdown",
+      "id": "f2843ca928e6e71c",
+      "text": "## Build plan\n\n- **M1 — data model note:** epoch-rooted registry (roots, effective times, epoch policy, failure behaviour)\n  written as a short profile the Credentials TF can review — this is the co-authored piece (§27.3).\n- **M2 — rt 03 reference model:** set-membership against a named epoch root + negative tests (stale root\n  rejected; revoked issuer rejected; inconsistent snapshots rejected — §26.1).\n- **M3 — revocation selection:** cost out patterns 1–3 against the §25 evaluation list (refresh cost,\n  offline verification, mobile viability); recommend one per profile.\n- **M4 — circuit:** the shared gadget instantiated for PR-ISS; edge-admissibility statement ported once\n  01/03 land."
+    },
+    {
+      "type": "markdown",
+      "id": "683bdc3cc211dbe7",
+      "text": "## Upstream surface\n\n- The one deliverable the cred-spec *asks for by name*. Frame as joint work: our TF specifies the proof\n  side; the Credentials TF owns registry governance/institutional legitimacy (§27.3 boundary).\n- E3 (trust-registry terminology) is already staged; this exploration is its continuation into mechanism."
+    },
+    {
+      "type": "markdown",
+      "id": "a0bdaa92db34af16",
+      "text": "## Open questions\n\n- Who operates nullifier/state storage when a context spans a governed verifier *set* (§13.5) — the\n  registry, a verifier-set operator, or per-verifier state with reconciliation?\n- Does revocation of an *issuer* retroactively invalidate proofs made against roots where it was accepted?\n  (§10.6 says reliance expires on accreditation change — propagation semantics needed; ties to the\n  redress matrix §23 row 2.)"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "O4 — Registry ZK Revocation",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "efafe7dc36cf0c9e",
+            "text": "# O4 — Registry-ZK interaction and revocation\n\n*How a zero-knowledge proof reads a trust registry: snapshot semantics, issuer-set membership, revocation,\nand the edge-admissibility rule — the deferred interaction, by name.*\n\n**Register:** O4 · leverage 🟠 · **Ladder:** design doc (+ rt 07's edge-admissibility rule, 11/11)\n**Anchor (cred-spec):** trust registry (issuer/role/revocation authority) · \"registry-ZK interactions\ndeferred to future work.\"\n**Anchor (decision doc):** **PR-ISS** (§12) · §22 lifecycle clocks · §12.4 registry and snapshot semantics.\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "936203d1e80f0c7a",
+            "text": "## What the spec defers and the decision doc structures\n\nThe cred-spec names the trust registry as the governance object (acceptable issuers, roles, revocations)\nand defers how a ZK proof interacts with it. The decision doc supplies the missing requirements without\npicking a construction:\n\n- **PR-ISS is a snapshot statement** (§12.4): issuer qualification is evaluated against \"a named registry,\n  set commitment, or governance snapshot with explicit effective time, cache rules, update semantics, and\n  failure behaviour.\" Not \"the registry\" in the abstract — a versioned root at a time.\n- **Issuer concealment is profile-specific** (§12.3): explicit disclosure, concealment within a named set,\n  coarse issuer class, or threshold/multi-issuer assurance — chosen per relying purpose + correlation\n  analysis, never hard-coded.\n- **Registry traffic is a disclosure surface** (§12.4, §19): status lookups and network patterns can reveal\n  the issuer or holder even when the proof reveals nothing — the interaction design carries its own\n  disclosure-boundary record.\n- **Lifecycle clocks are separate** (§22.1): status freshness ≠ attestation validity ≠ nullifier epoch ≠\n  enrolment-root cryptoperiod. \"Registry snapshot no older than 24 hours\" (Appendix B) is the shape of a\n  conformant freshness rule."
+          },
+          {
+            "type": "markdown",
+            "id": "4aeffa7d6416db12",
+            "text": "## The design sketch\n\n**Registry as epoch-rooted commitments.** The registry authority publishes, per epoch, signed roots over its\ngoverned sets — accepted-issuer set, membership set(s), revocation set — each with effective time and epoch\npolicy. Proofs are made **against a named root**, and the verifier's relying policy states the maximum\nacceptable root age.\n\n**Membership** = the shared Poseidon-Merkle gadget (one circuit with O2): `commitment ∈ root(epoch)`.\n\n**Revocation** — three candidate patterns, to be selected through the §25 gate:\n1. **Short epochs, positive membership only** — the set is re-rooted often enough that removal *is*\n   revocation. Simplest; cost = re-issuance of paths each epoch.\n2. **Accumulator / vector-commitment non-membership** — prove absence from the revocation set at a named\n   root. Stronger freshness; heavier circuits.\n3. **Privacy-preserving status mechanism** (§18.2's \"status reference\" row) — bounded-cache status checks\n   outside the circuit, with the lookup pattern itself minimised (batching, coarse timing — §20).\n\n**The edge-admissibility rule** (runtime 07's contribution): registry interaction is not only *reading* —\nit governs when the graph may *grow*. Runtime 07's Swordsman checks (both endpoints personhood-anchored in\nthe registry-governed set, mutual consent, fresh R-DIDs, non-collusion recompute) are a candidate profile\nfor \"when may an edge be minted against a registry snapshot\" — the write-side of the deferred interaction."
+          },
+          {
+            "type": "markdown",
+            "id": "f7a73278d7ad4347",
+            "text": "## What exists\n\n- rt 03 STUB (set-membership over the accredited set) + rt 07 (11/11, the admissibility rule).\n- The coherence reconciliation: \"accredited set\" = the cryptographic Merkle object; **trust registry** = the\n  governance object. The proof's set-membership is a ZK *view* of the registry's authorized list.\n- §12.5's multi-issuer aggregation note — independent honest issuers multiply confidence — gives the\n  registry a purpose beyond list-keeping; composable with concealment-within-a-set."
+          },
+          {
+            "type": "markdown",
+            "id": "f2843ca928e6e71c",
+            "text": "## Build plan\n\n- **M1 — data model note:** epoch-rooted registry (roots, effective times, epoch policy, failure behaviour)\n  written as a short profile the Credentials TF can review — this is the co-authored piece (§27.3).\n- **M2 — rt 03 reference model:** set-membership against a named epoch root + negative tests (stale root\n  rejected; revoked issuer rejected; inconsistent snapshots rejected — §26.1).\n- **M3 — revocation selection:** cost out patterns 1–3 against the §25 evaluation list (refresh cost,\n  offline verification, mobile viability); recommend one per profile.\n- **M4 — circuit:** the shared gadget instantiated for PR-ISS; edge-admissibility statement ported once\n  01/03 land."
+          },
+          {
+            "type": "markdown",
+            "id": "683bdc3cc211dbe7",
+            "text": "## Upstream surface\n\n- The one deliverable the cred-spec *asks for by name*. Frame as joint work: our TF specifies the proof\n  side; the Credentials TF owns registry governance/institutional legitimacy (§27.3 boundary).\n- E3 (trust-registry terminology) is already staged; this exploration is its continuation into mechanism."
+          },
+          {
+            "type": "markdown",
+            "id": "a0bdaa92db34af16",
+            "text": "## Open questions\n\n- Who operates nullifier/state storage when a context spans a governed verifier *set* (§13.5) — the\n  registry, a verifier-set operator, or per-verifier state with reconciliation?\n- Does revocation of an *issuer* retroactively invalidate proofs made against roots where it was accepted?\n  (§10.6 says reliance expires on accreditation change — propagation semantics needed; ties to the\n  redress matrix §23 row 2.)"
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

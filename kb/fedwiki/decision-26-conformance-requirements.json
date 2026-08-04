@@ -1,0 +1,26 @@
+{
+  "title": "Decision §26 — Conformance requirements",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "3e5152ec79b75d41",
+      "text": "## 26. Conformance requirements\n\nA conformant profile or implementation MUST provide:\n\n- a completed context decision record;\n- one assurance-boundary record per supported predicate;\n- one disclosure-boundary record per supported predicate;\n- a versioned attestation schema and field register;\n- a canonical transcript fixture;\n- nullifier scope-and-epoch fixture where applicable;\n- issuer-set or registry-snapshot fixture where applicable;\n- lifecycle and cryptoperiod profile;\n- mediated-proving declaration where applicable;\n- implementation conformance statement;\n- positive, negative, and cross-context test vectors;\n- evidence that user-facing context descriptions match the cryptographic configuration;\n- residual-risk record.\n\n### 26.1 Minimum negative tests\n\nThe test programme MUST reject at least the following:\n\n- a valid proof over an expired, revoked, or unaccepted attestation;\n- a verifier output implying biometric correctness;\n- replay into another verifier, context, purpose, scope, or transcript;\n- reuse of a nullifier domain across distinct contexts;\n- an issuer-verifier-collusion-resistance claim with no defined adversary or test;\n- a schema containing an unjustified stable correlator;\n- a context expansion without version and migration;\n- a silent fallback to a lower-assurance or mediated path;\n- acceptance of holder-key control as sufficient agent authority;\n- inconsistent epoch or registry snapshots;\n- a disclosure claim that ignores observable events or accompanying fields."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §26 — Conformance requirements",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "3e5152ec79b75d41",
+            "text": "## 26. Conformance requirements\n\nA conformant profile or implementation MUST provide:\n\n- a completed context decision record;\n- one assurance-boundary record per supported predicate;\n- one disclosure-boundary record per supported predicate;\n- a versioned attestation schema and field register;\n- a canonical transcript fixture;\n- nullifier scope-and-epoch fixture where applicable;\n- issuer-set or registry-snapshot fixture where applicable;\n- lifecycle and cryptoperiod profile;\n- mediated-proving declaration where applicable;\n- implementation conformance statement;\n- positive, negative, and cross-context test vectors;\n- evidence that user-facing context descriptions match the cryptographic configuration;\n- residual-risk record.\n\n### 26.1 Minimum negative tests\n\nThe test programme MUST reject at least the following:\n\n- a valid proof over an expired, revoked, or unaccepted attestation;\n- a verifier output implying biometric correctness;\n- replay into another verifier, context, purpose, scope, or transcript;\n- reuse of a nullifier domain across distinct contexts;\n- an issuer-verifier-collusion-resistance claim with no defined adversary or test;\n- a schema containing an unjustified stable correlator;\n- a context expansion without version and migration;\n- a silent fallback to a lower-assurance or mediated path;\n- acceptance of holder-key control as sufficient agent authority;\n- inconsistent epoch or registry snapshots;\n- a disclosure claim that ignores observable events or accompanying fields."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

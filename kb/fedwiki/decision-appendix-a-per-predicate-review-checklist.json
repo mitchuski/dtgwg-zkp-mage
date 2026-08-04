@@ -1,0 +1,26 @@
+{
+  "title": "Decision — Appendix A. Per-predicate review checklist",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "036f2b4fc26c010d",
+      "text": "## Appendix A. Per-predicate review checklist\n\nFor each predicate, reviewers should be able to answer:\n\n1. What exact proposition is proved?\n2. What does it explicitly not establish?\n3. What attestation fields and external state are required?\n4. What is deliberately disclosed?\n5. What can be inferred or reconstructed?\n6. Who can observe it, alone or in collusion?\n7. How long do the proof, pseudonym, root, metadata, and logs remain relevant?\n8. Alongside what other fields, proofs, events, and traffic does the claim remain valid?\n9. Who is accountable for an incorrect upstream determination?\n10. How is an incorrect relying decision contested and corrected?\n11. What context, scope, purpose, and epoch bind the statement?\n12. What construction and performance evidence is required?\n13. What positive and negative conformance tests demonstrate the boundary?\n14. Can an affected person understand the operational meaning of the context and fallback path?"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision — Appendix A. Per-predicate review checklist",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "036f2b4fc26c010d",
+            "text": "## Appendix A. Per-predicate review checklist\n\nFor each predicate, reviewers should be able to answer:\n\n1. What exact proposition is proved?\n2. What does it explicitly not establish?\n3. What attestation fields and external state are required?\n4. What is deliberately disclosed?\n5. What can be inferred or reconstructed?\n6. Who can observe it, alone or in collusion?\n7. How long do the proof, pseudonym, root, metadata, and logs remain relevant?\n8. Alongside what other fields, proofs, events, and traffic does the claim remain valid?\n9. Who is accountable for an incorrect upstream determination?\n10. How is an incorrect relying decision contested and corrected?\n11. What context, scope, purpose, and epoch bind the statement?\n12. What construction and performance evidence is required?\n13. What positive and negative conformance tests demonstrate the boundary?\n14. Can an affected person understand the operational meaning of the context and fallback path?"
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

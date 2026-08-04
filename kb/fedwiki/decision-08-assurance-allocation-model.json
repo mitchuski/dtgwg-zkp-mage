@@ -1,0 +1,26 @@
+{
+  "title": "Decision §8 — Assurance allocation model",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "9b9089e8ebf74a4f",
+      "text": "## 8. Assurance allocation model\n\nThe system allocates assurance across five layers.\n\n| Layer | What it contributes | What it does not contribute by itself |\n|---|---|---|\n| Biometric or determination layer | sensor capture, liveness or personhood determination, match or enrolment result | cryptographic privacy; governance legitimacy |\n| Issuer-attestation layer | signed representation of the determination, policy, assurance class, subject binding, validity, status | proof that the determination was factually correct |\n| Cryptographic proof layer | possession, predicate satisfaction, integrity, selective disclosure, transcript binding, scoped linkage properties | accreditation, biometric correctness, civil identity, user intent |\n| Governance and registry layer | issuer qualification, policy meaning, recognition, audit, accountability, status authority | proof generation or witness secrecy |\n| Deployment and human-experience layer | request comprehension, context legibility, fallback behaviour, accessibility, operational controls, correction and redress | cryptographic soundness |\n\nA verifier decision is supportable only when all required layers are in force. A proof may be cryptographically valid while the relying decision is invalid because policy, accreditation, status, context, retention, or deployment conditions are not satisfied."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §8 — Assurance allocation model",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "9b9089e8ebf74a4f",
+            "text": "## 8. Assurance allocation model\n\nThe system allocates assurance across five layers.\n\n| Layer | What it contributes | What it does not contribute by itself |\n|---|---|---|\n| Biometric or determination layer | sensor capture, liveness or personhood determination, match or enrolment result | cryptographic privacy; governance legitimacy |\n| Issuer-attestation layer | signed representation of the determination, policy, assurance class, subject binding, validity, status | proof that the determination was factually correct |\n| Cryptographic proof layer | possession, predicate satisfaction, integrity, selective disclosure, transcript binding, scoped linkage properties | accreditation, biometric correctness, civil identity, user intent |\n| Governance and registry layer | issuer qualification, policy meaning, recognition, audit, accountability, status authority | proof generation or witness secrecy |\n| Deployment and human-experience layer | request comprehension, context legibility, fallback behaviour, accessibility, operational controls, correction and redress | cryptographic soundness |\n\nA verifier decision is supportable only when all required layers are in force. A proof may be cryptographically valid while the relying decision is invalid because policy, accreditation, status, context, retention, or deployment conditions are not satisfied."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

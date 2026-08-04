@@ -1,0 +1,106 @@
+{
+  "title": "X6 — Assurance Horizons and Erosion Clocks",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "80d651663cdc2811",
+      "text": "# X6 — Assurance horizons and erosion clocks — the PVM reading\n\n*The decision doc's assurance horizon (§5.9) is structurally the Privacy Value Model's erosion clock: a\nproof's privacy guarantee is fixed at proof time, but the observer's background accumulates — the proof\ndoes not leak more; it matters less.*\n\n**Register:** none — X-series research bridge (agentprivacy research reaching *into* TF work, not a\nregister expansion) · leverage 🟡 · **Ladder:** reference built 2026-07-18 —\n[[Lab — erosion-record]] 8/8: ten-clock sort as a closed validated list,\nerosion-aware residual-risk record (overclaimed measurement structurally banned; rate-not-cliff\nenforced), PR-UNQ worked example with §23-routed re-base accountability. See its NOTES.md\n**Anchor (decision doc):** §5.9 assurance horizon · §5.10 cryptoperiod · §22.1 separate clocks · §10.6\nreliance expiry · §2.4 \"for how long\" · §19/§20 disclosure surfaces and observable events · §26\nresidual-risk record.\n**Anchor (PVM):** PVM V6 moving ceiling, C82 (WP-07 Def 3.9 + Cor 5.4b lineage): erosion form\nR_inf(t) = Σε_i / H(X | B_t); two-clock thesis (certification clock vs erosion clock).\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "b29fb46d58e67da8",
+      "text": "## What the decision doc offers\n\nThe decision doc already treats time as first-class. §2.4 makes **\"for how long\"** a mandatory parameter\nof every material claim — \"a claim missing one of these parameters is not merely incomplete\ndocumentation. It is not yet a testable claim.\" §5.9 defines the **assurance horizon** as the period over\nwhich claims \"remain supportable, taking account of cryptographic assumptions, biometric threat\nevolution, schema stability, governance validity, status freshness, retention, and operational controls.\"\n§22.1 lists **ten distinct clocks** a profile MUST distinguish; §10.6 makes reliance expire at the\n*earliest* of a mixed list; §19/§20 enumerate the accumulating observables — schema fields, status and\nregistry queries, presentation timing, retries, cross-proof composition — while ruling that \"the\nspecification claims unlinkability, not undetectability.\"\n\nWhat it does not yet offer is a *theory of why* some of those clocks behave differently from others."
+    },
+    {
+      "type": "markdown",
+      "id": "b35e483e7ec26c80",
+      "text": "## What the PVM offers\n\nThe PVM V6 moving-ceiling result (C82, proven-conditional, WP-07 Cor 5.4b lineage) is exactly that\ntheory. A ZK guarantee is **compute-saturated**: the per-show leakage ε_i is fixed at proof time and the\ntranscript never leaks more later. What moves is the denominator — the adversary's background\ninformation B_t (linkage corpora, side priors, accumulated observables) grows on a calendar, so the\neffective anonymity mass H(X | B_t) shrinks and the erosion ratio R_inf(t) = Σε_i / H(X | B_t) rises.\n**The protection does not leak more; it matters less.** The drift is informational, not computational.\nV6 names two clock families: the **certification clock** (an authority certifies a value and can\nre-certify it) and the **erosion clock** (background accumulation nobody can renew — only re-base)."
+    },
+    {
+      "type": "markdown",
+      "id": "a2b9c750c7b85aae",
+      "text": "## The claim\n\n1. **§5.9 is an erosion clock.** The assurance horizon is not another expiry an authority sets; it is\n   the composite envelope of quantities that degrade as observables accumulate over the §19/§20\n   surfaces. Verifier-side and observer-side B_t grows with every schema field revealed, every status\n   query, every timing pattern, every cross-show composition — exactly the correlators §10.4 and §18.4\n   already list.\n2. **\"For how long\" should be stated as a rate, not a cliff.** A disclosure boundary (§5.4) needs an\n   erosion analysis, not just an expiry date: how fast does the claim degrade as the named observables\n   accumulate, and what accumulation level triggers re-base. The §10.6 earliest-of list stays — cliffs\n   are still real for certification clocks — but the erosion-family entries get a rate statement.\n3. **The ten clocks sort into the two families**, and the sort sharpens §22 conformance: certification\n   clocks need renewal mechanisms; erosion clocks need monitoring plus re-base triggers (§22.3\n   migration, re-enrolment). §22.2's ban on \"permanent or unbounded\" defaults is, in this reading, the\n   requirement that no erosion clock be left unwatched."
+    },
+    {
+      "type": "markdown",
+      "id": "ba591781979265a9",
+      "text": "## The ten clocks of §22.1, sorted\n\n| §22.1 clock | Family | Who moves it | Renewal / re-base path |\n|---|---|---|---|\n| Proof-transcript lifetime | certification | profile | expires per transcript (§15) |\n| Challenge/session lifetime | certification | verifier policy | new session |\n| Attestation validity | certification | issuer | re-issuance |\n| Status freshness | certification | status authority | refresh / snapshot (§12.4) |\n| Nullifier epoch | certification | context authority (§6.7) | governed rollover (§5.8) |\n| Enrolment-root cryptoperiod | certification | issuer/governance (§5.10) | rotation, migration (§22.3) |\n| Policy & accreditation validity | certification | governance authority | re-accreditation |\n| Log retention | **erosion** | retained observables accrue into B_t | deletion/segregation; §20 minimisation slows the rate |\n| Proof-system security horizon | **erosion** (see honesty note) | cryptanalytic background accumulates | re-base by migration (§22.3) |\n| Biometric assurance horizon | **erosion** | \"biometric threat evolution\" (§5.9) | re-base by re-enrolment under stronger policy |\n\nThe §5.9 assurance horizon is then the *minimum* over the erosion rows — the envelope clock. Honesty\nnote: the proof-system security horizon is erosion-family *operationally* (nobody renews it; only\nmigration re-bases it), but its driver is computational advance, whereas the PVM's R(t) drift is\nstrictly informational; the bridge is structural, not an identity."
+    },
+    {
+      "type": "markdown",
+      "id": "b88a1424fc35b5ec",
+      "text": "## What exists\n\n- The decision doc's complete time machinery (§2.4, §5.8–§5.10, §10.6, §22) — the TF side of the bridge.\n- PVM V6: C82 proven-conditional with the erosion form and shelf life t* = sup{t : R(t) < 1}; C97\n  (non-reconstruction as the ownability mechanism, \"durable for the term the erosion clock permits\").\n- Appendix B's `for_how_long` block — the natural place a rate statement would slot beside the existing\n  `assurance_horizon: 2 years` cliff value."
+    },
+    {
+      "type": "markdown",
+      "id": "4571811661189661",
+      "text": "## Build plan\n\n- **B1 — sort note.** The table above, expanded one paragraph per row, with the §19/§20 observable list\n  cross-referenced as the B_t inputs per disclosure boundary. (This doc is B1's draft.)\n- **B2 — erosion-aware residual-risk record.** A YAML extension of §26's residual-risk record: per\n  disclosure boundary, the accumulating observables, an estimated erosion horizon, the monitoring\n  signal, and the re-base trigger. Mirror Appendix B's shape.\n- **B3 — worked example on PR-UNQ.** The nullifier's within-context pseudonym (§13.5) is the cleanest\n  accumulating observable: state its erosion analysis alongside the existing epoch/cryptoperiod cliffs."
+    },
+    {
+      "type": "markdown",
+      "id": "360b30326269652a",
+      "text": "## Upstream surface\n\nCareful — this is agentprivacy research reaching into TF work. The candidate surface is an **informative\nresearch note** (an annex or appendix note beside §22 / §26), cited as external research (PVM V6 /\nWP-07 Cor 5.4b lineage), offered through TF discussion — never normative text, and never a dependency of\nany profile. The narrow language stays the decision doc's own; the note contributes the two-family sort\nand the rate-not-cliff framing, nothing else."
+    },
+    {
+      "type": "markdown",
+      "id": "bb7a15445ac9c544",
+      "text": "## Open questions\n\n- H(X | B_t) is mostly not measurable in deployment. What proxy observables (registry-query volume,\n  presentation frequency, schema-variant rarity) are honest enough to drive a monitoring signal without\n  overclaiming a quantity?\n- Does log retention belong wholly to the erosion family, or is it a certification-set *parameter*\n  (retention period) whose *effect* (correlation accumulation) is the erosion quantity? The record\n  format may need both faces.\n- Should the §26 residual-risk record require an erosion section, or offer it as an optional class? A\n  MUST is premature before the TF has seen a worked example (B3).\n- Where does re-base authority sit? Erosion clocks have no renewing authority by definition — but the\n  migration/re-enrolment trigger still needs an accountable party in the §23 matrix."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "X6 — Assurance Horizons and Erosion Clocks",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "80d651663cdc2811",
+            "text": "# X6 — Assurance horizons and erosion clocks — the PVM reading\n\n*The decision doc's assurance horizon (§5.9) is structurally the Privacy Value Model's erosion clock: a\nproof's privacy guarantee is fixed at proof time, but the observer's background accumulates — the proof\ndoes not leak more; it matters less.*\n\n**Register:** none — X-series research bridge (agentprivacy research reaching *into* TF work, not a\nregister expansion) · leverage 🟡 · **Ladder:** reference built 2026-07-18 —\n[[Lab — erosion-record]] 8/8: ten-clock sort as a closed validated list,\nerosion-aware residual-risk record (overclaimed measurement structurally banned; rate-not-cliff\nenforced), PR-UNQ worked example with §23-routed re-base accountability. See its NOTES.md\n**Anchor (decision doc):** §5.9 assurance horizon · §5.10 cryptoperiod · §22.1 separate clocks · §10.6\nreliance expiry · §2.4 \"for how long\" · §19/§20 disclosure surfaces and observable events · §26\nresidual-risk record.\n**Anchor (PVM):** PVM V6 moving ceiling, C82 (WP-07 Def 3.9 + Cor 5.4b lineage): erosion form\nR_inf(t) = Σε_i / H(X | B_t); two-clock thesis (certification clock vs erosion clock).\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "b29fb46d58e67da8",
+            "text": "## What the decision doc offers\n\nThe decision doc already treats time as first-class. §2.4 makes **\"for how long\"** a mandatory parameter\nof every material claim — \"a claim missing one of these parameters is not merely incomplete\ndocumentation. It is not yet a testable claim.\" §5.9 defines the **assurance horizon** as the period over\nwhich claims \"remain supportable, taking account of cryptographic assumptions, biometric threat\nevolution, schema stability, governance validity, status freshness, retention, and operational controls.\"\n§22.1 lists **ten distinct clocks** a profile MUST distinguish; §10.6 makes reliance expire at the\n*earliest* of a mixed list; §19/§20 enumerate the accumulating observables — schema fields, status and\nregistry queries, presentation timing, retries, cross-proof composition — while ruling that \"the\nspecification claims unlinkability, not undetectability.\"\n\nWhat it does not yet offer is a *theory of why* some of those clocks behave differently from others."
+          },
+          {
+            "type": "markdown",
+            "id": "b35e483e7ec26c80",
+            "text": "## What the PVM offers\n\nThe PVM V6 moving-ceiling result (C82, proven-conditional, WP-07 Cor 5.4b lineage) is exactly that\ntheory. A ZK guarantee is **compute-saturated**: the per-show leakage ε_i is fixed at proof time and the\ntranscript never leaks more later. What moves is the denominator — the adversary's background\ninformation B_t (linkage corpora, side priors, accumulated observables) grows on a calendar, so the\neffective anonymity mass H(X | B_t) shrinks and the erosion ratio R_inf(t) = Σε_i / H(X | B_t) rises.\n**The protection does not leak more; it matters less.** The drift is informational, not computational.\nV6 names two clock families: the **certification clock** (an authority certifies a value and can\nre-certify it) and the **erosion clock** (background accumulation nobody can renew — only re-base)."
+          },
+          {
+            "type": "markdown",
+            "id": "a2b9c750c7b85aae",
+            "text": "## The claim\n\n1. **§5.9 is an erosion clock.** The assurance horizon is not another expiry an authority sets; it is\n   the composite envelope of quantities that degrade as observables accumulate over the §19/§20\n   surfaces. Verifier-side and observer-side B_t grows with every schema field revealed, every status\n   query, every timing pattern, every cross-show composition — exactly the correlators §10.4 and §18.4\n   already list.\n2. **\"For how long\" should be stated as a rate, not a cliff.** A disclosure boundary (§5.4) needs an\n   erosion analysis, not just an expiry date: how fast does the claim degrade as the named observables\n   accumulate, and what accumulation level triggers re-base. The §10.6 earliest-of list stays — cliffs\n   are still real for certification clocks — but the erosion-family entries get a rate statement.\n3. **The ten clocks sort into the two families**, and the sort sharpens §22 conformance: certification\n   clocks need renewal mechanisms; erosion clocks need monitoring plus re-base triggers (§22.3\n   migration, re-enrolment). §22.2's ban on \"permanent or unbounded\" defaults is, in this reading, the\n   requirement that no erosion clock be left unwatched."
+          },
+          {
+            "type": "markdown",
+            "id": "ba591781979265a9",
+            "text": "## The ten clocks of §22.1, sorted\n\n| §22.1 clock | Family | Who moves it | Renewal / re-base path |\n|---|---|---|---|\n| Proof-transcript lifetime | certification | profile | expires per transcript (§15) |\n| Challenge/session lifetime | certification | verifier policy | new session |\n| Attestation validity | certification | issuer | re-issuance |\n| Status freshness | certification | status authority | refresh / snapshot (§12.4) |\n| Nullifier epoch | certification | context authority (§6.7) | governed rollover (§5.8) |\n| Enrolment-root cryptoperiod | certification | issuer/governance (§5.10) | rotation, migration (§22.3) |\n| Policy & accreditation validity | certification | governance authority | re-accreditation |\n| Log retention | **erosion** | retained observables accrue into B_t | deletion/segregation; §20 minimisation slows the rate |\n| Proof-system security horizon | **erosion** (see honesty note) | cryptanalytic background accumulates | re-base by migration (§22.3) |\n| Biometric assurance horizon | **erosion** | \"biometric threat evolution\" (§5.9) | re-base by re-enrolment under stronger policy |\n\nThe §5.9 assurance horizon is then the *minimum* over the erosion rows — the envelope clock. Honesty\nnote: the proof-system security horizon is erosion-family *operationally* (nobody renews it; only\nmigration re-bases it), but its driver is computational advance, whereas the PVM's R(t) drift is\nstrictly informational; the bridge is structural, not an identity."
+          },
+          {
+            "type": "markdown",
+            "id": "b88a1424fc35b5ec",
+            "text": "## What exists\n\n- The decision doc's complete time machinery (§2.4, §5.8–§5.10, §10.6, §22) — the TF side of the bridge.\n- PVM V6: C82 proven-conditional with the erosion form and shelf life t* = sup{t : R(t) < 1}; C97\n  (non-reconstruction as the ownability mechanism, \"durable for the term the erosion clock permits\").\n- Appendix B's `for_how_long` block — the natural place a rate statement would slot beside the existing\n  `assurance_horizon: 2 years` cliff value."
+          },
+          {
+            "type": "markdown",
+            "id": "4571811661189661",
+            "text": "## Build plan\n\n- **B1 — sort note.** The table above, expanded one paragraph per row, with the §19/§20 observable list\n  cross-referenced as the B_t inputs per disclosure boundary. (This doc is B1's draft.)\n- **B2 — erosion-aware residual-risk record.** A YAML extension of §26's residual-risk record: per\n  disclosure boundary, the accumulating observables, an estimated erosion horizon, the monitoring\n  signal, and the re-base trigger. Mirror Appendix B's shape.\n- **B3 — worked example on PR-UNQ.** The nullifier's within-context pseudonym (§13.5) is the cleanest\n  accumulating observable: state its erosion analysis alongside the existing epoch/cryptoperiod cliffs."
+          },
+          {
+            "type": "markdown",
+            "id": "360b30326269652a",
+            "text": "## Upstream surface\n\nCareful — this is agentprivacy research reaching into TF work. The candidate surface is an **informative\nresearch note** (an annex or appendix note beside §22 / §26), cited as external research (PVM V6 /\nWP-07 Cor 5.4b lineage), offered through TF discussion — never normative text, and never a dependency of\nany profile. The narrow language stays the decision doc's own; the note contributes the two-family sort\nand the rate-not-cliff framing, nothing else."
+          },
+          {
+            "type": "markdown",
+            "id": "bb7a15445ac9c544",
+            "text": "## Open questions\n\n- H(X | B_t) is mostly not measurable in deployment. What proxy observables (registry-query volume,\n  presentation frequency, schema-variant rarity) are honest enough to drive a monitoring signal without\n  overclaiming a quantity?\n- Does log retention belong wholly to the erosion family, or is it a certification-set *parameter*\n  (retention period) whose *effect* (correlation accumulation) is the erosion quantity? The record\n  format may need both faces.\n- Should the §26 residual-risk record require an erosion section, or offer it as an optional class? A\n  MUST is premature before the TF has seen a worked example (B3).\n- Where does re-base authority sit? Erosion clocks have no renewing authority by definition — but the\n  migration/re-enrolment trigger still needs an accountable party in the §23 matrix."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Decision §24 — Prohibited claims and constructions",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "3cc6b8ff534637ca",
+      "text": "## 24. Prohibited claims and constructions\n\nV1 MUST NOT:\n\n- claim that a valid ZKP establishes correctness of the biometric determination;\n- claim full unlinkability while also claiming Sybil resistance;\n- describe a nullifier as proof of one-human-one-record;\n- expose global stable identifiers or nullifiers;\n- place raw biometrics or reversible templates in the proof flow;\n- require civil-identity disclosure for the minimum profile;\n- require issuer concealment in every profile;\n- conflate holder-key control with human continuity, consent, or agent authority;\n- leave proof composition undocumented;\n- use proprietary verifier-only formats without interoperable test vectors;\n- require global personhood or uniqueness before the minimum profile can ship;\n- hard-code one algorithm into the semantic model;\n- make post-quantum support a blocker for the first implementable release;\n- permit mediated proving without non-retention and correlation controls;\n- use a context boundary that can expand silently;\n- claim issuer-verifier-collusion resistance without testing and documenting the full correlation surface."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §24 — Prohibited claims and constructions",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "3cc6b8ff534637ca",
+            "text": "## 24. Prohibited claims and constructions\n\nV1 MUST NOT:\n\n- claim that a valid ZKP establishes correctness of the biometric determination;\n- claim full unlinkability while also claiming Sybil resistance;\n- describe a nullifier as proof of one-human-one-record;\n- expose global stable identifiers or nullifiers;\n- place raw biometrics or reversible templates in the proof flow;\n- require civil-identity disclosure for the minimum profile;\n- require issuer concealment in every profile;\n- conflate holder-key control with human continuity, consent, or agent authority;\n- leave proof composition undocumented;\n- use proprietary verifier-only formats without interoperable test vectors;\n- require global personhood or uniqueness before the minimum profile can ship;\n- hard-code one algorithm into the semantic model;\n- make post-quantum support a blocker for the first implementable release;\n- permit mediated proving without non-retention and correlation controls;\n- use a context boundary that can expand silently;\n- claim issuer-verifier-collusion resistance without testing and documenting the full correlation surface."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

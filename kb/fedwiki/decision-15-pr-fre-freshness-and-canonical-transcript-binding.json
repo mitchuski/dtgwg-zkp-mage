@@ -1,0 +1,26 @@
+{
+  "title": "Decision §15 — PR-FRE: freshness and canonical transcript binding",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "061740870d7d8e59",
+      "text": "## 15. PR-FRE: freshness and canonical transcript binding\n\n### 15.1 Statement established\n\nThe proof is bound to a current, verifier-authorised, domain-separated transcript and cannot be replayed or transplanted into a materially different request without detection.\n\n### 15.2 Required transcript fields\n\nThe canonical transcript MUST bind at least:\n\n- protocol identifier and version;\n- profile identifier and version;\n- verifier or audience identifier;\n- governed context descriptor;\n- purpose and scope identifiers;\n- challenge or nonce;\n- session identifier;\n- requested predicates;\n- policy and assurance requirements;\n- delegation reference where applicable;\n- expiry boundary and accepted clock rules;\n- status or registry snapshot requirements;\n- fallback or mediated-proving mode when material;\n- canonical encoding and domain-separation version.\n\nA bare nonce is insufficient.\n\n### 15.3 Negative meaning\n\nPR-FRE does not establish liveness, personhood, identity, authority, or non-coercion. It establishes only that the proved statement is bound to the current transcript under the accepted freshness rules.\n\n### 15.4 Disclosure\n\nTranscript fields can reveal verifier, audience, purpose, requested predicates, risk posture, timing, session patterns, and step-up frequency. These are observable even when the witness remains hidden."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §15 — PR-FRE: freshness and canonical transcript binding",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "061740870d7d8e59",
+            "text": "## 15. PR-FRE: freshness and canonical transcript binding\n\n### 15.1 Statement established\n\nThe proof is bound to a current, verifier-authorised, domain-separated transcript and cannot be replayed or transplanted into a materially different request without detection.\n\n### 15.2 Required transcript fields\n\nThe canonical transcript MUST bind at least:\n\n- protocol identifier and version;\n- profile identifier and version;\n- verifier or audience identifier;\n- governed context descriptor;\n- purpose and scope identifiers;\n- challenge or nonce;\n- session identifier;\n- requested predicates;\n- policy and assurance requirements;\n- delegation reference where applicable;\n- expiry boundary and accepted clock rules;\n- status or registry snapshot requirements;\n- fallback or mediated-proving mode when material;\n- canonical encoding and domain-separation version.\n\nA bare nonce is insufficient.\n\n### 15.3 Negative meaning\n\nPR-FRE does not establish liveness, personhood, identity, authority, or non-coercion. It establishes only that the proved statement is bound to the current transcript under the accepted freshness rules.\n\n### 15.4 Disclosure\n\nTranscript fields can reveal verifier, audience, purpose, requested predicates, risk posture, timing, session patterns, and step-up frequency. These are observable even when the witness remains hidden."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

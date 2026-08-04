@@ -1,0 +1,76 @@
+{
+  "fixture": "PR-SHW/reject/partial-show-rejected/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§15.2",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "the §19 observer list of the show — verifier, issuer, colluding sets, mediated prover, network observer (X3 joint disclosure record)",
+    "forHowLong": "the transcript session; the PR-UNQ member linkage persists for the context epoch and dominates the session-lived members (X3 M3)",
+    "alongsideWhat": "the other member proofs of the same governed bundle, explicitly enumerated — the joint boundary is wider than the union of the members (§2.6; X3 M1 worksheet)"
+  },
+  "inputs": {
+    "show": {
+      "bundleId": "EPP-UNIQ",
+      "bundleVersion": "1",
+      "transcript": {
+        "protocol": "dtg-zkp/0.1",
+        "profile": "epp/1",
+        "verifier": "verifier:service-alpha-gate",
+        "contextDescriptorDigest": "06927aa4f24a377940d9870841997853b8a945e9e452e30ab6d2886896990fd2",
+        "purpose": "purpose:account-registration",
+        "scope": "scope:service-alpha",
+        "challenge": "nonce:fixture-shw-a",
+        "sessionId": "session:fixture-shw-a",
+        "requestedPredicates": [
+          "PR-LIV",
+          "PR-ISS",
+          "PR-HLD",
+          "PR-FRE",
+          "PR-PER",
+          "PR-UNQ"
+        ],
+        "policyRequirements": "assurance>=L2",
+        "expiry": 1800000000,
+        "snapshotRequirements": "root-age<=24h",
+        "encodingVersion": "dtg-zkp/canonical/v0"
+      },
+      "transcriptDigest": "922e0a863b278ea050aa07b1e4ef07760ce68a44ad108a07983c41b7a173f4ca",
+      "members": [
+        {
+          "predicate": "PR-LIV",
+          "transcriptDigest": "922e0a863b278ea050aa07b1e4ef07760ce68a44ad108a07983c41b7a173f4ca",
+          "commitment": "c7336cd7af62e8ebff032121f9daa50f5fb75ee80a0b7d5417ba874d2798cd7f"
+        },
+        {
+          "predicate": "PR-HLD",
+          "transcriptDigest": "922e0a863b278ea050aa07b1e4ef07760ce68a44ad108a07983c41b7a173f4ca",
+          "commitment": "5e1607f07530d258985a4db5936717235f7a7c45f7b3d2c08f36ef352b226db5"
+        },
+        {
+          "predicate": "PR-FRE",
+          "transcriptDigest": "922e0a863b278ea050aa07b1e4ef07760ce68a44ad108a07983c41b7a173f4ca",
+          "commitment": "32313e4aa9954ebdaaaec8cad456457fd9ef44a8fea3e50d9011e0dff7e63ee0"
+        },
+        {
+          "predicate": "PR-PER",
+          "transcriptDigest": "922e0a863b278ea050aa07b1e4ef07760ce68a44ad108a07983c41b7a173f4ca",
+          "commitment": "bb487b8d98e57ba8102c42539de1b686a9a630d072431f43574fb73d951111a1"
+        },
+        {
+          "predicate": "PR-UNQ",
+          "transcriptDigest": "922e0a863b278ea050aa07b1e4ef07760ce68a44ad108a07983c41b7a173f4ca",
+          "commitment": "358e46a981aeab076f9ea802e72692cb5e0b3910eac8a7b73e48acb0c1dc0f34"
+        }
+      ]
+    },
+    "now": 1752750000
+  },
+  "expect": {
+    "outcome": "reject",
+    "reason": "partial-show-rejected"
+  }
+}

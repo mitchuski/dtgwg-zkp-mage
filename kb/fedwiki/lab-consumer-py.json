@@ -1,0 +1,86 @@
+{
+  "title": "Lab — consumer-py",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "9eb3d25a869e973a",
+      "text": "# consumer-py — the second-language consumer (X1 milestone M5)\n\nPython 3, stdlib only (`hashlib`, `json`, `re`, `pathlib`) — the fixtures lab's\nzero-dep rule, in a second language. Run from this directory:\n\n```\npython consume.py   # re-run the frozen suite     -> vectors: 39/39 pass\npython test.py      # the P1–P6 property suite    -> consumer-py: 6/6 pass\n```"
+    },
+    {
+      "type": "markdown",
+      "id": "b09a6a51c9e5dd4e",
+      "text": "## What this proves\n\nTwo implementations — `../fixtures/consume.mjs` (JavaScript) and this\n`consume.py` (Python) — share **no code**. They share only the data: the 39\nvectors under `../fixtures/vectors/`, the manifest, and the reason-register\nvocabulary. Both consumers load the same vectors, re-derive every digest,\nre-run the constructions, and reach the **same outcome and the same reason\ncode, byte for byte**, on every vector (P1), including the same per-family\ncounts (PR-CTX 2, PR-EPO 3, PR-FLB 2, PR-HLD 1, PR-LIV 5, PR-PER 1, PR-SHW 8,\nPR-TGF 7, PR-UNQ 10 = 39).\n\nThat is the X1 interop claim demonstrated, and §26's requirement instantiated:\n*independent implementations instantiate the decisions consistently*. The\nfixtures — not the JavaScript — carry the decisions. X1's M5 milestone\n(\"a second implementation in another language would rewrite exactly this file\nand nothing else\" — consume.mjs header) is discharged by this directory.\n\nSuite size note: the vector count is **39** (9 families), exactly as\n`manifest.json` pins (`vectorCount: 39`); the 40th `.json` file in the vectors\ntree is the manifest itself."
+    },
+    {
+      "type": "markdown",
+      "id": "24173dc131ec26a1",
+      "text": "## Canonical-JSON byte-compatibility — what actually mattered\n\nP3 is the critical property: all **29 embedded digests** (descriptor digests\nbound into transcripts, transcript digests, the show transcript digest, the\nsix member commitments of the accept show, and the two `card:<digest[:12]>`\nversions in the PR-CTX migration record) re-derive byte-identically from the\nPython canonical encoding. What had to match the JS `canonicalize()`:\n\n- **Separators**: exactly `{\"k\":v,\"k2\":v2}` and `[a,b]` — no spaces anywhere.\n  (Python's `json.dumps` default of `', '` / `': '` would break every digest;\n  the encoder here builds the string by hand like the JS does.)\n- **Key sorting**: JS `Object.keys(...).sort()` sorts UTF-16 code units;\n  Python `sorted()` sorts code points. Identical for ASCII keys — and every\n  key in the suite is ASCII. A key containing astral-plane characters would\n  diverge; recorded here as the known boundary of the port.\n- **String escaping**: `JSON.stringify` escapes `\"` and `\\`, uses the short\n  escapes `\\b \\t \\n \\f \\r` for those controls, `\\u00XX` for other chars\n  < 0x20, and leaves non-ASCII **raw**. `json.dumps(s, ensure_ascii=False)`\n  produces exactly that. (With the default `ensure_ascii=True`, any non-ASCII\n  byte would diverge — the suite's canonicalized objects happen to be pure\n  ASCII, but the port does not rely on that.)\n- **Numbers**: all numbers in the canonicalized data are integers (epoch\n  seconds); JS prints them without a decimal point and so does Python for\n  `int`. The port also renders integral **floats** the JS way (`1` not `1.0`)\n  and rejects non-finite numbers, but no vector exercises a float — untested\n  path, flagged honestly.\n- **`undefined` filtering**: the JS drops `undefined`-valued keys. JSON-loaded\n  Python dicts cannot contain such a value, so no code was needed — noted so a\n  future non-JSON caller does not assume the filter exists.\n- **Hash discipline**: runtime 01's `H` = SHA-256 over parts, each prefixed\n  with its 4-byte big-endian byte length (so `H(a,b) != H(a||b)`), parts UTF-8\n  encoded; domain-tag strings copied byte-exact from the sources."
+    },
+    {
+      "type": "markdown",
+      "id": "b1229811710ce25d",
+      "text": "## The register port (`reasons.py`)\n\nThe register is treated as **data**: the 66 exact codes and 29 family prefixes\nare parsed out of `../fixtures/reasons.mjs` as text (never imported or\nexecuted), and the vectors' own `expect.reason` codes (22 distinct across the\nsuite) are collected alongside. Only the *mechanism* is re-implemented: exact\nstratum + family stratum (`isKnownReason` = exact match, or family prefix +\nnon-empty parameter). P2 confirms every non-accept reason in the suite is\nknown to the port. Parsed counts (66 + 29 = 95, version `v2`) agree with the\nJS suite's own F10 result."
+    },
+    {
+      "type": "markdown",
+      "id": "4201aba7f7317542",
+      "text": "## What was NOT ported (nothing any vector exercises)\n\n- **rt01**: nothing omitted — enrol / nullifier / ContextRegistry all used.\n- **rt07**: `encounter()`, `Mage.propose()`, `dreamCycleTurn()`,\n  `TrustGraph.neighbours/connected` — vectors carry the candidate and the\n  shared compression pre-computed; only `joinCommunity`, `rdid`,\n  `Swordsman.prove`, `roster`, and edge add/has are needed.\n- **show-composition**: `makeShow` (and so `bundle-profile-mismatch`),\n  `matchBundle`, `completionEvidence` (`taskcontext-not-outcome-evidence`),\n  `jointDisclosureRecord`, `STATEMENTS`/`OBSERVERS` content — `verifyShow`\n  never consults them for a verdict. The `transcript-invalid` branch of\n  `verifyShow` IS ported (it is reachable), but no vector triggers it.\n- **context-card**: the `provingMode` q5 branch and custom-justification\n  merging are ported but unexercised; `checkLegibility`'s failure families\n  (`unrendered-field:` etc.) can fire but no vector makes them fire.\n- **canonical**: transcripts with `delegationRef` (no PR-DEL vector).\n- **Register-wide**: the 29 family-prefixed codes and the v2 instrument codes\n  (quiet-presentation, rotation, erosion, mediator, multi-issuer, guardian)\n  exist only as *vocabulary* here — no vector exercises those constructions,\n  so no Python port of those six labs was attempted (that is the JS suite's\n  F10 live-trigger job, out of M5's scope)."
+    },
+    {
+      "type": "markdown",
+      "id": "94dee4b8b5a9dfef",
+      "text": "## Divergences found between the JS and the data\n\n**None.** Every embedded digest re-derives (P3: 29/29), every outcome and\nreason matches (P1: 39/39), the manifest agrees with the tree, and the lint\nregex ports reproduce all 7 prohibited hits with the frozen reason codes while\npassing all 3 narrow-language samples (P5) — including the `unless`-guarded\ncollusion pattern. The JS suite (`node ../fixtures/test.mjs`) still passes\n13/13 untouched. One near-miss worth recording: JS `\\s` and Python `\\s` differ\nslightly at the Unicode margins (JS includes `\\v` and some exotic spaces in\nboth engines — they agree on everything the lint texts contain), so the lint\nport's equivalence is demonstrated on the frozen samples, not proven in\ngeneral."
+    },
+    {
+      "type": "markdown",
+      "id": "f7bf27f298b2111d",
+      "text": "## Pointer\n\nX1 exploration doc:\n[[X1 — Conformance Fixtures]] —\nmilestone M5, \"second-language consumer\": this directory discharges it.\nCounterpart consumer:\n`../fixtures/consume.mjs`; vector producer: `../fixtures/extract.mjs`;\nregister: `../fixtures/reasons.mjs` (v2); suite: `../fixtures/test.mjs`\n(13/13, unchanged by this build)."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Lab — consumer-py",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "9eb3d25a869e973a",
+            "text": "# consumer-py — the second-language consumer (X1 milestone M5)\n\nPython 3, stdlib only (`hashlib`, `json`, `re`, `pathlib`) — the fixtures lab's\nzero-dep rule, in a second language. Run from this directory:\n\n```\npython consume.py   # re-run the frozen suite     -> vectors: 39/39 pass\npython test.py      # the P1–P6 property suite    -> consumer-py: 6/6 pass\n```"
+          },
+          {
+            "type": "markdown",
+            "id": "b09a6a51c9e5dd4e",
+            "text": "## What this proves\n\nTwo implementations — `../fixtures/consume.mjs` (JavaScript) and this\n`consume.py` (Python) — share **no code**. They share only the data: the 39\nvectors under `../fixtures/vectors/`, the manifest, and the reason-register\nvocabulary. Both consumers load the same vectors, re-derive every digest,\nre-run the constructions, and reach the **same outcome and the same reason\ncode, byte for byte**, on every vector (P1), including the same per-family\ncounts (PR-CTX 2, PR-EPO 3, PR-FLB 2, PR-HLD 1, PR-LIV 5, PR-PER 1, PR-SHW 8,\nPR-TGF 7, PR-UNQ 10 = 39).\n\nThat is the X1 interop claim demonstrated, and §26's requirement instantiated:\n*independent implementations instantiate the decisions consistently*. The\nfixtures — not the JavaScript — carry the decisions. X1's M5 milestone\n(\"a second implementation in another language would rewrite exactly this file\nand nothing else\" — consume.mjs header) is discharged by this directory.\n\nSuite size note: the vector count is **39** (9 families), exactly as\n`manifest.json` pins (`vectorCount: 39`); the 40th `.json` file in the vectors\ntree is the manifest itself."
+          },
+          {
+            "type": "markdown",
+            "id": "24173dc131ec26a1",
+            "text": "## Canonical-JSON byte-compatibility — what actually mattered\n\nP3 is the critical property: all **29 embedded digests** (descriptor digests\nbound into transcripts, transcript digests, the show transcript digest, the\nsix member commitments of the accept show, and the two `card:<digest[:12]>`\nversions in the PR-CTX migration record) re-derive byte-identically from the\nPython canonical encoding. What had to match the JS `canonicalize()`:\n\n- **Separators**: exactly `{\"k\":v,\"k2\":v2}` and `[a,b]` — no spaces anywhere.\n  (Python's `json.dumps` default of `', '` / `': '` would break every digest;\n  the encoder here builds the string by hand like the JS does.)\n- **Key sorting**: JS `Object.keys(...).sort()` sorts UTF-16 code units;\n  Python `sorted()` sorts code points. Identical for ASCII keys — and every\n  key in the suite is ASCII. A key containing astral-plane characters would\n  diverge; recorded here as the known boundary of the port.\n- **String escaping**: `JSON.stringify` escapes `\"` and `\\`, uses the short\n  escapes `\\b \\t \\n \\f \\r` for those controls, `\\u00XX` for other chars\n  < 0x20, and leaves non-ASCII **raw**. `json.dumps(s, ensure_ascii=False)`\n  produces exactly that. (With the default `ensure_ascii=True`, any non-ASCII\n  byte would diverge — the suite's canonicalized objects happen to be pure\n  ASCII, but the port does not rely on that.)\n- **Numbers**: all numbers in the canonicalized data are integers (epoch\n  seconds); JS prints them without a decimal point and so does Python for\n  `int`. The port also renders integral **floats** the JS way (`1` not `1.0`)\n  and rejects non-finite numbers, but no vector exercises a float — untested\n  path, flagged honestly.\n- **`undefined` filtering**: the JS drops `undefined`-valued keys. JSON-loaded\n  Python dicts cannot contain such a value, so no code was needed — noted so a\n  future non-JSON caller does not assume the filter exists.\n- **Hash discipline**: runtime 01's `H` = SHA-256 over parts, each prefixed\n  with its 4-byte big-endian byte length (so `H(a,b) != H(a||b)`), parts UTF-8\n  encoded; domain-tag strings copied byte-exact from the sources."
+          },
+          {
+            "type": "markdown",
+            "id": "b1229811710ce25d",
+            "text": "## The register port (`reasons.py`)\n\nThe register is treated as **data**: the 66 exact codes and 29 family prefixes\nare parsed out of `../fixtures/reasons.mjs` as text (never imported or\nexecuted), and the vectors' own `expect.reason` codes (22 distinct across the\nsuite) are collected alongside. Only the *mechanism* is re-implemented: exact\nstratum + family stratum (`isKnownReason` = exact match, or family prefix +\nnon-empty parameter). P2 confirms every non-accept reason in the suite is\nknown to the port. Parsed counts (66 + 29 = 95, version `v2`) agree with the\nJS suite's own F10 result."
+          },
+          {
+            "type": "markdown",
+            "id": "4201aba7f7317542",
+            "text": "## What was NOT ported (nothing any vector exercises)\n\n- **rt01**: nothing omitted — enrol / nullifier / ContextRegistry all used.\n- **rt07**: `encounter()`, `Mage.propose()`, `dreamCycleTurn()`,\n  `TrustGraph.neighbours/connected` — vectors carry the candidate and the\n  shared compression pre-computed; only `joinCommunity`, `rdid`,\n  `Swordsman.prove`, `roster`, and edge add/has are needed.\n- **show-composition**: `makeShow` (and so `bundle-profile-mismatch`),\n  `matchBundle`, `completionEvidence` (`taskcontext-not-outcome-evidence`),\n  `jointDisclosureRecord`, `STATEMENTS`/`OBSERVERS` content — `verifyShow`\n  never consults them for a verdict. The `transcript-invalid` branch of\n  `verifyShow` IS ported (it is reachable), but no vector triggers it.\n- **context-card**: the `provingMode` q5 branch and custom-justification\n  merging are ported but unexercised; `checkLegibility`'s failure families\n  (`unrendered-field:` etc.) can fire but no vector makes them fire.\n- **canonical**: transcripts with `delegationRef` (no PR-DEL vector).\n- **Register-wide**: the 29 family-prefixed codes and the v2 instrument codes\n  (quiet-presentation, rotation, erosion, mediator, multi-issuer, guardian)\n  exist only as *vocabulary* here — no vector exercises those constructions,\n  so no Python port of those six labs was attempted (that is the JS suite's\n  F10 live-trigger job, out of M5's scope)."
+          },
+          {
+            "type": "markdown",
+            "id": "94dee4b8b5a9dfef",
+            "text": "## Divergences found between the JS and the data\n\n**None.** Every embedded digest re-derives (P3: 29/29), every outcome and\nreason matches (P1: 39/39), the manifest agrees with the tree, and the lint\nregex ports reproduce all 7 prohibited hits with the frozen reason codes while\npassing all 3 narrow-language samples (P5) — including the `unless`-guarded\ncollusion pattern. The JS suite (`node ../fixtures/test.mjs`) still passes\n13/13 untouched. One near-miss worth recording: JS `\\s` and Python `\\s` differ\nslightly at the Unicode margins (JS includes `\\v` and some exotic spaces in\nboth engines — they agree on everything the lint texts contain), so the lint\nport's equivalence is demonstrated on the frozen samples, not proven in\ngeneral."
+          },
+          {
+            "type": "markdown",
+            "id": "f7bf27f298b2111d",
+            "text": "## Pointer\n\nX1 exploration doc:\n[[X1 — Conformance Fixtures]] —\nmilestone M5, \"second-language consumer\": this directory discharges it.\nCounterpart consumer:\n`../fixtures/consume.mjs`; vector producer: `../fixtures/extract.mjs`;\nregister: `../fixtures/reasons.mjs` (v2); suite: `../fixtures/test.mjs`\n(13/13, unchanged by this build)."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

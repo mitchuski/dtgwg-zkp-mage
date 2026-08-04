@@ -1,0 +1,26 @@
+{
+  "title": "Decision §30 — Decision record",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "23682aa70390b66e",
+      "text": "## 30. Decision record\n\n| Decision | Proposed status | Consequence |\n|---|---|---|\n| Proof establishes predicates over an attestation, not correctness of the underlying determination | Accept | Assurance accountability remains with issuer and governance framework |\n| Context is a governed linkability domain | Accept | Context needs authority, purpose, epoch, human meaning, and change control |\n| Context-dependent unlinkability replaces full unlinkability | Accept | Extended profile must declare trade position and collusion model |\n| Minimum Liveness and Extended Personhood are structurally separate | Accept | Minimum profile can ship without population deduplication |\n| Assurance and disclosure boundaries are paired | Accept | Every predicate has reliance and leakage records |\n| Attestation schema sets both boundaries | Accept | Schema design precedes construction lock-in |\n| Claims require against whom, for how long, alongside what | Accept | Privacy and assurance claims become testable |\n| Nullifier means scoped reuse detection, not unique human | Accept | Verifier outputs and documentation must use narrow language |\n| Holder control is not agent authority | Accept | Delegation remains separate structured evidence |\n| Human legibility is a conformance property | Accept | Context definition requires Human Experience review |\n| Mediated proving requires a separate profile | Accept | No silent privacy or assurance downgrade |\n| Specific cryptographic constructions | Deferred | Selected only after boundary ratification and benchmarking |"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §30 — Decision record",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "23682aa70390b66e",
+            "text": "## 30. Decision record\n\n| Decision | Proposed status | Consequence |\n|---|---|---|\n| Proof establishes predicates over an attestation, not correctness of the underlying determination | Accept | Assurance accountability remains with issuer and governance framework |\n| Context is a governed linkability domain | Accept | Context needs authority, purpose, epoch, human meaning, and change control |\n| Context-dependent unlinkability replaces full unlinkability | Accept | Extended profile must declare trade position and collusion model |\n| Minimum Liveness and Extended Personhood are structurally separate | Accept | Minimum profile can ship without population deduplication |\n| Assurance and disclosure boundaries are paired | Accept | Every predicate has reliance and leakage records |\n| Attestation schema sets both boundaries | Accept | Schema design precedes construction lock-in |\n| Claims require against whom, for how long, alongside what | Accept | Privacy and assurance claims become testable |\n| Nullifier means scoped reuse detection, not unique human | Accept | Verifier outputs and documentation must use narrow language |\n| Holder control is not agent authority | Accept | Delegation remains separate structured evidence |\n| Human legibility is a conformance property | Accept | Context definition requires Human Experience review |\n| Mediated proving requires a separate profile | Accept | No silent privacy or assurance downgrade |\n| Specific cryptographic constructions | Deferred | Selected only after boundary ratification and benchmarking |"
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

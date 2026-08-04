@@ -1,0 +1,66 @@
+{
+  "title": "Workflow — Workbench and Research Root",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "e4ba85b67d99b4f6",
+      "text": "# Workflow — how the two DTG directories work together\n\n*2026-07-17. The two roots are related, not separated: one is the workbench for direct working-group\nwork, the other is the research root that draws from it and feeds it. This doc is the sorting.*"
+    },
+    {
+      "type": "markdown",
+      "id": "47cf02d430180f25",
+      "text": "## The two roles\n\n**`~/dtgwg-zkp-tf-mage` — THE WORKBENCH (Mitch's direct ToIP WG work).**\nThe upstream clone of `trustoverip/dtgwg-zkp-tf`, maintained by Mitch as co-chair. Everything in it is\nTF-deliverable-shaped:\n\n- the **tracked tree** carries only changes Mitch intends to PR (currently: the 2-line README edit);\n- the **`runtimes/` lab** (git-excluded) is the evidence bench — reference implementations + property\n  tests that back TF positions with runnable behaviour (rt 01 9/9, rt 07 11/11), plus the TF-facing\n  registers (CRED-SPEC-COHERENCE, CRED-SPEC-OPPORTUNITIES, STRAWMAN-COHERENCE-EDITS E1–E7);\n- its **exit is upstream**: PR / issue to ToIP, by Mitch, never automatic.\n\n**`~/dtgwg-cred-spec-main_mage` — THE RESEARCH ROOT (exploration of the ideas).**\nNo upstream discipline; iterate freely. It holds the vendored cred-spec (untouched, others' work), the\nintegration map, the decision-document working draft, and `explorations/` — the ideas built out across\nthe board. It **draws from** the workbench (cites the runtimes, the coherence map, the register) and\n**feeds** two directions: back into the workbench when an idea matures into TF work, and outward into\nthe agentprivacy corpus."
+    },
+    {
+      "type": "markdown",
+      "id": "767f356da031c1f5",
+      "text": "## The loop\n\n```\n                    ToIP upstream (dtgwg-zkp-tf · dtgwg-cred-spec)\n                         ▲                        │\n                 (3) PR/issue — Mitch only        │ new spec material\n                         │                        ▼\n              ┌──────────┴───────────┐   vendored into\n              │  dtgwg-zkp-tf-mage   │   the research root\n              │  WORKBENCH           │\n              │  direct WG work      │\n              └──────────┬───────────┘\n                 ▲       │\n     (2) promote │       │ (1) draw from\n                 │       ▼\n              ┌──────────┴───────────────┐\n              │ dtgwg-cred-spec-main_mage │\n              │ RESEARCH ROOT             │\n              │ explorations of the ideas │\n              └──────────┬───────────────┘\n                         │ (4) integrate\n                         ▼\n        agentprivacy corpus (master · spellweb · docs · guide)\n```\n\n**(1) Draw from.** Explorations cite the workbench freely — runtimes, coherence map, E-register. The\nworkbench is the source of *evidence*; the research root is where its meaning is stretched.\n\n**(2) Promote.** An exploration graduates to the workbench when it stops being an idea and becomes TF\nwork — concretely, when it needs one of the workbench's two lanes:\n- **needs runnable evidence** → build the runtime / extend property tests in `runtimes/` (the design doc\n  stays in `explorations/` as the source; the lab gets the code and a NOTES pointer back);\n- **needs TF review** → the document moves into the workbench as a PR-shaped tracked change at its\n  upstream path, and the research-root copy becomes frozen lineage (or a pointer).\n\n**(3) Upstream.** Only from the workbench, only by Mitch, only via PR/issue after TF discussion. The\nresearch root never touches upstream directly — the workbench is the airlock.\n\n**(4) Integrate.** Explorations also project outward into the corpus via [[Integration Map]]\n(master /model, skills, spellweb KG, docs canon via the pipeline, guide federation). That lane rides\nthe existing display/re-sync trains and Mitch's G-M gate — independent of the upstream lane."
+    },
+    {
+      "type": "markdown",
+      "id": "e2b174a132be3af9",
+      "text": "## Placement rules (what lives where)\n\n| Artefact class | Home | Why |\n|---|---|---|\n| Reference implementations, property tests | workbench `runtimes/` | evidence bench; future conformance fixtures |\n| Predicate↔anchor registers, E1–E7 candidate edits | workbench `runtimes/` | TF-facing, PR-adjacent |\n| PR-shaped spec-text changes | workbench tracked tree | the only thing that leaves the machine |\n| Vendored upstream specs | research root (`dtgwg-cred-spec-main/`) | others' work, read-only |\n| Exploration/design docs (O-items, VWC seat, …) | research root `explorations/` | free iteration |\n| TF deliverable drafts **while being written** | research root | drafting is exploration |\n| TF deliverable drafts **once review is requested** | promote → workbench (then upstream path) | it has become direct WG work |\n| Corpus integration maps / status | research root | the outward lane's ledger |"
+    },
+    {
+      "type": "markdown",
+      "id": "ada6e69ce5eef216",
+      "text": "## Current dispositions under these rules\n\n- **[[Decision — Overview]]** — stays here while it iterates (v0.1.0-draft). Its own\n  §31 names its upstream home (`docs/implementation-guide/boundaries/…` in the TF repo); when Mitch calls\n  it review-ready, it promotes to the workbench as a tracked, PR-shaped addition at that path — the first\n  full pass through lane (2)→(3).\n- **`explorations/`** — home is correct. Each doc's \"build plan\" M-items that create code (O2 M2/M3,\n  VWC M1/M2, O3 M3, O7 M3) execute in the workbench lab per lane (2); the doc itself stays here.\n- **CRED-SPEC-COHERENCE / OPPORTUNITIES / STRAWMAN-COHERENCE-EDITS** — stay in the workbench lab: they\n  are TF work product (the register keeps a pointer here; the explorations cite them — lane (1) both ways).\n- **Versioning:** the research root is fast-and-loose (no git today; give it its own local git later if\n  the lineage starts mattering). The workbench's tracked tree stays clean enough that `git status` always\n  answers \"what am I about to propose to the TF?\""
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Workflow — Workbench and Research Root",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "e4ba85b67d99b4f6",
+            "text": "# Workflow — how the two DTG directories work together\n\n*2026-07-17. The two roots are related, not separated: one is the workbench for direct working-group\nwork, the other is the research root that draws from it and feeds it. This doc is the sorting.*"
+          },
+          {
+            "type": "markdown",
+            "id": "47cf02d430180f25",
+            "text": "## The two roles\n\n**`~/dtgwg-zkp-tf-mage` — THE WORKBENCH (Mitch's direct ToIP WG work).**\nThe upstream clone of `trustoverip/dtgwg-zkp-tf`, maintained by Mitch as co-chair. Everything in it is\nTF-deliverable-shaped:\n\n- the **tracked tree** carries only changes Mitch intends to PR (currently: the 2-line README edit);\n- the **`runtimes/` lab** (git-excluded) is the evidence bench — reference implementations + property\n  tests that back TF positions with runnable behaviour (rt 01 9/9, rt 07 11/11), plus the TF-facing\n  registers (CRED-SPEC-COHERENCE, CRED-SPEC-OPPORTUNITIES, STRAWMAN-COHERENCE-EDITS E1–E7);\n- its **exit is upstream**: PR / issue to ToIP, by Mitch, never automatic.\n\n**`~/dtgwg-cred-spec-main_mage` — THE RESEARCH ROOT (exploration of the ideas).**\nNo upstream discipline; iterate freely. It holds the vendored cred-spec (untouched, others' work), the\nintegration map, the decision-document working draft, and `explorations/` — the ideas built out across\nthe board. It **draws from** the workbench (cites the runtimes, the coherence map, the register) and\n**feeds** two directions: back into the workbench when an idea matures into TF work, and outward into\nthe agentprivacy corpus."
+          },
+          {
+            "type": "markdown",
+            "id": "767f356da031c1f5",
+            "text": "## The loop\n\n```\n                    ToIP upstream (dtgwg-zkp-tf · dtgwg-cred-spec)\n                         ▲                        │\n                 (3) PR/issue — Mitch only        │ new spec material\n                         │                        ▼\n              ┌──────────┴───────────┐   vendored into\n              │  dtgwg-zkp-tf-mage   │   the research root\n              │  WORKBENCH           │\n              │  direct WG work      │\n              └──────────┬───────────┘\n                 ▲       │\n     (2) promote │       │ (1) draw from\n                 │       ▼\n              ┌──────────┴───────────────┐\n              │ dtgwg-cred-spec-main_mage │\n              │ RESEARCH ROOT             │\n              │ explorations of the ideas │\n              └──────────┬───────────────┘\n                         │ (4) integrate\n                         ▼\n        agentprivacy corpus (master · spellweb · docs · guide)\n```\n\n**(1) Draw from.** Explorations cite the workbench freely — runtimes, coherence map, E-register. The\nworkbench is the source of *evidence*; the research root is where its meaning is stretched.\n\n**(2) Promote.** An exploration graduates to the workbench when it stops being an idea and becomes TF\nwork — concretely, when it needs one of the workbench's two lanes:\n- **needs runnable evidence** → build the runtime / extend property tests in `runtimes/` (the design doc\n  stays in `explorations/` as the source; the lab gets the code and a NOTES pointer back);\n- **needs TF review** → the document moves into the workbench as a PR-shaped tracked change at its\n  upstream path, and the research-root copy becomes frozen lineage (or a pointer).\n\n**(3) Upstream.** Only from the workbench, only by Mitch, only via PR/issue after TF discussion. The\nresearch root never touches upstream directly — the workbench is the airlock.\n\n**(4) Integrate.** Explorations also project outward into the corpus via [[Integration Map]]\n(master /model, skills, spellweb KG, docs canon via the pipeline, guide federation). That lane rides\nthe existing display/re-sync trains and Mitch's G-M gate — independent of the upstream lane."
+          },
+          {
+            "type": "markdown",
+            "id": "e2b174a132be3af9",
+            "text": "## Placement rules (what lives where)\n\n| Artefact class | Home | Why |\n|---|---|---|\n| Reference implementations, property tests | workbench `runtimes/` | evidence bench; future conformance fixtures |\n| Predicate↔anchor registers, E1–E7 candidate edits | workbench `runtimes/` | TF-facing, PR-adjacent |\n| PR-shaped spec-text changes | workbench tracked tree | the only thing that leaves the machine |\n| Vendored upstream specs | research root (`dtgwg-cred-spec-main/`) | others' work, read-only |\n| Exploration/design docs (O-items, VWC seat, …) | research root `explorations/` | free iteration |\n| TF deliverable drafts **while being written** | research root | drafting is exploration |\n| TF deliverable drafts **once review is requested** | promote → workbench (then upstream path) | it has become direct WG work |\n| Corpus integration maps / status | research root | the outward lane's ledger |"
+          },
+          {
+            "type": "markdown",
+            "id": "ada6e69ce5eef216",
+            "text": "## Current dispositions under these rules\n\n- **[[Decision — Overview]]** — stays here while it iterates (v0.1.0-draft). Its own\n  §31 names its upstream home (`docs/implementation-guide/boundaries/…` in the TF repo); when Mitch calls\n  it review-ready, it promotes to the workbench as a tracked, PR-shaped addition at that path — the first\n  full pass through lane (2)→(3).\n- **`explorations/`** — home is correct. Each doc's \"build plan\" M-items that create code (O2 M2/M3,\n  VWC M1/M2, O3 M3, O7 M3) execute in the workbench lab per lane (2); the doc itself stays here.\n- **CRED-SPEC-COHERENCE / OPPORTUNITIES / STRAWMAN-COHERENCE-EDITS** — stay in the workbench lab: they\n  are TF work product (the register keeps a pointer here; the explorations cite them — lane (1) both ways).\n- **Versioning:** the research root is fast-and-loose (no git today; give it its own local git later if\n  the lineage starts mattering). The workbench's tracked tree stays clean enough that `git status` always\n  answers \"what am I about to propose to the TF?\""
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

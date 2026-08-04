@@ -1,0 +1,65 @@
+{
+  "formatVersion": "x1-fixtures/v0",
+  "decisionDoc": "0.1.0-draft",
+  "reasonRegister": "v2",
+  "vectorCount": 39,
+  "families": {
+    "PR-CTX": [
+      "PR-CTX/accept-context-expansion-with-migration-001.json",
+      "PR-CTX/reject-context-expansion-without-version-001.json"
+    ],
+    "PR-EPO": [
+      "PR-EPO/accept-fresh-snapshot-001.json",
+      "PR-EPO/reject-epoch-snapshot-inconsistent-001.json",
+      "PR-EPO/reject-stale-registry-snapshot-001.json"
+    ],
+    "PR-FLB": [
+      "PR-FLB/accept-declared-mediated-proving-001.json",
+      "PR-FLB/reject-silent-fallback-001.json"
+    ],
+    "PR-HLD": [
+      "PR-HLD/lint-key-control-as-authority-001.json"
+    ],
+    "PR-LIV": [
+      "PR-LIV/accept-valid-attestation-001.json",
+      "PR-LIV/lint-overclaim-verifier-output-001.json",
+      "PR-LIV/reject-expired-or-revoked-attestation-001.json",
+      "PR-LIV/reject-expired-or-revoked-attestation-002.json",
+      "PR-LIV/reject-expired-or-revoked-attestation-003.json"
+    ],
+    "PR-PER": [
+      "PR-PER/lint-overclaim-verifier-output-001.json"
+    ],
+    "PR-SHW": [
+      "PR-SHW/accept-complete-show-001.json",
+      "PR-SHW/lint-disclosure-ignores-observables-001.json",
+      "PR-SHW/lint-disclosure-ignores-observables-002.json",
+      "PR-SHW/lint-disclosure-narrow-language-pass-001.json",
+      "PR-SHW/reject-bundle-outside-registry-001.json",
+      "PR-SHW/reject-member-transcript-mismatch-001.json",
+      "PR-SHW/reject-partial-show-rejected-001.json",
+      "PR-SHW/reject-stale-transcript-001.json"
+    ],
+    "PR-TGF": [
+      "PR-TGF/accept-mutual-consent-edge-001.json",
+      "PR-TGF/reject-duplicate-edge-001.json",
+      "PR-TGF/reject-endpoint-not-personhood-anchored-001.json",
+      "PR-TGF/reject-r-did-mismatch-001.json",
+      "PR-TGF/reject-self-edge-forbidden-001.json",
+      "PR-TGF/reject-unilateral-no-mutual-consent-001.json",
+      "PR-TGF/reject-vrc-commitment-forged-001.json"
+    ],
+    "PR-UNQ": [
+      "PR-UNQ/accept-cross-context-unlinkable-001.json",
+      "PR-UNQ/accept-first-enrolment-001.json",
+      "PR-UNQ/accept-justified-optional-field-001.json",
+      "PR-UNQ/lint-collusion-narrow-language-pass-001.json",
+      "PR-UNQ/lint-narrow-language-pass-001.json",
+      "PR-UNQ/lint-overclaim-verifier-output-001.json",
+      "PR-UNQ/lint-undocumented-collusion-claim-001.json",
+      "PR-UNQ/reject-duplicate-human-in-context-001.json",
+      "PR-UNQ/reject-nullifier-domain-reuse-001.json",
+      "PR-UNQ/reject-unjustified-stable-correlator-001.json"
+    ]
+  }
+}

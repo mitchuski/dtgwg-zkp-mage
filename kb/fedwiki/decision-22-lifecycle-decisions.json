@@ -1,0 +1,26 @@
+{
+  "title": "Decision §22 — Lifecycle decisions",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "52aeb80af59d9c31",
+      "text": "## 22. Lifecycle decisions\n\n### 22.1 Separate clocks\n\nThe profile MUST distinguish:\n\n- proof-transcript lifetime;\n- challenge/session lifetime;\n- attestation validity;\n- status freshness;\n- nullifier epoch;\n- enrolment-root cryptoperiod;\n- policy and accreditation validity;\n- log retention;\n- proof-system security horizon;\n- biometric assurance horizon.\n\n### 22.2 Unbounded values prohibited\n\nA nullifier without a bounded epoch and an enrolment root without a cryptoperiod are non-conformant unless the profile provides an explicit, reviewed exception. “Permanent” or “unbounded” MUST NOT be accepted as an implicit default.\n\n### 22.3 Migration\n\nAlgorithm agility MUST be supported by a concrete migration mechanism, including profile identifiers, version negotiation, overlap periods, deprecation, downgrade protection, fixture updates, and treatment of long-lived enrolment artefacts. Merely stating that algorithms are replaceable is insufficient."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §22 — Lifecycle decisions",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "52aeb80af59d9c31",
+            "text": "## 22. Lifecycle decisions\n\n### 22.1 Separate clocks\n\nThe profile MUST distinguish:\n\n- proof-transcript lifetime;\n- challenge/session lifetime;\n- attestation validity;\n- status freshness;\n- nullifier epoch;\n- enrolment-root cryptoperiod;\n- policy and accreditation validity;\n- log retention;\n- proof-system security horizon;\n- biometric assurance horizon.\n\n### 22.2 Unbounded values prohibited\n\nA nullifier without a bounded epoch and an enrolment root without a cryptoperiod are non-conformant unless the profile provides an explicit, reviewed exception. “Permanent” or “unbounded” MUST NOT be accepted as an implicit default.\n\n### 22.3 Migration\n\nAlgorithm agility MUST be supported by a concrete migration mechanism, including profile identifiers, version negotiation, overlap periods, deprecation, downgrade protection, fixture updates, and treatment of long-lived enrolment artefacts. Merely stating that algorithms are replaceable is insufficient."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

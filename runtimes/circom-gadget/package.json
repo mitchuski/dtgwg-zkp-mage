@@ -1,0 +1,15 @@
+{
+  "name": "dtg-zkp-circom-gadget",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared circom gadget: Poseidon nullifier + Merkle membership (O2 M3; also the O4 / multi-issuer / guardian-recovery membership leg)",
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "circomlib": "^2.0.5",
+    "circomlibjs": "^0.1.7",
+    "snarkjs": "^0.7.6"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Decision §17 — PR-DEL: delegated authority evidence",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "8d5415abe6d93425",
+      "text": "## 17. PR-DEL: delegated authority evidence\n\n### 17.1 Statement established\n\nWhere separately supported, the evidence establishes that a named agent is authorised by a principal to perform the current action under declared scope, purpose, conditions, duration, and revocation state.\n\n### 17.2 Separation requirement\n\nDelegation evidence MUST remain structurally separate from proof of holder-key control. The ZKP may prove possession of or predicates over delegation evidence and bind it to the transcript, but the semantic authority comes from the delegation instrument and its governance.\n\n### 17.3 Negative meaning\n\nPR-DEL does not establish that the principal is currently present, that the principal would approve every implementation detail, or that the agent is trustworthy outside the delegation."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §17 — PR-DEL: delegated authority evidence",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "8d5415abe6d93425",
+            "text": "## 17. PR-DEL: delegated authority evidence\n\n### 17.1 Statement established\n\nWhere separately supported, the evidence establishes that a named agent is authorised by a principal to perform the current action under declared scope, purpose, conditions, duration, and revocation state.\n\n### 17.2 Separation requirement\n\nDelegation evidence MUST remain structurally separate from proof of holder-key control. The ZKP may prove possession of or predicates over delegation evidence and bind it to the transcript, but the semantic authority comes from the delegation instrument and its governance.\n\n### 17.3 Negative meaning\n\nPR-DEL does not establish that the principal is currently present, that the principal would approve every implementation detail, or that the agent is trustworthy outside the delegation."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

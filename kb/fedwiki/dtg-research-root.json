@@ -1,0 +1,66 @@
+{
+  "title": "DTG Research Root",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "68b352f475a29469",
+      "text": "# dtgwg-cred-spec-main_mage\n\n**THE RESEARCH ROOT** — exploration of the DTG credential/ZKP ideas across the board, and their\nintegration into the agentprivacy system.\n\nRelated, not separate: `~/dtgwg-zkp-tf-mage` is **the workbench** — Mitch's direct work on the ToIP DTG\nZKP working group (co-chair). This root *draws from* the workbench (runtimes, coherence registers) and\n*feeds* it (explorations promote to TF work when they mature); the workbench alone talks to upstream.\nThe full loop — draw from · promote · upstream · integrate — is in [[Workflow — Workbench and Research Root]]."
+    },
+    {
+      "type": "markdown",
+      "id": "f72bbf57dd272c73",
+      "text": "## Attribution\n\n- `dtgwg-cred-spec-main/` — **vendored upstream, others' work**: the ToIP DTG Working Group\n  Credentials Core Specification (`trustoverip/dtgwg-cred-spec`, main branch snapshot,\n  vendored 2026-07-16). Not edited here; spec changes go through the upstream repo / TF process.\n- Everything else in this directory — the **mage method layer**: integration maps, coherence\n  notes, and working documents that read the spec and route it into the agentprivacy system."
+    },
+    {
+      "type": "markdown",
+      "id": "193f8a7718748f6f",
+      "text": "## What the spec defines (one screen)\n\nSix W3C VC types under `DTGCredential`, three functional categories:\n\n| Category | Type | Issuer → Subject | Role |\n| --- | --- | --- | --- |\n| Edge | **VRC** RelationshipCredential | R-DID/M-DID → R-DID/M-DID | peer relationship; 2 VRCs = 1 DTG edge |\n| Edge | **VMC** MembershipCredential | C-DID → M-DID (or C-DID) | community membership; PHC = governance-qualified VMC |\n| Invitation | **VIC** InvitationCredential | C-DID or M-DID (per policy) | authorizes onboarding via VTA/PEP |\n| Annotation | **VPC** PersonaCredential | P-DID → counterparty DID | intentional correlation under holder control |\n| Annotation | **VEC** EndorsementCredential | endorser DID → endorsed DID | community-governed reputation/skill |\n| Annotation | **VWC** WitnessCredential | witness M-DID/VTA DID → observed DID | edge-formation attestation; `taskContext` REQUIRED |\n\nFour official DID roles: **R-DID** (relationship, unique per counterparty), **M-DID** (membership),\n**C-DID** (community), **P-DID** (persona). No W-DID.\n\nTwo ZK constructions (ZKP presentation SHOULD be the default):\n\n1. **Pairwise ZKP** — any two VRC holders; disclose P-DIDs, hide R-DIDs; no community assurance.\n2. **Community-anchored ZKP** — VRC + VMC + same-C-DID proof; carries the community's assurances\n   (personhood, when the VMCs are PHCs) into the relationship proof.\n\nTrust-task boundary: **credential** = true standing alone; **artifact** = only meaningful inside its\nexchange (`threadId`-correlated). `taskContext` binds a credential to its ceremony; verifiers MUST NOT\nread it as completion evidence without the reachable outcome artifact.\n\nDetailed ZK protocols and registry-ZK interaction are **explicitly deferred by this spec** — that is\nthe DTG ZKP Task Force charter (our seat)."
+    },
+    {
+      "type": "markdown",
+      "id": "9b44522d7ca063b9",
+      "text": "## Working documents (mage layer)\n\n- `dtgwg-cred-spec-main/CONTEXT.md` — language crib for the spec's terms (coherence-pass vocabulary,\n  `_Avoid_` list). Travels with the vendored copy so the terms stay next to their source.\n- [[Integration Map]] — where each spec concept lands across the agentprivacy system\n  (master /model, harness runtimes, spellweb KG, docs canon, guide wiki). Status per surface tracked\n  in the doc; the master/skills/spellweb rows executed 2026-07-16/17.\n- [[Decision — Overview]] — **the decision baseline** (v0.1.0-draft, 2026-07-17,\n  first-draft-for-task-force-review): MLP/EPP profile split, PR-* predicate register with paired\n  assurance/disclosure boundaries, context as governed linkability domain, construction-selection gate.\n  Binds everything in `explorations/`.\n- `explorations/` — the expansion ideas built into design docs (O-series + VWC witness seat + the\n  X-series), each aligned to the decision baseline. Start at [[Explorations Index]].\n- [[Briefing 2026-07-18 — ZKP Explorations]] — **DRAFT TF briefing note** (findings + runnable evidence\n  + candidate contributions + open questions), prepared for Mitch's review; he circulates, or not."
+    },
+    {
+      "type": "markdown",
+      "id": "cd2468c41310a990",
+      "text": "## Related local work\n\n- `dtgwg-zkp-tf` clone — ZKP-TF repo: runtimes 01–07 lab (local-only), predicate↔anchor matrix,\n  CRED-SPEC-COHERENCE / OPPORTUNITIES / STRAWMAN-COHERENCE-EDITS docs.\n- `dual-agent-harness` runtime 07 `trust-graph-formation` — models graph formation\n  (collision→edge→propagation), reuses runtime 01 nullifier."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "DTG Research Root",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "68b352f475a29469",
+            "text": "# dtgwg-cred-spec-main_mage\n\n**THE RESEARCH ROOT** — exploration of the DTG credential/ZKP ideas across the board, and their\nintegration into the agentprivacy system.\n\nRelated, not separate: `~/dtgwg-zkp-tf-mage` is **the workbench** — Mitch's direct work on the ToIP DTG\nZKP working group (co-chair). This root *draws from* the workbench (runtimes, coherence registers) and\n*feeds* it (explorations promote to TF work when they mature); the workbench alone talks to upstream.\nThe full loop — draw from · promote · upstream · integrate — is in [[Workflow — Workbench and Research Root]]."
+          },
+          {
+            "type": "markdown",
+            "id": "f72bbf57dd272c73",
+            "text": "## Attribution\n\n- `dtgwg-cred-spec-main/` — **vendored upstream, others' work**: the ToIP DTG Working Group\n  Credentials Core Specification (`trustoverip/dtgwg-cred-spec`, main branch snapshot,\n  vendored 2026-07-16). Not edited here; spec changes go through the upstream repo / TF process.\n- Everything else in this directory — the **mage method layer**: integration maps, coherence\n  notes, and working documents that read the spec and route it into the agentprivacy system."
+          },
+          {
+            "type": "markdown",
+            "id": "193f8a7718748f6f",
+            "text": "## What the spec defines (one screen)\n\nSix W3C VC types under `DTGCredential`, three functional categories:\n\n| Category | Type | Issuer → Subject | Role |\n| --- | --- | --- | --- |\n| Edge | **VRC** RelationshipCredential | R-DID/M-DID → R-DID/M-DID | peer relationship; 2 VRCs = 1 DTG edge |\n| Edge | **VMC** MembershipCredential | C-DID → M-DID (or C-DID) | community membership; PHC = governance-qualified VMC |\n| Invitation | **VIC** InvitationCredential | C-DID or M-DID (per policy) | authorizes onboarding via VTA/PEP |\n| Annotation | **VPC** PersonaCredential | P-DID → counterparty DID | intentional correlation under holder control |\n| Annotation | **VEC** EndorsementCredential | endorser DID → endorsed DID | community-governed reputation/skill |\n| Annotation | **VWC** WitnessCredential | witness M-DID/VTA DID → observed DID | edge-formation attestation; `taskContext` REQUIRED |\n\nFour official DID roles: **R-DID** (relationship, unique per counterparty), **M-DID** (membership),\n**C-DID** (community), **P-DID** (persona). No W-DID.\n\nTwo ZK constructions (ZKP presentation SHOULD be the default):\n\n1. **Pairwise ZKP** — any two VRC holders; disclose P-DIDs, hide R-DIDs; no community assurance.\n2. **Community-anchored ZKP** — VRC + VMC + same-C-DID proof; carries the community's assurances\n   (personhood, when the VMCs are PHCs) into the relationship proof.\n\nTrust-task boundary: **credential** = true standing alone; **artifact** = only meaningful inside its\nexchange (`threadId`-correlated). `taskContext` binds a credential to its ceremony; verifiers MUST NOT\nread it as completion evidence without the reachable outcome artifact.\n\nDetailed ZK protocols and registry-ZK interaction are **explicitly deferred by this spec** — that is\nthe DTG ZKP Task Force charter (our seat)."
+          },
+          {
+            "type": "markdown",
+            "id": "9b44522d7ca063b9",
+            "text": "## Working documents (mage layer)\n\n- `dtgwg-cred-spec-main/CONTEXT.md` — language crib for the spec's terms (coherence-pass vocabulary,\n  `_Avoid_` list). Travels with the vendored copy so the terms stay next to their source.\n- [[Integration Map]] — where each spec concept lands across the agentprivacy system\n  (master /model, harness runtimes, spellweb KG, docs canon, guide wiki). Status per surface tracked\n  in the doc; the master/skills/spellweb rows executed 2026-07-16/17.\n- [[Decision — Overview]] — **the decision baseline** (v0.1.0-draft, 2026-07-17,\n  first-draft-for-task-force-review): MLP/EPP profile split, PR-* predicate register with paired\n  assurance/disclosure boundaries, context as governed linkability domain, construction-selection gate.\n  Binds everything in `explorations/`.\n- `explorations/` — the expansion ideas built into design docs (O-series + VWC witness seat + the\n  X-series), each aligned to the decision baseline. Start at [[Explorations Index]].\n- [[Briefing 2026-07-18 — ZKP Explorations]] — **DRAFT TF briefing note** (findings + runnable evidence\n  + candidate contributions + open questions), prepared for Mitch's review; he circulates, or not."
+          },
+          {
+            "type": "markdown",
+            "id": "cd2468c41310a990",
+            "text": "## Related local work\n\n- `dtgwg-zkp-tf` clone — ZKP-TF repo: runtimes 01–07 lab (local-only), predicate↔anchor matrix,\n  CRED-SPEC-COHERENCE / OPPORTUNITIES / STRAWMAN-COHERENCE-EDITS docs.\n- `dual-agent-harness` runtime 07 `trust-graph-formation` — models graph formation\n  (collision→edge→propagation), reuses runtime 01 nullifier."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

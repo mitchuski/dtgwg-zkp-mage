@@ -1,0 +1,86 @@
+{
+  "title": "O9 — VRC Promise Bundle",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "8451329f1824ed66",
+      "text": "# O9 — VRC as promise bundle: the economic extension\n\n*The spec's VRC is deliberately minimal. Agentprivacy's VRC carries promise-theoretic and economic\nsemantics. Propose the richer reading as an extension the minimal schema can carry — a contribution, not a\nfork of the name.*\n\n**Register:** O9 · leverage 🟠 · **Ladder:** design doc\n**Anchor (cred-spec):** VRC minimal schema (bare relationship attestation between two R-DIDs) · \"minimal\nschemas enable common predicates\" · extension room in `credentialSubject`.\n**Anchor (decision doc):** §18 schema governance (every field = assurance surface + correlation surface) ·\n§2.4 three-parameter claims · §27.2 (trust tasks compose predicates; bundled proofs may leak jointly).\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "f21e33c69e146a03",
+      "text": "## The drift that becomes a contribution\n\nThe coherence pass flagged it as Gap 2: agentprivacy's whitepapers define VRC richer than the spec —\n**promise bundle** (promise-theory: what each party has voluntarily promised the other), **mutual\ncomprehension** (\"proof of bilateral comprehension without central authority\"), and **ERC-7812 bilateral\ncommitment** anchoring. The ruling then: don't rewrite our canon to match; the richness is a *contribution\nsurface*. This doc is that contribution, shaped.\n\nThe spec kept the VRC minimal so predicates stay simple — correct instinct, and the extension must honor\nit: **the base VRC stays untouched; the bundle rides as an extension block, and every base-level predicate\nkeeps working on an extended VRC.**"
+    },
+    {
+      "type": "markdown",
+      "id": "27080912fa6a55bc",
+      "text": "## The extension, sketched\n\n```\ncredentialSubject: {\n  …minimal VRC fields (untouched)…,\n  ext_promiseBundle: {\n    version,\n    promises: [ { promiseType, scope, direction (a→b | b→a | mutual), commitment } ],\n    comprehension: { commitment },        // the mutual-comprehension attestation, committed not disclosed\n    anchor: { scheme: \"erc7812\" | …, ref } // optional on-chain bilateral commitment\n  }\n}\n```\n\nDesign rules, from §18 discipline:\n- **Committed, not disclosed.** Promise contents are commitments; presentations reveal *predicates over*\n  the bundle (\"a promise of type T with scope ⊇ S exists, mutual, unexpired\"), never the bundle. The\n  economic layer must not become the correlation layer.\n- **Cardinality control.** `promiseType` is a small governed vocabulary, not free text — rare promise\n  types fingerprint a relationship exactly the way rare assurance classes fingerprint an issuer (§18.4).\n- **The anchor is optional and one-way.** An on-chain ERC-7812 reference must not become a stable\n  cross-context identifier for the pair (§6.6) — the anchor is a commitment the parties can *open toward a\n  chain record*, not a pointer a verifier can follow."
+    },
+    {
+      "type": "markdown",
+      "id": "a5086570fc321b8b",
+      "text": "## The ZK predicates the extension enables\n\nRiding the **pairwise construction**, same as the base VRC:\n\n- **PR-PRM (promise existence):** a promise of type T, direction d, scope ⊇ S exists in the bundle and is\n  unexpired. *Negative meaning:* not that the promise was kept; not the promise's terms; not the bundle's\n  size. (Promise-*keeping* is outcome evidence — the spec's outcome-interpretability rule applies: a\n  taskContext-bearing credential is not evidence of completion. Kept-ness lives in trust-task protocols,\n  §27.2 — out of scope here, on purpose.)\n- **PR-CMP (comprehension):** the mutual-comprehension commitment verifies against both parties'\n  contributions — the ZK form of the whitepaper's \"bilateral comprehension without central authority.\"\n  This is vrc-identity SKILL open problem #5 (\"bilateral proverb as ZK proof of shared context\") given its\n  predicate name.\n- **Economic composition:** a trust-task can require \"≥ n mutual promises of type T across distinct\n  counterparties\" — composed from PR-PRM instances. §27.2's warning governs: individually sound bundle\n  proofs may leak jointly (n distinct-counterparty proofs reveal degree ≥ n — degree *is* the disclosure;\n  state it in the boundary record, three-parameter form per §2.4)."
+    },
+    {
+      "type": "markdown",
+      "id": "e02b5043374ee82f",
+      "text": "## What exists\n\n- The promise protocol: `agentprivacy-docs/specs/vrc_promise_protocol_v3_3.md` + the swordsman/mage\n  whitepaper's VRC semantics — the *source* semantics this extension carries.\n- The dual-agent harness promise-theory lineage (promises as the harness's trust substrate).\n- rt 07: an extended VRC is still one edge — G1–G8 hold unchanged over an extended VRC (worth one\n  regression property when the extension lands in the reference model)."
+    },
+    {
+      "type": "markdown",
+      "id": "6f5b12d036ff15c8",
+      "text": "## Build plan\n\n- **M1 — mapping table:** our-VRC-fields → spec-minimal-fields → extension block; confirm zero collisions\n  with the base schema (the \"extends, never redefines\" proof).\n- **M2 — extension schema draft** + §18.1 field register (each extension field: purpose, disclosure mode,\n  cardinality, correlation risk).\n- **M3 — PR-PRM/PR-CMP boundary records** (assurance + disclosure pairs; the degree-leakage analysis).\n- **M4 — reference predicates** over the extended VRC in the lab (extend rt 07's edge object; one new\n  property: base predicates unaffected by the extension).\n- **M5 — Credentials TF surface:** propose as a registered extension (\"relationship semantics\" extension\n  class) — the cred-spec reserves new credential *types* for trust-task protocols, but an extension block\n  on an existing type is the door it leaves open."
+    },
+    {
+      "type": "markdown",
+      "id": "dc3090dc494f89e9",
+      "text": "## Open questions\n\n- Extension registry: does the cred-spec want a governed extension vocabulary (like the context-authority\n  model, §6.7) or per-ecosystem extensions? Our proposal should offer the governed shape.\n- Promise expiry vs VRC validity: separate clocks (§22.1 discipline) — a promise may lapse inside a live\n  relationship; the extension carries its own validity fields."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "O9 — VRC Promise Bundle",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "8451329f1824ed66",
+            "text": "# O9 — VRC as promise bundle: the economic extension\n\n*The spec's VRC is deliberately minimal. Agentprivacy's VRC carries promise-theoretic and economic\nsemantics. Propose the richer reading as an extension the minimal schema can carry — a contribution, not a\nfork of the name.*\n\n**Register:** O9 · leverage 🟠 · **Ladder:** design doc\n**Anchor (cred-spec):** VRC minimal schema (bare relationship attestation between two R-DIDs) · \"minimal\nschemas enable common predicates\" · extension room in `credentialSubject`.\n**Anchor (decision doc):** §18 schema governance (every field = assurance surface + correlation surface) ·\n§2.4 three-parameter claims · §27.2 (trust tasks compose predicates; bundled proofs may leak jointly).\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "f21e33c69e146a03",
+            "text": "## The drift that becomes a contribution\n\nThe coherence pass flagged it as Gap 2: agentprivacy's whitepapers define VRC richer than the spec —\n**promise bundle** (promise-theory: what each party has voluntarily promised the other), **mutual\ncomprehension** (\"proof of bilateral comprehension without central authority\"), and **ERC-7812 bilateral\ncommitment** anchoring. The ruling then: don't rewrite our canon to match; the richness is a *contribution\nsurface*. This doc is that contribution, shaped.\n\nThe spec kept the VRC minimal so predicates stay simple — correct instinct, and the extension must honor\nit: **the base VRC stays untouched; the bundle rides as an extension block, and every base-level predicate\nkeeps working on an extended VRC.**"
+          },
+          {
+            "type": "markdown",
+            "id": "27080912fa6a55bc",
+            "text": "## The extension, sketched\n\n```\ncredentialSubject: {\n  …minimal VRC fields (untouched)…,\n  ext_promiseBundle: {\n    version,\n    promises: [ { promiseType, scope, direction (a→b | b→a | mutual), commitment } ],\n    comprehension: { commitment },        // the mutual-comprehension attestation, committed not disclosed\n    anchor: { scheme: \"erc7812\" | …, ref } // optional on-chain bilateral commitment\n  }\n}\n```\n\nDesign rules, from §18 discipline:\n- **Committed, not disclosed.** Promise contents are commitments; presentations reveal *predicates over*\n  the bundle (\"a promise of type T with scope ⊇ S exists, mutual, unexpired\"), never the bundle. The\n  economic layer must not become the correlation layer.\n- **Cardinality control.** `promiseType` is a small governed vocabulary, not free text — rare promise\n  types fingerprint a relationship exactly the way rare assurance classes fingerprint an issuer (§18.4).\n- **The anchor is optional and one-way.** An on-chain ERC-7812 reference must not become a stable\n  cross-context identifier for the pair (§6.6) — the anchor is a commitment the parties can *open toward a\n  chain record*, not a pointer a verifier can follow."
+          },
+          {
+            "type": "markdown",
+            "id": "a5086570fc321b8b",
+            "text": "## The ZK predicates the extension enables\n\nRiding the **pairwise construction**, same as the base VRC:\n\n- **PR-PRM (promise existence):** a promise of type T, direction d, scope ⊇ S exists in the bundle and is\n  unexpired. *Negative meaning:* not that the promise was kept; not the promise's terms; not the bundle's\n  size. (Promise-*keeping* is outcome evidence — the spec's outcome-interpretability rule applies: a\n  taskContext-bearing credential is not evidence of completion. Kept-ness lives in trust-task protocols,\n  §27.2 — out of scope here, on purpose.)\n- **PR-CMP (comprehension):** the mutual-comprehension commitment verifies against both parties'\n  contributions — the ZK form of the whitepaper's \"bilateral comprehension without central authority.\"\n  This is vrc-identity SKILL open problem #5 (\"bilateral proverb as ZK proof of shared context\") given its\n  predicate name.\n- **Economic composition:** a trust-task can require \"≥ n mutual promises of type T across distinct\n  counterparties\" — composed from PR-PRM instances. §27.2's warning governs: individually sound bundle\n  proofs may leak jointly (n distinct-counterparty proofs reveal degree ≥ n — degree *is* the disclosure;\n  state it in the boundary record, three-parameter form per §2.4)."
+          },
+          {
+            "type": "markdown",
+            "id": "e02b5043374ee82f",
+            "text": "## What exists\n\n- The promise protocol: `agentprivacy-docs/specs/vrc_promise_protocol_v3_3.md` + the swordsman/mage\n  whitepaper's VRC semantics — the *source* semantics this extension carries.\n- The dual-agent harness promise-theory lineage (promises as the harness's trust substrate).\n- rt 07: an extended VRC is still one edge — G1–G8 hold unchanged over an extended VRC (worth one\n  regression property when the extension lands in the reference model)."
+          },
+          {
+            "type": "markdown",
+            "id": "6f5b12d036ff15c8",
+            "text": "## Build plan\n\n- **M1 — mapping table:** our-VRC-fields → spec-minimal-fields → extension block; confirm zero collisions\n  with the base schema (the \"extends, never redefines\" proof).\n- **M2 — extension schema draft** + §18.1 field register (each extension field: purpose, disclosure mode,\n  cardinality, correlation risk).\n- **M3 — PR-PRM/PR-CMP boundary records** (assurance + disclosure pairs; the degree-leakage analysis).\n- **M4 — reference predicates** over the extended VRC in the lab (extend rt 07's edge object; one new\n  property: base predicates unaffected by the extension).\n- **M5 — Credentials TF surface:** propose as a registered extension (\"relationship semantics\" extension\n  class) — the cred-spec reserves new credential *types* for trust-task protocols, but an extension block\n  on an existing type is the door it leaves open."
+          },
+          {
+            "type": "markdown",
+            "id": "dc3090dc494f89e9",
+            "text": "## Open questions\n\n- Extension registry: does the cred-spec want a governed extension vocabulary (like the context-authority\n  model, §6.7) or per-ecosystem extensions? Our proposal should offer the governed shape.\n- Promise expiry vs VRC validity: separate clocks (§22.1 discipline) — a promise may lapse inside a live\n  relationship; the extension carries its own validity fields."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

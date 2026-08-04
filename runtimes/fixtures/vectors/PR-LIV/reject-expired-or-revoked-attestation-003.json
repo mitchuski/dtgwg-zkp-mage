@@ -1,0 +1,34 @@
+{
+  "fixture": "PR-LIV/reject/expired-or-revoked-attestation/003",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§10.1",
+      "§10.6",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "the verifier set of the governed context; the attestation issuer is relied on for issuance only — issuer accountability is §10.5, never transferred to the proof",
+    "forHowLong": "until attestation validUntil or a status revocation, whichever first (§10.1); never past the §10.6 cryptoperiod horizon",
+    "alongsideWhat": "the minimal attestation status fields carried in this vector only; full status-list and accreditation-snapshot constructions are runtime-02 future work (§2.6)"
+  },
+  "inputs": {
+    "attestation": {
+      "issuer": "issuer:unaccredited-labs",
+      "validFrom": 1740000000,
+      "validUntil": 1760000000,
+      "status": "active"
+    },
+    "acceptedIssuers": [
+      "issuer:accredited-liveness-1",
+      "issuer:accredited-liveness-2"
+    ],
+    "now": 1752750000
+  },
+  "expect": {
+    "outcome": "reject",
+    "reason": "expired-or-revoked-attestation",
+    "claimCeiling": "a proof over an attestation is only as alive as the attestation: validity window, status, and issuer acceptance are checked at presentation time, never assumed from proof validity (§10.1)"
+  }
+}

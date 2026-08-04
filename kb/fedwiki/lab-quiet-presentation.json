@@ -1,0 +1,86 @@
+{
+  "title": "Lab — quiet-presentation",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "0593d7f0af113ca7",
+      "text": "# quiet-presentation — X4 observable-event minimisation as a runnable reference\n\n*Lab model of X4's design layer (research root: [[X4 — Observable Event Minimisation]]). Reference model of the decision rules over event traces — not real networking, not crypto.*"
+    },
+    {
+      "type": "markdown",
+      "id": "fc10a57757d9b959",
+      "text": "## What it demonstrates\n\n**Unlinkability, not undetectability — made testable.** §20 rules the narrow claim: a presentation\nevent remains observable, and the request pattern itself discloses behaviour. This lane does not\nweaken that ruling; it turns §20's SHOULD-level minimisation measures into checkable properties and\nmakes the honest part structural: `checkQuietTier` **never returns without a non-empty residue\nlist** (`presentation-occurrence`, `coarse-timing`, `status-fetch-cadence`,\n`co-resident-app-signals-bounded-not-eliminated`). The tier is a **posture, not a promise** — a\ndeclared, testable deployment class in the §6.4 spirit, and a passing result still says what the\nverifier sees.\n\nTwo deployments over logical-tick event traces (`{type, t, shape, surface}`, no `Date.now()`\nanywhere):\n\n- **quiet** — status roots fetched on a fixed schedule *independent of presentations* (M-STATUS),\n  shapes padded to a profile constant (M-SHAPE), ONE uniform external error string with detailed\n  reason codes routed to the holder only (M-ERROR), retries bounded and on the timing grid\n  (M-RETRY);\n- **naive** — the anti-model: per-show status lookup, per-show proof shape, internal reason codes\n  on the external surface, immediate off-grid retries. It fails the tier by name."
+    },
+    {
+      "type": "markdown",
+      "id": "704af2036260ddac",
+      "text": "## Budget table summary (budget.mjs — M1)\n\nOne row per §19 observer (imported from show-composition's `OBSERVERS` — the list is not\nrestated), for MLP and EPP, each row in §2.4 three-parameter form\n(`{againstWhom, forHowLong, alongsideWhat}`):\n\n| Observer | Sees per presentation (quiet tier holding) | Horizon (MLP → EPP) |\n|---|---|---|\n| verifier | occurrence, coarse time on grid, bundle id, step-up frequency, uniform error surface, constant shape | session → epoch (nullifier dominates) |\n| issuer | nothing per-show (local mirror) | root-cache validity window |\n| issuer+verifier colluding | occurrence + issuer class; EPP adds within-context nullifier join | session → epoch-within-context |\n| multiple verifiers colluding | timing intersection; EPP adds shared-context nullifier linkage (by design, §2.3) | session → epoch-within-context |\n| registry operator | scheduled cadence only, not shows | root-cache window |\n| accreditation authority | nothing per-show (mirrored snapshot) | snapshot window |\n| mediated prover | where used: full stream under §21.2; switch never silent (§21.3) | session only (non-retention) |\n| wallet/agent operator | full local view incl. holder-routed reason codes | holder retention policy |\n| network observer | fixed-cadence contact pattern, padded sizes, grid timing | profile version lifetime |\n| auditor/log processor | exactly the log-field register fields (§6.6) | per-field retention |\n| co-resident app | occurrence via device signals — **declared residue, bounded not eliminated** | co-residency period |\n\n`validateBudget` requires every §19 observer to have a row (`missing-observer-row:<name>`), all\nthree §2.4 parameters per row (`incomplete-claim-form:...`), and refuses an empty \"sees\" list\n(`empty-sees-claims-undetectability:...`) — an empty row would claim undetectability."
+    },
+    {
+      "type": "markdown",
+      "id": "f290cfacdc143a8d",
+      "text": "## Tier properties (quiet.mjs — M2)\n\nX4 names 7 required properties. Modelled here, at event-trace altitude:\n\n1. **status pattern presentation-independent** — the mixed trace's status-fetch tick pattern must\n   equal the same deployment's idle-window pattern (a comparison of two traces, not a property of\n   one) → `status-correlated-with-presentation`;\n2. **no per-show authority contact** — no *off-schedule* status-fetch within k ticks of a\n   presentation; on-schedule ticks that land near a show are exempt (that is what independence\n   means) → `per-show-authority-contact`;\n3. **uniform external error surface** — one distinct external string, and never a string drawn from\n   the internal v1 reason register; internal codes stay distinct and holder-routed →\n   `error-surface-nonuniform`, `unknown-internal-reason:<code>`;\n4. **shape constant per profile** → `shape-fingerprint`;\n5. **retries within budget and on-grid** → `retry-off-grid`, `retry-over-budget`.\n\n**Deferred — could not be modelled honestly at this altitude:** the *statistical* halves of tier\nproperties 1 and 3 (traffic-trace **distribution** indistinguishability across credential choices,\nand error **timing** indistinguishability over the §26.1 negative corpus — those need real traces\nand a distinguisher, not tick equality); tier property 6 (mediated path §21.2 controls — no\nmediator is modelled here; it appears only as a budget row); packet-level network shape (the\n`shape` field is a size-class stand-in). Named as gaps, not silently capped."
+    },
+    {
+      "type": "markdown",
+      "id": "7b123752e93b93ab",
+      "text": "## Named failure codes emitted (the X1 seam)\n\n`missing-observer-row:<observer>` · `unknown-observer:<name>` · `incomplete-claim-form:<observer>:<param>` ·\n`empty-sees-claims-undetectability:<observer>` · `status-correlated-with-presentation` ·\n`per-show-authority-contact` · `error-surface-nonuniform` · `shape-fingerprint` · `retry-off-grid` ·\n`retry-over-budget` · `unknown-internal-reason:<code>` · `prohibited-log-field:<name>` ·\n`unregistered-log-field:<name>`\n\nThese are **fixture-register candidates for a future v2** of the fixtures lane's reason register\n(v1 is append-only; this lane does NOT edit `../fixtures/`). The consumption direction today is the\nreverse: quiet.mjs *imports* `isKnownReason` to require holder-routed codes to be register vocabulary\nand to forbid register vocabulary on the external surface — the fixture-visible internal vocabulary\nvs. external surface separation X4's M-ERROR requires."
+    },
+    {
+      "type": "markdown",
+      "id": "0bbe89c074915914",
+      "text": "## Prohibited log fields (logregister.mjs — M3)\n\n`exactPresentationTimestamp` (coarsen; §6.6/§20) · `holderDeviceId` · `stableHolderId` (§6.6) ·\n`retryCountByPseudonym` (§10.4) · `proofSizeBytes` (§10.4/§19 — logging it un-pads the padding) ·\n`internalReasonCode` (holder-routed only) · `mediatorSessionId` (§21.2 non-retention).\n\nThe compliant register carries 7 fields (`presentationEpoch`, `bundleId`, `profileVersion`,\n`rootEpoch`, `outcome`, `retryWithinBudget`, `externalErrorSurface`) each with purpose, retention,\ncardinality, correlation risk, and responsible authority — the §23 accountability route for excess\ncorrelation is the party controlling the correlating surface."
+    },
+    {
+      "type": "markdown",
+      "id": "2b59bb5fc5fd0d1f",
+      "text": "## Pointers\n\n- **Research root:** [[X4 — Observable Event Minimisation]]\n  (M1 budget → budget.mjs; M2 property tests → quiet.mjs; M3 register → logregister.mjs; M4 tier\n  declaration text = upstream work, not lab code).\n- **Upstream surface:** §25 gate item 7 — \"composition and observable-event assumptions\". The tier\n  declaration plus these fixtures are the gate input; the budget rows are §19 disclosure-boundary\n  record rows in §2.4 form, ready to be quoted.\n- **Siblings:** `../show-composition/` (OBSERVERS, the presentations being wrapped),\n  `../fixtures/reasons.mjs` (v1 internal vocabulary, READ-ONLY), `../canonical/` (shared encodings).\n\nRun: `node test.mjs` → 8/8."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Lab — quiet-presentation",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "0593d7f0af113ca7",
+            "text": "# quiet-presentation — X4 observable-event minimisation as a runnable reference\n\n*Lab model of X4's design layer (research root: [[X4 — Observable Event Minimisation]]). Reference model of the decision rules over event traces — not real networking, not crypto.*"
+          },
+          {
+            "type": "markdown",
+            "id": "fc10a57757d9b959",
+            "text": "## What it demonstrates\n\n**Unlinkability, not undetectability — made testable.** §20 rules the narrow claim: a presentation\nevent remains observable, and the request pattern itself discloses behaviour. This lane does not\nweaken that ruling; it turns §20's SHOULD-level minimisation measures into checkable properties and\nmakes the honest part structural: `checkQuietTier` **never returns without a non-empty residue\nlist** (`presentation-occurrence`, `coarse-timing`, `status-fetch-cadence`,\n`co-resident-app-signals-bounded-not-eliminated`). The tier is a **posture, not a promise** — a\ndeclared, testable deployment class in the §6.4 spirit, and a passing result still says what the\nverifier sees.\n\nTwo deployments over logical-tick event traces (`{type, t, shape, surface}`, no `Date.now()`\nanywhere):\n\n- **quiet** — status roots fetched on a fixed schedule *independent of presentations* (M-STATUS),\n  shapes padded to a profile constant (M-SHAPE), ONE uniform external error string with detailed\n  reason codes routed to the holder only (M-ERROR), retries bounded and on the timing grid\n  (M-RETRY);\n- **naive** — the anti-model: per-show status lookup, per-show proof shape, internal reason codes\n  on the external surface, immediate off-grid retries. It fails the tier by name."
+          },
+          {
+            "type": "markdown",
+            "id": "704af2036260ddac",
+            "text": "## Budget table summary (budget.mjs — M1)\n\nOne row per §19 observer (imported from show-composition's `OBSERVERS` — the list is not\nrestated), for MLP and EPP, each row in §2.4 three-parameter form\n(`{againstWhom, forHowLong, alongsideWhat}`):\n\n| Observer | Sees per presentation (quiet tier holding) | Horizon (MLP → EPP) |\n|---|---|---|\n| verifier | occurrence, coarse time on grid, bundle id, step-up frequency, uniform error surface, constant shape | session → epoch (nullifier dominates) |\n| issuer | nothing per-show (local mirror) | root-cache validity window |\n| issuer+verifier colluding | occurrence + issuer class; EPP adds within-context nullifier join | session → epoch-within-context |\n| multiple verifiers colluding | timing intersection; EPP adds shared-context nullifier linkage (by design, §2.3) | session → epoch-within-context |\n| registry operator | scheduled cadence only, not shows | root-cache window |\n| accreditation authority | nothing per-show (mirrored snapshot) | snapshot window |\n| mediated prover | where used: full stream under §21.2; switch never silent (§21.3) | session only (non-retention) |\n| wallet/agent operator | full local view incl. holder-routed reason codes | holder retention policy |\n| network observer | fixed-cadence contact pattern, padded sizes, grid timing | profile version lifetime |\n| auditor/log processor | exactly the log-field register fields (§6.6) | per-field retention |\n| co-resident app | occurrence via device signals — **declared residue, bounded not eliminated** | co-residency period |\n\n`validateBudget` requires every §19 observer to have a row (`missing-observer-row:<name>`), all\nthree §2.4 parameters per row (`incomplete-claim-form:...`), and refuses an empty \"sees\" list\n(`empty-sees-claims-undetectability:...`) — an empty row would claim undetectability."
+          },
+          {
+            "type": "markdown",
+            "id": "f290cfacdc143a8d",
+            "text": "## Tier properties (quiet.mjs — M2)\n\nX4 names 7 required properties. Modelled here, at event-trace altitude:\n\n1. **status pattern presentation-independent** — the mixed trace's status-fetch tick pattern must\n   equal the same deployment's idle-window pattern (a comparison of two traces, not a property of\n   one) → `status-correlated-with-presentation`;\n2. **no per-show authority contact** — no *off-schedule* status-fetch within k ticks of a\n   presentation; on-schedule ticks that land near a show are exempt (that is what independence\n   means) → `per-show-authority-contact`;\n3. **uniform external error surface** — one distinct external string, and never a string drawn from\n   the internal v1 reason register; internal codes stay distinct and holder-routed →\n   `error-surface-nonuniform`, `unknown-internal-reason:<code>`;\n4. **shape constant per profile** → `shape-fingerprint`;\n5. **retries within budget and on-grid** → `retry-off-grid`, `retry-over-budget`.\n\n**Deferred — could not be modelled honestly at this altitude:** the *statistical* halves of tier\nproperties 1 and 3 (traffic-trace **distribution** indistinguishability across credential choices,\nand error **timing** indistinguishability over the §26.1 negative corpus — those need real traces\nand a distinguisher, not tick equality); tier property 6 (mediated path §21.2 controls — no\nmediator is modelled here; it appears only as a budget row); packet-level network shape (the\n`shape` field is a size-class stand-in). Named as gaps, not silently capped."
+          },
+          {
+            "type": "markdown",
+            "id": "7b123752e93b93ab",
+            "text": "## Named failure codes emitted (the X1 seam)\n\n`missing-observer-row:<observer>` · `unknown-observer:<name>` · `incomplete-claim-form:<observer>:<param>` ·\n`empty-sees-claims-undetectability:<observer>` · `status-correlated-with-presentation` ·\n`per-show-authority-contact` · `error-surface-nonuniform` · `shape-fingerprint` · `retry-off-grid` ·\n`retry-over-budget` · `unknown-internal-reason:<code>` · `prohibited-log-field:<name>` ·\n`unregistered-log-field:<name>`\n\nThese are **fixture-register candidates for a future v2** of the fixtures lane's reason register\n(v1 is append-only; this lane does NOT edit `../fixtures/`). The consumption direction today is the\nreverse: quiet.mjs *imports* `isKnownReason` to require holder-routed codes to be register vocabulary\nand to forbid register vocabulary on the external surface — the fixture-visible internal vocabulary\nvs. external surface separation X4's M-ERROR requires."
+          },
+          {
+            "type": "markdown",
+            "id": "0bbe89c074915914",
+            "text": "## Prohibited log fields (logregister.mjs — M3)\n\n`exactPresentationTimestamp` (coarsen; §6.6/§20) · `holderDeviceId` · `stableHolderId` (§6.6) ·\n`retryCountByPseudonym` (§10.4) · `proofSizeBytes` (§10.4/§19 — logging it un-pads the padding) ·\n`internalReasonCode` (holder-routed only) · `mediatorSessionId` (§21.2 non-retention).\n\nThe compliant register carries 7 fields (`presentationEpoch`, `bundleId`, `profileVersion`,\n`rootEpoch`, `outcome`, `retryWithinBudget`, `externalErrorSurface`) each with purpose, retention,\ncardinality, correlation risk, and responsible authority — the §23 accountability route for excess\ncorrelation is the party controlling the correlating surface."
+          },
+          {
+            "type": "markdown",
+            "id": "2b59bb5fc5fd0d1f",
+            "text": "## Pointers\n\n- **Research root:** [[X4 — Observable Event Minimisation]]\n  (M1 budget → budget.mjs; M2 property tests → quiet.mjs; M3 register → logregister.mjs; M4 tier\n  declaration text = upstream work, not lab code).\n- **Upstream surface:** §25 gate item 7 — \"composition and observable-event assumptions\". The tier\n  declaration plus these fixtures are the gate input; the budget rows are §19 disclosure-boundary\n  record rows in §2.4 form, ready to be quoted.\n- **Siblings:** `../show-composition/` (OBSERVERS, the presentations being wrapped),\n  `../fixtures/reasons.mjs` (v1 internal vocabulary, READ-ONLY), `../canonical/` (shared encodings).\n\nRun: `node test.mjs` → 8/8."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

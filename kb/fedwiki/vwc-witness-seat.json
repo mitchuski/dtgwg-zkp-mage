@@ -1,0 +1,86 @@
+{
+  "title": "VWC — Witness Seat",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "e0a0f8d21d5ac3ac",
+      "text": "# VWC — the witness seat on the dream cycle\n\n*A third party attesting the collision: the Verifiable Witness Credential joins runtime 07 as the third\nseat — transcript-bound, optional, and never a substitute for consent.*\n\n**Register:** runtime 07 \"next steps\" item 1 (not an O-item) · leverage 🟠 · **Ladder:** **BUILT\n2026-07-18** — [[Lab — witness-seat]] 15/15 (W1–W7 incl. the separation\nproperty enforced attestation-after-Swordsman, the never-sees-the-secret triple guard, and rt07's\n11/11 as an executable regression gate). The oldest open thread of the 07-16 dream cycle, closed.\nSame-VTC question + weighted propagation stay parked\n**Anchor (cred-spec):** **VWC** (witness annotation credential) · `taskContext` · outcome-interpretability\nrule.\n**Anchor (decision doc):** §15 canonical transcript (a bare nonce is insufficient) · §7.3/§17 separation\ndiscipline (a witness attests, it does not authorize) · §19 observer analysis (the witness is an observer).\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "d77569bc020d1a46",
+      "text": "## What it is\n\nRuntime 07 grows the trust graph through the fold: Mage proposes the smallest edge, Swordsman proves\npersonhood + consent + freshness + non-collusion across the Gap. The cred-spec provides a third role the\ncycle doesn't seat yet: a **VWC** — a third party's signed attestation that the encounter (the collision)\noccurred, bound to a `taskContext`.\n\nThe seat matters because it upgrades edge *evidence* without touching edge *admissibility*: a witnessed\nedge carries independent corroboration of the collision; an unwitnessed edge still forms on bilateral\nconsent alone. That separation mirrors the decision doc's discipline exactly — the witness contributes to\nthe assurance side, never replaces a required proof, and must never become a hidden authority."
+    },
+    {
+      "type": "markdown",
+      "id": "280a74a858278f77",
+      "text": "## Design\n\n**The witness object:**\n\n```\nattestation = sign(witness_key, {\n  collision_commitment,    // H over the encounter's public parts — witness never learns the shared secret\n  rdid_a, rdid_b,          // the fresh per-counterparty R-DIDs on the candidate edge\n  transcript_digest,       // §15 canonical transcript, NOT a bare nonce: protocol/profile versions,\n                           // context descriptor, purpose, scope, session, epoch — canonically encoded\n  witness_membership_ref   // the witness's own personhood anchor (M-DID in a VTC, via rt 01)\n})\n```\n\n**Swordsman changes:** accepts an *optional* witness attestation on a candidate edge; verifies the witness\nsignature, the witness's own personhood anchor, and that `transcript_digest` matches the transcript the\nedge is forming under (a witness statement from another session/context must not transplant — §15.1 replay\ndiscipline applied to witnesses).\n\n**Properties to add to the 11 (target 15/15):**\n- **W1** — a witnessed edge carries the witness attestation; verifiable independently later.\n- **W2** — an unwitnessed edge still forms (the witness is optional evidence, not a gate).\n- **W3** — a forged or transcript-mismatched witness attestation is rejected by name.\n- **W4** — a witness cannot mint an edge alone: witness ≠ consent ≠ proposal. (The separation property —\n  the witness seat must not collapse into a third signing authority.)"
+    },
+    {
+      "type": "markdown",
+      "id": "0a29ac066c2d8784",
+      "text": "## Boundary notes (the paired records, drafted)\n\n**Assurance boundary:** a verifier of a witnessed edge may rely on: a registry-anchored third party signed\na statement binding this collision commitment to this transcript. It must NOT infer: that the collision's\n*content* was as claimed (the witness saw an encounter, not the shared secret); that the witness was\nhonest; that a witnessed edge is more *consensual* than an unwitnessed one. Accountability: the witness for\nits attestation; the context authority for who may witness.\n\n**Disclosure boundary:** the witness is an **observer** (§19's list gains a row) — it learns that two\nR-DIDs collided at a time, under a context. It must not learn the shared secret or either party's M-DID.\nWitness *patterns* (who witnesses whom, how often) are themselves correlatable — a busy witness becomes a\ntraffic-analysis hub; retention rules for witness logs belong in the profile (§20 minimisation applies)."
+    },
+    {
+      "type": "markdown",
+      "id": "b0c2927afd205350",
+      "text": "## The dream-cycle reading\n\nThe fold gains its third seat: 🧙 proposes, ⚔️ proves, and the witness stands at the edge of the Gap —\nseeing that a meeting happened, never what it meant. `witnessed_by` was already in the spellweb grammar\n(SPELLWEB spec §6B); this makes it mechanical, with the same honesty the rest of the cycle carries: the\nwitness adds evidence, the Gap still decides."
+    },
+    {
+      "type": "markdown",
+      "id": "f33a00da30511ec8",
+      "text": "## Build plan\n\n- **M1 —** implement the witness channel in rt 07 (`src/trust-graph.mjs` + 4 new properties), reusing\n  rt 01 for the witness's own personhood anchor. Zero-dep, offline, like the rest.\n- **M2 —** upgrade `taskContext` handling to a §15-shaped canonical transcript digest (shared with O5's\n  freshness harness — same mechanism, one implementation).\n- **M3 —** boundary records (the two drafts above, completed in Appendix-B format).\n- **M4 —** feed rt 07's NOTES candidate-note 3 upstream: \"a VWC slots straight in\" now has a runnable\n  reference + a separation property (W4) worth stating normatively."
+    },
+    {
+      "type": "markdown",
+      "id": "7f999a328df061ac",
+      "text": "## Open questions\n\n- Must a witness hold a VMC in the *same* VTC as the parties, or is any registry-anchored witness\n  acceptable? (Same-community witnessing is stronger for the community-anchored construction but shrinks\n  the witness pool and increases intra-community traffic analysis.)\n- Does a witnessed edge earn different weight in propagation? Tempting, but weight semantics belong to\n  trust-task protocols, not the formation layer — park it, note it."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "VWC — Witness Seat",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "e0a0f8d21d5ac3ac",
+            "text": "# VWC — the witness seat on the dream cycle\n\n*A third party attesting the collision: the Verifiable Witness Credential joins runtime 07 as the third\nseat — transcript-bound, optional, and never a substitute for consent.*\n\n**Register:** runtime 07 \"next steps\" item 1 (not an O-item) · leverage 🟠 · **Ladder:** **BUILT\n2026-07-18** — [[Lab — witness-seat]] 15/15 (W1–W7 incl. the separation\nproperty enforced attestation-after-Swordsman, the never-sees-the-secret triple guard, and rt07's\n11/11 as an executable regression gate). The oldest open thread of the 07-16 dream cycle, closed.\nSame-VTC question + weighted propagation stay parked\n**Anchor (cred-spec):** **VWC** (witness annotation credential) · `taskContext` · outcome-interpretability\nrule.\n**Anchor (decision doc):** §15 canonical transcript (a bare nonce is insufficient) · §7.3/§17 separation\ndiscipline (a witness attests, it does not authorize) · §19 observer analysis (the witness is an observer).\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "d77569bc020d1a46",
+            "text": "## What it is\n\nRuntime 07 grows the trust graph through the fold: Mage proposes the smallest edge, Swordsman proves\npersonhood + consent + freshness + non-collusion across the Gap. The cred-spec provides a third role the\ncycle doesn't seat yet: a **VWC** — a third party's signed attestation that the encounter (the collision)\noccurred, bound to a `taskContext`.\n\nThe seat matters because it upgrades edge *evidence* without touching edge *admissibility*: a witnessed\nedge carries independent corroboration of the collision; an unwitnessed edge still forms on bilateral\nconsent alone. That separation mirrors the decision doc's discipline exactly — the witness contributes to\nthe assurance side, never replaces a required proof, and must never become a hidden authority."
+          },
+          {
+            "type": "markdown",
+            "id": "280a74a858278f77",
+            "text": "## Design\n\n**The witness object:**\n\n```\nattestation = sign(witness_key, {\n  collision_commitment,    // H over the encounter's public parts — witness never learns the shared secret\n  rdid_a, rdid_b,          // the fresh per-counterparty R-DIDs on the candidate edge\n  transcript_digest,       // §15 canonical transcript, NOT a bare nonce: protocol/profile versions,\n                           // context descriptor, purpose, scope, session, epoch — canonically encoded\n  witness_membership_ref   // the witness's own personhood anchor (M-DID in a VTC, via rt 01)\n})\n```\n\n**Swordsman changes:** accepts an *optional* witness attestation on a candidate edge; verifies the witness\nsignature, the witness's own personhood anchor, and that `transcript_digest` matches the transcript the\nedge is forming under (a witness statement from another session/context must not transplant — §15.1 replay\ndiscipline applied to witnesses).\n\n**Properties to add to the 11 (target 15/15):**\n- **W1** — a witnessed edge carries the witness attestation; verifiable independently later.\n- **W2** — an unwitnessed edge still forms (the witness is optional evidence, not a gate).\n- **W3** — a forged or transcript-mismatched witness attestation is rejected by name.\n- **W4** — a witness cannot mint an edge alone: witness ≠ consent ≠ proposal. (The separation property —\n  the witness seat must not collapse into a third signing authority.)"
+          },
+          {
+            "type": "markdown",
+            "id": "0a29ac066c2d8784",
+            "text": "## Boundary notes (the paired records, drafted)\n\n**Assurance boundary:** a verifier of a witnessed edge may rely on: a registry-anchored third party signed\na statement binding this collision commitment to this transcript. It must NOT infer: that the collision's\n*content* was as claimed (the witness saw an encounter, not the shared secret); that the witness was\nhonest; that a witnessed edge is more *consensual* than an unwitnessed one. Accountability: the witness for\nits attestation; the context authority for who may witness.\n\n**Disclosure boundary:** the witness is an **observer** (§19's list gains a row) — it learns that two\nR-DIDs collided at a time, under a context. It must not learn the shared secret or either party's M-DID.\nWitness *patterns* (who witnesses whom, how often) are themselves correlatable — a busy witness becomes a\ntraffic-analysis hub; retention rules for witness logs belong in the profile (§20 minimisation applies)."
+          },
+          {
+            "type": "markdown",
+            "id": "b0c2927afd205350",
+            "text": "## The dream-cycle reading\n\nThe fold gains its third seat: 🧙 proposes, ⚔️ proves, and the witness stands at the edge of the Gap —\nseeing that a meeting happened, never what it meant. `witnessed_by` was already in the spellweb grammar\n(SPELLWEB spec §6B); this makes it mechanical, with the same honesty the rest of the cycle carries: the\nwitness adds evidence, the Gap still decides."
+          },
+          {
+            "type": "markdown",
+            "id": "f33a00da30511ec8",
+            "text": "## Build plan\n\n- **M1 —** implement the witness channel in rt 07 (`src/trust-graph.mjs` + 4 new properties), reusing\n  rt 01 for the witness's own personhood anchor. Zero-dep, offline, like the rest.\n- **M2 —** upgrade `taskContext` handling to a §15-shaped canonical transcript digest (shared with O5's\n  freshness harness — same mechanism, one implementation).\n- **M3 —** boundary records (the two drafts above, completed in Appendix-B format).\n- **M4 —** feed rt 07's NOTES candidate-note 3 upstream: \"a VWC slots straight in\" now has a runnable\n  reference + a separation property (W4) worth stating normatively."
+          },
+          {
+            "type": "markdown",
+            "id": "7f999a328df061ac",
+            "text": "## Open questions\n\n- Must a witness hold a VMC in the *same* VTC as the parties, or is any registry-anchored witness\n  acceptable? (Same-community witnessing is stronger for the community-anchored construction but shrinks\n  the witness pool and increases intra-community traffic analysis.)\n- Does a witnessed edge earn different weight in propagation? Tempting, but weight semantics belong to\n  trust-task protocols, not the formation layer — park it, note it."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

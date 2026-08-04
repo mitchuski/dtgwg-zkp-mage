@@ -1,0 +1,76 @@
+{
+  "title": "Chronicle 2026-07-18 — The First Circuit",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "4ad1a0cc59428460",
+      "text": "# 2026-07-18 · The First Circuit\n\n*The lab crossed from reference models into real cryptography — and the interesting part is not the\ncircuit. It is that the circuit came last, and everything it needed was already waiting for it.*\n\n**Scope:** the shared circom gadget ([[Lab — circom-gadget]]) — Poseidon\ncommitment, depth-20 Merkle inclusion, domain-tagged nullifier, real groth16 proofs, 8/8 — and the\ntwo-day arc that made it a one-evening build. Companion records: the exploration programme\n(`~/dtgwg-cred-spec-main_mage/explorations/`, O-series + X1–X9), the decision baseline\n([[Decision — Overview]]), the TF briefing draft, and the 2026-07-16 dream-cycle\nchronicle this one continues.\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "b5c3028ef04fcdec",
+      "text": "## 1. What happened, in order\n\nThe order is the story:\n\n1. The **Credentials Core Spec** fixed the objects and deliberately deferred the ZK layer.\n2. The **decision document** ruled how the layer must be filled: statement before construction (§2.1,\n   §25); every predicate with a positive statement *and* a negative meaning; the nullifier defined as\n   **scoped reuse detection, never \"one unique human\"** (§5.12).\n3. The **explorations** stretched every deferred seam into a design doc — nineteen of them, each\n   anchored to the sections it serves.\n4. The **references** made the designs runnable: twelve zero-dependency suites, 124 properties, every\n   rejection a named string.\n5. The **fixture register** froze those strings into one vocabulary — 95 entries, every addition\n   triggered live from its emitting module, so the vocabulary provably cannot drift from the code.\n6. And only then, thirteenth suite of thirteen, the **circuit**: 11,522 constraints proving exactly the\n   statement written down four steps earlier. ~640 ms to prove on a desktop, ~8 ms to verify, 722 bytes\n   of proof."
+    },
+    {
+      "type": "markdown",
+      "id": "d2ea01084fea7fc3",
+      "text": "## 2. Why this is an interesting first example\n\n**The circuit is the last artifact, not the first.** Most ZK projects begin with a circuit and retrofit\nits meaning afterwards — the statement gets reverse-engineered from the constraints, the privacy claims\nfrom the marketing. Here the §25 gate discipline was actually lived: by the time `circom` ran, the\nstatement existed in prose (O2), in narrow language (PR-UNQ), in a reference algebra with an adversary\ntest (runtime 01's self-Sybil), in canonical encodings (§6.2/§15.2), and in a conformance vocabulary\n(the register). The circuit had nothing left to decide except arithmetic. That inversion — meaning\nfirst, constraints last — is the whole method in one example, and the reason the \"hard\" step took an\nevening.\n\n**One digest, three faces.** The circuit's public `context` input is the canonical §6.2 descriptor\ndigest reduced to a field element — the *same bytes* the context card renders into six human-legible\nquestions and the fixture vectors serialize for cross-implementation exchange. A person reads the\ncontext, a test suite replays it, a constraint system proves against it, and all three are looking at\none object. That is what \"the user-facing description provably matches the cryptographic configuration\"\nlooks like when it reaches the bottom of the stack.\n\n**The narrow language survived into the constraints.** What the circuit proves is precisely scoped\nreuse detection: same secret + same context → same nullifier (detectable); same secret + different\ncontext → unlinkable values. Nothing in the constraint system claims a unique human — the enrolment\ndependency (one human ↔ one secret) stays visibly with governance, exactly where the decision document\nput it. The honest split held all the way down.\n\n**The open questions were asked by the lab, answered by the build.** Runtime 01's NOTES flagged, months\nbefore any circuit existed, that the spec must pin the hash and the domain tag because nullifier values\ndiffer by hash. The build made that concrete: `DOMAIN_TAG = sha256('dtg-zkp/nullifier/v0') mod p`,\nderivation documented in the circuit header and re-asserted by the JS harness at import. A reference\nmodel asked a spec question; a circuit answered it with a number the TF can now ratify or replace.\n\n**One circuit, four consumers.** The gadget is the shared spine the explorations predicted: O2 uses it\nas the PHC realization, O4 as registry set-membership, the multi-issuer work as the k-of-n seat, the\nguardian pattern as committed-set membership. The next three circuits are instantiations, not\ninventions.\n\n**And the honesty survived the crypto threshold.** The point where projects usually start overclaiming\nis the point where this one wrote its caveats largest: the trusted setup is a local, fixed-entropy,\nlab-only ceremony — stated plainly as *not* production; the npm dependencies are confined to the one\ndirectory, with the zero-dep rule holding everywhere else; the expected witness-generation failure in\nthe non-member test is labelled so nobody mistakes an intended rejection for a bug."
+    },
+    {
+      "type": "markdown",
+      "id": "93cb337e11302044",
+      "text": "## 3. The numbers, for the record\n\n| measure | value |\n|---|---|\n| constraints | 11,522 (5,427 non-linear) · depth 20 ≈ 1M enrolment capacity |\n| proving time | ~640 ms (desktop, single-threaded wasm witness + groth16) |\n| verification | ~8 ms · proof 722 B · vkey 3.3 KB · zkey 5.0 MB |\n\nThese are the first concrete datapoints for the strawman's \"claim ceiling per presentation\" question\nand the decision document's §25 performance envelope — a consumer device can carry this predicate."
+    },
+    {
+      "type": "markdown",
+      "id": "983940a1a99746ba",
+      "text": "## 4. The method, named\n\nThe two-day arc ran as the harness fold at the scale of research artifacts: exploration agents\n*proposed* (nineteen design docs, each a minimal candidate), build agents *proved* (thirteen suites,\nevery claim a property test), and the register held the shared vocabulary so no proposal could drift\nfrom its proof. Collision → edge → propagation, where the colliding parties are ideas and the edges are\ntested statements. The Gap held throughout — every suite re-verified by hand in the main thread, every\ndeferral stated rather than smoothed over, and the one contradiction the programme found (which family\nowns log retention) left standing for the group to rule on rather than silently resolved."
+    },
+    {
+      "type": "markdown",
+      "id": "9aac472328e46ad0",
+      "text": "## 5. State and doors\n\nAll local, nothing pushed; the TF clone's tracked tree carries only the pending two-line README edit.\nThe briefing draft sits with the First Person for review. Open doors, in rough order: the briefing\nverdict; the M5 second-language consumer (the interop existence proof, now guarding 95 vocabulary\nentries); porting the gadget to its three sibling consumers; the Semaphore v4 cross-check; and the\nupstream lane itself — E1–E7 and the §26.2 fixture format, when the group is ready.\n\n(⚔️⊥⿻⊥🧙)😊"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Chronicle 2026-07-18 — The First Circuit",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "4ad1a0cc59428460",
+            "text": "# 2026-07-18 · The First Circuit\n\n*The lab crossed from reference models into real cryptography — and the interesting part is not the\ncircuit. It is that the circuit came last, and everything it needed was already waiting for it.*\n\n**Scope:** the shared circom gadget ([[Lab — circom-gadget]]) — Poseidon\ncommitment, depth-20 Merkle inclusion, domain-tagged nullifier, real groth16 proofs, 8/8 — and the\ntwo-day arc that made it a one-evening build. Companion records: the exploration programme\n(`~/dtgwg-cred-spec-main_mage/explorations/`, O-series + X1–X9), the decision baseline\n([[Decision — Overview]]), the TF briefing draft, and the 2026-07-16 dream-cycle\nchronicle this one continues.\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "b5c3028ef04fcdec",
+            "text": "## 1. What happened, in order\n\nThe order is the story:\n\n1. The **Credentials Core Spec** fixed the objects and deliberately deferred the ZK layer.\n2. The **decision document** ruled how the layer must be filled: statement before construction (§2.1,\n   §25); every predicate with a positive statement *and* a negative meaning; the nullifier defined as\n   **scoped reuse detection, never \"one unique human\"** (§5.12).\n3. The **explorations** stretched every deferred seam into a design doc — nineteen of them, each\n   anchored to the sections it serves.\n4. The **references** made the designs runnable: twelve zero-dependency suites, 124 properties, every\n   rejection a named string.\n5. The **fixture register** froze those strings into one vocabulary — 95 entries, every addition\n   triggered live from its emitting module, so the vocabulary provably cannot drift from the code.\n6. And only then, thirteenth suite of thirteen, the **circuit**: 11,522 constraints proving exactly the\n   statement written down four steps earlier. ~640 ms to prove on a desktop, ~8 ms to verify, 722 bytes\n   of proof."
+          },
+          {
+            "type": "markdown",
+            "id": "d2ea01084fea7fc3",
+            "text": "## 2. Why this is an interesting first example\n\n**The circuit is the last artifact, not the first.** Most ZK projects begin with a circuit and retrofit\nits meaning afterwards — the statement gets reverse-engineered from the constraints, the privacy claims\nfrom the marketing. Here the §25 gate discipline was actually lived: by the time `circom` ran, the\nstatement existed in prose (O2), in narrow language (PR-UNQ), in a reference algebra with an adversary\ntest (runtime 01's self-Sybil), in canonical encodings (§6.2/§15.2), and in a conformance vocabulary\n(the register). The circuit had nothing left to decide except arithmetic. That inversion — meaning\nfirst, constraints last — is the whole method in one example, and the reason the \"hard\" step took an\nevening.\n\n**One digest, three faces.** The circuit's public `context` input is the canonical §6.2 descriptor\ndigest reduced to a field element — the *same bytes* the context card renders into six human-legible\nquestions and the fixture vectors serialize for cross-implementation exchange. A person reads the\ncontext, a test suite replays it, a constraint system proves against it, and all three are looking at\none object. That is what \"the user-facing description provably matches the cryptographic configuration\"\nlooks like when it reaches the bottom of the stack.\n\n**The narrow language survived into the constraints.** What the circuit proves is precisely scoped\nreuse detection: same secret + same context → same nullifier (detectable); same secret + different\ncontext → unlinkable values. Nothing in the constraint system claims a unique human — the enrolment\ndependency (one human ↔ one secret) stays visibly with governance, exactly where the decision document\nput it. The honest split held all the way down.\n\n**The open questions were asked by the lab, answered by the build.** Runtime 01's NOTES flagged, months\nbefore any circuit existed, that the spec must pin the hash and the domain tag because nullifier values\ndiffer by hash. The build made that concrete: `DOMAIN_TAG = sha256('dtg-zkp/nullifier/v0') mod p`,\nderivation documented in the circuit header and re-asserted by the JS harness at import. A reference\nmodel asked a spec question; a circuit answered it with a number the TF can now ratify or replace.\n\n**One circuit, four consumers.** The gadget is the shared spine the explorations predicted: O2 uses it\nas the PHC realization, O4 as registry set-membership, the multi-issuer work as the k-of-n seat, the\nguardian pattern as committed-set membership. The next three circuits are instantiations, not\ninventions.\n\n**And the honesty survived the crypto threshold.** The point where projects usually start overclaiming\nis the point where this one wrote its caveats largest: the trusted setup is a local, fixed-entropy,\nlab-only ceremony — stated plainly as *not* production; the npm dependencies are confined to the one\ndirectory, with the zero-dep rule holding everywhere else; the expected witness-generation failure in\nthe non-member test is labelled so nobody mistakes an intended rejection for a bug."
+          },
+          {
+            "type": "markdown",
+            "id": "93cb337e11302044",
+            "text": "## 3. The numbers, for the record\n\n| measure | value |\n|---|---|\n| constraints | 11,522 (5,427 non-linear) · depth 20 ≈ 1M enrolment capacity |\n| proving time | ~640 ms (desktop, single-threaded wasm witness + groth16) |\n| verification | ~8 ms · proof 722 B · vkey 3.3 KB · zkey 5.0 MB |\n\nThese are the first concrete datapoints for the strawman's \"claim ceiling per presentation\" question\nand the decision document's §25 performance envelope — a consumer device can carry this predicate."
+          },
+          {
+            "type": "markdown",
+            "id": "983940a1a99746ba",
+            "text": "## 4. The method, named\n\nThe two-day arc ran as the harness fold at the scale of research artifacts: exploration agents\n*proposed* (nineteen design docs, each a minimal candidate), build agents *proved* (thirteen suites,\nevery claim a property test), and the register held the shared vocabulary so no proposal could drift\nfrom its proof. Collision → edge → propagation, where the colliding parties are ideas and the edges are\ntested statements. The Gap held throughout — every suite re-verified by hand in the main thread, every\ndeferral stated rather than smoothed over, and the one contradiction the programme found (which family\nowns log retention) left standing for the group to rule on rather than silently resolved."
+          },
+          {
+            "type": "markdown",
+            "id": "9aac472328e46ad0",
+            "text": "## 5. State and doors\n\nAll local, nothing pushed; the TF clone's tracked tree carries only the pending two-line README edit.\nThe briefing draft sits with the First Person for review. Open doors, in rough order: the briefing\nverdict; the M5 second-language consumer (the interop existence proof, now guarding 95 vocabulary\nentries); porting the gadget to its three sibling consumers; the Semaphore v4 cross-check; and the\nupstream lane itself — E1–E7 and the §26.2 fixture format, when the group is ready.\n\n(⚔️⊥⿻⊥🧙)😊"
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

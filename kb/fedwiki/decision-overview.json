@@ -1,0 +1,26 @@
+{
+  "title": "Decision — Overview",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "74bb167bae65b719",
+      "text": "```yaml\ntitle: Predicate and Assurance-Boundary Decision Document\nshort_title: Predicate & Assurance-Boundary Decision Document\nversion: 0.1.0-draft\nstatus: first-draft-for-task-force-review\nnormative_status: decision input; not yet a ratified specification\nowner: DTG ZKP Task Force\nlast_reviewed: 2026-07-17\n```\n\n\n# Predicate & Assurance-Boundary Decision Document"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision — Overview",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "74bb167bae65b719",
+            "text": "```yaml\ntitle: Predicate and Assurance-Boundary Decision Document\nshort_title: Predicate & Assurance-Boundary Decision Document\nversion: 0.1.0-draft\nstatus: first-draft-for-task-force-review\nnormative_status: decision input; not yet a ratified specification\nowner: DTG ZKP Task Force\nlast_reviewed: 2026-07-17\n```\n\n\n# Predicate & Assurance-Boundary Decision Document"
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

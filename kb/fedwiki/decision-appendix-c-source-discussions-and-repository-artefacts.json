@@ -1,0 +1,26 @@
+{
+  "title": "Decision — Appendix C. Source discussions and repository artefacts",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "fa75b970a59222ca",
+      "text": "## Appendix C. Source discussions and repository artefacts\n\nThis draft is based on the Task Force launch discussion, the proof-construction and assurance-boundary discussion, the context-definition discussion, and the implementation-guide architecture already present in the repository. It should be reviewed against the latest version of those materials before ratification."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision — Appendix C. Source discussions and repository artefacts",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "fa75b970a59222ca",
+            "text": "## Appendix C. Source discussions and repository artefacts\n\nThis draft is based on the Task Force launch discussion, the proof-construction and assurance-boundary discussion, the context-definition discussion, and the implementation-guide architecture already present in the repository. It should be reviewed against the latest version of those materials before ratification."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

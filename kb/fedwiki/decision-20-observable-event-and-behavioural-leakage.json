@@ -1,0 +1,26 @@
+{
+  "title": "Decision §20 — Observable event and behavioural leakage",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "d57554170f3c7a20",
+      "text": "## 20. Observable event and behavioural leakage\n\nThe specification claims unlinkability, not undetectability. A presentation event remains observable. The request pattern can itself disclose behaviour, including:\n\n- which verifier requested a proof;\n- when and how often step-up occurs;\n- whether an action triggered risk controls;\n- how many retries occurred;\n- whether local proving failed;\n- whether a mediated or lower-assurance path was used;\n- whether an agent encountered intent drift or permission escalation.\n\nProfiles MUST identify observable-event leakage and SHOULD provide minimisation measures such as batching, coarse timing, local caching, private status checks, uniform error behaviour, and strict telemetry controls where practical."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §20 — Observable event and behavioural leakage",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "d57554170f3c7a20",
+            "text": "## 20. Observable event and behavioural leakage\n\nThe specification claims unlinkability, not undetectability. A presentation event remains observable. The request pattern can itself disclose behaviour, including:\n\n- which verifier requested a proof;\n- when and how often step-up occurs;\n- whether an action triggered risk controls;\n- how many retries occurred;\n- whether local proving failed;\n- whether a mediated or lower-assurance path was used;\n- whether an agent encountered intent drift or permission escalation.\n\nProfiles MUST identify observable-event leakage and SHOULD provide minimisation measures such as batching, coarse timing, local caching, private status checks, uniform error behaviour, and strict telemetry controls where practical."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

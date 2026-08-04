@@ -1,0 +1,72 @@
+{
+  "fixture": "PR-UNQ/reject/nullifier-domain-reuse/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§2.3",
+      "§13",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "the verifier set of this governed context (verifiers:service-*-registrars); issuer-verifier collusion NOT claimed resisted — EPP trade curve per §2.3",
+    "forHowLong": "one epoch (epoch:2026-07) under rollover:30d; reliance ends at epoch rollover or enrolment-root cryptoperiod end (§10.6 horizon discipline)",
+    "alongsideWhat": "the canonical §15.2 transcript only — credential fields, registry traffic, timing and network metadata are OUT of this reference model and re-open the analysis when present (§2.6)"
+  },
+  "inputs": {
+    "contextDescriptor": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-listing-account/1",
+      "purpose": "purpose:marketplace-registration",
+      "scope": "scope:service-beta",
+      "verifierSet": "verifiers:service-beta-registrars",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "presentedUnderDescriptor": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-account/1",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "verifierSet": "verifiers:service-alpha-registrars",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "transcript": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "verifier": "verifier:service-beta-gate",
+      "contextDescriptorDigest": "c5b208dfc0a6e711ec92867069321c762b95bb57f5f161a312c8b2ff7575489c",
+      "purpose": "purpose:marketplace-registration",
+      "scope": "scope:service-beta",
+      "challenge": "nonce:fixture-0003",
+      "sessionId": "session:fixture-0003",
+      "requestedPredicates": [
+        "PR-UNQ",
+        "PR-FRE"
+      ],
+      "policyRequirements": "assurance>=L2",
+      "expiry": "2026-08-01T00:00:00Z/clock:ntp-60s",
+      "snapshotRequirements": "root-age<=24h",
+      "encodingVersion": "dtg-zkp/canonical/v0"
+    },
+    "transcriptDigest": "c93ceb46d9f6a0988aea0fd5dfa1c4b1ccd85fb19d9b38e85787b70064c0e40a",
+    "subject": {
+      "humanId": "human:fixture-alice"
+    },
+    "nullifier": "14a6213ad0e4593645f4da857a858689dcddd74385d4abbefe267ef31da44d44"
+  },
+  "expect": {
+    "outcome": "reject",
+    "reason": "nullifier-domain-reuse",
+    "claimCeiling": "a nullifier is meaningful only under the context descriptor whose digest fed it (§2.3); presenting it under another governed context is domain reuse, not evidence about the presenter"
+  }
+}

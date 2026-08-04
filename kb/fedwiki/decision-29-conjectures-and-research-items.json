@@ -1,0 +1,26 @@
+{
+  "title": "Decision §29 — Conjectures and research items",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "accccda387ec9e41",
+      "text": "## 29. Conjectures and research items\n\nThe following should remain labelled as conjecture or open research until supported by evidence:\n\n- **zkML deployability:** high-confidence conjecture that proving the proprietary liveness model's execution is not deployable at consumer-device scale for V1.\n- **Recursive or folded composition:** open question whether the prover cost is acceptable for a mobile multi-predicate profile.\n- **Biometric-derived secret rotation:** open question how recovery, reissue, and epoch rotation can be achieved without creating reusable biometric correlators.\n- **Issuer-verifier collusion resistance:** construction-specific question whose answer depends on issuer-held data, schema, status, network, and enrolment design, not only the nullifier.\n- **Multi-issuer assurance:** open question whether and how independent issuer contributions can be composed into a useful assurance bound.\n- **Post-quantum migration:** implementation question requiring layer separability and evidence, not only algorithm identifiers."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §29 — Conjectures and research items",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "accccda387ec9e41",
+            "text": "## 29. Conjectures and research items\n\nThe following should remain labelled as conjecture or open research until supported by evidence:\n\n- **zkML deployability:** high-confidence conjecture that proving the proprietary liveness model's execution is not deployable at consumer-device scale for V1.\n- **Recursive or folded composition:** open question whether the prover cost is acceptable for a mobile multi-predicate profile.\n- **Biometric-derived secret rotation:** open question how recovery, reissue, and epoch rotation can be achieved without creating reusable biometric correlators.\n- **Issuer-verifier collusion resistance:** construction-specific question whose answer depends on issuer-held data, schema, status, network, and enrolment design, not only the nullifier.\n- **Multi-issuer assurance:** open question whether and how independent issuer contributions can be composed into a useful assurance bound.\n- **Post-quantum migration:** implementation question requiring layer separability and evidence, not only algorithm identifiers."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

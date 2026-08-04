@@ -1,0 +1,50 @@
+{
+  "fixture": "PR-CTX/reject/context-expansion-without-version/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§6.6",
+      "§6.7",
+      "§24",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "current AND future members of the recognition set — a widened verifierSet is a new against-whom, which is exactly why silent widening is forbidden (§6.6, §6.7)",
+    "forHowLong": "the epoch and retention windows the context card renders (q3); a migration record marks where the old window's meaning ends",
+    "alongsideWhat": "the §6.8 context card derived from the same descriptor digest the transcript binds, so description and configuration cannot diverge (§26)"
+  },
+  "inputs": {
+    "descriptorBefore": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-account/1",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "verifierSet": "verifiers:service-alpha-registrars",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "descriptorAfter": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-account/1",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "verifierSet": "verifiers:service-alpha-registrars+partner-network",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    }
+  },
+  "expect": {
+    "outcome": "reject",
+    "reason": "context-expansion-without-version",
+    "claimCeiling": "a recognition set may widen only as a versioned, migrated change (§6.7 material privacy change); the card re-versions with the digest, and the migration record is the missing half"
+  }
+}

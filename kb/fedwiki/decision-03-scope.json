@@ -1,0 +1,26 @@
+{
+  "title": "Decision §3 — Scope",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "ede7fd99d076c462",
+      "text": "## 3. Scope\n\n### 3.1 In scope\n\nThis document decides or structures decisions concerning:\n\n- predicate semantics;\n- verifier-reliance propositions;\n- negative meanings and prohibited overclaims;\n- disclosure and reconstruction surfaces;\n- context, scope, purpose, and epoch semantics;\n- adversary and collusion models;\n- assurance horizons and cryptoperiods;\n- issuer-attestation schema requirements;\n- accountability, correction, challenge, and redress routing;\n- minimum and extended profile boundaries;\n- required evidence for construction selection and conformance;\n- separation of holder binding from agent authority;\n- the system consequences of local, mediated, or fallback proving.\n\n### 3.2 Out of scope\n\nThis document does not:\n\n- select or ratify a specific proving system;\n- define biometric liveness algorithms or their correctness criteria;\n- define an accreditation or governance framework;\n- establish civil identity;\n- establish global one-person-one-record uniqueness;\n- define a complete agent-delegation protocol;\n- define the Trust Task Protocol or credential formats owned by other groups;\n- claim that zkML is part of the V1 deployment profile;\n- eliminate all observability of a presentation event;\n- guarantee coercion resistance, non-transferability of a holder key, or human intent."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §3 — Scope",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "ede7fd99d076c462",
+            "text": "## 3. Scope\n\n### 3.1 In scope\n\nThis document decides or structures decisions concerning:\n\n- predicate semantics;\n- verifier-reliance propositions;\n- negative meanings and prohibited overclaims;\n- disclosure and reconstruction surfaces;\n- context, scope, purpose, and epoch semantics;\n- adversary and collusion models;\n- assurance horizons and cryptoperiods;\n- issuer-attestation schema requirements;\n- accountability, correction, challenge, and redress routing;\n- minimum and extended profile boundaries;\n- required evidence for construction selection and conformance;\n- separation of holder binding from agent authority;\n- the system consequences of local, mediated, or fallback proving.\n\n### 3.2 Out of scope\n\nThis document does not:\n\n- select or ratify a specific proving system;\n- define biometric liveness algorithms or their correctness criteria;\n- define an accreditation or governance framework;\n- establish civil identity;\n- establish global one-person-one-record uniqueness;\n- define a complete agent-delegation protocol;\n- define the Trust Task Protocol or credential formats owned by other groups;\n- claim that zkML is part of the V1 deployment profile;\n- eliminate all observability of a presentation event;\n- guarantee coercion resistance, non-transferability of a holder key, or human intent."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

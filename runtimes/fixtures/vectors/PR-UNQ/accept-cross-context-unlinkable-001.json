@@ -1,0 +1,54 @@
+{
+  "fixture": "PR-UNQ/accept/cross-context-unlinkable/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§2.3",
+      "§13",
+      "§26",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "the verifier set of this governed context (verifiers:service-*-registrars); issuer-verifier collusion NOT claimed resisted — EPP trade curve per §2.3",
+    "forHowLong": "one epoch (epoch:2026-07) under rollover:30d; reliance ends at epoch rollover or enrolment-root cryptoperiod end (§10.6 horizon discipline)",
+    "alongsideWhat": "the canonical §15.2 transcript only — credential fields, registry traffic, timing and network metadata are OUT of this reference model and re-open the analysis when present (§2.6)"
+  },
+  "inputs": {
+    "crossContext": true,
+    "subject": {
+      "humanId": "human:fixture-alice"
+    },
+    "descriptorA": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-account/1",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "verifierSet": "verifiers:service-alpha-registrars",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "descriptorB": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-listing-account/1",
+      "purpose": "purpose:marketplace-registration",
+      "scope": "scope:service-beta",
+      "verifierSet": "verifiers:service-beta-registrars",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "nullifierA": "14a6213ad0e4593645f4da857a858689dcddd74385d4abbefe267ef31da44d44",
+    "nullifierB": "36dbc419bf21668d2e254d94e674470d31114e5bcb43b6b84d283da091010c29"
+  },
+  "expect": {
+    "outcome": "accept"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "title": "Lab — show-composition",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "7cf9dd078788c3ce",
+      "text": "# show-composition — the show is one transcript (X3, M2 + M4)\n\nRunnable reference for **X3 — trust-task composition**\n([[X3 — Trust Task Composition]], research root).\nZero-dep Node ESM; imports the shared §15.2/§6.2 encodings from `../canonical/canonical.mjs`.\nRun: `node test.mjs` → `show-composition: 10/10 pass`."
+    },
+    {
+      "type": "markdown",
+      "id": "faab4651092cc1c5",
+      "text": "## What it demonstrates\n\nA trust task never requests one predicate — it presents a **show**: several PR-*\nmember proofs bound to ONE canonical transcript (`requestedPredicates` is a\nrequired §15.2 field, so the baseline already makes the show the unit of\nfreshness — canonical C9 is the same fact at digest level, S7/S8 here at show\nlevel). The model enforces the X3 composition algebra:\n\n- **Atomicity** — a show verifies as a whole or fails as a whole; every member\n  must be present and bound to the same transcript digest.\n- **Bundle profiles, not à-la-carte** — requests name a governed\n  `{bundleId, version}`; any other predicate set is rejected (cipher-suite\n  instinct; §18.3 cardinality control lifted to the request layer).\n- **The credential/artifact wall** — a `taskContext`-bearing credential may ride\n  along, but the verified statement never contains a `taskCompletion` claim and\n  a completion query is refused. Outcome evidence is a `threadId`-correlated\n  artifact on the Trust Task side of the boundary.\n- **Joint disclosure record** (M3 shape, §2.4 three-parameter form, as data):\n  `againstWhom` = the §19 observer list; `forHowLong` = longest-lived member\n  linkage (PR-UNQ's epoch dominates session); `alongsideWhat` = the member list.\n\nThe joint boundary is **wider than the union** of per-predicate boundaries\n(intersection narrowing, request-pattern leakage, cross-show correlation) —\nthat quantitative worksheet is X3 **M1**, design-doc work, not code here."
+    },
+    {
+      "type": "markdown",
+      "id": "a934f1bbec787fec",
+      "text": "## Bundle registry v0 (`bundles.mjs`)\n\n| id | version | profile | predicates |\n|---|---|---|---|\n| MLP-BASE | 1 | mlp | PR-LIV, PR-ISS, PR-HLD, PR-FRE |\n| MLP-BASE+DEL | 1 | mlp | MLP-BASE + PR-DEL |\n| EPP-UNIQ | 1 | epp | MLP-BASE + PR-PER, PR-UNQ |\n| EPP-UNIQ+DEL | 1 | epp | EPP-UNIQ + PR-DEL |\n| EPP-RANGE | 1 | epp | EPP-UNIQ + PR-RNG |\n\n+DEL variants carry §7.3 delegation as separate evidence (transcript gains the\noptional `delegationRef` field); PR-DEL is never inferred from PR-HLD."
+    },
+    {
+      "type": "markdown",
+      "id": "1c6616a27318a2df",
+      "text": "## Named rejection reasons (the seam to the X1 fixture reason register)\n\n| reason | meaning |\n|---|---|\n| `bundle-outside-registry` | unknown id/version, à-la-carte set, surplus members |\n| `partial-show-rejected` | atomicity: a member proof missing |\n| `member-transcript-mismatch` | member bound to a different transcript (transplant/replay, §15.1/§26.1) |\n| `stale-transcript` | expiry vs an explicitly supplied `now` (no `Date.now()` anywhere) |\n| `transcript-invalid` | malformed transcript or tampered digest |\n| `taskcontext-not-outcome-evidence` | completion asked of a show — category error |\n| `bundle-profile-mismatch` | (makeShow) bundle profile vs descriptor profile disagree |\n\nThese strings are intended verbatim as X1 fixture expected-reasons."
+    },
+    {
+      "type": "markdown",
+      "id": "57577442cbbf9390",
+      "text": "## Upstream surface\n\n§27.2 joint session with the Trust Task workstream: they own request semantics\nand outcome artifacts; we own transcript binding and the disclosure calculus.\nThe bundle registry is the shared object (M2 draft here; authority question —\ncontext authority §6.7 vs Trust-Task-owned — is open in X3)."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Lab — show-composition",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "7cf9dd078788c3ce",
+            "text": "# show-composition — the show is one transcript (X3, M2 + M4)\n\nRunnable reference for **X3 — trust-task composition**\n([[X3 — Trust Task Composition]], research root).\nZero-dep Node ESM; imports the shared §15.2/§6.2 encodings from `../canonical/canonical.mjs`.\nRun: `node test.mjs` → `show-composition: 10/10 pass`."
+          },
+          {
+            "type": "markdown",
+            "id": "faab4651092cc1c5",
+            "text": "## What it demonstrates\n\nA trust task never requests one predicate — it presents a **show**: several PR-*\nmember proofs bound to ONE canonical transcript (`requestedPredicates` is a\nrequired §15.2 field, so the baseline already makes the show the unit of\nfreshness — canonical C9 is the same fact at digest level, S7/S8 here at show\nlevel). The model enforces the X3 composition algebra:\n\n- **Atomicity** — a show verifies as a whole or fails as a whole; every member\n  must be present and bound to the same transcript digest.\n- **Bundle profiles, not à-la-carte** — requests name a governed\n  `{bundleId, version}`; any other predicate set is rejected (cipher-suite\n  instinct; §18.3 cardinality control lifted to the request layer).\n- **The credential/artifact wall** — a `taskContext`-bearing credential may ride\n  along, but the verified statement never contains a `taskCompletion` claim and\n  a completion query is refused. Outcome evidence is a `threadId`-correlated\n  artifact on the Trust Task side of the boundary.\n- **Joint disclosure record** (M3 shape, §2.4 three-parameter form, as data):\n  `againstWhom` = the §19 observer list; `forHowLong` = longest-lived member\n  linkage (PR-UNQ's epoch dominates session); `alongsideWhat` = the member list.\n\nThe joint boundary is **wider than the union** of per-predicate boundaries\n(intersection narrowing, request-pattern leakage, cross-show correlation) —\nthat quantitative worksheet is X3 **M1**, design-doc work, not code here."
+          },
+          {
+            "type": "markdown",
+            "id": "a934f1bbec787fec",
+            "text": "## Bundle registry v0 (`bundles.mjs`)\n\n| id | version | profile | predicates |\n|---|---|---|---|\n| MLP-BASE | 1 | mlp | PR-LIV, PR-ISS, PR-HLD, PR-FRE |\n| MLP-BASE+DEL | 1 | mlp | MLP-BASE + PR-DEL |\n| EPP-UNIQ | 1 | epp | MLP-BASE + PR-PER, PR-UNQ |\n| EPP-UNIQ+DEL | 1 | epp | EPP-UNIQ + PR-DEL |\n| EPP-RANGE | 1 | epp | EPP-UNIQ + PR-RNG |\n\n+DEL variants carry §7.3 delegation as separate evidence (transcript gains the\noptional `delegationRef` field); PR-DEL is never inferred from PR-HLD."
+          },
+          {
+            "type": "markdown",
+            "id": "1c6616a27318a2df",
+            "text": "## Named rejection reasons (the seam to the X1 fixture reason register)\n\n| reason | meaning |\n|---|---|\n| `bundle-outside-registry` | unknown id/version, à-la-carte set, surplus members |\n| `partial-show-rejected` | atomicity: a member proof missing |\n| `member-transcript-mismatch` | member bound to a different transcript (transplant/replay, §15.1/§26.1) |\n| `stale-transcript` | expiry vs an explicitly supplied `now` (no `Date.now()` anywhere) |\n| `transcript-invalid` | malformed transcript or tampered digest |\n| `taskcontext-not-outcome-evidence` | completion asked of a show — category error |\n| `bundle-profile-mismatch` | (makeShow) bundle profile vs descriptor profile disagree |\n\nThese strings are intended verbatim as X1 fixture expected-reasons."
+          },
+          {
+            "type": "markdown",
+            "id": "57577442cbbf9390",
+            "text": "## Upstream surface\n\n§27.2 joint session with the Trust Task workstream: they own request semantics\nand outcome artifacts; we own transcript binding and the disclosure calculus.\nThe bundle registry is the shared object (M2 draft here; authority question —\ncontext authority §6.7 vs Trust-Task-owned — is open in X3)."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

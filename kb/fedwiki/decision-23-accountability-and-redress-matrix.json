@@ -1,0 +1,26 @@
+{
+  "title": "Decision §23 — Accountability and redress matrix",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "9f835ccdcb8f4d47",
+      "text": "## 23. Accountability and redress matrix\n\n| Failure | Primary accountable party | Supporting parties | Required remedy path |\n|---|---|---|---|\n| False liveness or personhood determination | Issuer | biometric provider, accreditation authority | contest determination, re-evaluation, correction, status propagation |\n| Incorrect issuer qualification | registry/accreditation authority | governance authority, verifier | correct registry state, publish effective time, re-evaluate affected decisions |\n| Cryptographic acceptance of invalid proof | proof implementation/operator | profile maintainer, verifier | patch, revoke parameters or profiles, incident notice, reprocessing |\n| False duplicate or nullifier collision | profile/operator and context authority | issuer, verifier state operator | investigate, restore access, correct state, appeal |\n| Silent context expansion | context authority/governance | verifiers, registry | suspend expansion, notify, migrate, reset or segregate identifiers where possible |\n| Excess disclosure or correlation | party controlling the correlating surface | issuer, wallet, verifier, mediator, registry | stop processing, delete or segregate data, schema/profile correction, incident handling |\n| Invalid delegation decision | delegation issuer/authority and verifier | wallet/agent operator | revoke, correct authority state, reverse or halt action where possible |\n| Silent fallback or assurance downgrade | verifier and wallet/operator | mediator | disclose, re-run under correct profile, remediate affected decisions |\n| Inaccessible or misleading context presentation | wallet/verifier experience owner | governance authority | accessible alternative, correction, process redesign, redress |\n\nA proof profile MUST define not only who is responsible but how a wrong decision is contested and how corrections propagate to verifiers, registries, logs, and downstream decisions."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §23 — Accountability and redress matrix",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "9f835ccdcb8f4d47",
+            "text": "## 23. Accountability and redress matrix\n\n| Failure | Primary accountable party | Supporting parties | Required remedy path |\n|---|---|---|---|\n| False liveness or personhood determination | Issuer | biometric provider, accreditation authority | contest determination, re-evaluation, correction, status propagation |\n| Incorrect issuer qualification | registry/accreditation authority | governance authority, verifier | correct registry state, publish effective time, re-evaluate affected decisions |\n| Cryptographic acceptance of invalid proof | proof implementation/operator | profile maintainer, verifier | patch, revoke parameters or profiles, incident notice, reprocessing |\n| False duplicate or nullifier collision | profile/operator and context authority | issuer, verifier state operator | investigate, restore access, correct state, appeal |\n| Silent context expansion | context authority/governance | verifiers, registry | suspend expansion, notify, migrate, reset or segregate identifiers where possible |\n| Excess disclosure or correlation | party controlling the correlating surface | issuer, wallet, verifier, mediator, registry | stop processing, delete or segregate data, schema/profile correction, incident handling |\n| Invalid delegation decision | delegation issuer/authority and verifier | wallet/agent operator | revoke, correct authority state, reverse or halt action where possible |\n| Silent fallback or assurance downgrade | verifier and wallet/operator | mediator | disclose, re-run under correct profile, remediate affected decisions |\n| Inaccessible or misleading context presentation | wallet/verifier experience owner | governance authority | accessible alternative, correction, process redesign, redress |\n\nA proof profile MUST define not only who is responsible but how a wrong decision is contested and how corrections propagate to verifiers, registries, logs, and downstream decisions."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Decision §9 — Predicate decision register",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "d7c4aa275c7ba6ec",
+      "text": "## 9. Predicate decision register\n\n### 9.1 Summary register\n\n| ID | Predicate | Profile | Verifier may rely on | Verifier must not infer |\n|---|---|---|---|---|\n| PR-LIV | Qualifying liveness-attestation possession | MLP, EPP | Presenter possesses an unexpired, non-revoked attestation satisfying named policy and assurance predicates | That the underlying liveness decision was correct; that the presenter is globally unique; civil identity |\n| PR-PER | Personhood-policy satisfaction | EPP | Attested subject satisfies the named personhood policy under its stated assumptions | Civil identity; global uniqueness; incorruptibility of issuer; current liveness unless separately proved |\n| PR-ISS | Issuer qualification | MLP/EPP as required | Attestation issuer is accepted under a named accreditation or governance framework | Correctness of issuer decision; issuer independence unless proved; hidden issuer in every profile |\n| PR-UNQ | Scoped reuse detection | EPP | Same enrolled secret cannot produce multiple accepted actions under the same context, scope, purpose, and epoch without a repeated nullifier | One natural person globally; one enrolment across all issuers; cross-context identity |\n| PR-HLD | Holder-secret control | MLP, EPP | Prover controls the secret or key bound to the attestation and transcript | Non-transferability; physical presence of a particular human; agent authority; informed consent |\n| PR-FRE | Freshness and transcript binding | MLP, EPP | Proof was generated for the current canonical request and cannot be replayed into a materially different transcript | Anything about liveness, personhood, identity, or authority beyond bound inputs |\n| PR-RNG | Attested range | Optional extension | Hidden attested value satisfies the requested range | Exact value; suitability for unrelated purposes; absence of inference from a narrow range |\n| PR-DEL | Delegated authority evidence | Extension, separate evidence | Named agent is authorised for the current action within declared scope and time | Holder identity; human presence; non-coercion; authority outside the delegation |\n\nThe following sections provide the required paired boundary analysis."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §9 — Predicate decision register",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "d7c4aa275c7ba6ec",
+            "text": "## 9. Predicate decision register\n\n### 9.1 Summary register\n\n| ID | Predicate | Profile | Verifier may rely on | Verifier must not infer |\n|---|---|---|---|---|\n| PR-LIV | Qualifying liveness-attestation possession | MLP, EPP | Presenter possesses an unexpired, non-revoked attestation satisfying named policy and assurance predicates | That the underlying liveness decision was correct; that the presenter is globally unique; civil identity |\n| PR-PER | Personhood-policy satisfaction | EPP | Attested subject satisfies the named personhood policy under its stated assumptions | Civil identity; global uniqueness; incorruptibility of issuer; current liveness unless separately proved |\n| PR-ISS | Issuer qualification | MLP/EPP as required | Attestation issuer is accepted under a named accreditation or governance framework | Correctness of issuer decision; issuer independence unless proved; hidden issuer in every profile |\n| PR-UNQ | Scoped reuse detection | EPP | Same enrolled secret cannot produce multiple accepted actions under the same context, scope, purpose, and epoch without a repeated nullifier | One natural person globally; one enrolment across all issuers; cross-context identity |\n| PR-HLD | Holder-secret control | MLP, EPP | Prover controls the secret or key bound to the attestation and transcript | Non-transferability; physical presence of a particular human; agent authority; informed consent |\n| PR-FRE | Freshness and transcript binding | MLP, EPP | Proof was generated for the current canonical request and cannot be replayed into a materially different transcript | Anything about liveness, personhood, identity, or authority beyond bound inputs |\n| PR-RNG | Attested range | Optional extension | Hidden attested value satisfies the requested range | Exact value; suitability for unrelated purposes; absence of inference from a narrow range |\n| PR-DEL | Delegated authority evidence | Extension, separate evidence | Named agent is authorised for the current action within declared scope and time | Holder identity; human presence; non-coercion; authority outside the delegation |\n\nThe following sections provide the required paired boundary analysis."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

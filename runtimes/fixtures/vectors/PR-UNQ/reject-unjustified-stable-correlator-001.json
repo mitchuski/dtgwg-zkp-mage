@@ -1,0 +1,41 @@
+{
+  "fixture": "PR-UNQ/reject/unjustified-stable-correlator/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§6.2",
+      "§24",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "the verifier set of this governed context (verifiers:service-*-registrars); issuer-verifier collusion NOT claimed resisted — EPP trade curve per §2.3",
+    "forHowLong": "one epoch (epoch:2026-07) under rollover:30d; reliance ends at epoch rollover or enrolment-root cryptoperiod end (§10.6 horizon discipline)",
+    "alongsideWhat": "the canonical §15.2 transcript only — credential fields, registry traffic, timing and network metadata are OUT of this reference model and re-open the analysis when present (§2.6)"
+  },
+  "inputs": {
+    "descriptorCheck": true,
+    "contextDescriptor": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-account/1",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "verifierSet": "verifiers:service-alpha-registrars",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d",
+      "stableHolderTag": "holder:global-tag-77"
+    },
+    "subject": {
+      "humanId": "human:fixture-alice"
+    }
+  },
+  "expect": {
+    "outcome": "reject",
+    "reason": "unjustified-stable-correlator",
+    "claimCeiling": "the §6.2 field register is closed: every descriptor field is governed or justified-optional; an unregistered field is a stable correlator until proven otherwise (§24)"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "title": "Lab — mediator",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "20482136c18ccd07",
+      "text": "# Mediated-proving reference model (X7 · M2 + M3)\n\nRunnable reference for the mediated-proving profile — §21 of the\npredicate-assurance boundary decision, designed in\n[[X7 — Mediated Proving Profile]].\nThis runtime turns the §21.2 checklist into mechanism: the controls are\nconstructors, property checks, and named failures — not prose.\n\nRun: `node test.mjs` → 9/9."
+    },
+    {
+      "type": "markdown",
+      "id": "5466aad3b79b630c",
+      "text": "## What it demonstrates\n\n**The taxonomy, enforced at the constructor** (`mediator.mjs`):\n\n- **T0 (blind mediator)** — a job carries ONLY the public statement (a subset\n  of §15.2 transcript fields — deliberately excluding `challenge` and\n  `sessionId`, which the transcript digest binds but which would be session\n  correlators at the mediator), H-blinded inputs derived holder-side from the\n  holder secret, and the transcript digest.\n- **T1 (semi-trusted)** — additionally carries commitments. The reference\n  makes the cost visible: the enrolment commitment is *stable*, i.e. a\n  cross-context correlator, which is exactly why T1 is only admissible with\n  the full operational §21.2 controls.\n- **T2 (honeypot)** — cannot be constructed. `level: 'T2'`, or any job payload\n  smuggling `witnesses`/`biometrics`/`credentials`, throws\n  `honeypot-prohibited` (§21.2 closing sentence; §24 \"permit mediated proving\n  without non-retention and correlation controls\"). The mediator also rescans\n  at execution — prohibited on both sides of the wire.\n\n**The honest split** (X7 \"Does mediation change what the verifier may rely\non?\"): witness preparation stays holder-side — `deriveBlindedInputs` needs\nthe secret; the mediator computes a pure function of the prepared job. The\nsecret never appears in the serialized job (M1 does a structural scan).\n\n**P-ISOLATE** (§21.2 session/tenant isolation): execution is a pure function\nof the job; state is keyed per-session and dropped at completion; no\ncross-job caches. Test M3: holder B's proof record is byte-identical whether\nor not holder A's job ran first.\n\n**P-FORGET** (§21.2 non-retention): post-job state equals pre-job state\nmodulo the declared audit fields. Test M4, with a deliberately-wrong variant\n(`makeMediator({ retain: ['transcriptDigest'] })`) failing by name.\n\n**Per-context mediator pseudonym** (§6.6 \"common fallback or mediated-prover\nidentifiers\" prohibited): `mediatorFacingId(secret, contextDescriptorDigest)\n= nullifier(secret, 'mediator/' + digest)` — runtime 01's nullifier\ndiscipline with the mediator seated as counterparty *per context*. Fresh per\ncontext, stable within one (the §6.5 intentional in-context linkage), no\nderivable relation across contexts (M5).\n\n**Transcript binding** (§15 / §21.2): a proof record verifies only against\nits own transcript digest — a mediator cannot re-target a proof to another\nverifier or session (M9).\n\n**The four-exit downgrade machine** (`downgrade.mjs`, §21.3): exactly four\nexits from `LOCAL-PROVING-FAILED` — FAIL, NAMED-LOWER-PROFILE,\nGOVERNED-MEDIATOR, CHANNEL-SWITCH — per an explicit relying policy object.\nEvery transition emits a visibility record\n`{transition, target, visibleTo: ['person','verifier']}`; the machine\nvalidates its own emissions, so it physically cannot produce a silent\nstep-down. The silent record exists only via `__unsafeSilentTransition`\n(test fixture for the §26.1 negative test / §23 redress row) and is rejected\nas `silent-fallback` (M7). \"Governed mediator\" means registry-listed under\nsnapshot semantics: missing, malformed, or future snapshots and de-listed\nmediators all fail closed as `mediator-not-governed` — and the failure is\nitself a *visible* FAIL transition (M8)."
+    },
+    {
+      "type": "markdown",
+      "id": "dc2b36e3bd661bb8",
+      "text": "## The declared audit record\n\n`AUDIT_FIELDS = ['jobCount', 'epochBucket']` — frozen. A job counter and a\ncoarse (one-day) epoch bucket. **No** session ids, **no** timestamps, **no**\ntranscript digests: those are the correlators §6.6 and X4's log-field\nregister exclude. Epochs are explicit inputs (`executeJob(job, { epoch })`)\n— no `Date.now` anywhere in this runtime."
+    },
+    {
+      "type": "markdown",
+      "id": "e5e8e006ac8d18c3",
+      "text": "## Honest residue (§19 mediator observer row)\n\nEven a conformant T0 mediator still learns, per job: that a proving job\noccurred; its (coarse) timing; the requesting context via the statement and\ndescriptor digest (unless verifier-blinded — X7 open question); the public\ntranscript fields it computes over. That residue is irreducible in this\nmodel and must appear in the profile's disclosure-boundary record; X4's\nM-BATCH/M-SHAPE apply to the holder↔mediator channel for the network side."
+    },
+    {
+      "type": "markdown",
+      "id": "51c221d67d13a8da",
+      "text": "## Named failure codes (fixture-register candidates)\n\n- `honeypot-prohibited` — T2 construction or smuggled witness material\n- `silent-fallback` — transition not visible to both person and verifier\n- `mediator-not-governed` — mediator absent from a valid registry snapshot\n- `retention-violation:*` — post-job state kept a non-audit field\n  (e.g. `retention-violation:transcriptDigest`, `retention-violation:session`)\n- `job-transcript-mismatch` — proof record re-targeted to another transcript\n- also emitted: `proof-invalid`, `descriptor-transcript-mismatch`,\n  `unknown-mediator-level:*`, `unnamed-lower-profile`, `unnamed-channel`,\n  `unnamed-target`, `unknown-exit:*`, `missing-epoch`"
+    },
+    {
+      "type": "markdown",
+      "id": "737c9c59e2b9d9d9",
+      "text": "## What stays design-doc / research work\n\n- **M1 (profile skeleton)** — the eleven §21.2 items answered per taxonomy\n  level as a fill-in profile document: design-doc work in X7.\n- **M4 (assurance-semantics table)** — per predicate (PR-LIV, PR-UNQ,\n  PR-HLD, PR-FRE), what T0 vs T1 preserves or downgrades: design-doc work,\n  input to the §25 gate.\n- **Real blind delegated proving** — collaborative/MPC-assisted SNARK\n  proving, witness-encrypted jobs: a §29-class research item. This runtime\n  models the prepared-input split's *rules*, not its cryptography; where the\n  circuit cannot be split, T0 is not achievable and the profile must declare\n  downgraded assurance semantics.\n- Verifier-blinding at the mediator, the mediator-session clock (§22.1), and\n  exit-2-vs-exit-3 ranking: X7 open questions."
+    },
+    {
+      "type": "markdown",
+      "id": "d32c42f32003d070",
+      "text": "## Pointers\n\n- Design doc: [[X7 — Mediated Proving Profile]]\n- Decision anchors: §21 (21.1/21.2/21.3), §19, §20, §6.5/§6.6, §23, §24, §26.1\n- Spine: `../canonical/canonical.mjs` (§6.2 descriptor, §15.2 transcript);\n  `../01-uniqueness-nullifier/src/nullifier.mjs` (H, nullifier)\n- Sibling: `../quiet-presentation/` — tier property 6 deferred the mediated\n  path to this runtime's design row."
+    },
+    {
+      "type": "markdown",
+      "id": "728e912ccf100383",
+      "text": "## Upstream surface\n\nFor the TF's §21 profile text: the T0/T1/T2 taxonomy with constructor\nenforcement, the four-exit machine with mandatory two-party visibility, the\nP-ISOLATE/P-FORGET conformance properties with the frozen audit-field list,\nand the named failure codes above as §26.1 negative-test fixtures. The\nper-context mediator pseudonym is the §6.6 compliance mechanism to offer\nalongside. Joint seam with Human Experience (§27.4): this runtime supplies\n*what* must be indicated (which transition fired, who now observes); HX owns\n*how*."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Lab — mediator",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "20482136c18ccd07",
+            "text": "# Mediated-proving reference model (X7 · M2 + M3)\n\nRunnable reference for the mediated-proving profile — §21 of the\npredicate-assurance boundary decision, designed in\n[[X7 — Mediated Proving Profile]].\nThis runtime turns the §21.2 checklist into mechanism: the controls are\nconstructors, property checks, and named failures — not prose.\n\nRun: `node test.mjs` → 9/9."
+          },
+          {
+            "type": "markdown",
+            "id": "5466aad3b79b630c",
+            "text": "## What it demonstrates\n\n**The taxonomy, enforced at the constructor** (`mediator.mjs`):\n\n- **T0 (blind mediator)** — a job carries ONLY the public statement (a subset\n  of §15.2 transcript fields — deliberately excluding `challenge` and\n  `sessionId`, which the transcript digest binds but which would be session\n  correlators at the mediator), H-blinded inputs derived holder-side from the\n  holder secret, and the transcript digest.\n- **T1 (semi-trusted)** — additionally carries commitments. The reference\n  makes the cost visible: the enrolment commitment is *stable*, i.e. a\n  cross-context correlator, which is exactly why T1 is only admissible with\n  the full operational §21.2 controls.\n- **T2 (honeypot)** — cannot be constructed. `level: 'T2'`, or any job payload\n  smuggling `witnesses`/`biometrics`/`credentials`, throws\n  `honeypot-prohibited` (§21.2 closing sentence; §24 \"permit mediated proving\n  without non-retention and correlation controls\"). The mediator also rescans\n  at execution — prohibited on both sides of the wire.\n\n**The honest split** (X7 \"Does mediation change what the verifier may rely\non?\"): witness preparation stays holder-side — `deriveBlindedInputs` needs\nthe secret; the mediator computes a pure function of the prepared job. The\nsecret never appears in the serialized job (M1 does a structural scan).\n\n**P-ISOLATE** (§21.2 session/tenant isolation): execution is a pure function\nof the job; state is keyed per-session and dropped at completion; no\ncross-job caches. Test M3: holder B's proof record is byte-identical whether\nor not holder A's job ran first.\n\n**P-FORGET** (§21.2 non-retention): post-job state equals pre-job state\nmodulo the declared audit fields. Test M4, with a deliberately-wrong variant\n(`makeMediator({ retain: ['transcriptDigest'] })`) failing by name.\n\n**Per-context mediator pseudonym** (§6.6 \"common fallback or mediated-prover\nidentifiers\" prohibited): `mediatorFacingId(secret, contextDescriptorDigest)\n= nullifier(secret, 'mediator/' + digest)` — runtime 01's nullifier\ndiscipline with the mediator seated as counterparty *per context*. Fresh per\ncontext, stable within one (the §6.5 intentional in-context linkage), no\nderivable relation across contexts (M5).\n\n**Transcript binding** (§15 / §21.2): a proof record verifies only against\nits own transcript digest — a mediator cannot re-target a proof to another\nverifier or session (M9).\n\n**The four-exit downgrade machine** (`downgrade.mjs`, §21.3): exactly four\nexits from `LOCAL-PROVING-FAILED` — FAIL, NAMED-LOWER-PROFILE,\nGOVERNED-MEDIATOR, CHANNEL-SWITCH — per an explicit relying policy object.\nEvery transition emits a visibility record\n`{transition, target, visibleTo: ['person','verifier']}`; the machine\nvalidates its own emissions, so it physically cannot produce a silent\nstep-down. The silent record exists only via `__unsafeSilentTransition`\n(test fixture for the §26.1 negative test / §23 redress row) and is rejected\nas `silent-fallback` (M7). \"Governed mediator\" means registry-listed under\nsnapshot semantics: missing, malformed, or future snapshots and de-listed\nmediators all fail closed as `mediator-not-governed` — and the failure is\nitself a *visible* FAIL transition (M8)."
+          },
+          {
+            "type": "markdown",
+            "id": "dc2b36e3bd661bb8",
+            "text": "## The declared audit record\n\n`AUDIT_FIELDS = ['jobCount', 'epochBucket']` — frozen. A job counter and a\ncoarse (one-day) epoch bucket. **No** session ids, **no** timestamps, **no**\ntranscript digests: those are the correlators §6.6 and X4's log-field\nregister exclude. Epochs are explicit inputs (`executeJob(job, { epoch })`)\n— no `Date.now` anywhere in this runtime."
+          },
+          {
+            "type": "markdown",
+            "id": "e5e8e006ac8d18c3",
+            "text": "## Honest residue (§19 mediator observer row)\n\nEven a conformant T0 mediator still learns, per job: that a proving job\noccurred; its (coarse) timing; the requesting context via the statement and\ndescriptor digest (unless verifier-blinded — X7 open question); the public\ntranscript fields it computes over. That residue is irreducible in this\nmodel and must appear in the profile's disclosure-boundary record; X4's\nM-BATCH/M-SHAPE apply to the holder↔mediator channel for the network side."
+          },
+          {
+            "type": "markdown",
+            "id": "51c221d67d13a8da",
+            "text": "## Named failure codes (fixture-register candidates)\n\n- `honeypot-prohibited` — T2 construction or smuggled witness material\n- `silent-fallback` — transition not visible to both person and verifier\n- `mediator-not-governed` — mediator absent from a valid registry snapshot\n- `retention-violation:*` — post-job state kept a non-audit field\n  (e.g. `retention-violation:transcriptDigest`, `retention-violation:session`)\n- `job-transcript-mismatch` — proof record re-targeted to another transcript\n- also emitted: `proof-invalid`, `descriptor-transcript-mismatch`,\n  `unknown-mediator-level:*`, `unnamed-lower-profile`, `unnamed-channel`,\n  `unnamed-target`, `unknown-exit:*`, `missing-epoch`"
+          },
+          {
+            "type": "markdown",
+            "id": "737c9c59e2b9d9d9",
+            "text": "## What stays design-doc / research work\n\n- **M1 (profile skeleton)** — the eleven §21.2 items answered per taxonomy\n  level as a fill-in profile document: design-doc work in X7.\n- **M4 (assurance-semantics table)** — per predicate (PR-LIV, PR-UNQ,\n  PR-HLD, PR-FRE), what T0 vs T1 preserves or downgrades: design-doc work,\n  input to the §25 gate.\n- **Real blind delegated proving** — collaborative/MPC-assisted SNARK\n  proving, witness-encrypted jobs: a §29-class research item. This runtime\n  models the prepared-input split's *rules*, not its cryptography; where the\n  circuit cannot be split, T0 is not achievable and the profile must declare\n  downgraded assurance semantics.\n- Verifier-blinding at the mediator, the mediator-session clock (§22.1), and\n  exit-2-vs-exit-3 ranking: X7 open questions."
+          },
+          {
+            "type": "markdown",
+            "id": "d32c42f32003d070",
+            "text": "## Pointers\n\n- Design doc: [[X7 — Mediated Proving Profile]]\n- Decision anchors: §21 (21.1/21.2/21.3), §19, §20, §6.5/§6.6, §23, §24, §26.1\n- Spine: `../canonical/canonical.mjs` (§6.2 descriptor, §15.2 transcript);\n  `../01-uniqueness-nullifier/src/nullifier.mjs` (H, nullifier)\n- Sibling: `../quiet-presentation/` — tier property 6 deferred the mediated\n  path to this runtime's design row."
+          },
+          {
+            "type": "markdown",
+            "id": "728e912ccf100383",
+            "text": "## Upstream surface\n\nFor the TF's §21 profile text: the T0/T1/T2 taxonomy with constructor\nenforcement, the four-exit machine with mandatory two-party visibility, the\nP-ISOLATE/P-FORGET conformance properties with the frozen audit-field list,\nand the named failure codes above as §26.1 negative-test fixtures. The\nper-context mediator pseudonym is the §6.6 compliance mechanism to offer\nalongside. Joint seam with Human Experience (§27.4): this runtime supplies\n*what* must be indicated (which transition fired, who now observes); HX owns\n*how*."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

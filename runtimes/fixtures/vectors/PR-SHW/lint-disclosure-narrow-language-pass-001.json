@@ -1,0 +1,21 @@
+{
+  "fixture": "PR-SHW/lint/disclosure-narrow-language-pass/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§2.4",
+      "§2.6"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "any reader of the verifier output — end users, auditors, downstream relying parties who inherit the overclaim",
+    "forHowLong": "for as long as the output text is displayed, logged, or quoted",
+    "alongsideWhat": "the §9 \"must not infer\" register and the §24 prohibited-claims list the text is linted against (lint list v0, English only — §27.4 shared artefact)"
+  },
+  "inputs": {
+    "verifierOutput": "The verifier observes occurrence and timing of this presentation and the transcript fields accompanying it; the witness remains hidden."
+  },
+  "expect": {
+    "outcome": "accept"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "title": "Lab — rotation",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "e045d22d1ab3d0b7",
+      "text": "# Rotation — recovery and rotation without correlators (X5 as a runnable reference)\n\nImplements the X5 exploration\n([[X5 — Recovery and Rotation]]) at milestones\n**M1** (clock table), **M2** (hierarchical epoch derivation), **M3** (recovery-domain\nnullifier), **M4** (boundary pair, drafted below as prose), **M5** (edge-rekey over rt 07).\n10/10 properties (R1–R10), zero-dep, offline, deterministic (no `Date.now` — explicit\nepoch ids, nonces and `now` values throughout)."
+    },
+    {
+      "type": "markdown",
+      "id": "0e8b29e522320207",
+      "text": "## The two-case split (never share a mechanism)\n\n| case | mechanism | touches issuer? | touches biometric? |\n|---|---|---|---|\n| **routine epoch rotation** | holder-side one-way derivation `s_epoch = H('dtg-zkp/epoch-secret/v0', s_master, epoch)` (pools-lineage discipline) | **never** (R1: issuer state byte-identical across 5 rotations) | never |\n| **catastrophic recovery** | issuer-blind replacement: revoke (status change) → fresh enrol, guarded by biometric dedup + recovery-domain nullifier | yes | yes (dedup match) |\n\nA profile that routes routine rotation through re-enrolment has built a periodic biometric\ncorrelator into its lifecycle (X5). Here the routine path *cannot* reach the issuer: it is\npure derivation. PR-UNQ (§13.1) survives rotation (R2), epochs are unlinkable without the\nmaster (R3), and descent from the enrolled commitment is checkable without the master ever\ncrossing the verifier boundary (R4 — the check consumes commitment + epoch + candidate\nepoch secret only; the ZK version proves the derivation as a relation).\n\nRecovery stores **no old→new pair**: the issuer state is three flat tables of atoms\n(commitments→status, templates→status, timing events), and R5 audits *every* record\nstructurally for a pairing. Duplication is prevented by the dedup matcher (R7) bounded by\nthe recovery-domain nullifier (R6) — §13.3's assurance-dependency list made mechanical.\nThe recovery context is a governed §6.2 descriptor (built via `runtimes/canonical`), never\nan opaque label; its `epoch` field is the recovery epoch, so the rate limit (§6.5) is\nepoch-scoped and the recovery-domain state is epoch-bounded like any nullifier state\n(§22.2)."
+    },
+    {
+      "type": "markdown",
+      "id": "796f8a279ca5d1eb",
+      "text": "## M1 — the §22.1 clock table\n\nFamilies follow the X6 erosion-clocks split: **certification** = a governed validity\nperiod someone grants and can renew; **erosion** = a horizon that decays regardless of\ngovernance. `touchedBy` records which X5 case moves the clock — the load-bearing rows are\nin bold.\n\n| clock | family | touched by |\n|---|---|---|\n| proof-transcript lifetime | certification | neither |\n| challenge/session lifetime | certification | neither |\n| attestation validity | certification | catastrophic |\n| status freshness | certification | catastrophic |\n| **nullifier epoch** | certification | **routine** |\n| **enrolment-root cryptoperiod** | certification | **catastrophic** |\n| recovery-domain retention | certification | catastrophic |\n| policy and accreditation validity | certification | neither |\n| log retention | certification | neither |\n| proof-system security horizon | erosion | neither (migration is §22.3, out of X5 scope) |\n| biometric assurance horizon | erosion | catastrophic (recovery re-enters enrolment under the *current* horizon) |\n\nThe nullifier epoch and the enrolment-root cryptoperiod rotate on different clocks **by\nconstruction** — routine rotation turns only the first, recovery only the second.\n`validateClocks` enforces §22.2: a missing/`permanent`/`unbounded` bound fails\n`unbounded-clock:<name>` (R10)."
+    },
+    {
+      "type": "markdown",
+      "id": "819d1eee1051aa8d",
+      "text": "## M4 — boundary pair for \"credential replaced\" (drafted, prose)\n\n**Assurance record.** What a successful recovery establishes: *a person whose biometric\nmatched a live template, within an unexhausted recovery epoch of the governed recovery\ncontext, now holds exactly one live enrolment; the previously live commitment is revoked;\nthe recovery event is reuse-detected within its epoch.* In §13.2-style negative form, it\ndoes **not** establish: that the new commitment belongs to the *same natural person* as\nthe old one beyond dedup-match strength (the whole continuity claim rides on biometric\nmatch quality and resistance to fraudulent presentation — §13.3); that the old secret was\ndestroyed rather than merely abandoned (compromise vs loss — the attacker-window question\nX5 leaves open); that no recovery happened in *other* recovery epochs; or one-unique-human\nglobally. Against whom: resistant to issuer and verifier as linkers (no stored pair);\n**not** resistant to an adversary who defeats the dedup matcher. For how long: the\nrecovery nullifier persists one recovery epoch; the revoked status persists per status\npolicy.\n\n**Disclosure record.** The issuer's view of a recovery is a revocation event and an\nenrolment event, close in time. Even with no stored pair, that **revocation→enrolment\ntiming adjacency is an X4-class observable** (traffic-shape, §20/§19 issuer-as-observer):\nan issuer processing one recovery a week trivially reconstructs old→new by timing alone.\nMitigations are X4's, not X5's: batching, coarse timestamps, uniform event handling — the\nmodel keeps `events` records commitment-free to make the *residual* leak (timing only)\nexplicit. The **guardian/threshold variant** (X5 pattern 3 — correlator moves from issuer\nto guardian set, guardian-selection metadata as a social graph) is **deferred**: not\nmodelled here; needs its own boundary pair and a §22.2 answer for guardian-attestation\nepochs."
+    },
+    {
+      "type": "markdown",
+      "id": "77b26f4e00aa26e4",
+      "text": "## Deviation from the design doc (additive, not modify)\n\nX5's M2 says \"add `s_epoch = H_domain(s_master, epoch)` **to runtime 01**\". Runtime 01 is\na byte-stability dependency of the fixtures lane ([[Lab — fixtures]] re-derives its\ndigests), so the lab rule is **additive**: rt 01 is untouched; the derivation layer lives\nhere and imports rt 01's `enrol`/`nullifier`/`H`/`ContextRegistry`. Same construction,\ndifferent home. One knock-on: rt 01's `enrol(humanId)` is deterministic per human (it\nmodels biometric→secret), so a *replacement* enrolment seeds it with a per-instance value\n`H('dtg-zkp/enrol-instance/v0', humanId, nonce)` — modelling issuer-side entropy at\nenrolment without changing rt 01."
+    },
+    {
+      "type": "markdown",
+      "id": "c9f0fcf91f155f77",
+      "text": "## M5 — edge re-key over rt 07 (per-edge-type choice, §6.7)\n\nTwo honest options, both runnable (`edges.mjs`); a profile MUST pick per edge type and\nstate it — silent continuity is a silent context expansion (§6.7):\n\n- **`reformEdge`** — the old edge dies with the epoch key; a new encounter forms a fresh\n  edge. R8 asserts the old and new edge share *only* the unrotated counterparty's own\n  member id — nothing attributable to the rotator bridges the epochs.\n- **`continueEdge`** — a bridging value scoped by the edge's shared matching compression\n  (derivable only by the two parties — rt 07's `encounter` discipline). The counterparty\n  learns `same-enrolment-new-key` as an **explicit disclosure record** held in the pair's\n  private edge context (§6.5 intentional in-context linkage). R9 asserts the shared\n  graph's outside view carries neither the bridge nor the disclosure, and that the bridge\n  is not derivable from public edge values (§6.6). Feeds O9's schema-extension discussion."
+    },
+    {
+      "type": "markdown",
+      "id": "68d1fc81d8e7d531",
+      "text": "## Named failure codes (fixture-register v2 candidates)\n\n| code | source | ref |\n|---|---|---|\n| `recovery-rate-exceeded` | `recover()` recovery-domain gate | §6.5, §13.4, §22.2 |\n| `duplicate-live-enrolment` | `issuerEnrol()` dedup matcher | §13.3, X5 pattern 1 |\n| `epoch-descent-mismatch` | `checkDescent()` | X5 M2, §5.10 |\n| `unknown-enrolment` | `recover()` on a commitment the issuer never issued | §10.1 status semantics |\n| `unbounded-clock:<name>` | `validateClocks()` | §22.2 |\n\nReused unchanged: `duplicate-human-in-context` (rt 01, byte-exact — R2). Per §13.6,\n`duplicate-human-in-context` remains retry-ambiguous and **recovery is one of its named\nlegitimate causes**: a verifier seeing a repeated nullifier during a recovery window\nneeds the challenge route, not a permanent exclusion."
+    },
+    {
+      "type": "markdown",
+      "id": "d187e07f43e44aba",
+      "text": "## Files\n\n| file | role |\n|---|---|\n| `rotation.mjs` | routine derivation + descent commitment; issuer-blind recovery + recovery domain; `CLOCKS` + validator |\n| `edges.mjs` | M5 — epoch-aware rt 07 nodes, `reformEdge` / `continueEdge`, outside-view check |\n| `test.mjs` | R1–R10 (`node test.mjs` → `rotation: 10/10 pass`) |"
+    },
+    {
+      "type": "markdown",
+      "id": "974e3bf0453de531",
+      "text": "## Upstream surface (§29)\n\nDirect contribution to §29's open item (\"biometric-derived secret rotation … without\ncreating reusable biometric correlators\"): the case split + recovery-domain nullifier turn\nthe open question into a decidable profile choice with stated trades; fills §13.4's\n\"recovery or rotation domain\" input with concrete semantics and fixture-ready codes; feeds\n§13.6 (recovery as a named cause of repeated nullifiers); the M5 analysis is the shared\nsurface with the Credentials TF (rotation must not break R-DID per-counterparty freshness\n— R-DIDs here rotate with the epoch automatically because rt 07 derives them from\n`node.secret`)."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Lab — rotation",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "e045d22d1ab3d0b7",
+            "text": "# Rotation — recovery and rotation without correlators (X5 as a runnable reference)\n\nImplements the X5 exploration\n([[X5 — Recovery and Rotation]]) at milestones\n**M1** (clock table), **M2** (hierarchical epoch derivation), **M3** (recovery-domain\nnullifier), **M4** (boundary pair, drafted below as prose), **M5** (edge-rekey over rt 07).\n10/10 properties (R1–R10), zero-dep, offline, deterministic (no `Date.now` — explicit\nepoch ids, nonces and `now` values throughout)."
+          },
+          {
+            "type": "markdown",
+            "id": "0e8b29e522320207",
+            "text": "## The two-case split (never share a mechanism)\n\n| case | mechanism | touches issuer? | touches biometric? |\n|---|---|---|---|\n| **routine epoch rotation** | holder-side one-way derivation `s_epoch = H('dtg-zkp/epoch-secret/v0', s_master, epoch)` (pools-lineage discipline) | **never** (R1: issuer state byte-identical across 5 rotations) | never |\n| **catastrophic recovery** | issuer-blind replacement: revoke (status change) → fresh enrol, guarded by biometric dedup + recovery-domain nullifier | yes | yes (dedup match) |\n\nA profile that routes routine rotation through re-enrolment has built a periodic biometric\ncorrelator into its lifecycle (X5). Here the routine path *cannot* reach the issuer: it is\npure derivation. PR-UNQ (§13.1) survives rotation (R2), epochs are unlinkable without the\nmaster (R3), and descent from the enrolled commitment is checkable without the master ever\ncrossing the verifier boundary (R4 — the check consumes commitment + epoch + candidate\nepoch secret only; the ZK version proves the derivation as a relation).\n\nRecovery stores **no old→new pair**: the issuer state is three flat tables of atoms\n(commitments→status, templates→status, timing events), and R5 audits *every* record\nstructurally for a pairing. Duplication is prevented by the dedup matcher (R7) bounded by\nthe recovery-domain nullifier (R6) — §13.3's assurance-dependency list made mechanical.\nThe recovery context is a governed §6.2 descriptor (built via `runtimes/canonical`), never\nan opaque label; its `epoch` field is the recovery epoch, so the rate limit (§6.5) is\nepoch-scoped and the recovery-domain state is epoch-bounded like any nullifier state\n(§22.2)."
+          },
+          {
+            "type": "markdown",
+            "id": "796f8a279ca5d1eb",
+            "text": "## M1 — the §22.1 clock table\n\nFamilies follow the X6 erosion-clocks split: **certification** = a governed validity\nperiod someone grants and can renew; **erosion** = a horizon that decays regardless of\ngovernance. `touchedBy` records which X5 case moves the clock — the load-bearing rows are\nin bold.\n\n| clock | family | touched by |\n|---|---|---|\n| proof-transcript lifetime | certification | neither |\n| challenge/session lifetime | certification | neither |\n| attestation validity | certification | catastrophic |\n| status freshness | certification | catastrophic |\n| **nullifier epoch** | certification | **routine** |\n| **enrolment-root cryptoperiod** | certification | **catastrophic** |\n| recovery-domain retention | certification | catastrophic |\n| policy and accreditation validity | certification | neither |\n| log retention | certification | neither |\n| proof-system security horizon | erosion | neither (migration is §22.3, out of X5 scope) |\n| biometric assurance horizon | erosion | catastrophic (recovery re-enters enrolment under the *current* horizon) |\n\nThe nullifier epoch and the enrolment-root cryptoperiod rotate on different clocks **by\nconstruction** — routine rotation turns only the first, recovery only the second.\n`validateClocks` enforces §22.2: a missing/`permanent`/`unbounded` bound fails\n`unbounded-clock:<name>` (R10)."
+          },
+          {
+            "type": "markdown",
+            "id": "819d1eee1051aa8d",
+            "text": "## M4 — boundary pair for \"credential replaced\" (drafted, prose)\n\n**Assurance record.** What a successful recovery establishes: *a person whose biometric\nmatched a live template, within an unexhausted recovery epoch of the governed recovery\ncontext, now holds exactly one live enrolment; the previously live commitment is revoked;\nthe recovery event is reuse-detected within its epoch.* In §13.2-style negative form, it\ndoes **not** establish: that the new commitment belongs to the *same natural person* as\nthe old one beyond dedup-match strength (the whole continuity claim rides on biometric\nmatch quality and resistance to fraudulent presentation — §13.3); that the old secret was\ndestroyed rather than merely abandoned (compromise vs loss — the attacker-window question\nX5 leaves open); that no recovery happened in *other* recovery epochs; or one-unique-human\nglobally. Against whom: resistant to issuer and verifier as linkers (no stored pair);\n**not** resistant to an adversary who defeats the dedup matcher. For how long: the\nrecovery nullifier persists one recovery epoch; the revoked status persists per status\npolicy.\n\n**Disclosure record.** The issuer's view of a recovery is a revocation event and an\nenrolment event, close in time. Even with no stored pair, that **revocation→enrolment\ntiming adjacency is an X4-class observable** (traffic-shape, §20/§19 issuer-as-observer):\nan issuer processing one recovery a week trivially reconstructs old→new by timing alone.\nMitigations are X4's, not X5's: batching, coarse timestamps, uniform event handling — the\nmodel keeps `events` records commitment-free to make the *residual* leak (timing only)\nexplicit. The **guardian/threshold variant** (X5 pattern 3 — correlator moves from issuer\nto guardian set, guardian-selection metadata as a social graph) is **deferred**: not\nmodelled here; needs its own boundary pair and a §22.2 answer for guardian-attestation\nepochs."
+          },
+          {
+            "type": "markdown",
+            "id": "77b26f4e00aa26e4",
+            "text": "## Deviation from the design doc (additive, not modify)\n\nX5's M2 says \"add `s_epoch = H_domain(s_master, epoch)` **to runtime 01**\". Runtime 01 is\na byte-stability dependency of the fixtures lane ([[Lab — fixtures]] re-derives its\ndigests), so the lab rule is **additive**: rt 01 is untouched; the derivation layer lives\nhere and imports rt 01's `enrol`/`nullifier`/`H`/`ContextRegistry`. Same construction,\ndifferent home. One knock-on: rt 01's `enrol(humanId)` is deterministic per human (it\nmodels biometric→secret), so a *replacement* enrolment seeds it with a per-instance value\n`H('dtg-zkp/enrol-instance/v0', humanId, nonce)` — modelling issuer-side entropy at\nenrolment without changing rt 01."
+          },
+          {
+            "type": "markdown",
+            "id": "c9f0fcf91f155f77",
+            "text": "## M5 — edge re-key over rt 07 (per-edge-type choice, §6.7)\n\nTwo honest options, both runnable (`edges.mjs`); a profile MUST pick per edge type and\nstate it — silent continuity is a silent context expansion (§6.7):\n\n- **`reformEdge`** — the old edge dies with the epoch key; a new encounter forms a fresh\n  edge. R8 asserts the old and new edge share *only* the unrotated counterparty's own\n  member id — nothing attributable to the rotator bridges the epochs.\n- **`continueEdge`** — a bridging value scoped by the edge's shared matching compression\n  (derivable only by the two parties — rt 07's `encounter` discipline). The counterparty\n  learns `same-enrolment-new-key` as an **explicit disclosure record** held in the pair's\n  private edge context (§6.5 intentional in-context linkage). R9 asserts the shared\n  graph's outside view carries neither the bridge nor the disclosure, and that the bridge\n  is not derivable from public edge values (§6.6). Feeds O9's schema-extension discussion."
+          },
+          {
+            "type": "markdown",
+            "id": "68d1fc81d8e7d531",
+            "text": "## Named failure codes (fixture-register v2 candidates)\n\n| code | source | ref |\n|---|---|---|\n| `recovery-rate-exceeded` | `recover()` recovery-domain gate | §6.5, §13.4, §22.2 |\n| `duplicate-live-enrolment` | `issuerEnrol()` dedup matcher | §13.3, X5 pattern 1 |\n| `epoch-descent-mismatch` | `checkDescent()` | X5 M2, §5.10 |\n| `unknown-enrolment` | `recover()` on a commitment the issuer never issued | §10.1 status semantics |\n| `unbounded-clock:<name>` | `validateClocks()` | §22.2 |\n\nReused unchanged: `duplicate-human-in-context` (rt 01, byte-exact — R2). Per §13.6,\n`duplicate-human-in-context` remains retry-ambiguous and **recovery is one of its named\nlegitimate causes**: a verifier seeing a repeated nullifier during a recovery window\nneeds the challenge route, not a permanent exclusion."
+          },
+          {
+            "type": "markdown",
+            "id": "d187e07f43e44aba",
+            "text": "## Files\n\n| file | role |\n|---|---|\n| `rotation.mjs` | routine derivation + descent commitment; issuer-blind recovery + recovery domain; `CLOCKS` + validator |\n| `edges.mjs` | M5 — epoch-aware rt 07 nodes, `reformEdge` / `continueEdge`, outside-view check |\n| `test.mjs` | R1–R10 (`node test.mjs` → `rotation: 10/10 pass`) |"
+          },
+          {
+            "type": "markdown",
+            "id": "974e3bf0453de531",
+            "text": "## Upstream surface (§29)\n\nDirect contribution to §29's open item (\"biometric-derived secret rotation … without\ncreating reusable biometric correlators\"): the case split + recovery-domain nullifier turn\nthe open question into a decidable profile choice with stated trades; fills §13.4's\n\"recovery or rotation domain\" input with concrete semantics and fixture-ready codes; feeds\n§13.6 (recovery as a named cause of repeated nullifiers); the M5 analysis is the shared\nsurface with the Credentials TF (rotation must not break R-DID per-counterparty freshness\n— R-DIDs here rotate with the epoch automatically because rt 07 derives them from\n`node.secret`)."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

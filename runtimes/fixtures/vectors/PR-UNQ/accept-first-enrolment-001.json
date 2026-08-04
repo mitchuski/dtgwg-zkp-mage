@@ -1,0 +1,60 @@
+{
+  "fixture": "PR-UNQ/accept/first-enrolment/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§13",
+      "§5.12",
+      "§6.2",
+      "§15.2",
+      "§26"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "the verifier set of this governed context (verifiers:service-*-registrars); issuer-verifier collusion NOT claimed resisted — EPP trade curve per §2.3",
+    "forHowLong": "one epoch (epoch:2026-07) under rollover:30d; reliance ends at epoch rollover or enrolment-root cryptoperiod end (§10.6 horizon discipline)",
+    "alongsideWhat": "the canonical §15.2 transcript only — credential fields, registry traffic, timing and network metadata are OUT of this reference model and re-open the analysis when present (§2.6)"
+  },
+  "inputs": {
+    "contextDescriptor": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-account/1",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "verifierSet": "verifiers:service-alpha-registrars",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "transcript": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "verifier": "verifier:service-alpha-gate",
+      "contextDescriptorDigest": "06927aa4f24a377940d9870841997853b8a945e9e452e30ab6d2886896990fd2",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "challenge": "nonce:fixture-0001",
+      "sessionId": "session:fixture-0001",
+      "requestedPredicates": [
+        "PR-UNQ",
+        "PR-FRE"
+      ],
+      "policyRequirements": "assurance>=L2",
+      "expiry": "2026-08-01T00:00:00Z/clock:ntp-60s",
+      "snapshotRequirements": "root-age<=24h",
+      "encodingVersion": "dtg-zkp/canonical/v0"
+    },
+    "transcriptDigest": "a283789f68fd6e0f9e42e8b89a4d91b202cf004a54a1f8ba59c790b4560bfc13",
+    "subject": {
+      "humanId": "human:fixture-alice"
+    },
+    "priorPresentations": [],
+    "nullifier": "14a6213ad0e4593645f4da857a858689dcddd74385d4abbefe267ef31da44d44"
+  },
+  "expect": {
+    "outcome": "accept"
+  }
+}

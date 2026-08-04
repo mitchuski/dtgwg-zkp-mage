@@ -1,0 +1,26 @@
+{
+  "title": "Decision §31 — Recommended repository disposition",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "69d50499d5bb6fe4",
+      "text": "## 31. Recommended repository disposition\n\nThis document should be maintained in the implementation-guide workspace as the authoritative synthesis that precedes and binds the existing boundary templates, predicate register, context record, ADRs, schema profile, threat model, and conformance fixtures.\n\nRecommended path:\n\n```text\ndocs/implementation-guide/boundaries/predicate-assurance-boundary-decision.md\n```\n\nThe existing artefacts should remain, but their relationship should be clarified:\n\n- this document records the Task Force's substantive decisions and system-level semantics;\n- `context-decision-record.md` is the deployment/profile instantiation template;\n- `assurance-boundary-template.md` and `disclosure-boundary-template.md` are per-predicate evidence templates;\n- `predicate-boundary-register.md` is the compact traceability index;\n- the ADRs record atomic architectural decisions and their consequences;\n- the attestation-schema profile and field register operationalise the shared schema input;\n- conformance fixtures prove that independent implementations instantiate the decisions consistently.\n\nThe implementation-guide README and boundary README should link to this document first and label it as the decision baseline. The upstream discussion can then be told that the repository already contains most of the required architecture in decomposed form, but it does not yet contain one complete, reviewable decision document that resolves the context question and presents the full per-predicate assurance and disclosure model as a single coherent first draft."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §31 — Recommended repository disposition",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "69d50499d5bb6fe4",
+            "text": "## 31. Recommended repository disposition\n\nThis document should be maintained in the implementation-guide workspace as the authoritative synthesis that precedes and binds the existing boundary templates, predicate register, context record, ADRs, schema profile, threat model, and conformance fixtures.\n\nRecommended path:\n\n```text\ndocs/implementation-guide/boundaries/predicate-assurance-boundary-decision.md\n```\n\nThe existing artefacts should remain, but their relationship should be clarified:\n\n- this document records the Task Force's substantive decisions and system-level semantics;\n- `context-decision-record.md` is the deployment/profile instantiation template;\n- `assurance-boundary-template.md` and `disclosure-boundary-template.md` are per-predicate evidence templates;\n- `predicate-boundary-register.md` is the compact traceability index;\n- the ADRs record atomic architectural decisions and their consequences;\n- the attestation-schema profile and field register operationalise the shared schema input;\n- conformance fixtures prove that independent implementations instantiate the decisions consistently.\n\nThe implementation-guide README and boundary README should link to this document first and label it as the decision baseline. The upstream discussion can then be told that the repository already contains most of the required architecture in decomposed form, but it does not yet contain one complete, reviewable decision document that resolves the context question and presents the full per-predicate assurance and disclosure model as a single coherent first draft."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

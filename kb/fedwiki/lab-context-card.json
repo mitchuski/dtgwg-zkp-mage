@@ -1,0 +1,56 @@
+{
+  "title": "Lab — context-card",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "ce19e32dd421cf2a",
+      "text": "# context-card — the §6.8 human-legibility instrument (X2)\n\n**What this is.** The decision document's six-question human-legibility test (§6.8) made runnable:\na *context card* generated from the §6.2 canonical context descriptor itself, so the user-facing\ndescription provably matches the cryptographic configuration. The §26 requirement — \"evidence that\nuser-facing context descriptions match the cryptographic domain\" (§6.7 last authority duty) — becomes\na **derivation, not an audit**: the card carries the descriptor digest, the §15.2 transcript binds the\nsame digest, and a mismatch is a named build failure (`digest-mismatch`), not a finding.\n\n**Run:** `node test.mjs` → 13/13 · `node demo.mjs` → the rt 07 trust-graph-formation community-vote\ncontext rendered end-to-end (X2 M4 worked example; the MyTerms term↔field table stays in the design doc).\n**Reuses:** `../canonical/canonical.mjs` (§6.2 encoding + digest — one encoding, shared)."
+    },
+    {
+      "type": "markdown",
+      "id": "f973abf1f9147893",
+      "text": "## The field → question map (X2 design point 2)\n\n| Q | §6.8 question | §6.2 descriptor inputs |\n|---|---|---|\n| q1 | What activity is this proof for? | `purpose` · `scope` |\n| q2 | Who can recognise repeat use? | `verifierSet` · `contextAuthority` |\n| q3 | For how long is repeat use linkable? | `epoch` · `epochPolicy` · `retentionPolicy` |\n| q4 | What happens when the epoch changes? | `epochPolicy` · `nullifierVersion` |\n| q5 | Does fallback change who observes? | `provingMode` render *option* (§21.2) — not a §6.2 field; absent ⇒ \"local proving only — no additional observer\" |\n| q6 | How do I challenge a decision? | `contextAuthority` (§6.7 correction/appeal/challenge route) |\n\n`protocol`, `profile`, `contextPolicy` (and optional `registryDomain`) carry recorded\nnon-materiality justifications instead: version/identifier pins whose operational content is already\nrendered through q1–q6, surfaced via the digest (§6.8: internals need not be exposed — but the\nomission is recorded, never silent). `checkLegibility` re-verifies coverage from the card *text*\n(each mapped field's value must appear in its question), so a stripped mapping fails by name\n(`unrendered-field:<name>`).\n\n**Narrow language (§5.12).** The repeat-use answers use the mandatory phrase verbatim — verifiers\n\"recognise repeat use (scoped reuse detection)\" — and the checker sweeps all card text for the\nforbidden broad-personhood phrasing as a named failure.\n\n**Expansion made visible (§6.6/§6.7).** `diffCards` versions the card by digest and flags\n`expansion=true` when q2 (recognition set — conservatively, any change: opaque identifiers can't\nprove a subset) or q3 (linkability window — duration-compared; a shrink is a delta, not an\nexpansion) widened. What silent expansion looks like to a person is a card that didn't change when\nthe domain did — which the derivation makes impossible."
+    },
+    {
+      "type": "markdown",
+      "id": "27f3a04bfbeb2498",
+      "text": "## Boundary notes (recap from X2)\n\nA person relying on a card may rely on: *this rendering was derived from the same canonical\ndescriptor the proof transcript binds*. They must **not** infer that verifiers *behave* within the\ndescribed boundary — **the card states the governed domain, not runtime compliance** — nor that the\nauthority's policy is fair, nor that an accurate card implies informed consent. The card is itself a\nsurface: serve from the wallet or cache-bundled, never as a per-presentation remote lookup (§20)."
+    },
+    {
+      "type": "markdown",
+      "id": "d99cb63d4a7616e1",
+      "text": "## Pointers\n\n- Design doc: [[X2 — Context Legibility Instrument]] (research root — M1–M4 here, M5 pending).\n- Candidate upstream surface: a §27.4 Human Experience workstream note — \"the §6.8 test as a\n  derivation instrument,\" with this checker as evidence."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Lab — context-card",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "ce19e32dd421cf2a",
+            "text": "# context-card — the §6.8 human-legibility instrument (X2)\n\n**What this is.** The decision document's six-question human-legibility test (§6.8) made runnable:\na *context card* generated from the §6.2 canonical context descriptor itself, so the user-facing\ndescription provably matches the cryptographic configuration. The §26 requirement — \"evidence that\nuser-facing context descriptions match the cryptographic domain\" (§6.7 last authority duty) — becomes\na **derivation, not an audit**: the card carries the descriptor digest, the §15.2 transcript binds the\nsame digest, and a mismatch is a named build failure (`digest-mismatch`), not a finding.\n\n**Run:** `node test.mjs` → 13/13 · `node demo.mjs` → the rt 07 trust-graph-formation community-vote\ncontext rendered end-to-end (X2 M4 worked example; the MyTerms term↔field table stays in the design doc).\n**Reuses:** `../canonical/canonical.mjs` (§6.2 encoding + digest — one encoding, shared)."
+          },
+          {
+            "type": "markdown",
+            "id": "f973abf1f9147893",
+            "text": "## The field → question map (X2 design point 2)\n\n| Q | §6.8 question | §6.2 descriptor inputs |\n|---|---|---|\n| q1 | What activity is this proof for? | `purpose` · `scope` |\n| q2 | Who can recognise repeat use? | `verifierSet` · `contextAuthority` |\n| q3 | For how long is repeat use linkable? | `epoch` · `epochPolicy` · `retentionPolicy` |\n| q4 | What happens when the epoch changes? | `epochPolicy` · `nullifierVersion` |\n| q5 | Does fallback change who observes? | `provingMode` render *option* (§21.2) — not a §6.2 field; absent ⇒ \"local proving only — no additional observer\" |\n| q6 | How do I challenge a decision? | `contextAuthority` (§6.7 correction/appeal/challenge route) |\n\n`protocol`, `profile`, `contextPolicy` (and optional `registryDomain`) carry recorded\nnon-materiality justifications instead: version/identifier pins whose operational content is already\nrendered through q1–q6, surfaced via the digest (§6.8: internals need not be exposed — but the\nomission is recorded, never silent). `checkLegibility` re-verifies coverage from the card *text*\n(each mapped field's value must appear in its question), so a stripped mapping fails by name\n(`unrendered-field:<name>`).\n\n**Narrow language (§5.12).** The repeat-use answers use the mandatory phrase verbatim — verifiers\n\"recognise repeat use (scoped reuse detection)\" — and the checker sweeps all card text for the\nforbidden broad-personhood phrasing as a named failure.\n\n**Expansion made visible (§6.6/§6.7).** `diffCards` versions the card by digest and flags\n`expansion=true` when q2 (recognition set — conservatively, any change: opaque identifiers can't\nprove a subset) or q3 (linkability window — duration-compared; a shrink is a delta, not an\nexpansion) widened. What silent expansion looks like to a person is a card that didn't change when\nthe domain did — which the derivation makes impossible."
+          },
+          {
+            "type": "markdown",
+            "id": "27f3a04bfbeb2498",
+            "text": "## Boundary notes (recap from X2)\n\nA person relying on a card may rely on: *this rendering was derived from the same canonical\ndescriptor the proof transcript binds*. They must **not** infer that verifiers *behave* within the\ndescribed boundary — **the card states the governed domain, not runtime compliance** — nor that the\nauthority's policy is fair, nor that an accurate card implies informed consent. The card is itself a\nsurface: serve from the wallet or cache-bundled, never as a per-presentation remote lookup (§20)."
+          },
+          {
+            "type": "markdown",
+            "id": "d99cb63d4a7616e1",
+            "text": "## Pointers\n\n- Design doc: [[X2 — Context Legibility Instrument]] (research root — M1–M4 here, M5 pending).\n- Candidate upstream surface: a §27.4 Human Experience workstream note — \"the §6.8 test as a\n  derivation instrument,\" with this checker as evidence."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

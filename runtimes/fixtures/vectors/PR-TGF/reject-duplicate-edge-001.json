@@ -1,0 +1,56 @@
+{
+  "fixture": "PR-TGF/reject/duplicate-edge/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§13.6",
+      "§26"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "other community members and the community verifier set; the counterparty is assumed adversarial (user-as-adversary stance); proposer/prover non-collusion per the Gap",
+    "forHowLong": "the life of the VRC edge within epoch:2026-07; membership pseudonyms roll with the community epoch policy",
+    "alongsideWhat": "the serialized candidate and prior signed edges only; encounter timing and out-of-band channels are out of model (§2.6)"
+  },
+  "inputs": {
+    "communityDescriptor": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:community-membership/1",
+      "purpose": "purpose:trust-graph-formation",
+      "scope": "scope:vtc-alpha",
+      "verifierSet": "verifiers:vtc-alpha-swordsmen",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "rosterHumanIds": [
+      "human:fixture-1",
+      "human:fixture-2",
+      "human:fixture-3"
+    ],
+    "existingEdges": [
+      {
+        "a": "6376b6320bbcc6bbcdc147116aa5776c26f1ecf5ecb96e6fb8d21149c0bc0190",
+        "b": "8ed181385f2cd8963d74448bec1966c6d98f5bebacd57032a7342a38b53c9e41",
+        "vrc": "1586503cbe3a1e16b45f400d3a787a0e1d21967a558ac75516fc4b6200633832"
+      }
+    ],
+    "candidate": {
+      "a": "6376b6320bbcc6bbcdc147116aa5776c26f1ecf5ecb96e6fb8d21149c0bc0190",
+      "b": "8ed181385f2cd8963d74448bec1966c6d98f5bebacd57032a7342a38b53c9e41",
+      "rdidA": "63d1fc8562801c743cc248d04a2903dc1110baada8a0848bce787486075e5872",
+      "rdidB": "14ca83de4a94301ebd461a74f19360de0c2e50f11660d30498904ccbace2afb9",
+      "shared": "a20fffad6995296cc36190f2696e554555cfa348ccc385d1ea72fb9e1d67c022",
+      "consentA": true,
+      "consentB": true,
+      "claimedVrc": "26788c61f0dc24279a243200b6ba0798822f9279d7d2f2254e19a49eb1bc4282"
+    }
+  },
+  "expect": {
+    "outcome": "reject",
+    "reason": "duplicate-edge"
+  }
+}

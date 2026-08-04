@@ -1,0 +1,57 @@
+{
+  "fixture": "PR-SHW/reject/bundle-outside-registry/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§18.3",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "the §19 observer list of the show — verifier, issuer, colluding sets, mediated prover, network observer (X3 joint disclosure record)",
+    "forHowLong": "the transcript session; the PR-UNQ member linkage persists for the context epoch and dominates the session-lived members (X3 M3)",
+    "alongsideWhat": "the other member proofs of the same governed bundle, explicitly enumerated — the joint boundary is wider than the union of the members (§2.6; X3 M1 worksheet)"
+  },
+  "inputs": {
+    "show": {
+      "bundleId": "EPP-UNIQ",
+      "bundleVersion": "1",
+      "transcript": {
+        "protocol": "dtg-zkp/0.1",
+        "profile": "epp/1",
+        "verifier": "verifier:service-alpha-gate",
+        "contextDescriptorDigest": "06927aa4f24a377940d9870841997853b8a945e9e452e30ab6d2886896990fd2",
+        "purpose": "purpose:account-registration",
+        "scope": "scope:service-alpha",
+        "challenge": "nonce:fixture-shw-a",
+        "sessionId": "session:fixture-shw-a",
+        "requestedPredicates": [
+          "PR-LIV",
+          "PR-FRE"
+        ],
+        "policyRequirements": "assurance>=L2",
+        "expiry": 1800000000,
+        "snapshotRequirements": "root-age<=24h",
+        "encodingVersion": "dtg-zkp/canonical/v0"
+      },
+      "transcriptDigest": "05fb10218933dd2777afea34e9d1441e5928b0ceb6b79dff1b8b26578bd8f4e8",
+      "members": [
+        {
+          "predicate": "PR-LIV",
+          "transcriptDigest": "05fb10218933dd2777afea34e9d1441e5928b0ceb6b79dff1b8b26578bd8f4e8",
+          "commitment": "4cef4890d7b289661093bef94898b4ae8f8904ca809799716617867ac362b326"
+        },
+        {
+          "predicate": "PR-FRE",
+          "transcriptDigest": "05fb10218933dd2777afea34e9d1441e5928b0ceb6b79dff1b8b26578bd8f4e8",
+          "commitment": "11621283e5157db476ab1c9b631169a68ae1e7ed4f72cc18a5c1cdf4d90e7d0a"
+        }
+      ]
+    },
+    "now": 1752750000
+  },
+  "expect": {
+    "outcome": "reject",
+    "reason": "bundle-outside-registry"
+  }
+}

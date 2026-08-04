@@ -1,0 +1,86 @@
+{
+  "title": "Lab — erosion-record",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "3b2e132be65e20ba",
+      "text": "# erosion-record — X6 assurance horizons and erosion clocks (the PVM reading)\n\nThe lightest of the X-builds: a **record format + validator + one worked\nexample**, not a simulation. Honesty is the whole point — H(X | B_t) is not\nmeasurable in deployment, so the deliverable is *structure*: a record shape in\nwhich overclaiming a measurement is a validation failure, not a review comment.\n\nZero-dep Node ESM, offline, deterministic. Run: `node test.mjs` (8/8),\n`node example.mjs` (prints the PR-UNQ record canonically serialized)."
+    },
+    {
+      "type": "markdown",
+      "id": "5329466f6c54459c",
+      "text": "## What it demonstrates\n\n1. **Two clock families as validatable structure.** The §22.1 ten-clock list\n   sorts into the PVM V6 two-clock thesis: *certification* clocks (an\n   authority certifies a value and can re-certify it) and *erosion* clocks\n   (background accumulation nobody can renew — only re-base). The sort is\n   data (`clocks.mjs`), and its validator enforces exactly the ten clocks,\n   each with a family.\n2. **Rate-not-cliff, enforced.** \"For how long\" (§2.4) keeps its §10.6 cliffs\n   for the certification family, but every erosion entry must name its\n   accumulating observables (the §19/§20 surfaces feeding B_t), a monitoring\n   signal, and a re-base trigger. A bare expiry date wearing an erosion label\n   fails (`cliff-only-erosion-claim`); an erosion clock with no re-base\n   trigger is the §22.2 \"permanent or unbounded\" default the decision doc\n   prohibits (`erosion-clock-unwatched`).\n3. **Overclaim structurally impossible.** An estimated horizon's basis may be\n   `declared` or `estimated` — never `measured`. The X6 honesty rule is a\n   schema constraint (`overclaimed-measurement`)."
+    },
+    {
+      "type": "markdown",
+      "id": "6777bed5948eeafa",
+      "text": "## The ten clocks of §22.1, sorted (from X6, B1)\n\n| §22.1 clock | Family | Who moves it | Renewal / re-base path |\n|---|---|---|---|\n| proof-transcript-lifetime | certification | profile | expires per transcript (§15) |\n| challenge-session-lifetime | certification | verifier policy | new session |\n| attestation-validity | certification | issuer | re-issuance |\n| status-freshness | certification | status authority | refresh / snapshot (§12.4) |\n| nullifier-epoch | certification | context authority (§6.7) | governed rollover (§5.8) |\n| enrolment-root-cryptoperiod | certification | issuer/governance (§5.10) | rotation, migration (§22.3) |\n| policy-accreditation-validity | certification | governance authority | re-accreditation |\n| log-retention | **erosion** | retained observables accrue into B_t | deletion/segregation; §20 minimisation slows the rate |\n| proof-system-security-horizon | **erosion** (honesty note) | cryptanalytic background accumulates | re-base by migration (§22.3) |\n| biometric-assurance-horizon | **erosion** | biometric threat evolution (§5.9) | re-base by re-enrolment under stronger policy |\n\nThe §5.9 assurance horizon is the minimum over the erosion rows — the\nenvelope clock. **Honesty note** (carried as `bridgeCaveat: true` +\n`driver: 'computational'` on the proof-system row, surfaced by\n`getCaveats()`): the proof-system security horizon is erosion-family\n*operationally* (nobody renews it; only migration re-bases it), but its\ndriver is computational advance, whereas the PVM's R(t) drift is strictly\ninformational — the bridge is structural, not an identity."
+    },
+    {
+      "type": "markdown",
+      "id": "7afb4d677a248e25",
+      "text": "## The worked example (B3): PR-UNQ\n\n`example.mjs` extends Appendix B's compact boundary-record for PR-UNQ:\n\n- **Certification cliffs** — Appendix B's own: epoch 30 days, enrolment-root\n  cryptoperiod 2 years, nullifier retention 35 days.\n- **Erosion entry** (clock: log-retention) — accumulating observables: the\n  **within-context pseudonym** (§13.5 — every accepted show adds one stable\n  pseudonymous point to verifier-side B_t), the registry-query pattern, and\n  schema-variant rarity (§19). Monitoring signal: `nullifier-set-size ×\n  presentation-frequency proxy`. Estimated horizon: 2 years, basis\n  **declared** (restating Appendix B's `assurance_horizon`, not measuring\n  H(X | B_t)). Re-base trigger: epoch rollover / re-enrolment under §22.3\n  migration.\n- Accountable parties gain `erosion_monitoring` and `rebase_execution` —\n  the X6 open question \"where does re-base authority sit\" answered the §23\n  way: the trigger has a named party even though the clock has no renewer."
+    },
+    {
+      "type": "markdown",
+      "id": "c3315d9a67815d27",
+      "text": "## PVM anchor\n\nC82 (WP-07 Def 3.9 + Cor 5.4b lineage): erosion form\nR_inf(t) = Σε_i / H(X | B_t) — the proof does not leak more; it matters less.\n**Upstream posture: informative-only** — the candidate surface is an\ninformative research note beside §22/§26, cited as external research, offered\nthrough TF discussion. Never normative text, never a dependency of any\nprofile. The narrow language stays the decision doc's own; this build\ncontributes only the two-family sort and the rate-not-cliff record shape."
+    },
+    {
+      "type": "markdown",
+      "id": "ac20e4b7b04c4c02",
+      "text": "## Named failure codes (fixture-register candidates)\n\n| Code | Meaning |\n|---|---|\n| `missing-clock:<name>` | a §22.1 clock is absent from the sort |\n| `unsorted-clock:<name>` | a clock present without a valid family |\n| `unknown-clock:<name>` | a clock outside the closed §22.1 list |\n| `erosion-clock-unwatched` | erosion entry with no re-base trigger (§22.2 unbounded failure) |\n| `overclaimed-measurement` | horizon basis claims `measured` — H(X|B_t) is not measurable |\n| `cliff-only-erosion-claim` | erosion entry is a bare expiry with no observables |\n| `claim-missing-parameter:<which>` | §2.4 parameter absent (against_whom / for_how_long / alongside_what) |\n| `missing-clock-family:<family>` | for_how_long lacks the certification or erosion side |\n| `erosion-missing-observables` / `-monitoring-signal` / `-horizon` | erosion entry incomplete |\n| `invalid-horizon-basis` | basis outside {declared, estimated} (and not the measured overclaim) |\n| `missing-field:<name>` | Appendix B top-level field absent |"
+    },
+    {
+      "type": "markdown",
+      "id": "3391d3ead7f1a0f6",
+      "text": "## Files\n\n- `clocks.mjs` — B1: the ten-clock sort as data + `validateSort` + `getCaveats`\n- `record.mjs` — B2: erosion-aware residual-risk record, `validateRecord` +\n  `serializeRecord` (canonical, via `../canonical/canonical.mjs`)\n- `example.mjs` — B3: `PR_UNQ_EROSION_RECORD`\n- `test.mjs` — E1–E8\n\nDesign doc: [[X6 — Assurance Horizons and Erosion Clocks]]\n(research root). Decision doc anchors: §2.4, §5.9/§5.10, §13.5, §19/§20,\n§22.1–§22.3, §26, Appendix B."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Lab — erosion-record",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "3b2e132be65e20ba",
+            "text": "# erosion-record — X6 assurance horizons and erosion clocks (the PVM reading)\n\nThe lightest of the X-builds: a **record format + validator + one worked\nexample**, not a simulation. Honesty is the whole point — H(X | B_t) is not\nmeasurable in deployment, so the deliverable is *structure*: a record shape in\nwhich overclaiming a measurement is a validation failure, not a review comment.\n\nZero-dep Node ESM, offline, deterministic. Run: `node test.mjs` (8/8),\n`node example.mjs` (prints the PR-UNQ record canonically serialized)."
+          },
+          {
+            "type": "markdown",
+            "id": "5329466f6c54459c",
+            "text": "## What it demonstrates\n\n1. **Two clock families as validatable structure.** The §22.1 ten-clock list\n   sorts into the PVM V6 two-clock thesis: *certification* clocks (an\n   authority certifies a value and can re-certify it) and *erosion* clocks\n   (background accumulation nobody can renew — only re-base). The sort is\n   data (`clocks.mjs`), and its validator enforces exactly the ten clocks,\n   each with a family.\n2. **Rate-not-cliff, enforced.** \"For how long\" (§2.4) keeps its §10.6 cliffs\n   for the certification family, but every erosion entry must name its\n   accumulating observables (the §19/§20 surfaces feeding B_t), a monitoring\n   signal, and a re-base trigger. A bare expiry date wearing an erosion label\n   fails (`cliff-only-erosion-claim`); an erosion clock with no re-base\n   trigger is the §22.2 \"permanent or unbounded\" default the decision doc\n   prohibits (`erosion-clock-unwatched`).\n3. **Overclaim structurally impossible.** An estimated horizon's basis may be\n   `declared` or `estimated` — never `measured`. The X6 honesty rule is a\n   schema constraint (`overclaimed-measurement`)."
+          },
+          {
+            "type": "markdown",
+            "id": "6777bed5948eeafa",
+            "text": "## The ten clocks of §22.1, sorted (from X6, B1)\n\n| §22.1 clock | Family | Who moves it | Renewal / re-base path |\n|---|---|---|---|\n| proof-transcript-lifetime | certification | profile | expires per transcript (§15) |\n| challenge-session-lifetime | certification | verifier policy | new session |\n| attestation-validity | certification | issuer | re-issuance |\n| status-freshness | certification | status authority | refresh / snapshot (§12.4) |\n| nullifier-epoch | certification | context authority (§6.7) | governed rollover (§5.8) |\n| enrolment-root-cryptoperiod | certification | issuer/governance (§5.10) | rotation, migration (§22.3) |\n| policy-accreditation-validity | certification | governance authority | re-accreditation |\n| log-retention | **erosion** | retained observables accrue into B_t | deletion/segregation; §20 minimisation slows the rate |\n| proof-system-security-horizon | **erosion** (honesty note) | cryptanalytic background accumulates | re-base by migration (§22.3) |\n| biometric-assurance-horizon | **erosion** | biometric threat evolution (§5.9) | re-base by re-enrolment under stronger policy |\n\nThe §5.9 assurance horizon is the minimum over the erosion rows — the\nenvelope clock. **Honesty note** (carried as `bridgeCaveat: true` +\n`driver: 'computational'` on the proof-system row, surfaced by\n`getCaveats()`): the proof-system security horizon is erosion-family\n*operationally* (nobody renews it; only migration re-bases it), but its\ndriver is computational advance, whereas the PVM's R(t) drift is strictly\ninformational — the bridge is structural, not an identity."
+          },
+          {
+            "type": "markdown",
+            "id": "7afb4d677a248e25",
+            "text": "## The worked example (B3): PR-UNQ\n\n`example.mjs` extends Appendix B's compact boundary-record for PR-UNQ:\n\n- **Certification cliffs** — Appendix B's own: epoch 30 days, enrolment-root\n  cryptoperiod 2 years, nullifier retention 35 days.\n- **Erosion entry** (clock: log-retention) — accumulating observables: the\n  **within-context pseudonym** (§13.5 — every accepted show adds one stable\n  pseudonymous point to verifier-side B_t), the registry-query pattern, and\n  schema-variant rarity (§19). Monitoring signal: `nullifier-set-size ×\n  presentation-frequency proxy`. Estimated horizon: 2 years, basis\n  **declared** (restating Appendix B's `assurance_horizon`, not measuring\n  H(X | B_t)). Re-base trigger: epoch rollover / re-enrolment under §22.3\n  migration.\n- Accountable parties gain `erosion_monitoring` and `rebase_execution` —\n  the X6 open question \"where does re-base authority sit\" answered the §23\n  way: the trigger has a named party even though the clock has no renewer."
+          },
+          {
+            "type": "markdown",
+            "id": "c3315d9a67815d27",
+            "text": "## PVM anchor\n\nC82 (WP-07 Def 3.9 + Cor 5.4b lineage): erosion form\nR_inf(t) = Σε_i / H(X | B_t) — the proof does not leak more; it matters less.\n**Upstream posture: informative-only** — the candidate surface is an\ninformative research note beside §22/§26, cited as external research, offered\nthrough TF discussion. Never normative text, never a dependency of any\nprofile. The narrow language stays the decision doc's own; this build\ncontributes only the two-family sort and the rate-not-cliff record shape."
+          },
+          {
+            "type": "markdown",
+            "id": "ac20e4b7b04c4c02",
+            "text": "## Named failure codes (fixture-register candidates)\n\n| Code | Meaning |\n|---|---|\n| `missing-clock:<name>` | a §22.1 clock is absent from the sort |\n| `unsorted-clock:<name>` | a clock present without a valid family |\n| `unknown-clock:<name>` | a clock outside the closed §22.1 list |\n| `erosion-clock-unwatched` | erosion entry with no re-base trigger (§22.2 unbounded failure) |\n| `overclaimed-measurement` | horizon basis claims `measured` — H(X|B_t) is not measurable |\n| `cliff-only-erosion-claim` | erosion entry is a bare expiry with no observables |\n| `claim-missing-parameter:<which>` | §2.4 parameter absent (against_whom / for_how_long / alongside_what) |\n| `missing-clock-family:<family>` | for_how_long lacks the certification or erosion side |\n| `erosion-missing-observables` / `-monitoring-signal` / `-horizon` | erosion entry incomplete |\n| `invalid-horizon-basis` | basis outside {declared, estimated} (and not the measured overclaim) |\n| `missing-field:<name>` | Appendix B top-level field absent |"
+          },
+          {
+            "type": "markdown",
+            "id": "3391d3ead7f1a0f6",
+            "text": "## Files\n\n- `clocks.mjs` — B1: the ten-clock sort as data + `validateSort` + `getCaveats`\n- `record.mjs` — B2: erosion-aware residual-risk record, `validateRecord` +\n  `serializeRecord` (canonical, via `../canonical/canonical.mjs`)\n- `example.mjs` — B3: `PR_UNQ_EROSION_RECORD`\n- `test.mjs` — E1–E8\n\nDesign doc: [[X6 — Assurance Horizons and Erosion Clocks]]\n(research root). Decision doc anchors: §2.4, §5.9/§5.10, §13.5, §19/§20,\n§22.1–§22.3, §26, Appendix B."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

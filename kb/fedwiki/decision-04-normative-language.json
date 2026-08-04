@@ -1,0 +1,26 @@
+{
+  "title": "Decision §4 — Normative language",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "9c01e8195ab79390",
+      "text": "## 4. Normative language\n\nThe key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** are to be interpreted as requirement-strength indicators once this document is adopted into a normative specification. In this first draft they identify the intended force of proposed decisions."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §4 — Normative language",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "9c01e8195ab79390",
+            "text": "## 4. Normative language\n\nThe key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** are to be interpreted as requirement-strength indicators once this document is adopted into a normative specification. In this first draft they identify the intended force of proposed decisions."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

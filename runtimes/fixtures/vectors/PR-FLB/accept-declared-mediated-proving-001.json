@@ -1,0 +1,58 @@
+{
+  "fixture": "PR-FLB/accept/declared-mediated-proving/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§21",
+      "§21.2",
+      "§26"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "the mediated prover as an ADDITIONAL observer of the proving event (§21.2) — the exact observer a silent fallback hides",
+    "forHowLong": "the mediation event; mediator non-retention rules apply thereafter (§21.2)",
+    "alongsideWhat": "the §15.2 transcript whose optional provingMode field is the declaration surface — an absent field is an undeclared observer (§21, §27.4)"
+  },
+  "inputs": {
+    "contextDescriptor": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-account/1",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "verifierSet": "verifiers:service-alpha-registrars",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "transcript": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "verifier": "verifier:service-alpha-gate",
+      "contextDescriptorDigest": "06927aa4f24a377940d9870841997853b8a945e9e452e30ab6d2886896990fd2",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "challenge": "nonce:fixture-flb-2",
+      "sessionId": "session:fixture-flb-2",
+      "requestedPredicates": [
+        "PR-UNQ",
+        "PR-FRE"
+      ],
+      "policyRequirements": "assurance>=L2",
+      "expiry": "2026-08-01T00:00:00Z/clock:ntp-60s",
+      "snapshotRequirements": "root-age<=24h",
+      "encodingVersion": "dtg-zkp/canonical/v0",
+      "provingMode": "mediated:prover:relay-1"
+    },
+    "transcriptDigest": "105391005b2e141dbdf240aa47e90a320c47ea37e490f968774477f5f7ed9597",
+    "proving": {
+      "mediated": true,
+      "mode": "mediated:prover:relay-1"
+    }
+  },
+  "expect": {
+    "outcome": "accept"
+  }
+}

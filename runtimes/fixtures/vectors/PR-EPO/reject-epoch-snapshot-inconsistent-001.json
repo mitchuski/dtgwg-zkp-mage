@@ -1,0 +1,72 @@
+{
+  "fixture": "PR-EPO/reject/epoch-snapshot-inconsistent/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§12.4",
+      "§13.6",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "the governed verifier set relying on shared registry state; a stale or contradictory snapshot shifts what \"current\" means between verifiers (§12.4)",
+    "forHowLong": "one epoch under the descriptor's epochPolicy; snapshot validity per the transcript's snapshotRequirements root-age bound (§12.4)",
+    "alongsideWhat": "the §15.2 transcript, the carried registry snapshot, and the §6.2 descriptor's epoch fields (§12.4; §13.6 epoch disagreement)"
+  },
+  "inputs": {
+    "contextDescriptor": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-account/1",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "verifierSet": "verifiers:service-alpha-registrars",
+      "epoch": "epoch:2026-07",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "presentedUnderDescriptor": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "contextAuthority": "authority:fixture-vtc",
+      "contextPolicy": "policy:one-account/1",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "verifierSet": "verifiers:service-alpha-registrars",
+      "epoch": "epoch:2026-06",
+      "epochPolicy": "rollover:30d",
+      "nullifierVersion": "dtg-zkp/nullifier/v0",
+      "retentionPolicy": "retention:35d"
+    },
+    "transcript": {
+      "protocol": "dtg-zkp/0.1",
+      "profile": "epp/1",
+      "verifier": "verifier:service-alpha-gate",
+      "contextDescriptorDigest": "06927aa4f24a377940d9870841997853b8a945e9e452e30ab6d2886896990fd2",
+      "purpose": "purpose:account-registration",
+      "scope": "scope:service-alpha",
+      "challenge": "nonce:fixture-epo-1",
+      "sessionId": "session:fixture-epo-1",
+      "requestedPredicates": [
+        "PR-UNQ",
+        "PR-FRE"
+      ],
+      "policyRequirements": "assurance>=L2",
+      "expiry": "2026-08-01T00:00:00Z/clock:ntp-60s",
+      "snapshotRequirements": "root-age<=24h",
+      "encodingVersion": "dtg-zkp/canonical/v0"
+    },
+    "transcriptDigest": "eb4680fc9f80dc77fd08a10a1b6b8ef31b859e12a908b744325e2ad5fa4be2e6",
+    "subject": {
+      "humanId": "human:fixture-alice"
+    },
+    "nullifier": "3d6da9db7ee858b575bcec5175ac082b2ea362967c5bda2640a03fa2e3fe122d"
+  },
+  "expect": {
+    "outcome": "reject",
+    "reason": "epoch-snapshot-inconsistent",
+    "claimCeiling": "epoch disagreement is a legitimate cause of this observable (§13.6) — the rejection is deterministic, the diagnosis is not; route to challenge"
+  }
+}

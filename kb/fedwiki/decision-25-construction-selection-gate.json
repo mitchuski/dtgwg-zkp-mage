@@ -1,0 +1,26 @@
+{
+  "title": "Decision §25 — Construction-selection gate",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "d85f4584ff7a0d35",
+      "text": "## 25. Construction-selection gate\n\nA cryptographic construction SHALL NOT be ratified for a predicate until the Task Force has approved:\n\n1. the exact positive statement;\n2. the negative meaning;\n3. the context, scope, purpose, and epoch inputs;\n4. the adversary and collusion model;\n5. the assurance horizon and cryptoperiod;\n6. the issuer-attestation fields and disclosure modes;\n7. the composition and observable-event assumptions;\n8. the accountability and redress path;\n9. the required performance envelope;\n10. conformance fixtures and negative tests.\n\nConstruction evaluation SHOULD then consider:\n\n- proof and verification size;\n- proving time on representative consumer devices;\n- verifier throughput;\n- trusted-setup and toxic-waste assumptions;\n- parameter and proving-key distribution;\n- browser and mobile SDK viability;\n- library maturity and independent implementations;\n- deterministic test-vector support;\n- offline verification;\n- secure-hardware dependencies;\n- revocation and refresh cost;\n- recursive or folded composition feasibility;\n- post-quantum migration path;\n- error diagnosability;\n- fallback behaviour;\n- deployment and operational complexity."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §25 — Construction-selection gate",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "d85f4584ff7a0d35",
+            "text": "## 25. Construction-selection gate\n\nA cryptographic construction SHALL NOT be ratified for a predicate until the Task Force has approved:\n\n1. the exact positive statement;\n2. the negative meaning;\n3. the context, scope, purpose, and epoch inputs;\n4. the adversary and collusion model;\n5. the assurance horizon and cryptoperiod;\n6. the issuer-attestation fields and disclosure modes;\n7. the composition and observable-event assumptions;\n8. the accountability and redress path;\n9. the required performance envelope;\n10. conformance fixtures and negative tests.\n\nConstruction evaluation SHOULD then consider:\n\n- proof and verification size;\n- proving time on representative consumer devices;\n- verifier throughput;\n- trusted-setup and toxic-waste assumptions;\n- parameter and proving-key distribution;\n- browser and mobile SDK viability;\n- library maturity and independent implementations;\n- deterministic test-vector support;\n- offline verification;\n- secure-hardware dependencies;\n- revocation and refresh cost;\n- recursive or folded composition feasibility;\n- post-quantum migration path;\n- error diagnosability;\n- fallback behaviour;\n- deployment and operational complexity."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Decision §19 — Disclosure-boundary model",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "a1b8aea5334819de",
+      "text": "## 19. Disclosure-boundary model\n\nFor each predicate and profile, the implementation SHALL analyse at least the following observers:\n\n- verifier;\n- issuer;\n- issuer and verifier colluding;\n- multiple verifiers colluding;\n- registry operator;\n- accreditation authority;\n- mediated prover;\n- wallet or agent operator;\n- network observer;\n- auditor or log processor;\n- malicious application co-resident on the device.\n\nThe analysis SHALL cover:\n\n- deliberately disclosed values;\n- derived values and rarity;\n- persistent pseudonyms and nullifiers;\n- proof size, encoding, and timing fingerprints;\n- status and registry queries;\n- presentation occurrence, timing, retries, and frequency;\n- fallback and downgrade path;\n- mediator retention;\n- device and network identifiers;\n- cross-proof and cross-credential composition;\n- error codes and diagnostics;\n- human interaction and step-up events."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §19 — Disclosure-boundary model",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "a1b8aea5334819de",
+            "text": "## 19. Disclosure-boundary model\n\nFor each predicate and profile, the implementation SHALL analyse at least the following observers:\n\n- verifier;\n- issuer;\n- issuer and verifier colluding;\n- multiple verifiers colluding;\n- registry operator;\n- accreditation authority;\n- mediated prover;\n- wallet or agent operator;\n- network observer;\n- auditor or log processor;\n- malicious application co-resident on the device.\n\nThe analysis SHALL cover:\n\n- deliberately disclosed values;\n- derived values and rarity;\n- persistent pseudonyms and nullifiers;\n- proof size, encoding, and timing fingerprints;\n- status and registry queries;\n- presentation occurrence, timing, retries, and frequency;\n- fallback and downgrade path;\n- mediator retention;\n- device and network identifiers;\n- cross-proof and cross-credential composition;\n- error codes and diagnostics;\n- human interaction and step-up events."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

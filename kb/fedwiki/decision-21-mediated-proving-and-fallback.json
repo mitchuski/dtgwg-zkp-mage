@@ -1,0 +1,26 @@
+{
+  "title": "Decision §21 — Mediated proving and fallback",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "87677538d6d09922",
+      "text": "## 21. Mediated proving and fallback\n\n### 21.1 Decision\n\nA profile MAY support mediated proving when a holder device cannot generate the required proof, but the mediated path MUST be explicit and separately assessed.\n\n### 21.2 Required controls\n\nA mediated-proving profile MUST define:\n\n- data sent to the mediator;\n- whether the mediator sees witnesses, biometrics, commitments, or credentials;\n- non-retention and deletion requirements;\n- isolation between sessions and tenants;\n- authentication and authorisation;\n- transcript binding;\n- audit and incident response;\n- whether the mediator can link contexts;\n- user-visible indication that mediation is occurring;\n- equivalent or downgraded assurance semantics;\n- failure and fallback behaviour.\n\nA mediated prover MUST NOT become the biometric or credential honeypot the privacy architecture was intended to avoid.\n\n### 21.3 Downgrade decision\n\nWhen the preferred proof cannot be produced, the system MUST NOT silently step down. It MUST either fail, invoke an explicitly identified lower-assurance profile, use a governed mediator, or switch channel according to a relying policy visible to the person and verifier."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §21 — Mediated proving and fallback",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "87677538d6d09922",
+            "text": "## 21. Mediated proving and fallback\n\n### 21.1 Decision\n\nA profile MAY support mediated proving when a holder device cannot generate the required proof, but the mediated path MUST be explicit and separately assessed.\n\n### 21.2 Required controls\n\nA mediated-proving profile MUST define:\n\n- data sent to the mediator;\n- whether the mediator sees witnesses, biometrics, commitments, or credentials;\n- non-retention and deletion requirements;\n- isolation between sessions and tenants;\n- authentication and authorisation;\n- transcript binding;\n- audit and incident response;\n- whether the mediator can link contexts;\n- user-visible indication that mediation is occurring;\n- equivalent or downgraded assurance semantics;\n- failure and fallback behaviour.\n\nA mediated prover MUST NOT become the biometric or credential honeypot the privacy architecture was intended to avoid.\n\n### 21.3 Downgrade decision\n\nWhen the preferred proof cannot be produced, the system MUST NOT silently step down. It MUST either fail, invoke an explicitly identified lower-assurance profile, use a governed mediator, or switch channel according to a relying policy visible to the person and verifier."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

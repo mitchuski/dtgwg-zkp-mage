@@ -1,0 +1,26 @@
+{
+  "title": "Decision §27 — Cross-workstream dependencies",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "23d10b8a6fbdfaf5",
+      "text": "## 27. Cross-workstream dependencies\n\n### 27.1 Credentials work\n\nThe Credentials workstream needs the context and disclosure decisions before stabilising attestation fields. Credential fields can defeat context separation even when the proof construction is sound.\n\n### 27.2 Trust Tasks work\n\nTrust tasks compose predicates and determine request semantics. The transcript, purpose, scope, and multi-proof composition model require joint definition. Bundled proofs that are individually sound may leak jointly.\n\n### 27.3 Registry and governance work\n\nIssuer qualification, policy recognition, status, snapshot semantics, context authority, and change control depend on registries and governance. The ZKP profile consumes these decisions but does not define their institutional legitimacy.\n\n### 27.4 Human Experience work\n\nHuman Experience participation is required for context legibility, consent and notice, fallback and downgrade behaviour, accessibility, assisted use, error handling, challenge, correction, and redress.\n\n### 27.5 Agent and delegation work\n\nDelegation semantics require a separate structured evidence model and lifecycle. The ZKP profile should bind to that evidence but not invent authority semantics inside a key-control predicate."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §27 — Cross-workstream dependencies",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "23d10b8a6fbdfaf5",
+            "text": "## 27. Cross-workstream dependencies\n\n### 27.1 Credentials work\n\nThe Credentials workstream needs the context and disclosure decisions before stabilising attestation fields. Credential fields can defeat context separation even when the proof construction is sound.\n\n### 27.2 Trust Tasks work\n\nTrust tasks compose predicates and determine request semantics. The transcript, purpose, scope, and multi-proof composition model require joint definition. Bundled proofs that are individually sound may leak jointly.\n\n### 27.3 Registry and governance work\n\nIssuer qualification, policy recognition, status, snapshot semantics, context authority, and change control depend on registries and governance. The ZKP profile consumes these decisions but does not define their institutional legitimacy.\n\n### 27.4 Human Experience work\n\nHuman Experience participation is required for context legibility, consent and notice, fallback and downgrade behaviour, accessibility, assisted use, error handling, challenge, correction, and redress.\n\n### 27.5 Agent and delegation work\n\nDelegation semantics require a separate structured evidence model and lifecycle. The ZKP profile should bind to that evidence but not invent authority semantics inside a key-control predicate."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

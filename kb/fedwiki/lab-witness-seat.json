@@ -1,0 +1,86 @@
+{
+  "title": "Lab — witness-seat",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "84a336878dfdfe64",
+      "text": "# Witness seat — notes\n\n*The third seat on the dream cycle: a VWC (Verifiable Witness Credential) attesting the\ncollision, transcript-bound, optional, and never a substitute for consent.*\n\nSource design: [[VWC — Witness Seat]]. This build\ncloses the oldest open thread in the lab — runtime 07's \"next steps\" item 1 / candidate-note 3\n(\"a VWC slots straight in\"), flagged in the 2026-07-16 dream-cycle chronicle."
+    },
+    {
+      "type": "markdown",
+      "id": "c1c42df8e4ca25a2",
+      "text": "## What it demonstrates\n\nRuntime 07 grows the trust graph in two seats: 🧙 the Mage proposes the smallest edge, ⚔️ the\nSwordsman proves it across the Gap. This runtime seats the third role the cred-spec provides\nbut the cycle didn't hold: a **witness** — a registry-anchored third party who sees THAT a\nmeeting happened, never what it meant. The witness receives only the collision's public\ncommitment (the candidate's VRC commitment), the two fresh R-DIDs, and the §15.2 canonical\ntranscript; it signs an attestation binding those four together in its own\npersonhood-anchored name.\n\nThe seat upgrades edge **evidence** without touching edge **admissibility**:\n\n- a witnessed edge carries independent corroboration of the collision, re-verifiable later\n  from the stored edge + the retained transcript + the witness registry alone (W1);\n- an unwitnessed edge forms exactly as rt07 forms it today — the unwitnessed path is\n  byte-for-byte rt07's path (W2);\n- **W4 is the separation property**: the attestation is never consulted before, or instead\n  of, the Swordsman's verdict. A witness holding a perfectly valid attestation cannot move an\n  unconsented candidate past the consent gate, and cannot forge a proposal (it never holds\n  the parties' secrets, so it cannot mint their fresh per-counterparty R-DIDs). Witness ≠\n  consent ≠ proposal — the seat must not collapse into a third signing authority. This is the\n  same separation discipline X9's guardian doc states one level up (guardians attest\n  recovery, they do not authorize identity), inherited here at the edge-formation level."
+    },
+    {
+      "type": "markdown",
+      "id": "d4f339702c08df3b",
+      "text": "## Boundary notes (recap from the design doc)\n\n**Assurance boundary** — a verifier of a witnessed edge may rely on: *a registry-anchored\nthird party signed a statement binding this collision commitment to this transcript.* It\nmust NOT infer: that the collision's *content* was as claimed (the witness saw an encounter,\nnot the shared secret); that the witness was honest; that a witnessed edge is more\n*consensual* than an unwitnessed one. Accountability: the witness for its attestation; the\ncontext authority for who may witness.\n\n**Disclosure boundary** — the witness is a **§19 observer** (the observer list gains a row):\nit learns that two R-DIDs collided at a time, under a context. It must not learn the shared\nsecret or either party's M-DID — enforced structurally here (W5: view whitelist + canonical\ntranscript schema + lifetime-view scan). Witness *patterns* (who witnesses whom, how often)\nare themselves correlatable — a busy witness becomes a traffic-analysis hub; retention rules\nfor witness logs belong in the profile (§20 minimisation applies)."
+    },
+    {
+      "type": "markdown",
+      "id": "7cd556d7b977c33e",
+      "text": "## Named failure codes (fixture-register v3 candidates)\n\nChecked in this order; append-only candidates for `../fixtures/reasons.mjs` v3:\n\n| code | meaning |\n|---|---|\n| `witness-not-personhood-anchored` | membership ref does not resolve in the witness registry (W6) |\n| `witness-signature-invalid` | signature does not verify over the canonicalized attestation body (W3) |\n| `witness-transcript-mismatch` | attestation made under a different session/context — §15.1 replay discipline applied to witnesses (W3) |\n| `witness-rdid-mismatch` | attestation names different R-DIDs than the candidate's fresh per-counterparty ones (W3) |\n| `witness-collision-mismatch` | attestation binds a different collision commitment than the edge's recomputed VRC |\n| `witness-view-violation:<key>` | thrown (not returned): an encounter secret was offered to the witness — refused before the view is touched (W5) |\n\nDesign note: an *invalid* attestation rejects the witnessed-edge operation by name (an\nactive forgery is a mirage, like a forged VRC commitment — the Swordsman's posture), while an\n*absent* attestation changes nothing (W2). Absence ≠ forgery."
+    },
+    {
+      "type": "markdown",
+      "id": "3510ebba9c37126a",
+      "text": "## The additive refinement\n\nThe exploration's M1 wording (\"implement the witness channel in rt 07\") is refined to\n**own-directory-importing**: runtime 07 is a byte-stability dependency of the fixtures suite\n(its rejection strings are pinned in the reasons register, byte-for-byte), so this build\nlives in [[Lab — witness-seat]], imports rt07's `joinCommunity` / `Swordsman` / `Mage` /\n`encounter` and calls `Swordsman.prove` UNCHANGED — the lab's established precedent\n(show-composition, quiet-presentation, guardian-recovery all wrap rather than edit). W7 makes\nthe byte-stability contract executable: rt07's own `test.mjs` runs in a subprocess and must\nstill report 11/11.\n\nOther deliberate model choices:\n\n- **Signature model**: H-based MAC-style signature (`H(domain, key, canonicalize(body))`),\n  same modelling honesty as rt07's `roster` holding node secrets — the witness registry holds\n  the verification key; the circuit swaps a real signature scheme, the binding argument is\n  identical.\n- **Collision commitment** = the candidate's public VRC commitment (`claimedVrc`), which the\n  wrapper cross-checks against the Swordsman's independently recomputed `vrc` — the witness\n  binds to the recomputed value, never to the Mage's bare claim.\n- **Transcript** = the shared `canonical/canonical.mjs` §15.2 implementation (the design\n  doc's M2: one mechanism, shared with the freshness harness — a bare nonce is insufficient)."
+    },
+    {
+      "type": "markdown",
+      "id": "a409db0b8abcfe1d",
+      "text": "## Deferred (parked per the design doc)\n\n- **Same-VTC-witness question**: must a witness hold a VMC in the *same* VTC as the parties,\n  or is any registry-anchored witness acceptable? Same-community witnessing is stronger for\n  the community-anchored construction but shrinks the witness pool and increases\n  intra-community traffic analysis. (This build anchors the witness in a community via\n  rt07's `joinCommunity` but does not require it to be the *parties'* community.)\n- **Weighted propagation**: does a witnessed edge earn different weight? Weight semantics\n  belong to trust-task protocols, not the formation layer — parked, noted."
+    },
+    {
+      "type": "markdown",
+      "id": "f2b4e0d10e930c43",
+      "text": "## Pointers\n\n- Design doc: [[VWC — Witness Seat]] (M1–M4; this\n  build = M1 + M2, boundary recap above = M3 draft carried; M4 = the upstream candidate-note\n  feed, now backed by a runnable reference + W4 stated as a property).\n- Thread closed: rt07 `NOTES.md` \"next steps\" item 1 + candidate-note 3, flagged in the\n  2026-07-16 dream-cycle chronicle.\n- Decision doc anchors: §15/§15.1/§15.2 (canonical transcript, replay), §17.2/§7.3\n  (separation discipline — attestation ≠ authority), §19 (observer analysis), §20\n  (minimisation of witness logs).\n- Tests: `node test.mjs` → 15/15 (W1–W7; W7 = rt07 regression subprocess)."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Lab — witness-seat",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "84a336878dfdfe64",
+            "text": "# Witness seat — notes\n\n*The third seat on the dream cycle: a VWC (Verifiable Witness Credential) attesting the\ncollision, transcript-bound, optional, and never a substitute for consent.*\n\nSource design: [[VWC — Witness Seat]]. This build\ncloses the oldest open thread in the lab — runtime 07's \"next steps\" item 1 / candidate-note 3\n(\"a VWC slots straight in\"), flagged in the 2026-07-16 dream-cycle chronicle."
+          },
+          {
+            "type": "markdown",
+            "id": "c1c42df8e4ca25a2",
+            "text": "## What it demonstrates\n\nRuntime 07 grows the trust graph in two seats: 🧙 the Mage proposes the smallest edge, ⚔️ the\nSwordsman proves it across the Gap. This runtime seats the third role the cred-spec provides\nbut the cycle didn't hold: a **witness** — a registry-anchored third party who sees THAT a\nmeeting happened, never what it meant. The witness receives only the collision's public\ncommitment (the candidate's VRC commitment), the two fresh R-DIDs, and the §15.2 canonical\ntranscript; it signs an attestation binding those four together in its own\npersonhood-anchored name.\n\nThe seat upgrades edge **evidence** without touching edge **admissibility**:\n\n- a witnessed edge carries independent corroboration of the collision, re-verifiable later\n  from the stored edge + the retained transcript + the witness registry alone (W1);\n- an unwitnessed edge forms exactly as rt07 forms it today — the unwitnessed path is\n  byte-for-byte rt07's path (W2);\n- **W4 is the separation property**: the attestation is never consulted before, or instead\n  of, the Swordsman's verdict. A witness holding a perfectly valid attestation cannot move an\n  unconsented candidate past the consent gate, and cannot forge a proposal (it never holds\n  the parties' secrets, so it cannot mint their fresh per-counterparty R-DIDs). Witness ≠\n  consent ≠ proposal — the seat must not collapse into a third signing authority. This is the\n  same separation discipline X9's guardian doc states one level up (guardians attest\n  recovery, they do not authorize identity), inherited here at the edge-formation level."
+          },
+          {
+            "type": "markdown",
+            "id": "d4f339702c08df3b",
+            "text": "## Boundary notes (recap from the design doc)\n\n**Assurance boundary** — a verifier of a witnessed edge may rely on: *a registry-anchored\nthird party signed a statement binding this collision commitment to this transcript.* It\nmust NOT infer: that the collision's *content* was as claimed (the witness saw an encounter,\nnot the shared secret); that the witness was honest; that a witnessed edge is more\n*consensual* than an unwitnessed one. Accountability: the witness for its attestation; the\ncontext authority for who may witness.\n\n**Disclosure boundary** — the witness is a **§19 observer** (the observer list gains a row):\nit learns that two R-DIDs collided at a time, under a context. It must not learn the shared\nsecret or either party's M-DID — enforced structurally here (W5: view whitelist + canonical\ntranscript schema + lifetime-view scan). Witness *patterns* (who witnesses whom, how often)\nare themselves correlatable — a busy witness becomes a traffic-analysis hub; retention rules\nfor witness logs belong in the profile (§20 minimisation applies)."
+          },
+          {
+            "type": "markdown",
+            "id": "7cd556d7b977c33e",
+            "text": "## Named failure codes (fixture-register v3 candidates)\n\nChecked in this order; append-only candidates for `../fixtures/reasons.mjs` v3:\n\n| code | meaning |\n|---|---|\n| `witness-not-personhood-anchored` | membership ref does not resolve in the witness registry (W6) |\n| `witness-signature-invalid` | signature does not verify over the canonicalized attestation body (W3) |\n| `witness-transcript-mismatch` | attestation made under a different session/context — §15.1 replay discipline applied to witnesses (W3) |\n| `witness-rdid-mismatch` | attestation names different R-DIDs than the candidate's fresh per-counterparty ones (W3) |\n| `witness-collision-mismatch` | attestation binds a different collision commitment than the edge's recomputed VRC |\n| `witness-view-violation:<key>` | thrown (not returned): an encounter secret was offered to the witness — refused before the view is touched (W5) |\n\nDesign note: an *invalid* attestation rejects the witnessed-edge operation by name (an\nactive forgery is a mirage, like a forged VRC commitment — the Swordsman's posture), while an\n*absent* attestation changes nothing (W2). Absence ≠ forgery."
+          },
+          {
+            "type": "markdown",
+            "id": "3510ebba9c37126a",
+            "text": "## The additive refinement\n\nThe exploration's M1 wording (\"implement the witness channel in rt 07\") is refined to\n**own-directory-importing**: runtime 07 is a byte-stability dependency of the fixtures suite\n(its rejection strings are pinned in the reasons register, byte-for-byte), so this build\nlives in [[Lab — witness-seat]], imports rt07's `joinCommunity` / `Swordsman` / `Mage` /\n`encounter` and calls `Swordsman.prove` UNCHANGED — the lab's established precedent\n(show-composition, quiet-presentation, guardian-recovery all wrap rather than edit). W7 makes\nthe byte-stability contract executable: rt07's own `test.mjs` runs in a subprocess and must\nstill report 11/11.\n\nOther deliberate model choices:\n\n- **Signature model**: H-based MAC-style signature (`H(domain, key, canonicalize(body))`),\n  same modelling honesty as rt07's `roster` holding node secrets — the witness registry holds\n  the verification key; the circuit swaps a real signature scheme, the binding argument is\n  identical.\n- **Collision commitment** = the candidate's public VRC commitment (`claimedVrc`), which the\n  wrapper cross-checks against the Swordsman's independently recomputed `vrc` — the witness\n  binds to the recomputed value, never to the Mage's bare claim.\n- **Transcript** = the shared `canonical/canonical.mjs` §15.2 implementation (the design\n  doc's M2: one mechanism, shared with the freshness harness — a bare nonce is insufficient)."
+          },
+          {
+            "type": "markdown",
+            "id": "a409db0b8abcfe1d",
+            "text": "## Deferred (parked per the design doc)\n\n- **Same-VTC-witness question**: must a witness hold a VMC in the *same* VTC as the parties,\n  or is any registry-anchored witness acceptable? Same-community witnessing is stronger for\n  the community-anchored construction but shrinks the witness pool and increases\n  intra-community traffic analysis. (This build anchors the witness in a community via\n  rt07's `joinCommunity` but does not require it to be the *parties'* community.)\n- **Weighted propagation**: does a witnessed edge earn different weight? Weight semantics\n  belong to trust-task protocols, not the formation layer — parked, noted."
+          },
+          {
+            "type": "markdown",
+            "id": "f2b4e0d10e930c43",
+            "text": "## Pointers\n\n- Design doc: [[VWC — Witness Seat]] (M1–M4; this\n  build = M1 + M2, boundary recap above = M3 draft carried; M4 = the upstream candidate-note\n  feed, now backed by a runnable reference + W4 stated as a property).\n- Thread closed: rt07 `NOTES.md` \"next steps\" item 1 + candidate-note 3, flagged in the\n  2026-07-16 dream-cycle chronicle.\n- Decision doc anchors: §15/§15.1/§15.2 (canonical transcript, replay), §17.2/§7.3\n  (separation discipline — attestation ≠ authority), §19 (observer analysis), §20\n  (minimisation of witness logs).\n- Tests: `node test.mjs` → 15/15 (W1–W7; W7 = rt07 regression subprocess)."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

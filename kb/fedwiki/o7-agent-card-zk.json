@@ -1,0 +1,86 @@
+{
+  "title": "O7 — Agent Card ZK",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "6de5191f87365315",
+      "text": "# O7 — Agent-card ZK proofs\n\n*An agent proves capability and authority from its Agent card without revealing the principal or the full\ncard — built on PR-DEL's rule that authority is separate structured evidence, never key control.*\n\n**Register:** O7 · leverage 🟠 · **Ladder:** design doc (runtime 08 candidate)\n**Anchor (cred-spec):** planned DTG Verifiable Data Structures — **r-card** (self-updating vCard analog\ncarrying a VRC) and **Agent card** (modeled on the A2A AgentCard discovery document) · **VTA** (Verifiable\nTrust Agent, local/cloud) · VPC/P-DID.\n**Anchor (decision doc):** **PR-DEL** (§17) · §7.3 delegation extension · §14.2 (holder-key control is not\nagent authority).\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "2a302f2809ebf2e6",
+      "text": "## Why this is the agentprivacy reach\n\nThis is where DTG ZKP meets the agent-sovereignty thesis: agents acting on a principal's behalf without\neroding the principal's privacy. The cred-spec gestures at Agent cards; the decision doc supplies the\ndiscipline that makes the ZK version *safe to want*:\n\n> Agent authority SHALL NOT be inferred from holder-key control. (§7.3)\n\nSo an agent-card ZK proof is not \"the agent has a key\" — it is a proof over **separate delegation\nevidence**, §7.3's list made hidden-but-verifiable: principal, agent, delegated capability, scope, purpose,\nvalidity window, conditions, revocation status, step-up requirements, and coverage of the *current action*."
+    },
+    {
+      "type": "markdown",
+      "id": "552a0f35a01459a0",
+      "text": "## The statement\n\nThe presenting VTA proves, bound to the current canonical transcript (§15):\n\n1. it possesses an Agent card issued/endorsed under an accepted policy (registry-anchored — O4);\n2. the card's delegation evidence covers **capability c for the current action's scope and purpose**,\n   within validity, not revoked;\n3. the card is bound to a **P-DID/VPC** whose principal holds a personhood anchor (PHC leg — O2) —\n   *without revealing the principal, the P-DID linkage, or the card's other capabilities*.\n\nRides the **pairwise (VRC-based) construction** + holder binding (rt 04's seat), with the card's fields\nselectively disclosed as predicates.\n\n**Negative meaning, carried verbatim** (§17.3): not that the principal is currently present; not that the\nprincipal would approve every implementation detail; not that the agent is trustworthy outside the\ndelegation; not human intent or non-coercion (out of scope per §3.2)."
+    },
+    {
+      "type": "markdown",
+      "id": "01bfa2455f01dbfe",
+      "text": "## Design sketch\n\n**Card as commitment tree.** The Agent card is Merkleized per field-class (identity binding, capability\nlist, scope/purpose grants, validity, conditions, step-up rules). A proof opens only the path for the\nqueried capability + validity + binding — the discovery-document *shape* stays A2A-compatible in the clear\nform, while the ZK presentation reveals one branch.\n\n**Two-sided minimality:** the verifier learns \"an authorized agent for action X under policy P\" — not who\nthe agent serves. The principal-side unlinkability is the point: across verifiers, the same agent serving\nthe same principal must not be correlatable via the card (fresh presentation randomness; no stable card\nidentifiers — §6.6's prohibited-linkage list applies to card fields exactly as to credentials).\n\n**Revocation is first-class:** delegation is the credential class *most* likely to be revoked mid-life\n(§17.1 lists revocation state in the evidence). The O4 status patterns apply, with tighter freshness — a\nrelying policy for delegated actions should demand a younger registry snapshot than one for personhood.\n\n**Step-up:** §7.3's step-up requirements map to the transcript: a card may grant capability c only with an\naccompanying fresh PR-LIV proof from the *principal* — composable because all our predicates bind the same\ncanonical transcript (composition surface per §2.6 must be analysed jointly)."
+    },
+    {
+      "type": "markdown",
+      "id": "bbead2e02e5d3265",
+      "text": "## What exists\n\n- rt 04 STUB (holder/agent binding, VPC/P-DID + VTA presenter) — the binding seat this composes onto.\n- The agentprivacy lineage: hearthold/harness agent roles, the myterms/blade browser-agent line, and the\n  r-card already in canon — real surfaces that would *use* this profile.\n- A2A AgentCard as the interop target for the clear form."
+    },
+    {
+      "type": "markdown",
+      "id": "dad00094646bed98",
+      "text": "## Build plan\n\n- **M1 — card schema sketch:** field classes + §18.1 per-field register (each card field gets a disclosure\n  mode; capability lists are high-cardinality and fingerprint-prone — coarse capability classes preferred).\n- **M2 — boundary records:** PR-DEL assurance + disclosure pair for the card construction (the disclosure\n  record must cover the agent-traffic observer: *when* an agent proves is itself behavioural leakage, §20).\n- **M3 — runtime 08:** reference model — Merkleized card, capability query, transcript binding, negative\n  tests (revoked delegation fails; capability outside scope fails; key-control-only presentation fails\n  **by name** — the §26.1 \"holder-key control as sufficient agent authority\" rejection).\n- **M4 — TF/WG surface:** a short \"ZK presentations of Agent cards\" note where the cred-spec's Verifiable\n  Data Structures section invites future work; frame as the delegation extension's proof layer."
+    },
+    {
+      "type": "markdown",
+      "id": "a04cef58548107a8",
+      "text": "## Open questions\n\n- Who issues the Agent card — the principal (self-issued delegation, anchored by the principal's PHC) or a\n  governance layer (registered agents)? Likely both, as distinct profiles with different PR-ISS postures.\n- Chained delegation (agent delegates to sub-agent): §7.3's evidence list composes, but depth bounds and\n  transitive revocation need semantics — park for V2, note in the card schema."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "O7 — Agent Card ZK",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "6de5191f87365315",
+            "text": "# O7 — Agent-card ZK proofs\n\n*An agent proves capability and authority from its Agent card without revealing the principal or the full\ncard — built on PR-DEL's rule that authority is separate structured evidence, never key control.*\n\n**Register:** O7 · leverage 🟠 · **Ladder:** design doc (runtime 08 candidate)\n**Anchor (cred-spec):** planned DTG Verifiable Data Structures — **r-card** (self-updating vCard analog\ncarrying a VRC) and **Agent card** (modeled on the A2A AgentCard discovery document) · **VTA** (Verifiable\nTrust Agent, local/cloud) · VPC/P-DID.\n**Anchor (decision doc):** **PR-DEL** (§17) · §7.3 delegation extension · §14.2 (holder-key control is not\nagent authority).\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "2a302f2809ebf2e6",
+            "text": "## Why this is the agentprivacy reach\n\nThis is where DTG ZKP meets the agent-sovereignty thesis: agents acting on a principal's behalf without\neroding the principal's privacy. The cred-spec gestures at Agent cards; the decision doc supplies the\ndiscipline that makes the ZK version *safe to want*:\n\n> Agent authority SHALL NOT be inferred from holder-key control. (§7.3)\n\nSo an agent-card ZK proof is not \"the agent has a key\" — it is a proof over **separate delegation\nevidence**, §7.3's list made hidden-but-verifiable: principal, agent, delegated capability, scope, purpose,\nvalidity window, conditions, revocation status, step-up requirements, and coverage of the *current action*."
+          },
+          {
+            "type": "markdown",
+            "id": "552a0f35a01459a0",
+            "text": "## The statement\n\nThe presenting VTA proves, bound to the current canonical transcript (§15):\n\n1. it possesses an Agent card issued/endorsed under an accepted policy (registry-anchored — O4);\n2. the card's delegation evidence covers **capability c for the current action's scope and purpose**,\n   within validity, not revoked;\n3. the card is bound to a **P-DID/VPC** whose principal holds a personhood anchor (PHC leg — O2) —\n   *without revealing the principal, the P-DID linkage, or the card's other capabilities*.\n\nRides the **pairwise (VRC-based) construction** + holder binding (rt 04's seat), with the card's fields\nselectively disclosed as predicates.\n\n**Negative meaning, carried verbatim** (§17.3): not that the principal is currently present; not that the\nprincipal would approve every implementation detail; not that the agent is trustworthy outside the\ndelegation; not human intent or non-coercion (out of scope per §3.2)."
+          },
+          {
+            "type": "markdown",
+            "id": "01bfa2455f01dbfe",
+            "text": "## Design sketch\n\n**Card as commitment tree.** The Agent card is Merkleized per field-class (identity binding, capability\nlist, scope/purpose grants, validity, conditions, step-up rules). A proof opens only the path for the\nqueried capability + validity + binding — the discovery-document *shape* stays A2A-compatible in the clear\nform, while the ZK presentation reveals one branch.\n\n**Two-sided minimality:** the verifier learns \"an authorized agent for action X under policy P\" — not who\nthe agent serves. The principal-side unlinkability is the point: across verifiers, the same agent serving\nthe same principal must not be correlatable via the card (fresh presentation randomness; no stable card\nidentifiers — §6.6's prohibited-linkage list applies to card fields exactly as to credentials).\n\n**Revocation is first-class:** delegation is the credential class *most* likely to be revoked mid-life\n(§17.1 lists revocation state in the evidence). The O4 status patterns apply, with tighter freshness — a\nrelying policy for delegated actions should demand a younger registry snapshot than one for personhood.\n\n**Step-up:** §7.3's step-up requirements map to the transcript: a card may grant capability c only with an\naccompanying fresh PR-LIV proof from the *principal* — composable because all our predicates bind the same\ncanonical transcript (composition surface per §2.6 must be analysed jointly)."
+          },
+          {
+            "type": "markdown",
+            "id": "bbead2e02e5d3265",
+            "text": "## What exists\n\n- rt 04 STUB (holder/agent binding, VPC/P-DID + VTA presenter) — the binding seat this composes onto.\n- The agentprivacy lineage: hearthold/harness agent roles, the myterms/blade browser-agent line, and the\n  r-card already in canon — real surfaces that would *use* this profile.\n- A2A AgentCard as the interop target for the clear form."
+          },
+          {
+            "type": "markdown",
+            "id": "dad00094646bed98",
+            "text": "## Build plan\n\n- **M1 — card schema sketch:** field classes + §18.1 per-field register (each card field gets a disclosure\n  mode; capability lists are high-cardinality and fingerprint-prone — coarse capability classes preferred).\n- **M2 — boundary records:** PR-DEL assurance + disclosure pair for the card construction (the disclosure\n  record must cover the agent-traffic observer: *when* an agent proves is itself behavioural leakage, §20).\n- **M3 — runtime 08:** reference model — Merkleized card, capability query, transcript binding, negative\n  tests (revoked delegation fails; capability outside scope fails; key-control-only presentation fails\n  **by name** — the §26.1 \"holder-key control as sufficient agent authority\" rejection).\n- **M4 — TF/WG surface:** a short \"ZK presentations of Agent cards\" note where the cred-spec's Verifiable\n  Data Structures section invites future work; frame as the delegation extension's proof layer."
+          },
+          {
+            "type": "markdown",
+            "id": "a04cef58548107a8",
+            "text": "## Open questions\n\n- Who issues the Agent card — the principal (self-issued delegation, anchored by the principal's PHC) or a\n  governance layer (registered agents)? Likely both, as distinct profiles with different PR-ISS postures.\n- Chained delegation (agent delegates to sub-agent): §7.3's evidence list composes, but depth bounds and\n  transitive revocation need semantics — park for V2, note in the card schema."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Chronicle 2026-07-16 — Trust-Graph Formation Dream Cycle",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "6bfd9ea92ab6b4ff",
+      "text": "# 2026-07-16 · Trust-Graph Formation as a Dream-Agent Cycle\n\n*The ToIP trust graph named our objects and left the ZK layer open. We cohered to its names and contributed a\nharness runtime that makes how the graph forms runnable.*\n\n**Scope:** a coherence pass against the ToIP **DTG Credentials Core Specification**, and a new harness runtime\n(`07-trust-graph-formation`) that models graph formation as a Mage ⊥ Swordsman cycle. This is a stub chronicle;\nthe substance lives in the runtime and in the spellweb dream record.\n\n**Companion artefacts:**\n- Runtime + forms-spec: [[Lab — 07-trust-graph-formation]] (NOTES.md + src + 11/11 tests)\n- Coherence map: `~/dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-COHERENCE.md`\n- Opportunity register: `~/dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-OPPORTUNITIES.md`\n- Dream-cycle record (KG voice): `~/spellweb/chronicles/DREAM-2026-07-16.md`\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "7a973dcfe36b47c0",
+      "text": "## 1. The turn\n\nThe DTG Credentials Core Spec (Working Draft) fixes the credential/DID/registry model — VRC/VMC/VIC/VPC/VEC/VWC,\nthe R/M/C/P-DIDs, two ZK constructions, PHC and IDVC, the trust registry — and then, deliberately, defers \"the\ndetailed ZK protocols and registry-ZK interactions to future work.\" That deferred layer is the ZKP Task Force's\ncharter, and it is exactly the layer our framework already occupies. So the work was not to invent, but to\n**cohere**: name our objects the spec's way, then show the graph forming on top of them."
+    },
+    {
+      "type": "markdown",
+      "id": "b079636762ba9e72",
+      "text": "## 2. How the trust graph forms (matched both ways)\n\nThe framework's three-layer identity — **data GUID → relationship VRC → principal DID** — maps cleanly onto the\nspec's model, and the growth loop is the same one the whitepaper already carries: *matching compression → VRC\nformation → trust-graph growth*. The runtime states it as **collision → edge → propagation**:\n\n- **Node** = a personhood-anchored member (principal + data layers) → the spec's **M-DID in a VTC**, personhood\n  by the **PHC** one-per-person rule (mechanised by runtime 01's nullifier).\n- **Edge** = a **VRC** (relationship layer), \"proof of bilateral comprehension without central authority\" → a\n  VRC between two fresh, unique **R-DIDs** (pairwise ZK construction).\n- **Propagation** = trust reaching transitively → the spec's **community-anchored** ZK construction (two members\n  of one VTC prove a path without revealing themselves)."
+    },
+    {
+      "type": "markdown",
+      "id": "0aee7be8e36c5f5a",
+      "text": "## 3. The dream-agent cycle\n\nThe graph grows through the harness fold, not by fiat — the anti-Sybil discipline made structural:\n\n- **🧙 Mage** (`bnot`, proposer) proposes the smallest edge — a candidate VRC with each side's R-DID + consent.\n- **⚔️ Swordsman** (`neg`, prover) proves before signing: personhood on both endpoints, no self-edge, mutual\n  consent, fresh R-DIDs, and — across the Gap — recomputes the VRC commitment rather than trusting the proposer.\n- **⿻ The Gap** holds them apart. `neg(bnot(x)) = succ(x)`: one edge is added only when a reduction is signed by\n  a proof that did not collude with it. A bare proposal never grows the graph.\n\nEleven properties hold (bilateral consent, personhood gate, no self-Sybil, R-DID uniqueness, sign-to-advance,\nidempotent edge, the Gap catching a forged commitment, community propagation)."
+    },
+    {
+      "type": "markdown",
+      "id": "2568ac0b7d323366",
+      "text": "## 4. What remains open\n\n- A **witness seat (VWC)**: a third party attesting the collision, taskContext-bound — the natural next edge.\n- **Persona edges (VPC/P-DID)** so a node presents different personas per relationship.\n- Porting the edge-admissibility statement to circom once 01/03 land (endpoints prove membership without\n  revealing the member).\n\nNothing committed or pushed. Runtime and coherence work sit local in the ZKP-TF lab; this chronicle and the\nspellweb dream record are the framework-side and KG-side records of the same cycle.\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "67ebd6b42650eb77",
+      "text": "## 5. Addendum — 2026-07-17 · integration executed\n\nThe staged display integration crossed into this repo's working tree (uncommitted, G-M):\n\n- `src/app/model/page.tsx:255` re-anchored the VRC delegation line to the DTG Credentials Core Spec,\n  naming the pairwise construction.\n- `agentprivacy-skills/.../privacy-layer/agentprivacy-vrc-identity/SKILL.md` gained the DTG spec section,\n  with open problem #5 tied to the TF charter; `persona/agentprivacy-ambassador/SKILL.md` gained the\n  DTG WG/TF line.\n- `src/app/guide/the-dual-agent-harness/page.tsx` fleet list now names trust-graph formation — \"the DTG\n  credentials seam.\"\n- Two federation re-sync trains carried these into the guide snapshot (gate + verify PASS); deploy pending.\n\nThe exploration side moved to its own root: `~/dtgwg-cred-spec-main_mage` now holds the **Predicate &\nAssurance-Boundary Decision Document** (first draft for TF review — MLP/EPP profile split, paired\nassurance/disclosure boundaries per predicate, nullifier = scoped reuse detection) and `explorations/`\n(O1–O9 + the VWC witness seat as design docs, aligned to that baseline). The TF clone stays git-clean;\nper-surface status lives in [[Integration Map]].\n\n(⚔️⊥⿻⊥🧙)😊"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Chronicle 2026-07-16 — Trust-Graph Formation Dream Cycle",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "6bfd9ea92ab6b4ff",
+            "text": "# 2026-07-16 · Trust-Graph Formation as a Dream-Agent Cycle\n\n*The ToIP trust graph named our objects and left the ZK layer open. We cohered to its names and contributed a\nharness runtime that makes how the graph forms runnable.*\n\n**Scope:** a coherence pass against the ToIP **DTG Credentials Core Specification**, and a new harness runtime\n(`07-trust-graph-formation`) that models graph formation as a Mage ⊥ Swordsman cycle. This is a stub chronicle;\nthe substance lives in the runtime and in the spellweb dream record.\n\n**Companion artefacts:**\n- Runtime + forms-spec: [[Lab — 07-trust-graph-formation]] (NOTES.md + src + 11/11 tests)\n- Coherence map: `~/dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-COHERENCE.md`\n- Opportunity register: `~/dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-OPPORTUNITIES.md`\n- Dream-cycle record (KG voice): `~/spellweb/chronicles/DREAM-2026-07-16.md`\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "7a973dcfe36b47c0",
+            "text": "## 1. The turn\n\nThe DTG Credentials Core Spec (Working Draft) fixes the credential/DID/registry model — VRC/VMC/VIC/VPC/VEC/VWC,\nthe R/M/C/P-DIDs, two ZK constructions, PHC and IDVC, the trust registry — and then, deliberately, defers \"the\ndetailed ZK protocols and registry-ZK interactions to future work.\" That deferred layer is the ZKP Task Force's\ncharter, and it is exactly the layer our framework already occupies. So the work was not to invent, but to\n**cohere**: name our objects the spec's way, then show the graph forming on top of them."
+          },
+          {
+            "type": "markdown",
+            "id": "b079636762ba9e72",
+            "text": "## 2. How the trust graph forms (matched both ways)\n\nThe framework's three-layer identity — **data GUID → relationship VRC → principal DID** — maps cleanly onto the\nspec's model, and the growth loop is the same one the whitepaper already carries: *matching compression → VRC\nformation → trust-graph growth*. The runtime states it as **collision → edge → propagation**:\n\n- **Node** = a personhood-anchored member (principal + data layers) → the spec's **M-DID in a VTC**, personhood\n  by the **PHC** one-per-person rule (mechanised by runtime 01's nullifier).\n- **Edge** = a **VRC** (relationship layer), \"proof of bilateral comprehension without central authority\" → a\n  VRC between two fresh, unique **R-DIDs** (pairwise ZK construction).\n- **Propagation** = trust reaching transitively → the spec's **community-anchored** ZK construction (two members\n  of one VTC prove a path without revealing themselves)."
+          },
+          {
+            "type": "markdown",
+            "id": "0aee7be8e36c5f5a",
+            "text": "## 3. The dream-agent cycle\n\nThe graph grows through the harness fold, not by fiat — the anti-Sybil discipline made structural:\n\n- **🧙 Mage** (`bnot`, proposer) proposes the smallest edge — a candidate VRC with each side's R-DID + consent.\n- **⚔️ Swordsman** (`neg`, prover) proves before signing: personhood on both endpoints, no self-edge, mutual\n  consent, fresh R-DIDs, and — across the Gap — recomputes the VRC commitment rather than trusting the proposer.\n- **⿻ The Gap** holds them apart. `neg(bnot(x)) = succ(x)`: one edge is added only when a reduction is signed by\n  a proof that did not collude with it. A bare proposal never grows the graph.\n\nEleven properties hold (bilateral consent, personhood gate, no self-Sybil, R-DID uniqueness, sign-to-advance,\nidempotent edge, the Gap catching a forged commitment, community propagation)."
+          },
+          {
+            "type": "markdown",
+            "id": "2568ac0b7d323366",
+            "text": "## 4. What remains open\n\n- A **witness seat (VWC)**: a third party attesting the collision, taskContext-bound — the natural next edge.\n- **Persona edges (VPC/P-DID)** so a node presents different personas per relationship.\n- Porting the edge-admissibility statement to circom once 01/03 land (endpoints prove membership without\n  revealing the member).\n\nNothing committed or pushed. Runtime and coherence work sit local in the ZKP-TF lab; this chronicle and the\nspellweb dream record are the framework-side and KG-side records of the same cycle.\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "67ebd6b42650eb77",
+            "text": "## 5. Addendum — 2026-07-17 · integration executed\n\nThe staged display integration crossed into this repo's working tree (uncommitted, G-M):\n\n- `src/app/model/page.tsx:255` re-anchored the VRC delegation line to the DTG Credentials Core Spec,\n  naming the pairwise construction.\n- `agentprivacy-skills/.../privacy-layer/agentprivacy-vrc-identity/SKILL.md` gained the DTG spec section,\n  with open problem #5 tied to the TF charter; `persona/agentprivacy-ambassador/SKILL.md` gained the\n  DTG WG/TF line.\n- `src/app/guide/the-dual-agent-harness/page.tsx` fleet list now names trust-graph formation — \"the DTG\n  credentials seam.\"\n- Two federation re-sync trains carried these into the guide snapshot (gate + verify PASS); deploy pending.\n\nThe exploration side moved to its own root: `~/dtgwg-cred-spec-main_mage` now holds the **Predicate &\nAssurance-Boundary Decision Document** (first draft for TF review — MLP/EPP profile split, paired\nassurance/disclosure boundaries per predicate, nullifier = scoped reuse detection) and `explorations/`\n(O1–O9 + the VWC witness seat as design docs, aligned to that baseline). The TF clone stays git-clean;\nper-surface status lives in [[Integration Map]].\n\n(⚔️⊥⿻⊥🧙)😊"
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

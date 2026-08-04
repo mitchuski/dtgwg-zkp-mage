@@ -1,0 +1,96 @@
+{
+  "title": "O3 — IDVC Assurance Profile",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "dd1bfda3ea2e7390",
+      "text": "# O3 — The IDVC as the MLP's qualifying attestation\n\n*\"Valid IDVC at assurance ≥ L from a registry-listed IDVP\" — the standard liveness input contract, now\nshaped by PR-LIV and the attestation-schema discipline.*\n\n**Register:** O3 · leverage 🟠 · **Ladder:** design doc\n**Anchor (cred-spec):** **IDVC** — any W3C VC satisfying VTC/VTN identity-proofing; named issuers\nVeriff/Jumio/Yoti/Onfido/ID.me/Socure/Trulioo. Not a DTG credential subtype.\n**Anchor (decision doc):** **PR-LIV** (§10) · MLP (§7.1) · §18 attestation schema as the shared boundary\ndeterminant · §8 assurance allocation.\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "0f50f5dd1cd332f6",
+      "text": "## What changed with the decision doc\n\nThe original register entry proposed inventing an \"IDVC assurance-level predicate profile.\" The decision doc\nhas now *built the frame for it*: PR-LIV is exactly that predicate, stated with its negative meaning, and\nthe MLP is the profile it ships in. What remains for this exploration is the **binding**: mapping the\ncred-spec's IDVC onto the decision doc's attestation-schema requirements so a biometric provider knows\nprecisely what to sign.\n\nThe controlling insight (§18): **the issuer attestation schema determines both boundaries at once.** A\nfield added for assurance (policy version, assurance class, accreditation reference) is simultaneously a\ncorrelation surface. The IDVC profile is therefore a schema-governance exercise, not just a predicate."
+    },
+    {
+      "type": "markdown",
+      "id": "389f412f2e9a3cab",
+      "text": "## The statement (PR-LIV, instantiated for IDVCs)\n\nThe prover possesses an IDVC that: was signed by an IDVP accepted under the relying policy (via the trust\nregistry — O4); asserts a liveness/identity-proofing outcome satisfying the requested predicate; was issued\nunder an accepted policy id+version; carries an **assurance class ≥ L**; is within validity; is not revoked\nper the profile's status semantics; is bound to the holder secret; and is bound to the current canonical\ntranscript (§15).\n\n**Negative meaning, carried verbatim** (§10.2): not that the biometric determination was correct; not that\nthe sensor was uncompromised; not civil identity; not global uniqueness; not non-transfer of the key; not\nconsent or comprehension. The issuer stays accountable for the determination (§8, §10.5) — the proof carries\npossession + predicates, never correctness."
+    },
+    {
+      "type": "markdown",
+      "id": "86280931442eabc8",
+      "text": "## Schema mapping (IDVC fields → §18.2 field classes)\n\n| IDVC content | §18.2 field class | Disclosure treatment |\n|---|---|---|\n| IDVP identity | issuer accreditation reference | set-membership proof (concealment within registry set) or explicit — profile-specific (§12.3) |\n| assurance level L | assurance class | disclose the *threshold met*, minimise cardinality — rare classes fingerprint (§10.4) |\n| identity-proofing policy | policy identifier/version | prove accepted value or coarse class |\n| issuance/expiry | validity bounds | interval-membership proof, never exact timestamps (§18.3) |\n| subject binding | holder-binding commitment | hidden witness |\n| determination result | determination result | hidden; only the predicate disclosed |\n| status entry | status reference | privacy-preserving status / bounded cache (→ O4 revocation patterns) |\n\nProhibited (§18.3): stable issuer-local identifiers, raw biometrics, reversible templates, exact timestamps,\nunique status indices. **The no-biometric-honeypot stance is now a schema rule, not just a design stance.**"
+    },
+    {
+      "type": "markdown",
+      "id": "c8018916bf06096a",
+      "text": "## Why this is the Chair's boundary object\n\nThe MLP is deliberately shippable without the Sybil/unlinkability trade (§7.1) — it is the profile a\nbiometric provider (Realeyes included) can implement and benchmark first. This exploration gives the\nprovider side one page: *what your attestation must contain, what treatment each field gets, what the\nverifier may rely on, and what you remain accountable for.* The assurance-class enumeration needs a\nregistry field — coordinate with the Credentials TF (§27.1: credential fields can defeat context separation\neven when the proof is sound)."
+    },
+    {
+      "type": "markdown",
+      "id": "88c2d0175fc2a4d5",
+      "text": "## What exists\n\n- rt 02 STUB (ZKP of a valid issuer signature over a hidden attestation) — the construction seat.\n- The decision doc's PR-LIV boundary analysis (§10) — the assurance side, done.\n- The named-IDVP ecosystem in the cred-spec — the real-world issuer set."
+    },
+    {
+      "type": "markdown",
+      "id": "b896388b437bf1c2",
+      "text": "## Build plan\n\n- **M1 — schema profile draft:** the field table above as a versioned attestation-schema profile with the\n  §18.1 per-field register (purpose, disclosure mode, cardinality, stability, correlation risk, lifecycle).\n- **M2 — disclosure-boundary record** for PR-LIV-over-IDVC (§10.3/§10.4 instantiated: which correlators an\n  actual IDVP schema introduces — rare assurance classes, proving-time fingerprints, status patterns).\n- **M3 — rt 02 reference model:** signature-in-circuit over a mock IDVC with the M1 schema; negative tests\n  from §26.1 (expired/revoked accepted attestation must fail; output implying biometric correctness must be\n  rejected as a *claim*).\n- **M4 — provider one-pager** for TF review with the Chair."
+    },
+    {
+      "type": "markdown",
+      "id": "32cb6ae2a18af001",
+      "text": "## Open questions\n\n- Signature scheme reality: named IDVPs sign classical W3C VCs (ECDSA/EdDSA) — signature-in-circuit cost vs\n  issuer re-signing in a ZK-friendly scheme vs format-level selective disclosure (BBS+/SD-JWT) as the\n  carrier with our predicate layered on. §25's evaluation list decides.\n- Assurance-class vocabulary: whose enumeration — ours, the registry's, or an external framework\n  (NIST IAL/…)? Cardinality-minimisation (§18.2) argues for a small mapped set."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "O3 — IDVC Assurance Profile",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "dd1bfda3ea2e7390",
+            "text": "# O3 — The IDVC as the MLP's qualifying attestation\n\n*\"Valid IDVC at assurance ≥ L from a registry-listed IDVP\" — the standard liveness input contract, now\nshaped by PR-LIV and the attestation-schema discipline.*\n\n**Register:** O3 · leverage 🟠 · **Ladder:** design doc\n**Anchor (cred-spec):** **IDVC** — any W3C VC satisfying VTC/VTN identity-proofing; named issuers\nVeriff/Jumio/Yoti/Onfido/ID.me/Socure/Trulioo. Not a DTG credential subtype.\n**Anchor (decision doc):** **PR-LIV** (§10) · MLP (§7.1) · §18 attestation schema as the shared boundary\ndeterminant · §8 assurance allocation.\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "0f50f5dd1cd332f6",
+            "text": "## What changed with the decision doc\n\nThe original register entry proposed inventing an \"IDVC assurance-level predicate profile.\" The decision doc\nhas now *built the frame for it*: PR-LIV is exactly that predicate, stated with its negative meaning, and\nthe MLP is the profile it ships in. What remains for this exploration is the **binding**: mapping the\ncred-spec's IDVC onto the decision doc's attestation-schema requirements so a biometric provider knows\nprecisely what to sign.\n\nThe controlling insight (§18): **the issuer attestation schema determines both boundaries at once.** A\nfield added for assurance (policy version, assurance class, accreditation reference) is simultaneously a\ncorrelation surface. The IDVC profile is therefore a schema-governance exercise, not just a predicate."
+          },
+          {
+            "type": "markdown",
+            "id": "389f412f2e9a3cab",
+            "text": "## The statement (PR-LIV, instantiated for IDVCs)\n\nThe prover possesses an IDVC that: was signed by an IDVP accepted under the relying policy (via the trust\nregistry — O4); asserts a liveness/identity-proofing outcome satisfying the requested predicate; was issued\nunder an accepted policy id+version; carries an **assurance class ≥ L**; is within validity; is not revoked\nper the profile's status semantics; is bound to the holder secret; and is bound to the current canonical\ntranscript (§15).\n\n**Negative meaning, carried verbatim** (§10.2): not that the biometric determination was correct; not that\nthe sensor was uncompromised; not civil identity; not global uniqueness; not non-transfer of the key; not\nconsent or comprehension. The issuer stays accountable for the determination (§8, §10.5) — the proof carries\npossession + predicates, never correctness."
+          },
+          {
+            "type": "markdown",
+            "id": "86280931442eabc8",
+            "text": "## Schema mapping (IDVC fields → §18.2 field classes)\n\n| IDVC content | §18.2 field class | Disclosure treatment |\n|---|---|---|\n| IDVP identity | issuer accreditation reference | set-membership proof (concealment within registry set) or explicit — profile-specific (§12.3) |\n| assurance level L | assurance class | disclose the *threshold met*, minimise cardinality — rare classes fingerprint (§10.4) |\n| identity-proofing policy | policy identifier/version | prove accepted value or coarse class |\n| issuance/expiry | validity bounds | interval-membership proof, never exact timestamps (§18.3) |\n| subject binding | holder-binding commitment | hidden witness |\n| determination result | determination result | hidden; only the predicate disclosed |\n| status entry | status reference | privacy-preserving status / bounded cache (→ O4 revocation patterns) |\n\nProhibited (§18.3): stable issuer-local identifiers, raw biometrics, reversible templates, exact timestamps,\nunique status indices. **The no-biometric-honeypot stance is now a schema rule, not just a design stance.**"
+          },
+          {
+            "type": "markdown",
+            "id": "c8018916bf06096a",
+            "text": "## Why this is the Chair's boundary object\n\nThe MLP is deliberately shippable without the Sybil/unlinkability trade (§7.1) — it is the profile a\nbiometric provider (Realeyes included) can implement and benchmark first. This exploration gives the\nprovider side one page: *what your attestation must contain, what treatment each field gets, what the\nverifier may rely on, and what you remain accountable for.* The assurance-class enumeration needs a\nregistry field — coordinate with the Credentials TF (§27.1: credential fields can defeat context separation\neven when the proof is sound)."
+          },
+          {
+            "type": "markdown",
+            "id": "88c2d0175fc2a4d5",
+            "text": "## What exists\n\n- rt 02 STUB (ZKP of a valid issuer signature over a hidden attestation) — the construction seat.\n- The decision doc's PR-LIV boundary analysis (§10) — the assurance side, done.\n- The named-IDVP ecosystem in the cred-spec — the real-world issuer set."
+          },
+          {
+            "type": "markdown",
+            "id": "b896388b437bf1c2",
+            "text": "## Build plan\n\n- **M1 — schema profile draft:** the field table above as a versioned attestation-schema profile with the\n  §18.1 per-field register (purpose, disclosure mode, cardinality, stability, correlation risk, lifecycle).\n- **M2 — disclosure-boundary record** for PR-LIV-over-IDVC (§10.3/§10.4 instantiated: which correlators an\n  actual IDVP schema introduces — rare assurance classes, proving-time fingerprints, status patterns).\n- **M3 — rt 02 reference model:** signature-in-circuit over a mock IDVC with the M1 schema; negative tests\n  from §26.1 (expired/revoked accepted attestation must fail; output implying biometric correctness must be\n  rejected as a *claim*).\n- **M4 — provider one-pager** for TF review with the Chair."
+          },
+          {
+            "type": "markdown",
+            "id": "32cb6ae2a18af001",
+            "text": "## Open questions\n\n- Signature scheme reality: named IDVPs sign classical W3C VCs (ECDSA/EdDSA) — signature-in-circuit cost vs\n  issuer re-signing in a ZK-friendly scheme vs format-level selective disclosure (BBS+/SD-JWT) as the\n  carrier with our predicate layered on. §25's evaluation list decides.\n- Assurance-class vocabulary: whose enumeration — ours, the registry's, or an external framework\n  (NIST IAL/…)? Cardinality-minimisation (§18.2) argues for a small mapped set."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

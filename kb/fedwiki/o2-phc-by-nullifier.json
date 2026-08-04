@@ -1,0 +1,96 @@
+{
+  "title": "O2 — PHC by Nullifier",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "c035505d673bbbaf",
+      "text": "# O2 — PHC supported by scoped reuse detection\n\n*The nullifier is the cryptographic leg of a Personhood Credential — it enforces scoped reuse detection\nwithin a governed context. The \"one person\" part stays with enrolment governance, and the claim is stated\nthat narrowly on purpose.*\n\n**Register:** O2 · leverage 🔴 · **Ladder:** **CIRCUIT BUILT 2026-07-18 (M3 done)** —\n[[Lab — circom-gadget]] 8/8 with real groth16 proofs: Poseidon/BN254, depth-20\nMerkle, domain tag pinned (sha256('dtg-zkp/nullifier/v0') mod p), context = §6.2 descriptor digest as\nfield. **M4 first datapoint: 11,523 constraints (incl. the +1 transcript-binding constraint added\n2026-07-18 per the cross-check's recommendation — proof now cryptographically bound to the §15.2\ntranscript; nullifier preimage unchanged) · ~630 ms prove · ~8 ms verify · 725 B proof.** Suite 10/10\n(Z9 transplant rejection now cryptographic, Z10 nullifier-stability distinction).\nLab-only trusted setup (not a production ceremony). **M5 DONE** — [[Semaphore v4 Crosscheck]] (this\ndir): structurally conformant, byte-incompatible at every preimage; one accidental gap found (no\nin-circuit transcript binding — ~1-constraint fix recommended); Semaphore-compat profile sketched.\nRemaining: M1 boundary record · the transcript-binding input decision · epoch-as-separate-input (§22.2)\n**Anchor (cred-spec):** PHC pattern (a VMC whose governance enforces real-human + one-membership-per-person)\n· R-DID uniqueness rule · community-anchored construction.\n**Anchor (decision doc):** **PR-UNQ** (§13) · §5.12 nullifier definition · §6 context · EPP only (§7.2).\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "381b0ea859cdb551",
+      "text": "## The narrow claim (decision-doc language, adopted verbatim)\n\n> The same enrolled secret cannot produce two accepted actions in the same context, scope, purpose, and\n> epoch without producing the same nullifier, assuming correct enrolment binding and construction\n> implementation. (§13.1)\n\nWhat it does **not** establish (§13.2, and our docs must never imply otherwise): one unique human globally;\none enrolment per issuer or ecosystem; that two secrets can't belong to one person; that one secret can't be\nshared; cross-context identity. **Only scoped reuse detection is primarily cryptographic** — one-enrolment-\nper-issuer is a biometric/governance property, and global uniqueness is outside the V1 claim entirely (§13.3)."
+    },
+    {
+      "type": "markdown",
+      "id": "f34174948c704175",
+      "text": "## How this still realizes the PHC\n\nThe cred-spec's PHC asserts one-membership-per-person at the governance layer. The decision doc splits the\nenforcement honestly:\n\n- **Governance + enrolment** (issuer, biometric dedup, accreditation) make one human ↔ one enrolled secret.\n- **The nullifier** makes that binding *hold at proof time*: within the governed context, a second accepted\n  action from the same secret is detected — without a global identifier, without the registry learning who.\n\nSo the exploration's contribution to the Credentials TF is unchanged in substance but sharper in language:\n*the ZK mechanism by which a VTC's PHC governance becomes enforceable within a context* — the cryptographic\nleg, never the whole PHC."
+    },
+    {
+      "type": "markdown",
+      "id": "df83f9fa4d8c8a33",
+      "text": "## The statement (proof form)\n\n```\npublic:   canonical context descriptor (→ §6.2, not an opaque string), nullifier N,\n          enrolment-root R (epoch-bounded, cryptoperiod-governed — §22.2)\nprivate:  enrolled secret s, blinding r, Merkle path π\nstatement: commitment(s, r) ∈ R   ∧   N = H_domain(s, ctx)\n```\n\nDecision-doc upgrades over the runtime-01 model:\n- **Context is a descriptor, not a string** (§6.2): protocol/profile versions, context authority, policy,\n  purpose, scope, verifier-set, epoch, nullifier version, retention policy — canonically encoded. Runtime\n  01's \"context canonicalization\" note (NOTES item 3) anticipated this; §6.2 is the full answer.\n- **The nullifier MUST bind** enrolment-root id, context descriptor, scope, purpose, epoch, versions, and\n  recovery domain (§13.4) — our `H(s, context)` becomes `H_domain(s, descriptor-digest)` with each input\n  explicit.\n- **Bounded epochs are conformance requirements** (§22.2): an unbounded nullifier is non-conformant."
+    },
+    {
+      "type": "markdown",
+      "id": "c87e3d1026490d2e",
+      "text": "## What exists\n\n- [[Lab — 01-uniqueness-nullifier]] — zero-dep reference model, **9/9 property\n  tests**, including **P4 user-as-adversary self-Sybil** (the presenter is the adversary; their second\n  action in one context is refused) — a direct fixture for §26.1's negative tests.\n- Domain separation already versioned: `dtg-zkp/nullifier/v0`.\n- Lineage: privacy-pools / mana-pools nullifier discipline (see O6 in [[O5 O6 O8 — Supporting Notes]]).\n- §13.6 adds what the runtime lacks: **failure/redress semantics** — a repeated nullifier may be a retry,\n  race, recovery, or epoch disagreement, not only an attack; deterministic error semantics + a challenge\n  route are part of the profile."
+    },
+    {
+      "type": "markdown",
+      "id": "a08093d2068e349a",
+      "text": "## Build plan\n\n- **M1 — boundary record.** Complete the PR-UNQ assurance + disclosure boundary pair for our construction\n  (Appendix B of the decision doc is the worked example for exactly this predicate — start from it).\n- **M2 — descriptor + epoch upgrade** of the reference model: replace the string context with a canonical\n  descriptor digest; add epoch input + rollover test; add the retry-vs-attack error semantics.\n- **M3 — circom port** (the shared gadget): Poseidon nullifier + Merkle membership (depth ~20). Toolchain\n  present: circom 2.2.3. Only after M1 clears the §25 gate posture.\n- **M4 — cost measurement** on a consumer device (§25's performance envelope; feeds \"claim ceiling per\n  presentation\").\n- **M5 — Semaphore v4 cross-check** — state precisely \"conformant with / diverges from.\""
+    },
+    {
+      "type": "markdown",
+      "id": "33b01c78c9ce2fc2",
+      "text": "## Upstream surface\n\n- The strawman's uniqueness row gains a runnable reference + the narrow PR-UNQ statement.\n- To the Credentials TF: an informative note — *how a VTC's PHC governance is made enforceable in-context* —\n  with the honest split (governance dedupes the enrolment; the nullifier makes the dedup binding at proof\n  time), citing §13.3's assurance-dependency list.\n- The spec must pin the hash (nullifier values differ by hash) + the versioned domain tag — rt 01 NOTES\n  item 2, now reinforced by §13.4's version-binding requirement."
+    },
+    {
+      "type": "markdown",
+      "id": "43b6f4d23bf6a3f9",
+      "text": "## Open questions\n\n- Cross-VTC uniqueness is deliberately *not* provable (unlinkability working as designed) — but §13.3's\n  \"issuer coordination and common-root semantics\" leaves room for governed multi-issuer roots; position?\n- Recovery/rotation domain (§13.4) — how the pools lineage's note on secret rotation maps onto §29's\n  \"biometric-derived secret rotation\" open question."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "O2 — PHC by Nullifier",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "c035505d673bbbaf",
+            "text": "# O2 — PHC supported by scoped reuse detection\n\n*The nullifier is the cryptographic leg of a Personhood Credential — it enforces scoped reuse detection\nwithin a governed context. The \"one person\" part stays with enrolment governance, and the claim is stated\nthat narrowly on purpose.*\n\n**Register:** O2 · leverage 🔴 · **Ladder:** **CIRCUIT BUILT 2026-07-18 (M3 done)** —\n[[Lab — circom-gadget]] 8/8 with real groth16 proofs: Poseidon/BN254, depth-20\nMerkle, domain tag pinned (sha256('dtg-zkp/nullifier/v0') mod p), context = §6.2 descriptor digest as\nfield. **M4 first datapoint: 11,523 constraints (incl. the +1 transcript-binding constraint added\n2026-07-18 per the cross-check's recommendation — proof now cryptographically bound to the §15.2\ntranscript; nullifier preimage unchanged) · ~630 ms prove · ~8 ms verify · 725 B proof.** Suite 10/10\n(Z9 transplant rejection now cryptographic, Z10 nullifier-stability distinction).\nLab-only trusted setup (not a production ceremony). **M5 DONE** — [[Semaphore v4 Crosscheck]] (this\ndir): structurally conformant, byte-incompatible at every preimage; one accidental gap found (no\nin-circuit transcript binding — ~1-constraint fix recommended); Semaphore-compat profile sketched.\nRemaining: M1 boundary record · the transcript-binding input decision · epoch-as-separate-input (§22.2)\n**Anchor (cred-spec):** PHC pattern (a VMC whose governance enforces real-human + one-membership-per-person)\n· R-DID uniqueness rule · community-anchored construction.\n**Anchor (decision doc):** **PR-UNQ** (§13) · §5.12 nullifier definition · §6 context · EPP only (§7.2).\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "381b0ea859cdb551",
+            "text": "## The narrow claim (decision-doc language, adopted verbatim)\n\n> The same enrolled secret cannot produce two accepted actions in the same context, scope, purpose, and\n> epoch without producing the same nullifier, assuming correct enrolment binding and construction\n> implementation. (§13.1)\n\nWhat it does **not** establish (§13.2, and our docs must never imply otherwise): one unique human globally;\none enrolment per issuer or ecosystem; that two secrets can't belong to one person; that one secret can't be\nshared; cross-context identity. **Only scoped reuse detection is primarily cryptographic** — one-enrolment-\nper-issuer is a biometric/governance property, and global uniqueness is outside the V1 claim entirely (§13.3)."
+          },
+          {
+            "type": "markdown",
+            "id": "f34174948c704175",
+            "text": "## How this still realizes the PHC\n\nThe cred-spec's PHC asserts one-membership-per-person at the governance layer. The decision doc splits the\nenforcement honestly:\n\n- **Governance + enrolment** (issuer, biometric dedup, accreditation) make one human ↔ one enrolled secret.\n- **The nullifier** makes that binding *hold at proof time*: within the governed context, a second accepted\n  action from the same secret is detected — without a global identifier, without the registry learning who.\n\nSo the exploration's contribution to the Credentials TF is unchanged in substance but sharper in language:\n*the ZK mechanism by which a VTC's PHC governance becomes enforceable within a context* — the cryptographic\nleg, never the whole PHC."
+          },
+          {
+            "type": "markdown",
+            "id": "df83f9fa4d8c8a33",
+            "text": "## The statement (proof form)\n\n```\npublic:   canonical context descriptor (→ §6.2, not an opaque string), nullifier N,\n          enrolment-root R (epoch-bounded, cryptoperiod-governed — §22.2)\nprivate:  enrolled secret s, blinding r, Merkle path π\nstatement: commitment(s, r) ∈ R   ∧   N = H_domain(s, ctx)\n```\n\nDecision-doc upgrades over the runtime-01 model:\n- **Context is a descriptor, not a string** (§6.2): protocol/profile versions, context authority, policy,\n  purpose, scope, verifier-set, epoch, nullifier version, retention policy — canonically encoded. Runtime\n  01's \"context canonicalization\" note (NOTES item 3) anticipated this; §6.2 is the full answer.\n- **The nullifier MUST bind** enrolment-root id, context descriptor, scope, purpose, epoch, versions, and\n  recovery domain (§13.4) — our `H(s, context)` becomes `H_domain(s, descriptor-digest)` with each input\n  explicit.\n- **Bounded epochs are conformance requirements** (§22.2): an unbounded nullifier is non-conformant."
+          },
+          {
+            "type": "markdown",
+            "id": "c87e3d1026490d2e",
+            "text": "## What exists\n\n- [[Lab — 01-uniqueness-nullifier]] — zero-dep reference model, **9/9 property\n  tests**, including **P4 user-as-adversary self-Sybil** (the presenter is the adversary; their second\n  action in one context is refused) — a direct fixture for §26.1's negative tests.\n- Domain separation already versioned: `dtg-zkp/nullifier/v0`.\n- Lineage: privacy-pools / mana-pools nullifier discipline (see O6 in [[O5 O6 O8 — Supporting Notes]]).\n- §13.6 adds what the runtime lacks: **failure/redress semantics** — a repeated nullifier may be a retry,\n  race, recovery, or epoch disagreement, not only an attack; deterministic error semantics + a challenge\n  route are part of the profile."
+          },
+          {
+            "type": "markdown",
+            "id": "a08093d2068e349a",
+            "text": "## Build plan\n\n- **M1 — boundary record.** Complete the PR-UNQ assurance + disclosure boundary pair for our construction\n  (Appendix B of the decision doc is the worked example for exactly this predicate — start from it).\n- **M2 — descriptor + epoch upgrade** of the reference model: replace the string context with a canonical\n  descriptor digest; add epoch input + rollover test; add the retry-vs-attack error semantics.\n- **M3 — circom port** (the shared gadget): Poseidon nullifier + Merkle membership (depth ~20). Toolchain\n  present: circom 2.2.3. Only after M1 clears the §25 gate posture.\n- **M4 — cost measurement** on a consumer device (§25's performance envelope; feeds \"claim ceiling per\n  presentation\").\n- **M5 — Semaphore v4 cross-check** — state precisely \"conformant with / diverges from.\""
+          },
+          {
+            "type": "markdown",
+            "id": "33b01c78c9ce2fc2",
+            "text": "## Upstream surface\n\n- The strawman's uniqueness row gains a runnable reference + the narrow PR-UNQ statement.\n- To the Credentials TF: an informative note — *how a VTC's PHC governance is made enforceable in-context* —\n  with the honest split (governance dedupes the enrolment; the nullifier makes the dedup binding at proof\n  time), citing §13.3's assurance-dependency list.\n- The spec must pin the hash (nullifier values differ by hash) + the versioned domain tag — rt 01 NOTES\n  item 2, now reinforced by §13.4's version-binding requirement."
+          },
+          {
+            "type": "markdown",
+            "id": "43b6f4d23bf6a3f9",
+            "text": "## Open questions\n\n- Cross-VTC uniqueness is deliberately *not* provable (unlinkability working as designed) — but §13.3's\n  \"issuer coordination and common-root semantics\" leaves room for governed multi-issuer roots; position?\n- Recovery/rotation domain (§13.4) — how the pools lineage's note on secret rotation maps onto §29's\n  \"biometric-derived secret rotation\" open question."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

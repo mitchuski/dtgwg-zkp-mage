@@ -1,0 +1,26 @@
+{
+  "title": "Decision §7 — Profile architecture",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "92398312cb048456",
+      "text": "## 7. Profile architecture\n\n### 7.1 Minimum Liveness Profile (MLP)\n\nThe MLP establishes that the presenter possesses a qualifying, current liveness attestation issued under an accepted policy and assurance class, controls the required holder secret, and generated a proof bound to the current verifier request and transcript.\n\nThe MLP MUST NOT require population-level deduplication, scoped nullifiers, or a claim of personhood uniqueness. It therefore does not depend on the Sybil-resistance/unlinkability trade curve.\n\nThe MLP includes:\n\n- qualifying liveness-attestation possession;\n- accepted policy and assurance predicates;\n- issuer qualification where required by the relying policy;\n- holder-key or holder-secret control;\n- canonical transcript and freshness binding;\n- expiry, status, and revocation evaluation;\n- disclosure and observable-event analysis;\n- local or mediated proving rules where supported.\n\n### 7.2 Extended Personhood Profile (EPP)\n\nThe EPP composes the MLP with one or more of:\n\n- personhood-policy satisfaction;\n- issuer-set membership or multi-issuer assurance;\n- same-human-as-enrolment evidence;\n- scoped uniqueness or reuse detection;\n- context-dependent unlinkability;\n- rate limitation or n-show behaviour;\n- optional attested demographic predicates.\n\nThe EPP MUST state where it sits on the Sybil-resistance/unlinkability trade curve. It MUST identify the context, scope, purpose, epoch, enrolment population, issuer coordination assumptions, recovery rules, and collusion target.\n\n### 7.3 Delegation extension\n\nAgent authority SHALL NOT be inferred from holder-key control. Where an agent presents or triggers a proof on behalf of a principal, the presentation MUST be accompanied by separate delegation evidence sufficient to establish:\n\n- principal;\n- agent;\n- delegated capability or action;\n- scope and purpose;\n- start and expiry time;\n- conditions and limits;\n- revocation or suspension status;\n- step-up requirements;\n- evidence that the current action is covered.\n\nThe ZKP profile may bind the delegation evidence to the transcript, but the profile MUST NOT represent delegation semantics as a property of the holder-key proof alone."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §7 — Profile architecture",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "92398312cb048456",
+            "text": "## 7. Profile architecture\n\n### 7.1 Minimum Liveness Profile (MLP)\n\nThe MLP establishes that the presenter possesses a qualifying, current liveness attestation issued under an accepted policy and assurance class, controls the required holder secret, and generated a proof bound to the current verifier request and transcript.\n\nThe MLP MUST NOT require population-level deduplication, scoped nullifiers, or a claim of personhood uniqueness. It therefore does not depend on the Sybil-resistance/unlinkability trade curve.\n\nThe MLP includes:\n\n- qualifying liveness-attestation possession;\n- accepted policy and assurance predicates;\n- issuer qualification where required by the relying policy;\n- holder-key or holder-secret control;\n- canonical transcript and freshness binding;\n- expiry, status, and revocation evaluation;\n- disclosure and observable-event analysis;\n- local or mediated proving rules where supported.\n\n### 7.2 Extended Personhood Profile (EPP)\n\nThe EPP composes the MLP with one or more of:\n\n- personhood-policy satisfaction;\n- issuer-set membership or multi-issuer assurance;\n- same-human-as-enrolment evidence;\n- scoped uniqueness or reuse detection;\n- context-dependent unlinkability;\n- rate limitation or n-show behaviour;\n- optional attested demographic predicates.\n\nThe EPP MUST state where it sits on the Sybil-resistance/unlinkability trade curve. It MUST identify the context, scope, purpose, epoch, enrolment population, issuer coordination assumptions, recovery rules, and collusion target.\n\n### 7.3 Delegation extension\n\nAgent authority SHALL NOT be inferred from holder-key control. Where an agent presents or triggers a proof on behalf of a principal, the presentation MUST be accompanied by separate delegation evidence sufficient to establish:\n\n- principal;\n- agent;\n- delegated capability or action;\n- scope and purpose;\n- start and expiry time;\n- conditions and limits;\n- revocation or suspension status;\n- step-up requirements;\n- evidence that the current action is covered.\n\nThe ZKP profile may bind the delegation evidence to the transcript, but the profile MUST NOT represent delegation semantics as a property of the holder-key proof alone."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

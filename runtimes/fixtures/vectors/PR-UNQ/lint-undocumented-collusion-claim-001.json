@@ -1,0 +1,24 @@
+{
+  "fixture": "PR-UNQ/lint/undocumented-collusion-claim/001",
+  "spec": {
+    "decisionDoc": "0.1.0-draft",
+    "sections": [
+      "§2.4",
+      "§24",
+      "§26.1"
+    ]
+  },
+  "claimParams": {
+    "againstWhom": "any reader of the verifier output — end users, auditors, downstream relying parties who inherit the overclaim",
+    "forHowLong": "for as long as the output text is displayed, logged, or quoted",
+    "alongsideWhat": "the §9 \"must not infer\" register and the §24 prohibited-claims list the text is linted against (lint list v0, English only — §27.4 shared artefact)"
+  },
+  "inputs": {
+    "verifierOutput": "This deployment is resistant to issuer-verifier collusion."
+  },
+  "expect": {
+    "outcome": "lint-fail",
+    "reason": "undocumented-collusion-claim",
+    "claimCeiling": "a collusion-resistance claim is testable only with a named adversary and a named test (§2.4 \"against whom\"; §24); without them it is marketing, not a boundary"
+  }
+}

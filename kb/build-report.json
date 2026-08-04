@@ -1,0 +1,829 @@
+{
+  "generator": "tools/build-kb.mjs",
+  "built_from_commitish": "working-tree",
+  "sections": {
+    "root": 4,
+    "decision": 36,
+    "explorations": 19,
+    "lab": 15,
+    "chronicles": 2
+  },
+  "totalPages": 76,
+  "pages": [
+    {
+      "slug": "dtg-research-root",
+      "title": "DTG Research Root",
+      "section": "root",
+      "source": "README.md",
+      "order": 0
+    },
+    {
+      "slug": "workflow",
+      "title": "Workflow — Workbench and Research Root",
+      "section": "root",
+      "source": "WORKFLOW.md",
+      "order": 1
+    },
+    {
+      "slug": "integration-map",
+      "title": "Integration Map",
+      "section": "root",
+      "source": "INTEGRATION-MAP.md",
+      "order": 2
+    },
+    {
+      "slug": "briefing-2026-07-18-zkp-explorations",
+      "title": "Briefing 2026-07-18 — ZKP Explorations",
+      "section": "root",
+      "source": "BRIEFING-2026-07-18-zkp-explorations.md",
+      "order": 3
+    },
+    {
+      "slug": "decision-overview",
+      "title": "Decision — Overview",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 4
+    },
+    {
+      "slug": "decision-document-status",
+      "title": "Decision — Document status",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 5
+    },
+    {
+      "slug": "decision-01-executive-decision",
+      "title": "Decision §1 — Executive decision",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 6
+    },
+    {
+      "slug": "decision-02-decision-drivers",
+      "title": "Decision §2 — Decision drivers",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 7
+    },
+    {
+      "slug": "decision-03-scope",
+      "title": "Decision §3 — Scope",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 8
+    },
+    {
+      "slug": "decision-04-normative-language",
+      "title": "Decision §4 — Normative language",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 9
+    },
+    {
+      "slug": "decision-05-core-terminology",
+      "title": "Decision §5 — Core terminology",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 10
+    },
+    {
+      "slug": "decision-06-foundational-context-decision",
+      "title": "Decision §6 — Foundational context decision",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 11
+    },
+    {
+      "slug": "decision-07-profile-architecture",
+      "title": "Decision §7 — Profile architecture",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 12
+    },
+    {
+      "slug": "decision-08-assurance-allocation-model",
+      "title": "Decision §8 — Assurance allocation model",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 13
+    },
+    {
+      "slug": "decision-09-predicate-decision-register",
+      "title": "Decision §9 — Predicate decision register",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 14
+    },
+    {
+      "slug": "decision-10-pr-liv-qualifying-liveness-attestation-possession",
+      "title": "Decision §10 — PR-LIV: qualifying liveness-attestation possession",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 15
+    },
+    {
+      "slug": "decision-11-pr-per-personhood-policy-satisfaction",
+      "title": "Decision §11 — PR-PER: personhood-policy satisfaction",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 16
+    },
+    {
+      "slug": "decision-12-pr-iss-issuer-qualification",
+      "title": "Decision §12 — PR-ISS: issuer qualification",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 17
+    },
+    {
+      "slug": "decision-13-pr-unq-scoped-reuse-detection",
+      "title": "Decision §13 — PR-UNQ: scoped reuse detection",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 18
+    },
+    {
+      "slug": "decision-14-pr-hld-holder-secret-control",
+      "title": "Decision §14 — PR-HLD: holder-secret control",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 19
+    },
+    {
+      "slug": "decision-15-pr-fre-freshness-and-canonical-transcript-binding",
+      "title": "Decision §15 — PR-FRE: freshness and canonical transcript binding",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 20
+    },
+    {
+      "slug": "decision-16-pr-rng-attested-range-predicate",
+      "title": "Decision §16 — PR-RNG: attested range predicate",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 21
+    },
+    {
+      "slug": "decision-17-pr-del-delegated-authority-evidence",
+      "title": "Decision §17 — PR-DEL: delegated authority evidence",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 22
+    },
+    {
+      "slug": "decision-18-issuer-attestation-schema-as-the-shared-boundary-determinant",
+      "title": "Decision §18 — Issuer attestation schema as the shared boundary determinant",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 23
+    },
+    {
+      "slug": "decision-19-disclosure-boundary-model",
+      "title": "Decision §19 — Disclosure-boundary model",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 24
+    },
+    {
+      "slug": "decision-20-observable-event-and-behavioural-leakage",
+      "title": "Decision §20 — Observable event and behavioural leakage",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 25
+    },
+    {
+      "slug": "decision-21-mediated-proving-and-fallback",
+      "title": "Decision §21 — Mediated proving and fallback",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 26
+    },
+    {
+      "slug": "decision-22-lifecycle-decisions",
+      "title": "Decision §22 — Lifecycle decisions",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 27
+    },
+    {
+      "slug": "decision-23-accountability-and-redress-matrix",
+      "title": "Decision §23 — Accountability and redress matrix",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 28
+    },
+    {
+      "slug": "decision-24-prohibited-claims-and-constructions",
+      "title": "Decision §24 — Prohibited claims and constructions",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 29
+    },
+    {
+      "slug": "decision-25-construction-selection-gate",
+      "title": "Decision §25 — Construction-selection gate",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 30
+    },
+    {
+      "slug": "decision-26-conformance-requirements",
+      "title": "Decision §26 — Conformance requirements",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 31
+    },
+    {
+      "slug": "decision-27-cross-workstream-dependencies",
+      "title": "Decision §27 — Cross-workstream dependencies",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 32
+    },
+    {
+      "slug": "decision-28-open-decisions-for-task-force-ratification",
+      "title": "Decision §28 — Open decisions for Task Force ratification",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 33
+    },
+    {
+      "slug": "decision-29-conjectures-and-research-items",
+      "title": "Decision §29 — Conjectures and research items",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 34
+    },
+    {
+      "slug": "decision-30-decision-record",
+      "title": "Decision §30 — Decision record",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 35
+    },
+    {
+      "slug": "decision-31-recommended-repository-disposition",
+      "title": "Decision §31 — Recommended repository disposition",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 36
+    },
+    {
+      "slug": "decision-appendix-a-per-predicate-review-checklist",
+      "title": "Decision — Appendix A. Per-predicate review checklist",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 37
+    },
+    {
+      "slug": "decision-appendix-b-compact-boundary-record-example-for-pr-unq",
+      "title": "Decision — Appendix B. Compact boundary-record example for PR-UNQ",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 38
+    },
+    {
+      "slug": "decision-appendix-c-source-discussions-and-repository-artefacts",
+      "title": "Decision — Appendix C. Source discussions and repository artefacts",
+      "section": "decision",
+      "source": "predicate-assurance-boundary-decision.md",
+      "order": 39
+    },
+    {
+      "slug": "explorations",
+      "title": "Explorations Index",
+      "section": "explorations",
+      "source": "explorations/README.md",
+      "order": 40
+    },
+    {
+      "slug": "o1-deferred-zk-layer",
+      "title": "O1 — Deferred ZK Layer",
+      "section": "explorations",
+      "source": "explorations/O1-deferred-zk-layer.md",
+      "order": 41
+    },
+    {
+      "slug": "o2-phc-by-nullifier",
+      "title": "O2 — PHC by Nullifier",
+      "section": "explorations",
+      "source": "explorations/O2-phc-by-nullifier.md",
+      "order": 42
+    },
+    {
+      "slug": "o3-idvc-assurance-profile",
+      "title": "O3 — IDVC Assurance Profile",
+      "section": "explorations",
+      "source": "explorations/O3-idvc-assurance-profile.md",
+      "order": 43
+    },
+    {
+      "slug": "o4-registry-zk-revocation",
+      "title": "O4 — Registry ZK Revocation",
+      "section": "explorations",
+      "source": "explorations/O4-registry-zk-revocation.md",
+      "order": 44
+    },
+    {
+      "slug": "o5-o6-o8-supporting",
+      "title": "O5 O6 O8 — Supporting Notes",
+      "section": "explorations",
+      "source": "explorations/O5-O6-O8-supporting.md",
+      "order": 45
+    },
+    {
+      "slug": "o7-agent-card-zk",
+      "title": "O7 — Agent Card ZK",
+      "section": "explorations",
+      "source": "explorations/O7-agent-card-zk.md",
+      "order": 46
+    },
+    {
+      "slug": "o9-vrc-promise-bundle",
+      "title": "O9 — VRC Promise Bundle",
+      "section": "explorations",
+      "source": "explorations/O9-vrc-promise-bundle.md",
+      "order": 47
+    },
+    {
+      "slug": "semaphore-v4-crosscheck",
+      "title": "Semaphore v4 Crosscheck",
+      "section": "explorations",
+      "source": "explorations/SEMAPHORE-V4-CROSSCHECK.md",
+      "order": 48
+    },
+    {
+      "slug": "vwc-witness-seat",
+      "title": "VWC — Witness Seat",
+      "section": "explorations",
+      "source": "explorations/VWC-witness-seat.md",
+      "order": 49
+    },
+    {
+      "slug": "x1-conformance-fixtures",
+      "title": "X1 — Conformance Fixtures",
+      "section": "explorations",
+      "source": "explorations/X1-conformance-fixtures.md",
+      "order": 50
+    },
+    {
+      "slug": "x2-context-legibility-instrument",
+      "title": "X2 — Context Legibility Instrument",
+      "section": "explorations",
+      "source": "explorations/X2-context-legibility-instrument.md",
+      "order": 51
+    },
+    {
+      "slug": "x3-trust-task-composition",
+      "title": "X3 — Trust Task Composition",
+      "section": "explorations",
+      "source": "explorations/X3-trust-task-composition.md",
+      "order": 52
+    },
+    {
+      "slug": "x4-observable-event-minimisation",
+      "title": "X4 — Observable Event Minimisation",
+      "section": "explorations",
+      "source": "explorations/X4-observable-event-minimisation.md",
+      "order": 53
+    },
+    {
+      "slug": "x5-recovery-rotation",
+      "title": "X5 — Recovery and Rotation",
+      "section": "explorations",
+      "source": "explorations/X5-recovery-rotation.md",
+      "order": 54
+    },
+    {
+      "slug": "x6-assurance-horizons-erosion-clocks",
+      "title": "X6 — Assurance Horizons and Erosion Clocks",
+      "section": "explorations",
+      "source": "explorations/X6-assurance-horizons-erosion-clocks.md",
+      "order": 55
+    },
+    {
+      "slug": "x7-mediated-proving-profile",
+      "title": "X7 — Mediated Proving Profile",
+      "section": "explorations",
+      "source": "explorations/X7-mediated-proving-profile.md",
+      "order": 56
+    },
+    {
+      "slug": "x8-multi-issuer-aggregation",
+      "title": "X8 — Multi-Issuer Aggregation",
+      "section": "explorations",
+      "source": "explorations/X8-multi-issuer-aggregation.md",
+      "order": 57
+    },
+    {
+      "slug": "x9-guardian-recovery",
+      "title": "X9 — Guardian Recovery",
+      "section": "explorations",
+      "source": "explorations/X9-guardian-recovery.md",
+      "order": 58
+    },
+    {
+      "slug": "lab-runtimes",
+      "title": "Lab — Runtimes",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/README.md",
+      "order": 59
+    },
+    {
+      "slug": "lab-01-uniqueness-nullifier",
+      "title": "Lab — 01-uniqueness-nullifier",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/01-uniqueness-nullifier/NOTES.md",
+      "order": 60
+    },
+    {
+      "slug": "lab-07-trust-graph-formation",
+      "title": "Lab — 07-trust-graph-formation",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/07-trust-graph-formation/NOTES.md",
+      "order": 61
+    },
+    {
+      "slug": "lab-circom-gadget",
+      "title": "Lab — circom-gadget",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/circom-gadget/NOTES.md",
+      "order": 62
+    },
+    {
+      "slug": "lab-consumer-py",
+      "title": "Lab — consumer-py",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/consumer-py/NOTES.md",
+      "order": 63
+    },
+    {
+      "slug": "lab-context-card",
+      "title": "Lab — context-card",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/context-card/NOTES.md",
+      "order": 64
+    },
+    {
+      "slug": "lab-erosion-record",
+      "title": "Lab — erosion-record",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/erosion-record/NOTES.md",
+      "order": 65
+    },
+    {
+      "slug": "lab-fixtures",
+      "title": "Lab — fixtures",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/fixtures/NOTES.md",
+      "order": 66
+    },
+    {
+      "slug": "lab-guardian-recovery",
+      "title": "Lab — guardian-recovery",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/guardian-recovery/NOTES.md",
+      "order": 67
+    },
+    {
+      "slug": "lab-mediator",
+      "title": "Lab — mediator",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/mediator/NOTES.md",
+      "order": 68
+    },
+    {
+      "slug": "lab-multi-issuer",
+      "title": "Lab — multi-issuer",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/multi-issuer/NOTES.md",
+      "order": 69
+    },
+    {
+      "slug": "lab-quiet-presentation",
+      "title": "Lab — quiet-presentation",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/quiet-presentation/NOTES.md",
+      "order": 70
+    },
+    {
+      "slug": "lab-rotation",
+      "title": "Lab — rotation",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/rotation/NOTES.md",
+      "order": 71
+    },
+    {
+      "slug": "lab-show-composition",
+      "title": "Lab — show-composition",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/show-composition/NOTES.md",
+      "order": 72
+    },
+    {
+      "slug": "lab-witness-seat",
+      "title": "Lab — witness-seat",
+      "section": "lab",
+      "source": "../dtgwg-zkp-tf-mage/runtimes/witness-seat/NOTES.md",
+      "order": 73
+    },
+    {
+      "slug": "chronicle-2026-07-16-trust-graph-formation-dream-cycle",
+      "title": "Chronicle 2026-07-16 — Trust-Graph Formation Dream Cycle",
+      "section": "chronicles",
+      "source": "../agentprivacy_master/docs/chronicles/2026-07-16_trust-graph-formation-dream-cycle.md",
+      "order": 74
+    },
+    {
+      "slug": "chronicle-2026-07-18-the-first-circuit",
+      "title": "Chronicle 2026-07-18 — The First Circuit",
+      "section": "chronicles",
+      "source": "../agentprivacy_master/docs/chronicles/2026-07-18_the-first-circuit.md",
+      "order": 75
+    }
+  ],
+  "sourcesManifested": [
+    "README.md",
+    "WORKFLOW.md",
+    "INTEGRATION-MAP.md",
+    "BRIEFING-2026-07-18-zkp-explorations.md",
+    "predicate-assurance-boundary-decision.md",
+    "explorations/README.md",
+    "explorations/O1-deferred-zk-layer.md",
+    "explorations/O2-phc-by-nullifier.md",
+    "explorations/O3-idvc-assurance-profile.md",
+    "explorations/O4-registry-zk-revocation.md",
+    "explorations/O5-O6-O8-supporting.md",
+    "explorations/O7-agent-card-zk.md",
+    "explorations/O9-vrc-promise-bundle.md",
+    "explorations/SEMAPHORE-V4-CROSSCHECK.md",
+    "explorations/VWC-witness-seat.md",
+    "explorations/X1-conformance-fixtures.md",
+    "explorations/X2-context-legibility-instrument.md",
+    "explorations/X3-trust-task-composition.md",
+    "explorations/X4-observable-event-minimisation.md",
+    "explorations/X5-recovery-rotation.md",
+    "explorations/X6-assurance-horizons-erosion-clocks.md",
+    "explorations/X7-mediated-proving-profile.md",
+    "explorations/X8-multi-issuer-aggregation.md",
+    "explorations/X9-guardian-recovery.md",
+    "../dtgwg-zkp-tf-mage/runtimes/README.md",
+    "../dtgwg-zkp-tf-mage/runtimes/01-uniqueness-nullifier/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/07-trust-graph-formation/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/circom-gadget/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/consumer-py/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/context-card/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/erosion-record/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/fixtures/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/guardian-recovery/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/mediator/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/multi-issuer/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/quiet-presentation/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/rotation/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/show-composition/NOTES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/witness-seat/NOTES.md",
+    "../agentprivacy_master/docs/chronicles/2026-07-16_trust-graph-formation-dream-cycle.md",
+    "../agentprivacy_master/docs/chronicles/2026-07-18_the-first-circuit.md"
+  ],
+  "unmanifestedExcluded": [
+    "../agentprivacy_master/docs/chronicles/2025-02-24_skills_update_chronicle_from_src.md",
+    "../agentprivacy_master/docs/chronicles/2025-02-24_skills_update_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-02-22_promises_plurality_chronicle_from_src.md",
+    "../agentprivacy_master/docs/chronicles/2026-02-22_promises_plurality_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-03-29_unpushed_work_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-03-31_codebase_cleanup_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-04-05_poems_ceremony_implementation_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-09_bound_collection_sync_report.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-09_navigation_lattice_workshops_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-09_q10_blade_and_four_new_shops_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-09_resume_here_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-09_session_close_workshops_complete_drake_v2_designed.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-09_six_workshops_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-09_suite_overlap_tracking.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-09_synced_experience_coherence_map.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_city_of_mages_grimoire_pinned_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_city_of_mages_v1_2_1_luca_authored.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_kindred_blade_reframe_handoff.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_next_steps_and_gaps_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_overlay_cleanup_plan.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_phase_d_baked_and_uor_substrate_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_resume_here_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_spellweb_universe_integration_plan_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_two_mana_economy_celestial_aether.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_what_shipped_this_arc_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-10_witness_unlock_feature_design_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-11_city_of_mages_grimoire_v1_3_0_pinned.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-11_city_of_mages_v1_2_2_spacecomputer_authored.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-11_model_page_and_unified_artifacts.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-11_privacymage_grimoire_v10_3_0_pinned.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-11_v5_5_attachment_architecture_integration.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-12_convergence_v1_3_0_prod_pushed.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-12_solchanting_shop_opening_helia_summoned.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-13_chronicle_the_chart_house_admitted_to_corpus_pelagia_named.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-13_chronicle_the_chart_house_inception_navigator_arrives.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-13_master_reaudit_post_v1_5_0.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-14_chronicle_chart_shop_pleione_named_v44_assigned.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-14_chronicle_to_do_tomorrow_chart_shop_pickup.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-14_v1_6_0_artefact_creature_import_guide.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-15_archivist_admitted_library_opens.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-15_next_agent_handoff_spellweb_item_system_work.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-15_note_to_soulbae_the_bot.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-15_waypoint_portal_chart_shop_game.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-16_continuation_note_workshop_templates_pending.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-17_v1_6_0_release_plan.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-18_v1_7_1_site_rollout_push.md",
+    "../agentprivacy_master/docs/chronicles/2026-05-28_two_observations_generate_vs_charge.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-09_privacymage_grimoire_v10_4_0_lattice_coherence.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-10_agent_map_plan_key_geometry_figures.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-10_city_key_kappa_sigil_png_charge.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-11_agent_map_plan_star_updates.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-11_v6_surfaces_kappa_interop_v38_reseat_staleness_sweep.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-12_model_page_v6_equation_and_register_mirror.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-21_fedwiki_guide_librarian_audit.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-21_fedwiki_wikis_librarian_nav_session_chronicle.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-27_federation_coverage_audit.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-27_federation_family_and_welcome_navigation.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-27_phase1_tomes_cast_federated.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-27_phase2_research_conjectures_federated.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-27_phase3_spellweb_atlas_federated.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-27_phase5_forkback_gate.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-27_site_reconsolidation_execution.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-27_skills_to_fedwiki_and_guide_federation.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-27_tileglyph_nav_layer_and_coverage_audit.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-28_federation_closeout_artefacts_and_what_remains.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-28_grimoire_glyphs_and_crossing_the_subdomains.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-28_llm_wiki_reflection_and_skills_reflect_back.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-29_cartographer_visual_runtime_and_casting.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-29_session_recap_visual_runtime_casting_game42.md",
+    "../agentprivacy_master/docs/chronicles/2026-06-30_production_push_run.md",
+    "../agentprivacy_master/docs/chronicles/2026-07-13_harness_workshops_island_open_dag.md",
+    "../agentprivacy_master/docs/chronicles/ACT1_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT10_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT11_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT12_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT2_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT3_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT4_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT5_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT6_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT7_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT8_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/ACT9_INSCRIPTION_CHRONICLE.md",
+    "../agentprivacy_master/docs/chronicles/AGENTPRIVACY_SKILLS_ASSESSMENT_from_src.md",
+    "../agentprivacy_master/docs/chronicles/AGENTPRIVACY_SKILLS_ASSESSMENT.md",
+    "../agentprivacy_master/docs/chronicles/AGENTPRIVACY_SKILLS_INTEGRATION_PLAN_from_src.md",
+    "../agentprivacy_master/docs/chronicles/AGENTPRIVACY_SKILLS_INTEGRATION_PLAN.md",
+    "../agentprivacy_master/docs/chronicles/AUTHORING_GUIDE.md",
+    "../agentprivacy_master/docs/chronicles/BGIN_AGENTPRIVACY_CONVERGENCE.md",
+    "../agentprivacy_master/docs/chronicles/BGIN_IMPLEMENTATION_PLAN.md",
+    "../agentprivacy_master/docs/chronicles/blog-part1-forming-constellations.md",
+    "../agentprivacy_master/docs/chronicles/blog-part4-the-dihedral-mirror.md",
+    "../agentprivacy_master/docs/chronicles/blog-part5-the-amnesia-protocol.md",
+    "../agentprivacy_master/docs/chronicles/CEREMONY_CONSTELLATION_PLAN.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_AMNESIA_PROTOCOL_2026-04-03.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_CEREMONIES_INTEGRATION_2026-04-05.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_CEREMONY_INTEGRATION_2026-04-07.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_CONTROL_SCHEME_MATHEMATICS.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_DRAGONS_ANATOMY_AND_FLIGHT.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_DUAL_KEYPAIR_RUNECRAFT_2026-04-07.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_NAV_AND_BGIN.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_PVM_V52_SKILLS_2026-03-31.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_SPELLWEB_GENESIS.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_UOR_CONVERGENCE_2026-03-31.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_V10_2_PROD_DEPLOY_2026-04-22.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_V5_3_1_CEREMONY_COMPLETE.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_V5_3_1_SKILLS_MAPPING_SYNC_2026-04-07.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_V5_4_BETWEENNESS_SELENE_2026-04-12.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_V5_4_SKILLS_UPDATE_2026-04-12.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_V5_4_SPELLWEB_INTEGRATION_2026-04-12.md",
+    "../agentprivacy_master/docs/chronicles/CHRONICLE_ZERO_SPELLBOOK_V2_2026-04-22.md",
+    "../agentprivacy_master/docs/chronicles/CLEANUP_REVIEW.md",
+    "../agentprivacy_master/docs/chronicles/CLOUDFLARE_PAGES.md",
+    "../agentprivacy_master/docs/chronicles/default-promises-implementation.md",
+    "../agentprivacy_master/docs/chronicles/DISTRIBUTION_MAP_UOR_SKILLS_2026-03-31.md",
+    "../agentprivacy_master/docs/chronicles/DOCUMENT_SET_OVERVIEW.md",
+    "../agentprivacy_master/docs/chronicles/DREAM-2026-06-29.md",
+    "../agentprivacy_master/docs/chronicles/DREAM-2026-07-01.md",
+    "../agentprivacy_master/docs/chronicles/DUAL_CEREMONY_INTEGRATION_PLAN.md",
+    "../agentprivacy_master/docs/chronicles/DUAL_TERRITORY_CEREMONY_SPEC_v1.md",
+    "../agentprivacy_master/docs/chronicles/FILES_TO_MERGE_AND_REPLACE.md",
+    "../agentprivacy_master/docs/chronicles/first-page-updated.md",
+    "../agentprivacy_master/docs/chronicles/IMPLEMENTATION_PATH.md",
+    "../agentprivacy_master/docs/chronicles/INSCRIPTION_USERFLOW.md",
+    "../agentprivacy_master/docs/chronicles/INTEGRATION_BLADES.md",
+    "../agentprivacy_master/docs/chronicles/INTEGRATION_DOCS.md",
+    "../agentprivacy_master/docs/chronicles/INTEGRATION_EXTENSIONS.md",
+    "../agentprivacy_master/docs/chronicles/INTEGRATION_MASTER.md",
+    "../agentprivacy_master/docs/chronicles/INTEGRATION_SPELLWEB.md",
+    "../agentprivacy_master/docs/chronicles/last-page-reflection.md",
+    "../agentprivacy_master/docs/chronicles/MAGE_CEREMONY_OVERLAY_PLAN.md",
+    "../agentprivacy_master/docs/chronicles/MASTER_INTEGRATION_PLAN.md",
+    "../agentprivacy_master/docs/chronicles/MOBILE_COMPATIBILITY.md",
+    "../agentprivacy_master/docs/chronicles/moon-phase-notation.md",
+    "../agentprivacy_master/docs/chronicles/NEAR_AI_SETUP.md",
+    "../agentprivacy_master/docs/chronicles/NEXUS_SPELLWEB_ARCHITECTURE.md",
+    "../agentprivacy_master/docs/chronicles/NILLION_KEY_ATTESTATION.md",
+    "../agentprivacy_master/docs/chronicles/orb-interaction-plan-2026-03-31.md",
+    "../agentprivacy_master/docs/chronicles/orbitport-integration-plan.md",
+    "../agentprivacy_master/docs/chronicles/orbs-page-restructure-plan.md",
+    "../agentprivacy_master/docs/chronicles/PLAN_CEREMONY_PERSONA_SKILLS_UPDATE.md",
+    "../agentprivacy_master/docs/chronicles/PLAN_EDGES_TO_FILL_2026-03-31.md",
+    "../agentprivacy_master/docs/chronicles/PLAN_SPELLWEB_PVM_V52_UPDATE.md",
+    "../agentprivacy_master/docs/chronicles/plurality-spellbook-reconstruction-overview.md",
+    "../agentprivacy_master/docs/chronicles/POEMS_CEREMONY_PATH_PLAN.md",
+    "../agentprivacy_master/docs/chronicles/poems-the-amnesia-protocol.md",
+    "../agentprivacy_master/docs/chronicles/promises-v2-implementation-plan.md",
+    "../agentprivacy_master/docs/chronicles/PROVERBS_SYSTEM.md",
+    "../agentprivacy_master/docs/chronicles/REUPLOAD_CHECKLIST.md",
+    "../agentprivacy_master/docs/chronicles/review-2026-03-31-codebase-cleanup-and-orb-text-effects.md",
+    "../agentprivacy_master/docs/chronicles/SKILLS_PERSONAS_SPELLBOOK_MANAGEMENT.md",
+    "../agentprivacy_master/docs/chronicles/SOUL_ORB_COPY_NOTE.md",
+    "../agentprivacy_master/docs/chronicles/spellbook-canonical.md",
+    "../agentprivacy_master/docs/chronicles/SPELLWEB_AGENTPRIVACY_BLADE_BRIDGE.md",
+    "../agentprivacy_master/docs/chronicles/SPELLWEB_INTEGRATION_SPEC_v2.md",
+    "../agentprivacy_master/docs/chronicles/SPELLWEB_INTEGRATION_SPEC.md",
+    "../agentprivacy_master/docs/chronicles/SPELLWEB_V5_UPDATE_PLAN.md",
+    "../agentprivacy_master/docs/chronicles/SPELLWEB_WEB_TRANSFORMER.md",
+    "../agentprivacy_master/docs/chronicles/SPELLWEB.md",
+    "../agentprivacy_master/docs/chronicles/STATUS.md",
+    "../agentprivacy_master/docs/chronicles/SYNC_CEREMONY_V5_3_1.md",
+    "../agentprivacy_master/docs/chronicles/SYNC_CEREMONY_V5_3_2.md",
+    "../agentprivacy_master/docs/chronicles/training-grounds-explained.md",
+    "../agentprivacy_master/docs/chronicles/UX_CONVERGENCE_REVIEW.md",
+    "../agentprivacy_master/docs/chronicles/V5_3_1_CEREMONY_INTEGRATION_INSTRUCTIONS.md",
+    "../agentprivacy_master/docs/chronicles/V5_3_SUITE_UPDATE_PLAN.md",
+    "../dtgwg-zkp-tf-mage/runtimes/02-liveness-attestation/STUB.md",
+    "../dtgwg-zkp-tf-mage/runtimes/03-personhood-set-membership/STUB.md",
+    "../dtgwg-zkp-tf-mage/runtimes/04-holder-binding/STUB.md",
+    "../dtgwg-zkp-tf-mage/runtimes/05-freshness/STUB.md",
+    "../dtgwg-zkp-tf-mage/runtimes/06-demographic-range/STUB.md",
+    "../dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-COHERENCE.md",
+    "../dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-OPPORTUNITIES.md",
+    "../dtgwg-zkp-tf-mage/runtimes/STRAWMAN-COHERENCE-EDITS.md",
+    "dtgwg-cred-spec-main/CONTEXT.md",
+    "dtgwg-cred-spec-main/README.md",
+    "dtgwg-cred-spec-main/spec/appendix.md",
+    "dtgwg-cred-spec-main/spec/body.md",
+    "dtgwg-cred-spec-main/spec/header.md",
+    "dtgwg-cred-spec-main/spec/intro.md",
+    "dtgwg-cred-spec-main/spec/terms-and-definitions-intro.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/cloud_vta.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/community_did.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/community_trust_anchor.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/community_vta_network.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/community_vta.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/decentralized_trust_graph_working_group.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/decentralized_trust_graph.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/dtg_annotation_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/dtg_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/dtg_credentials_specification.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/dtg_edge_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/dtg_edge.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/dtg_invitation_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/dtg_node.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/dtg_verifiable_identifier.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/identity_verification_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/identity_verification_provider.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/initiator.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/local_vta.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/membership_did.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/persona_did.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/persona.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/personal_network_manager.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/personal_network_vault.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/personal_trust_network.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/personal_vta_network.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/personal_vta.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/personhood_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/policy_enforcement_point.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/relationship_card.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/relationship_did.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/relationship_invitation.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_data_structure.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_endorsement_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_membership_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_persona_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_relationship_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_trust_agent.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_trust_community.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_trust_network.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_trust_service_provider.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/verifiable_witness_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/vta_network_endpoint.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/vta_network.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/vtc_invitation_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/vtc_member.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/vtc_trust_anchor.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/vtn_invitation_credential.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/vtn_member.md",
+    "dtgwg-cred-spec-main/spec/terms-definitions/vtn_trust_anchor.md",
+    "SPEC-DRAFT-proof-of-understanding-trust-task.md",
+    "TRUST-TASKS-FIT-MAP-2026-07-18.md"
+  ],
+  "gate": {
+    "pagesScanned": 76,
+    "hits": 0
+  }
+}

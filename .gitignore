@@ -1,0 +1,10 @@
+# Vendored upstream (others' work) — see README Attribution; not republished here
+dtgwg-cred-spec-main/
+
+# Toolchain + build artifacts (circom lab: see runtimes/circom-gadget/README)
+node_modules/
+build/
+__pycache__/
+
+# Local scratch
+.scratch/

@@ -1,0 +1,26 @@
+{
+  "title": "Decision §28 — Open decisions for Task Force ratification",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "b9232f32bb4bd87f",
+      "text": "## 28. Open decisions for Task Force ratification\n\nThe following points should be explicitly ratified or revised at the working call:\n\n1. **Context delimiter:** adopt purpose-and-governance bounded context as the default rather than per-verifier or per-ecosystem context.\n2. **Collusion target:** make issuer-verifier collusion resistance the target for the Extended Personhood Profile, with any weaker deployment clearly identified as a separate privacy class.\n3. **Profile split:** ratify Minimum Liveness and Extended Personhood as the primary structural split.\n4. **Issuer concealment:** keep it profile-specific.\n5. **Boundary pairing:** require assurance and disclosure records for every material predicate.\n6. **Schema governance:** treat the attestation schema as the shared determinant of both boundaries.\n7. **Lifecycle:** require bounded epochs, enrolment-root cryptoperiods, and assurance horizons.\n8. **Delegation:** keep agent authority as separate structured evidence.\n9. **Mediated proving:** permit only through an explicit profile with non-retention and disclosure controls.\n10. **Human legibility:** make it a context conformance requirement."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision §28 — Open decisions for Task Force ratification",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "b9232f32bb4bd87f",
+            "text": "## 28. Open decisions for Task Force ratification\n\nThe following points should be explicitly ratified or revised at the working call:\n\n1. **Context delimiter:** adopt purpose-and-governance bounded context as the default rather than per-verifier or per-ecosystem context.\n2. **Collusion target:** make issuer-verifier collusion resistance the target for the Extended Personhood Profile, with any weaker deployment clearly identified as a separate privacy class.\n3. **Profile split:** ratify Minimum Liveness and Extended Personhood as the primary structural split.\n4. **Issuer concealment:** keep it profile-specific.\n5. **Boundary pairing:** require assurance and disclosure records for every material predicate.\n6. **Schema governance:** treat the attestation schema as the shared determinant of both boundaries.\n7. **Lifecycle:** require bounded epochs, enrolment-root cryptoperiods, and assurance horizons.\n8. **Delegation:** keep agent authority as separate structured evidence.\n9. **Mediated proving:** permit only through an explicit profile with non-retention and disclosure controls.\n10. **Human legibility:** make it a context conformance requirement."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

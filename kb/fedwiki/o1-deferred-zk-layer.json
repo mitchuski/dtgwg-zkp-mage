@@ -1,0 +1,96 @@
+{
+  "title": "O1 — Deferred ZK Layer",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "0e8248274e67507b",
+      "text": "# O1 — Fill the deferred ZK layer\n\n*DTG ZKP V1.0 is the conformant binding for the Credentials Core Spec's two ZK constructions — the missing\nlayer, not a parallel scheme.*\n\n**Register:** O1 · leverage 🔴 (charter-defining) · **Ladder:** design doc\n**Anchor (cred-spec):** \"Specification remains format-agnostic regarding ZKP implementations… detailed ZK\nprotocols and registry-ZK interactions deferred to future work.\"\n**Anchor (decision doc):** §2.1 statement-before-construction · §7 profile architecture · §25\nconstruction-selection gate.\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "613e29ae5bb43131",
+      "text": "## What the spec offers and defers\n\nThe Credentials Core Spec fixed everything *around* the proofs: six credential types, four DID types, the\ntrust registry, `taskContext`, and — critically — the **shapes** of exactly two ZK constructions:\n\n- **Pairwise (VRC-based):** two VRC holders prove possession + selectively disclose without revealing R-DIDs.\n- **Community-anchored (VMC-based):** two members of one C-DID prove relationship existence within a shared\n  governance context, no DIDs revealed.\n\nThen it stopped, on purpose. The protocol details of those two constructions and their interaction with the\ntrust registry are deferred to future work. The sibling WG cut a hole exactly our shape."
+    },
+    {
+      "type": "markdown",
+      "id": "59d8af84660efed7",
+      "text": "## What the decision doc adds\n\nThe Predicate & Assurance-Boundary Decision Document (v0.1.0-draft) resolves *how* the hole gets filled:\n\n- **Statement selection precedes construction selection** (§2.1): naming a nullifier or set-membership\n  proof tells nobody what proposition is exchanged. The deliverable's spine is the PR-* predicate register\n  (§9) — each with a positive statement, a **negative meaning**, and paired assurance/disclosure boundaries.\n- **Two profiles, not one ladder** (§7): the **Minimum Liveness Profile** ships without population\n  deduplication or the Sybil/unlinkability trade; the **Extended Personhood Profile** composes onto it and\n  must declare its position on that trade curve.\n- **The construction gate** (§25): no construction is ratified until statement, negative meaning, context\n  inputs, adversary model, horizons, schema fields, composition assumptions, accountability, performance\n  envelope, and fixtures are approved."
+    },
+    {
+      "type": "markdown",
+      "id": "9585abed05623eff",
+      "text": "## The claim\n\n**DTG ZKP V1.0 should be written as the binding that fills the deferred layer** — for each predicate, a\nconformant realization of one of the spec's two constructions, never a third scheme. Concretely, every\nnormative statement in our draft should be traceable as:\n\n```\nPR-* predicate (decision doc §9)  →  cred-spec anchor (credential/DID/registry object)  →  construction it rides  →  protocol detail we specify\n```\n\nThe first two arrows exist (`~/dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-COHERENCE.md` + the decision doc's\nregister); our deliverable is the fourth column — entered only through the §25 gate."
+    },
+    {
+      "type": "markdown",
+      "id": "3b5e4d8050a20e1c",
+      "text": "## Positioning rules (what \"not a parallel scheme\" means in practice)\n\n1. **Adopt the spec's objects verbatim** — VRC/VMC/VIC/VPC/VEC/VWC, R/M/C/P-DID, trust registry, PHC,\n   IDVC, taskContext. No synonyms, no new credential types (reserved for higher-layer trust-task protocols).\n2. **Adopt the decision doc's narrow language verbatim** — \"scoped reuse detection\" not \"unique human\";\n   \"possession of and predicates over an attestation\" not \"proof of liveness\"; holder-key control ≠ agent\n   authority. §24's prohibited-claims list is a style guide as much as a rule set.\n3. **Every predicate names its construction.** Uniqueness/personhood ride community-anchored; holder/agent\n   binding rides pairwise; freshness and range are constraints/compositions layered on those.\n4. **Format-agnosticism is preserved downward, not upward.** We bind to the spec's constructions (upward),\n   but stay agnostic on credential *formats* (SD-JWT-VC, BBS+) the way the spec does — our predicates are\n   the proof-layer realization, complementary to format-level selective disclosure.\n5. **Registry interaction is shared work.** The registry-ZK interaction (O4) is the one place our text and\n   the Credentials TF's must co-evolve — co-author, don't fork (decision doc §27.1/§27.3)."
+    },
+    {
+      "type": "markdown",
+      "id": "cdffa6a415b91526",
+      "text": "## What exists\n\n- The coherence map + anchor blocks on all seven runtimes (the first two arrows).\n- The decision doc itself — the §9 register with paired boundary analyses is the statement layer the §25\n  gate requires, drafted.\n- E1–E7 (`~/dtgwg-zkp-tf-mage/runtimes/STRAWMAN-COHERENCE-EDITS.md`) — the strawman-side edits making the\n  interlock explicit; E1 (normative reference) and E4 (name the two constructions) are the first upstream move.\n- Reference constructions with property tests for the two hardest predicates (rt 01 nullifier 9/9,\n  rt 07 edge-admissibility 11/11) — early drafts of §26 conformance fixtures."
+    },
+    {
+      "type": "markdown",
+      "id": "2241d6ecf10098fb",
+      "text": "## Build plan\n\n- **M1 — ratify the statement layer.** Bring the decision doc to the TF (§28's ten ratification points);\n  land E1–E7 as issues/PRs so the strawman and the cred-spec interlock.\n- **M2 — boundary records per predicate.** For each PR-* we build, complete the assurance-boundary +\n  disclosure-boundary pair (Appendix B format) — the runtimes' NOTES.md are the drafts.\n- **M3 — constructions through the gate.** Only now: per-predicate binding profiles (statement,\n  public/private inputs, construction, reference runtime, cost) → the shared circom gadget.\n- **M4 — the working draft.** Assemble into DTG ZKP V1.0 WD for IIW #43 (Nov 2026), MLP first, EPP behind\n  it, registry-ZK section co-authored with the Credentials TF."
+    },
+    {
+      "type": "markdown",
+      "id": "c2833a67ac301f7b",
+      "text": "## Open questions\n\n- One document (binding spec) or a profile-per-predicate series? The decision doc's §31 disposition\n  (decision baseline → templates → registers → fixtures) suggests one baseline + per-predicate records.\n- The cred-spec is itself WD v1.0 — track its churn; our normative reference needs a version/date pin.\n- Where the decision doc should live upstream: its §31 recommends `docs/implementation-guide/boundaries/`;\n  currently it's here in the exploration root awaiting TF review."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "O1 — Deferred ZK Layer",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "0e8248274e67507b",
+            "text": "# O1 — Fill the deferred ZK layer\n\n*DTG ZKP V1.0 is the conformant binding for the Credentials Core Spec's two ZK constructions — the missing\nlayer, not a parallel scheme.*\n\n**Register:** O1 · leverage 🔴 (charter-defining) · **Ladder:** design doc\n**Anchor (cred-spec):** \"Specification remains format-agnostic regarding ZKP implementations… detailed ZK\nprotocols and registry-ZK interactions deferred to future work.\"\n**Anchor (decision doc):** §2.1 statement-before-construction · §7 profile architecture · §25\nconstruction-selection gate.\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "613e29ae5bb43131",
+            "text": "## What the spec offers and defers\n\nThe Credentials Core Spec fixed everything *around* the proofs: six credential types, four DID types, the\ntrust registry, `taskContext`, and — critically — the **shapes** of exactly two ZK constructions:\n\n- **Pairwise (VRC-based):** two VRC holders prove possession + selectively disclose without revealing R-DIDs.\n- **Community-anchored (VMC-based):** two members of one C-DID prove relationship existence within a shared\n  governance context, no DIDs revealed.\n\nThen it stopped, on purpose. The protocol details of those two constructions and their interaction with the\ntrust registry are deferred to future work. The sibling WG cut a hole exactly our shape."
+          },
+          {
+            "type": "markdown",
+            "id": "59d8af84660efed7",
+            "text": "## What the decision doc adds\n\nThe Predicate & Assurance-Boundary Decision Document (v0.1.0-draft) resolves *how* the hole gets filled:\n\n- **Statement selection precedes construction selection** (§2.1): naming a nullifier or set-membership\n  proof tells nobody what proposition is exchanged. The deliverable's spine is the PR-* predicate register\n  (§9) — each with a positive statement, a **negative meaning**, and paired assurance/disclosure boundaries.\n- **Two profiles, not one ladder** (§7): the **Minimum Liveness Profile** ships without population\n  deduplication or the Sybil/unlinkability trade; the **Extended Personhood Profile** composes onto it and\n  must declare its position on that trade curve.\n- **The construction gate** (§25): no construction is ratified until statement, negative meaning, context\n  inputs, adversary model, horizons, schema fields, composition assumptions, accountability, performance\n  envelope, and fixtures are approved."
+          },
+          {
+            "type": "markdown",
+            "id": "9585abed05623eff",
+            "text": "## The claim\n\n**DTG ZKP V1.0 should be written as the binding that fills the deferred layer** — for each predicate, a\nconformant realization of one of the spec's two constructions, never a third scheme. Concretely, every\nnormative statement in our draft should be traceable as:\n\n```\nPR-* predicate (decision doc §9)  →  cred-spec anchor (credential/DID/registry object)  →  construction it rides  →  protocol detail we specify\n```\n\nThe first two arrows exist (`~/dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-COHERENCE.md` + the decision doc's\nregister); our deliverable is the fourth column — entered only through the §25 gate."
+          },
+          {
+            "type": "markdown",
+            "id": "3b5e4d8050a20e1c",
+            "text": "## Positioning rules (what \"not a parallel scheme\" means in practice)\n\n1. **Adopt the spec's objects verbatim** — VRC/VMC/VIC/VPC/VEC/VWC, R/M/C/P-DID, trust registry, PHC,\n   IDVC, taskContext. No synonyms, no new credential types (reserved for higher-layer trust-task protocols).\n2. **Adopt the decision doc's narrow language verbatim** — \"scoped reuse detection\" not \"unique human\";\n   \"possession of and predicates over an attestation\" not \"proof of liveness\"; holder-key control ≠ agent\n   authority. §24's prohibited-claims list is a style guide as much as a rule set.\n3. **Every predicate names its construction.** Uniqueness/personhood ride community-anchored; holder/agent\n   binding rides pairwise; freshness and range are constraints/compositions layered on those.\n4. **Format-agnosticism is preserved downward, not upward.** We bind to the spec's constructions (upward),\n   but stay agnostic on credential *formats* (SD-JWT-VC, BBS+) the way the spec does — our predicates are\n   the proof-layer realization, complementary to format-level selective disclosure.\n5. **Registry interaction is shared work.** The registry-ZK interaction (O4) is the one place our text and\n   the Credentials TF's must co-evolve — co-author, don't fork (decision doc §27.1/§27.3)."
+          },
+          {
+            "type": "markdown",
+            "id": "cdffa6a415b91526",
+            "text": "## What exists\n\n- The coherence map + anchor blocks on all seven runtimes (the first two arrows).\n- The decision doc itself — the §9 register with paired boundary analyses is the statement layer the §25\n  gate requires, drafted.\n- E1–E7 (`~/dtgwg-zkp-tf-mage/runtimes/STRAWMAN-COHERENCE-EDITS.md`) — the strawman-side edits making the\n  interlock explicit; E1 (normative reference) and E4 (name the two constructions) are the first upstream move.\n- Reference constructions with property tests for the two hardest predicates (rt 01 nullifier 9/9,\n  rt 07 edge-admissibility 11/11) — early drafts of §26 conformance fixtures."
+          },
+          {
+            "type": "markdown",
+            "id": "2241d6ecf10098fb",
+            "text": "## Build plan\n\n- **M1 — ratify the statement layer.** Bring the decision doc to the TF (§28's ten ratification points);\n  land E1–E7 as issues/PRs so the strawman and the cred-spec interlock.\n- **M2 — boundary records per predicate.** For each PR-* we build, complete the assurance-boundary +\n  disclosure-boundary pair (Appendix B format) — the runtimes' NOTES.md are the drafts.\n- **M3 — constructions through the gate.** Only now: per-predicate binding profiles (statement,\n  public/private inputs, construction, reference runtime, cost) → the shared circom gadget.\n- **M4 — the working draft.** Assemble into DTG ZKP V1.0 WD for IIW #43 (Nov 2026), MLP first, EPP behind\n  it, registry-ZK section co-authored with the Credentials TF."
+          },
+          {
+            "type": "markdown",
+            "id": "c2833a67ac301f7b",
+            "text": "## Open questions\n\n- One document (binding spec) or a profile-per-predicate series? The decision doc's §31 disposition\n  (decision baseline → templates → registers → fixtures) suggests one baseline + per-predicate records.\n- The cred-spec is itself WD v1.0 — track its churn; our normative reference needs a version/date pin.\n- Where the decision doc should live upstream: its §31 recommends `docs/implementation-guide/boundaries/`;\n  currently it's here in the exploration root awaiting TF review."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

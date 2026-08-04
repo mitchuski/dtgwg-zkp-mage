@@ -1,0 +1,26 @@
+{
+  "title": "Decision — Appendix B. Compact boundary-record example for PR-UNQ",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "c14546d4d9fc508b",
+      "text": "## Appendix B. Compact boundary-record example for PR-UNQ\n\n```yaml\nboundary_id: AB-PR-UNQ-001\npredicate: PR-UNQ\nprofile: extended-personhood-v1\nstatement_established: >\n  The same enrolled secret cannot produce two accepted actions in the\n  declared context, scope, purpose, and epoch without producing the same\n  nullifier.\nnegative_meaning:\n  - does not establish one natural person globally\n  - does not establish one enrolment across issuers\n  - does not establish non-transfer of the enrolled secret\nagainst_whom:\n  - honest-but-curious verifier\n  - colluding verifiers across distinct contexts\n  - issuer and verifier collusion, subject to declared issuer-data limits\nfor_how_long:\n  epoch: 30 days\n  enrolment_root_cryptoperiod: 2 years\n  nullifier_retention: 35 days\n  assurance_horizon: 2 years\nalongside_what:\n  - attestation schema v1\n  - canonical transcript v1\n  - registry snapshot no older than 24 hours\n  - no stable external account identifier shared across contexts\naccountable_parties:\n  enrolment_correctness: issuer\n  context_definition: context authority\n  nullifier_state: verifier-set operator\n  cryptographic_correctness: proof implementation\nredress:\n  - duplicate-decision challenge endpoint\n  - issuer re-evaluation\n  - verifier state correction\n  - appeal to context authority\n```"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Decision — Appendix B. Compact boundary-record example for PR-UNQ",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "c14546d4d9fc508b",
+            "text": "## Appendix B. Compact boundary-record example for PR-UNQ\n\n```yaml\nboundary_id: AB-PR-UNQ-001\npredicate: PR-UNQ\nprofile: extended-personhood-v1\nstatement_established: >\n  The same enrolled secret cannot produce two accepted actions in the\n  declared context, scope, purpose, and epoch without producing the same\n  nullifier.\nnegative_meaning:\n  - does not establish one natural person globally\n  - does not establish one enrolment across issuers\n  - does not establish non-transfer of the enrolled secret\nagainst_whom:\n  - honest-but-curious verifier\n  - colluding verifiers across distinct contexts\n  - issuer and verifier collusion, subject to declared issuer-data limits\nfor_how_long:\n  epoch: 30 days\n  enrolment_root_cryptoperiod: 2 years\n  nullifier_retention: 35 days\n  assurance_horizon: 2 years\nalongside_what:\n  - attestation schema v1\n  - canonical transcript v1\n  - registry snapshot no older than 24 hours\n  - no stable external account identifier shared across contexts\naccountable_parties:\n  enrolment_correctness: issuer\n  context_definition: context authority\n  nullifier_state: verifier-set operator\n  cryptographic_correctness: proof implementation\nredress:\n  - duplicate-decision challenge endpoint\n  - issuer re-evaluation\n  - verifier state correction\n  - appeal to context authority\n```"
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "title": "X3 — Trust Task Composition",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "7f1d910e2afce999",
+      "text": "# X3 — Trust-task composition and joint leakage: the show is one transcript\n\n*A real trust task never requests one predicate. It composes several PR-* predicates into a single\npresentation — a **show** — and §27.2 states the danger plainly: \"Bundled proofs that are individually\nsound may leak jointly.\" This doc gives the composition its algebra, its joint disclosure boundary, and a\ngoverned remedy: named bundle profiles instead of à-la-carte predicate requests.*\n\n**Register:** X-series (new, beyond the nine-item register) · leverage 🔴 · **Ladder:** reference built\n2026-07-17 — [[Lab — show-composition]] 10/10; bundle registry v0 (5 bundles);\nM1 worksheet + M5 joint session remain design-doc work (see its NOTES.md)\n**Anchor (cred-spec):** trust-task boundary — credential = true standing alone; artifact = `threadId`-\ncorrelated exchange object; `taskContext` binds a credential to its ceremony, never completion evidence.\n**Anchor (decision doc):** §2.6 composition can defeat an individually sound proof · §27.2 trust tasks ·\n§15.2 canonical transcript (\"requested predicates\" is a required field) · §18.4 combination analysis ·\n§19 disclosure-boundary observers · §20 observable events · §2.4 three-parameter claims.\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "0e4d469fbcbb95db",
+      "text": "## The gap the decision doc names but does not fill\n\nEvery PR-* entry in the register (§9) carries a *paired* boundary analysis — per predicate. But a\nrepresentative trust-task show composes PR-LIV + PR-ISS + PR-UNQ + PR-FRE, possibly + PR-DEL, and the\ndecision doc rules the failure mode without ruling the model: \"an individually zero-knowledge transcript\ncan participate in a system that is correlatable or reconstructive\" (§2.6); \"leave proof composition\nundocumented\" is a prohibited construction (§24); \"the transcript, purpose, scope, and multi-proof\ncomposition model require joint definition\" with Trust Tasks (§27.2). This doc drafts that joint model\nfrom our side of the table."
+    },
+    {
+      "type": "markdown",
+      "id": "fcf4b602df21dc19",
+      "text": "## The claim\n\n**A show's disclosure boundary is a property of the predicate set, and it is strictly wider than the\nunion of the per-predicate disclosure boundaries.** Three mechanisms, all already latent in the baseline:\n\n1. **Intersection narrowing.** Each predicate's derived disclosure (assurance class, policy version,\n   issuer-set choice, epoch, proof shape) is a population filter; the show intersects the filters. §18.4\n   states the rule for schema fields — \"non-identifying separately but identifying together\" — and it\n   applies unchanged to composed predicates.\n2. **Request-pattern leakage.** The predicate set requested is itself an observable event: transcript\n   fields \"can reveal verifier, audience, purpose, requested predicates, risk posture\" (§15.4), and \"the\n   request pattern can itself disclose behaviour\" (§20). A rare combination (e.g. +PR-DEL, or PR-RNG with\n   a narrow range) fingerprints the vertical, the verifier's risk posture, and hence the holder's activity.\n3. **Cross-show correlation.** Two shows in different contexts sharing *no* identifiers still present a\n   correlatable pair (bundle shape, proof sizes, timing, retry pattern) to the §19 observers — multiple\n   verifiers colluding and the network observer foremost. Context separation (§6) can be defeated by\n   bundle shape alone."
+    },
+    {
+      "type": "markdown",
+      "id": "d487a59c7a4b3633",
+      "text": "## The composition algebra, sketched\n\n- **Atomicity.** All predicates in one show bind ONE canonical transcript — §15.2 already lists\n  \"requested predicates\" as a required field, so the baseline quietly makes the show, not the predicate,\n  the unit of freshness. Rule: a show verifies as a whole or fails as a whole; no partial acceptance, no\n  transplanting a member proof into a different transcript (§15.1).\n- **Boundary records at show level.** Per §26 each predicate carries assurance + disclosure records; a\n  composed show additionally carries a **joint disclosure record** in three-parameter form (§2.4):\n  against whom (the §19 observer list, per bundle), for how long (the longest-lived member linkage —\n  PR-UNQ's epoch dominates), alongside what (the other members, explicitly enumerated).\n- **Bundle profiles.** Instead of verifiers composing à la carte, the profile registers **named,\n  versioned predicate bundles** — MLP-BASE = {PR-LIV, PR-ISS, PR-HLD, PR-FRE}, EPP-UNIQ = MLP-BASE ∪\n  {PR-PER, PR-UNQ}, +DEL variants — exactly as cipher suites replaced à-la-carte algorithm negotiation.\n  Small governed vocabulary, large anonymity set per bundle; a request outside the registry is a §26.1\n  negative-test rejection. This is the same cardinality-control instinct as §18.3's prohibition on\n  high-cardinality extensions, lifted to the request layer.\n- **The credential/artifact wall.** Composition MUST NOT let a `taskContext`-bearing credential (VWC and\n  kin) stand in for outcome evidence: a bundle may *include* a ceremony-bound credential but the show's\n  established statement never crosses into task completion — that lives with the reachable outcome\n  artifact, `threadId`-correlated, on the Trust Task side of the boundary. Negative meaning, stated: a\n  valid show does not establish that any task was performed, completed, or performed well."
+    },
+    {
+      "type": "markdown",
+      "id": "45ff5d74199f8069",
+      "text": "## What exists\n\n- O9's \"economic composition\" note is the seed: n distinct-counterparty PR-PRM proofs reveal degree ≥ n —\n  degree *is* the disclosure. This doc generalises that from one extension to the whole register.\n- §15.2's transcript field list — the atomicity anchor is already normative text, not new machinery.\n- rt 07 trust-graph-formation: shows are the edge-formation events; a bundle-profile field on the show\n  object is a small extension with existing property-test scaffolding.\n- O5's transcript conformance harness — the natural place for joint negative tests."
+    },
+    {
+      "type": "markdown",
+      "id": "4d72e42bdb5774f5",
+      "text": "## Build plan\n\n- **M1 — joint-disclosure worksheet:** for the four-predicate representative show, run the full §19\n  observer × §19 surface matrix once, honestly; publish the delta over the union of per-predicate records.\n- **M2 — bundle-profile registry draft:** named bundles, versioning, change control on the §6.7\n  context-authority pattern; à-la-carte requests as a profile violation.\n- **M3 — show-level boundary record schema** (extends Appendix B's compact form with `bundleId`,\n  memberPredicates, joint three-parameter claim).\n- **M4 — reference model in the lab:** show object binding one transcript; properties: atomicity\n  (partial acceptance rejected), replay-across-transcript rejected (§26.1), bundle-outside-registry\n  rejected, taskContext-as-outcome rejected.\n- **M5 — joint session with Trust Tasks:** the composition model is explicitly a §27.2 co-owned\n  deliverable; bring M1+M2 as the ZKP-side draft."
+    },
+    {
+      "type": "markdown",
+      "id": "33aae3abb6c72d0e",
+      "text": "## Upstream surface\n\nJoint work with the Trust Task workstream (§27.2): they own request semantics and outcome artifacts; we\nown transcript binding and the disclosure calculus. The bundle-profile registry is the shared object —\nproposed as a section of the profile spec plus a governed registry, mirroring the context-authority model."
+    },
+    {
+      "type": "markdown",
+      "id": "69d84e8db4ed9fd4",
+      "text": "## Open questions\n\n- **Uniformity vs honesty:** padding proof sizes and coarsening timing (§20 minimisation) shrinks bundle\n  fingerprints but costs mobile provers — where is the floor for the consumer-device envelope (§25)?\n- **Recursive composition:** if folding makes an n-predicate show one proof (§29 open item), bundle shape\n  collapses to one size — does that *solve* fingerprinting, or move it into proving-time side channels?\n- **Bundle registry authority:** same body as context authority (§6.7), or Trust-Task-owned? The two\n  registries interlock — a context descriptor may need to name its admissible bundles.\n- **Cross-show budget:** should a profile state a linkage budget (how many shows per context per epoch\n  before intersection narrowing defeats the anonymity-set claim)? §2.4's \"for how long\" hints yes."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "X3 — Trust Task Composition",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "7f1d910e2afce999",
+            "text": "# X3 — Trust-task composition and joint leakage: the show is one transcript\n\n*A real trust task never requests one predicate. It composes several PR-* predicates into a single\npresentation — a **show** — and §27.2 states the danger plainly: \"Bundled proofs that are individually\nsound may leak jointly.\" This doc gives the composition its algebra, its joint disclosure boundary, and a\ngoverned remedy: named bundle profiles instead of à-la-carte predicate requests.*\n\n**Register:** X-series (new, beyond the nine-item register) · leverage 🔴 · **Ladder:** reference built\n2026-07-17 — [[Lab — show-composition]] 10/10; bundle registry v0 (5 bundles);\nM1 worksheet + M5 joint session remain design-doc work (see its NOTES.md)\n**Anchor (cred-spec):** trust-task boundary — credential = true standing alone; artifact = `threadId`-\ncorrelated exchange object; `taskContext` binds a credential to its ceremony, never completion evidence.\n**Anchor (decision doc):** §2.6 composition can defeat an individually sound proof · §27.2 trust tasks ·\n§15.2 canonical transcript (\"requested predicates\" is a required field) · §18.4 combination analysis ·\n§19 disclosure-boundary observers · §20 observable events · §2.4 three-parameter claims.\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "0e4d469fbcbb95db",
+            "text": "## The gap the decision doc names but does not fill\n\nEvery PR-* entry in the register (§9) carries a *paired* boundary analysis — per predicate. But a\nrepresentative trust-task show composes PR-LIV + PR-ISS + PR-UNQ + PR-FRE, possibly + PR-DEL, and the\ndecision doc rules the failure mode without ruling the model: \"an individually zero-knowledge transcript\ncan participate in a system that is correlatable or reconstructive\" (§2.6); \"leave proof composition\nundocumented\" is a prohibited construction (§24); \"the transcript, purpose, scope, and multi-proof\ncomposition model require joint definition\" with Trust Tasks (§27.2). This doc drafts that joint model\nfrom our side of the table."
+          },
+          {
+            "type": "markdown",
+            "id": "fcf4b602df21dc19",
+            "text": "## The claim\n\n**A show's disclosure boundary is a property of the predicate set, and it is strictly wider than the\nunion of the per-predicate disclosure boundaries.** Three mechanisms, all already latent in the baseline:\n\n1. **Intersection narrowing.** Each predicate's derived disclosure (assurance class, policy version,\n   issuer-set choice, epoch, proof shape) is a population filter; the show intersects the filters. §18.4\n   states the rule for schema fields — \"non-identifying separately but identifying together\" — and it\n   applies unchanged to composed predicates.\n2. **Request-pattern leakage.** The predicate set requested is itself an observable event: transcript\n   fields \"can reveal verifier, audience, purpose, requested predicates, risk posture\" (§15.4), and \"the\n   request pattern can itself disclose behaviour\" (§20). A rare combination (e.g. +PR-DEL, or PR-RNG with\n   a narrow range) fingerprints the vertical, the verifier's risk posture, and hence the holder's activity.\n3. **Cross-show correlation.** Two shows in different contexts sharing *no* identifiers still present a\n   correlatable pair (bundle shape, proof sizes, timing, retry pattern) to the §19 observers — multiple\n   verifiers colluding and the network observer foremost. Context separation (§6) can be defeated by\n   bundle shape alone."
+          },
+          {
+            "type": "markdown",
+            "id": "d487a59c7a4b3633",
+            "text": "## The composition algebra, sketched\n\n- **Atomicity.** All predicates in one show bind ONE canonical transcript — §15.2 already lists\n  \"requested predicates\" as a required field, so the baseline quietly makes the show, not the predicate,\n  the unit of freshness. Rule: a show verifies as a whole or fails as a whole; no partial acceptance, no\n  transplanting a member proof into a different transcript (§15.1).\n- **Boundary records at show level.** Per §26 each predicate carries assurance + disclosure records; a\n  composed show additionally carries a **joint disclosure record** in three-parameter form (§2.4):\n  against whom (the §19 observer list, per bundle), for how long (the longest-lived member linkage —\n  PR-UNQ's epoch dominates), alongside what (the other members, explicitly enumerated).\n- **Bundle profiles.** Instead of verifiers composing à la carte, the profile registers **named,\n  versioned predicate bundles** — MLP-BASE = {PR-LIV, PR-ISS, PR-HLD, PR-FRE}, EPP-UNIQ = MLP-BASE ∪\n  {PR-PER, PR-UNQ}, +DEL variants — exactly as cipher suites replaced à-la-carte algorithm negotiation.\n  Small governed vocabulary, large anonymity set per bundle; a request outside the registry is a §26.1\n  negative-test rejection. This is the same cardinality-control instinct as §18.3's prohibition on\n  high-cardinality extensions, lifted to the request layer.\n- **The credential/artifact wall.** Composition MUST NOT let a `taskContext`-bearing credential (VWC and\n  kin) stand in for outcome evidence: a bundle may *include* a ceremony-bound credential but the show's\n  established statement never crosses into task completion — that lives with the reachable outcome\n  artifact, `threadId`-correlated, on the Trust Task side of the boundary. Negative meaning, stated: a\n  valid show does not establish that any task was performed, completed, or performed well."
+          },
+          {
+            "type": "markdown",
+            "id": "45ff5d74199f8069",
+            "text": "## What exists\n\n- O9's \"economic composition\" note is the seed: n distinct-counterparty PR-PRM proofs reveal degree ≥ n —\n  degree *is* the disclosure. This doc generalises that from one extension to the whole register.\n- §15.2's transcript field list — the atomicity anchor is already normative text, not new machinery.\n- rt 07 trust-graph-formation: shows are the edge-formation events; a bundle-profile field on the show\n  object is a small extension with existing property-test scaffolding.\n- O5's transcript conformance harness — the natural place for joint negative tests."
+          },
+          {
+            "type": "markdown",
+            "id": "4d72e42bdb5774f5",
+            "text": "## Build plan\n\n- **M1 — joint-disclosure worksheet:** for the four-predicate representative show, run the full §19\n  observer × §19 surface matrix once, honestly; publish the delta over the union of per-predicate records.\n- **M2 — bundle-profile registry draft:** named bundles, versioning, change control on the §6.7\n  context-authority pattern; à-la-carte requests as a profile violation.\n- **M3 — show-level boundary record schema** (extends Appendix B's compact form with `bundleId`,\n  memberPredicates, joint three-parameter claim).\n- **M4 — reference model in the lab:** show object binding one transcript; properties: atomicity\n  (partial acceptance rejected), replay-across-transcript rejected (§26.1), bundle-outside-registry\n  rejected, taskContext-as-outcome rejected.\n- **M5 — joint session with Trust Tasks:** the composition model is explicitly a §27.2 co-owned\n  deliverable; bring M1+M2 as the ZKP-side draft."
+          },
+          {
+            "type": "markdown",
+            "id": "33aae3abb6c72d0e",
+            "text": "## Upstream surface\n\nJoint work with the Trust Task workstream (§27.2): they own request semantics and outcome artifacts; we\nown transcript binding and the disclosure calculus. The bundle-profile registry is the shared object —\nproposed as a section of the profile spec plus a governed registry, mirroring the context-authority model."
+          },
+          {
+            "type": "markdown",
+            "id": "69d84e8db4ed9fd4",
+            "text": "## Open questions\n\n- **Uniformity vs honesty:** padding proof sizes and coarsening timing (§20 minimisation) shrinks bundle\n  fingerprints but costs mobile provers — where is the floor for the consumer-device envelope (§25)?\n- **Recursive composition:** if folding makes an n-predicate show one proof (§29 open item), bundle shape\n  collapses to one size — does that *solve* fingerprinting, or move it into proving-time side channels?\n- **Bundle registry authority:** same body as context authority (§6.7), or Trust-Task-owned? The two\n  registries interlock — a context descriptor may need to name its admissible bundles.\n- **Cross-show budget:** should a profile state a linkage budget (how many shows per context per epoch\n  before intersection narrowing defeats the anonymity-set claim)? §2.4's \"for how long\" hints yes."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}

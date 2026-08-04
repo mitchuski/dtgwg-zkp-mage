@@ -1,0 +1,56 @@
+{
+  "title": "O5 O6 O8 — Supporting Notes",
+  "story": [
+    {
+      "type": "markdown",
+      "id": "3cdbdb4e8157f347",
+      "text": "# O5 · O6 · O8 — Supporting explorations\n\n*Three lower-cost lines: the freshness/transcript conformance harness, the pools cross-pollination, and the\npost-quantum path. Each is mostly reuse of what already exists.*\n\n**Register:** O5, O6, O8 · leverage 🟡 · **Ladder:** design notes\n\n---"
+    },
+    {
+      "type": "markdown",
+      "id": "ce730afde718855b",
+      "text": "## O5 — Runtime 05 as the transcript-conformance harness\n\n**Anchor:** cred-spec `taskContext` + outcome-interpretability · decision doc **PR-FRE** (§15).\n\nThe decision doc upgraded this exploration's target. The original idea bound the freshness nonce to\n`witnessContext.sessionId`; §15.2 now rules that **a bare nonce is insufficient** — freshness means binding\nto a **canonical transcript**: protocol/profile versions, verifier/audience, governed context descriptor,\npurpose, scope, challenge, session, requested predicates, policy requirements, delegation reference, expiry,\nsnapshot requirements, proving mode, encoding version.\n\nSo runtime 05 becomes the **conformance harness for PR-FRE**:\n\n- implement canonical-transcript formation + digest (one implementation, shared with the VWC seat's\n  `transcript_digest` and O7's step-up binding);\n- property tests from §26.1's negative list: replay into another verifier/context/purpose/scope/transcript\n  must fail; a materially different transcript with the same nonce must fail; transcript-field observation\n  is recorded as disclosure (§15.4), not treated as free.\n\nCheapest full deliverable in the lab: PR-FRE is required by both MLP and EPP, so the harness serves every\nprofile. **Negative meaning** carried: PR-FRE establishes only binding-to-current-transcript — never\nliveness, personhood, identity, or authority (§15.3)."
+    },
+    {
+      "type": "markdown",
+      "id": "0c4337eeb6e829f7",
+      "text": "## O6 — Correlation architecture ↔ privacy-pools / mana-pools lineage\n\n**Anchor:** cred-spec four-DID model (R/M/C/P) with mandatory R-DID uniqueness · decision doc §6\n(context = governed linkability domain) · §6.6 prohibited cross-context linkage.\n\nThe pools lineage (privacy-pools withdraw folding, mana-pools, the runtime-01 nullifier itself) is the same\nunlinkability discipline the spec's correlation architecture demands. Two directions of transfer:\n\n- **Pools → DTG:** domain-separated derivation as the R/M/C/P-DID minting discipline — each R-DID is a\n  per-counterparty derivation from the holder secret, exactly the pools' per-context pseudonym pattern;\n  the pools' association-set reasoning maps to registry epoch roots (O4).\n- **DTG → pools:** the decision doc's context machinery (§6.2 canonical descriptors, §6.7 context\n  authority + change control, §6.6 prohibited-linkage list) is a *governance* layer the pools story never\n  formalized — \"which withdrawals may be linked, by whom, under whose authority\" is a context decision\n  record. The 0xbow/ASP world would recognize every row of it.\n\nDeliverable: a two-page derivation-discipline note (how one holder secret safely mints R/M/C/P-DIDs with\nprovable non-correlation, pools-style) — feeds O2's descriptor upgrade and any TF question about DID\nderivation. Low urgency; write when O2's M2 lands."
+    },
+    {
+      "type": "markdown",
+      "id": "f3cc9912615adbe3",
+      "text": "## O8 — The post-quantum path\n\n**Anchor:** strawman §8 (\"pre-quantum acceptable for v1, documented PQ path\") · decision doc §24 (\"MUST NOT\nmake post-quantum support a blocker for the first implementable release\") + §29 (PQ migration = an\nimplementation question \"requiring layer separability and evidence, not only algorithm identifiers\") +\n§22.3 (migration must be a concrete mechanism).\n\nThe TF can lead the PQ story for the whole DTG stack precisely because the decision doc keeps it out of\nV1's critical path. The deliverable is a **layer-separability analysis**, not a scheme swap:\n\n| Layer | PQ status |\n|---|---|\n| Hash commitments, nullifiers, Merkle roots (the shared gadget) | already PQ-safe (symmetric/hash assumptions) |\n| Proof system (Groth16/PLONK-class over pairings) | not PQ; the layer that must be swappable (STARK-class successors) |\n| Issuer signatures on attestations (IDVC, VWC, delegation) | migrate with issuer PKI (ML-DSA et al.) — an O3 schema-versioning concern, not a circuit concern |\n| Long-lived artefacts (enrolment roots, §22.2 cryptoperiods) | the real exposure: harvest-now-decrypt-later applies to anything retained; cryptoperiods are the control |\n\nThreat-model credibility comes from the ecdsa.fail / quantum-ECC lineage (shor_mage): concrete cost models\nfor the classical-breaks timeline rather than hand-waving. Deliverable: a \"PQ considerations\" section for\nthe V1 draft doing §22.3 properly — profile identifiers, version negotiation, overlap periods, downgrade\nprotection, and what happens to enrolment roots at migration. Write once the construction gate (§25) has\nnamed actual proof systems; before that it has nothing concrete to separate."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "O5 O6 O8 — Supporting Notes",
+        "story": [
+          {
+            "type": "markdown",
+            "id": "3cdbdb4e8157f347",
+            "text": "# O5 · O6 · O8 — Supporting explorations\n\n*Three lower-cost lines: the freshness/transcript conformance harness, the pools cross-pollination, and the\npost-quantum path. Each is mostly reuse of what already exists.*\n\n**Register:** O5, O6, O8 · leverage 🟡 · **Ladder:** design notes\n\n---"
+          },
+          {
+            "type": "markdown",
+            "id": "ce730afde718855b",
+            "text": "## O5 — Runtime 05 as the transcript-conformance harness\n\n**Anchor:** cred-spec `taskContext` + outcome-interpretability · decision doc **PR-FRE** (§15).\n\nThe decision doc upgraded this exploration's target. The original idea bound the freshness nonce to\n`witnessContext.sessionId`; §15.2 now rules that **a bare nonce is insufficient** — freshness means binding\nto a **canonical transcript**: protocol/profile versions, verifier/audience, governed context descriptor,\npurpose, scope, challenge, session, requested predicates, policy requirements, delegation reference, expiry,\nsnapshot requirements, proving mode, encoding version.\n\nSo runtime 05 becomes the **conformance harness for PR-FRE**:\n\n- implement canonical-transcript formation + digest (one implementation, shared with the VWC seat's\n  `transcript_digest` and O7's step-up binding);\n- property tests from §26.1's negative list: replay into another verifier/context/purpose/scope/transcript\n  must fail; a materially different transcript with the same nonce must fail; transcript-field observation\n  is recorded as disclosure (§15.4), not treated as free.\n\nCheapest full deliverable in the lab: PR-FRE is required by both MLP and EPP, so the harness serves every\nprofile. **Negative meaning** carried: PR-FRE establishes only binding-to-current-transcript — never\nliveness, personhood, identity, or authority (§15.3)."
+          },
+          {
+            "type": "markdown",
+            "id": "0c4337eeb6e829f7",
+            "text": "## O6 — Correlation architecture ↔ privacy-pools / mana-pools lineage\n\n**Anchor:** cred-spec four-DID model (R/M/C/P) with mandatory R-DID uniqueness · decision doc §6\n(context = governed linkability domain) · §6.6 prohibited cross-context linkage.\n\nThe pools lineage (privacy-pools withdraw folding, mana-pools, the runtime-01 nullifier itself) is the same\nunlinkability discipline the spec's correlation architecture demands. Two directions of transfer:\n\n- **Pools → DTG:** domain-separated derivation as the R/M/C/P-DID minting discipline — each R-DID is a\n  per-counterparty derivation from the holder secret, exactly the pools' per-context pseudonym pattern;\n  the pools' association-set reasoning maps to registry epoch roots (O4).\n- **DTG → pools:** the decision doc's context machinery (§6.2 canonical descriptors, §6.7 context\n  authority + change control, §6.6 prohibited-linkage list) is a *governance* layer the pools story never\n  formalized — \"which withdrawals may be linked, by whom, under whose authority\" is a context decision\n  record. The 0xbow/ASP world would recognize every row of it.\n\nDeliverable: a two-page derivation-discipline note (how one holder secret safely mints R/M/C/P-DIDs with\nprovable non-correlation, pools-style) — feeds O2's descriptor upgrade and any TF question about DID\nderivation. Low urgency; write when O2's M2 lands."
+          },
+          {
+            "type": "markdown",
+            "id": "f3cc9912615adbe3",
+            "text": "## O8 — The post-quantum path\n\n**Anchor:** strawman §8 (\"pre-quantum acceptable for v1, documented PQ path\") · decision doc §24 (\"MUST NOT\nmake post-quantum support a blocker for the first implementable release\") + §29 (PQ migration = an\nimplementation question \"requiring layer separability and evidence, not only algorithm identifiers\") +\n§22.3 (migration must be a concrete mechanism).\n\nThe TF can lead the PQ story for the whole DTG stack precisely because the decision doc keeps it out of\nV1's critical path. The deliverable is a **layer-separability analysis**, not a scheme swap:\n\n| Layer | PQ status |\n|---|---|\n| Hash commitments, nullifiers, Merkle roots (the shared gadget) | already PQ-safe (symmetric/hash assumptions) |\n| Proof system (Groth16/PLONK-class over pairings) | not PQ; the layer that must be swappable (STARK-class successors) |\n| Issuer signatures on attestations (IDVC, VWC, delegation) | migrate with issuer PKI (ML-DSA et al.) — an O3 schema-versioning concern, not a circuit concern |\n| Long-lived artefacts (enrolment roots, §22.2 cryptoperiods) | the real exposure: harvest-now-decrypt-later applies to anything retained; cryptoperiods are the control |\n\nThreat-model credibility comes from the ecdsa.fail / quantum-ECC lineage (shor_mage): concrete cost models\nfor the classical-breaks timeline rather than hand-waving. Deliverable: a \"PQ considerations\" section for\nthe V1 draft doing §22.3 properly — profile identifiers, version negotiation, overlap periods, downgrade\nprotection, and what happens to enrolment roots at migration. Write once the construction gate (§25) has\nnamed actual proof systems; before that it has nothing concrete to separate."
+          }
+        ]
+      },
+      "date": 0
+    }
+  ]
+}
