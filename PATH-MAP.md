@@ -42,7 +42,7 @@ Deep navigation: every path below has fuller pages in
 ## P4 · Circuits and benchmarks (construction selection)
 
 **Question:** what does the §25 construction-selection gate admit, at what measured cost.
-**Read:** [lab circom-gadget](./kb/markdown/lab-circom-gadget.md) · [decision §25](./kb/markdown/decision-25-construction-selection-gate.md) — **Run:** `runtimes/circom-gadget` (needs npm install; 10/10 + 7/7 + 8/8)
+**Read:** [`CIRCUITS.md`](./CIRCUITS.md) (the full which-proofs/which-circuits/how-to-run answer, with a verbatim run transcript) · [lab circom-gadget](./kb/markdown/lab-circom-gadget.md) · [decision §25](./kb/markdown/decision-25-construction-selection-gate.md) — **Run:** `runtimes/circom-gadget` (needs npm install; 10/10 + 7/7 + 8/8)
 **Evidence in hand:** three real Groth16 circuits — single nullifier+membership+transcript-binding (**11,523 constraints, ~640 ms prove, ~8 ms verify, 722 B proof**), dual-issuer k=2 (10,717), guardian t=3 (16,078). Transcript binding cost exactly +1 constraint.
 **Open:** public signal layout `[context, root, nullifier, transcriptDigest]` ratification · production trusted-setup ceremony · EdDSA identity for PR-HLD.
 **Collaborate if:** you are a circuit engineer — refute a constraint count, propose a PLONKish or folding alternative through the §25 gate, or pressure-test the lab ceremony caveat.

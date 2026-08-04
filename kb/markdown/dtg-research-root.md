@@ -43,7 +43,7 @@ cd runtimes/consumer-py    && python test.py  # second-language consumer: 29/29 
 | Conformance | `fixtures` · `consumer-py` | byte-deterministic vectors; register v2 (95 entries, all triggered live); Python consumer = interop existence proof |
 | Presentation | `context-card` · `show-composition` · `quiet-presentation` | context legibility; atomic bundle shows; observer leakage budget |
 | Lifecycle | `rotation` · `guardian-recovery` · `erosion-record` · `multi-issuer` · `mediator` · `witness-seat` | key rotation w/o re-enrolment; t-of-n guardian recovery; assurance horizons; issuer independence collapse; mediated proving tiers; VWC witness seat |
-| Circuits | `circom-gadget` (needs `npm install` + `node setup.mjs`) | **real Groth16**: nullifier+membership+transcript-binding 11,523 constraints / ~640 ms prove / 722 B proof; dual-issuer k=2 (10,717); guardian t=3 (16,078). Lab-only trusted setup — stated, not hidden. |
+| Circuits | `circom-gadget` (needs `npm install` + `node setup.mjs`) | **real Groth16**: nullifier+membership+transcript-binding 11,523 constraints / ~680 ms prove / 721 B proof; dual-issuer k=2 (10,717); guardian t=3 (16,078). Lab-only trusted setup — stated, not hidden. **Full answer + run transcript: `./CIRCUITS.md`** |
 
 ## The decision layer
 
