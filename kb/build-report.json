@@ -762,6 +762,7 @@
     "../dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-COHERENCE.md",
     "../dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-OPPORTUNITIES.md",
     "../dtgwg-zkp-tf-mage/runtimes/STRAWMAN-COHERENCE-EDITS.md",
+    "AGENTS.md",
     "CALL-PREP-2026-08-04.md",
     "dtgwg-cred-spec-main/CONTEXT.md",
     "dtgwg-cred-spec-main/README.md",
@@ -822,6 +823,7 @@
     "dtgwg-cred-spec-main/spec/terms-definitions/vtn_member.md",
     "dtgwg-cred-spec-main/spec/terms-definitions/vtn_trust_anchor.md",
     "MY-CALLS-2026-07-18.md",
+    "PATH-MAP.md",
     "runtimes/01-uniqueness-nullifier/NOTES.md",
     "runtimes/02-liveness-attestation/STUB.md",
     "runtimes/03-personhood-set-membership/STUB.md",
@@ -846,6 +848,7 @@
     "runtimes/STRAWMAN-COHERENCE-EDITS.md",
     "runtimes/witness-seat/NOTES.md",
     "SPEC-DRAFT-proof-of-understanding-trust-task.md",
+    "THE-WORK-SO-FAR.md",
     "TRUST-TASKS-FIT-MAP-2026-07-18.md"
   ],
   "gate": {

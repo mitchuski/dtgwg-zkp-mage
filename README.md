@@ -9,6 +9,11 @@ cross-language interop proofs, and design explorations — each anchored to the 
 [DTG Credentials Core Specification](https://trustoverip.github.io/dtgwg-cred-spec/). Spec text goes
 through the upstream repo and TF process; this repo is the bench the proposals were tested on.
 
+**Task force members, start here:** [`THE-WORK-SO-FAR.md`](./THE-WORK-SO-FAR.md) is the
+4-minute human summary. Point your AI assistant at [`AGENTS.md`](./AGENTS.md) (its
+introduction to this knowledge base) and [`PATH-MAP.md`](./PATH-MAP.md) (the research
+paths + the position protocol for registering what you'd ratify, refine, refute, or build).
+
 **Browse it as a wiki:** [`kb/markdown/INDEX.md`](./kb/markdown/INDEX.md) — the whole corpus
 (decision document §-split, explorations, lab notes, chronicles) as a deterministic, manifest-first
 knowledge-base projection. Same content also ships as FedWiki page JSON in `kb/fedwiki/`.

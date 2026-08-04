@@ -70,6 +70,7 @@ if (report) {
     /^TRUST-TASKS-FIT-MAP-2026-07-18\.md$/,
     /^MY-CALLS-\d{4}-\d{2}-\d{2}\.md$/,                            // call working docs (Mitch's), not KB scope
     /^CALL-PREP-\d{4}-\d{2}-\d{2}\.md$/,
+    /^(AGENTS|PATH-MAP|THE-WORK-SO-FAR)\.md$/,                     // visitor/navigation meta-docs; GitHub-rendered, not KB corpus
     /^runtimes\//,                                                 // in-repo lab copy; KB projects the workbench original
     /^\.\.\/dtgwg-zkp-tf-mage\/runtimes\/(CRED-SPEC-COHERENCE|CRED-SPEC-OPPORTUNITIES|STRAWMAN-COHERENCE-EDITS)\.md$/,
     /^\.\.\/dtgwg-zkp-tf-mage\/runtimes\/[^/]+\/STUB\.md$/,        // stub predicates (no evidence yet)
