@@ -1,0 +1,12 @@
+{
+  "formatVersion": "x10-seats/v0",
+  "note": "Admission list for lane-1 verification submissions. Governance data, not cryptography (decision doc §7.3): seats are granted/revoked by the task force's ordinary process. A seat here does NOT carry any ceremony-security claim.",
+  "seats": [
+    {
+      "id": "mt",
+      "name": "Mitchell Travers",
+      "affiliation": "Soulbis · TF co-chair",
+      "status": "active"
+    }
+  ]
+}

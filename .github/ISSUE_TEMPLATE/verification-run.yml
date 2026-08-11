@@ -1,0 +1,67 @@
+name: Verification run
+description: File an independent run of the three circuits against the pinned manifest (X10 lane 1)
+title: "[verification-run] "
+labels: ["verification-run"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for verifying independently. The short path: run
+        `node orchestrate.mjs <your-seat-id>` in `runtimes/ceremony-orchestrator/`
+        and paste what it prints. Acceptance compares your **circuit digests**
+        (r1cs / wasm / constraint counts — byte-exact by construction) against
+        `artifacts.manifest.json`; your **setup-chain digests will legitimately
+        differ** (snarkjs contribution randomness) and are recorded as advisory.
+        Timings are informative only. A reproducible mismatch on a required
+        artifact is a *contribution*, not a failure — file it with position
+        `refute`.
+  - type: input
+    id: member
+    attributes:
+      label: Member
+      description: Name + affiliation (PATH-MAP position-record convention)
+      placeholder: e.g. Ada Example (Example Org)
+    validations:
+      required: true
+  - type: input
+    id: seat
+    attributes:
+      label: Seat id
+      description: Your admission-list id (ask in the TF channel or an issue if you don't have one yet)
+      placeholder: e.g. ae
+    validations:
+      required: false
+  - type: dropdown
+    id: position
+    attributes:
+      label: Position
+      description: The position protocol verb this run carries
+      options:
+        - ratify
+        - refine
+        - refute
+        - build
+    validations:
+      required: true
+  - type: input
+    id: tallies
+    attributes:
+      label: Suite tallies
+      placeholder: "circom-gadget: 10/10 pass · dual: 7/7 pass · guardian: 8/8 pass"
+    validations:
+      required: true
+  - type: textarea
+    id: submission
+    attributes:
+      label: Submission body
+      description: Paste the orchestrator's printed submission (toolchain, platform, per-circuit digests, pinned report sections). No absolute local paths — the orchestrator strips them by construction.
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: bring
+    attributes:
+      label: What you could bring
+      description: Optional — the PATH-MAP field. Circuit engineering, a third-language consumer, production telemetry, issuer-infrastructure knowledge…
+    validations:
+      required: false

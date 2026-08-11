@@ -1,0 +1,42 @@
+# SCAFFOLDING — not wired to any automatic trigger, by decision.
+#
+# Manual acceptance is the lane-1 process: the maintainer runs
+# `node runtimes/circom-gadget/verify-run.mjs <report.json>` locally and adds
+# accepted submissions to registry/data/submissions/. This workflow is the same
+# check as a manually-dispatched action, staged so the group can flip it to an
+# automatic trigger later IF the WG wants CI in the acceptance story (that flip
+# is a trust decision, not a convenience — it makes GitHub Actions part of the
+# registry's verification chain, and should be ratified as such).
+#
+# Usage: Actions → verify-submission → Run workflow → paste the report JSON.
+
+name: verify-submission
+on:
+  workflow_dispatch:
+    inputs:
+      report:
+        description: "Contents of one report.<circuit>.json (the whole JSON object)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-submission
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Write submitted report
+        run: printf '%s' "$REPORT_JSON" > /tmp/submitted-report.json
+        env:
+          REPORT_JSON: ${{ inputs.report }}
+      - name: Verify against pinned manifest
+        run: node runtimes/circom-gadget/verify-run.mjs /tmp/submitted-report.json

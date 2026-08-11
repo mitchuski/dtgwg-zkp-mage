@@ -77,6 +77,12 @@ baseline itself** opens: each doc develops a §-anchor the baseline rules but do
 | [X8-multi-issuer-aggregation.md](./X8-multi-issuer-aggregation.md) | §12.5 · §29 · §2.4 | 🟠 | 🟢 reference (`runtimes/multi-issuer/` 10/10) | ∏ε_i as a theorem with assumptions explicit; the independence register makes A2 checkable; k IS the disclosure (governed k-tiers); honest about PR-PER vs PR-LIV |
 | [X9-guardian-recovery.md](./X9-guardian-recovery.md) | §29 social leg · §13.4 · §22.2 | 🟠 | 🟢 reference (`runtimes/guardian-recovery/` 12/12) | X5's deferred pattern 3: recovery-witness credential (VWC-shaped, own shape — threshold ≠ witness), expiring guardianship answers §22.2, personhood-gated guardians kill the Sybil-self-guardian attack, trust graph = guardian candidate set |
 
+**Fourth wave (2026-08-11)** — operations, not spec: the CIRCUITS.md production-ceremony caveat made actionable:
+
+| Doc | Decision-doc anchor | Leverage | Ladder | One line |
+|---|---|---|---|---|
+| [X10-ceremony-as-trust-task.md](./X10-ceremony-as-trust-task.md) | §15 · §19 · §25 · §7.3 | 🟠 | 📝 design doc | agents orchestrate entropy, never *are* the entropy (never-sees-the-secret guard inherited from the witness seat); three lanes — verification-transcript registry now, phase-1 powers-of-tau low-regret, phase-2 GATED behind §25; seat gating = governance, nullifier dedup advisory-only (the recursion labelled) |
+
 Cross-links worth knowing: X1 is the format every other doc's fixtures inherit; X4's uniform-error rule
 is in deliberate tension with X1's reason register (resolved by splitting internal vocabulary from the
 external surface); X5 completes O2's open question; X6 is the research bridge to the PVM corpus

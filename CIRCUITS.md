@@ -68,12 +68,20 @@ Dependency versions reproduce exactly from the committed lockfile.
 
 ## The caveat that must travel with the numbers
 
-The trusted setup is a **lab fixture with fixed entropy** — deliberately, so any
-two machines build byte-identical artifacts. That makes the benchmarks honest
-and reproducible, and it makes the proving keys **unusable for production**. A
-real deployment requires a proper multi-party ceremony. This is the difference
-between "envelope data for construction selection" and "ship it" — drafting
-rule four applies: this paragraph is the label on the conjecture-free part.
+The trusted setup is a **lab fixture with fixed entropy** — deliberately, so
+the pipeline is reproducible end-to-end from a clean clone. Two precision notes,
+the second established empirically on 2026-08-11: the fixture makes the proving
+keys **unusable for production** (anyone holding this setup's toxic waste could
+forge proofs; a real deployment requires a proper multi-party ceremony), and
+byte-exact reproduction holds for the **compiled circuit only** — r1cs, witness
+wasm, and constraint counts match across independent builds, while the setup
+chain (ptau, zkeys, vkey) is machine-local because snarkjs mixes its own CSPRNG
+randomness into every contribution regardless of the fixed entropy string.
+Independent verification therefore compares circuit digests and re-runs the
+suites (real proofs against your own build); setup-chain digests are recorded
+as advisory. This is the difference between "envelope data for construction
+selection" and "ship it" — drafting rule four applies: this paragraph is the
+label on the conjecture-free part.
 
 ---
 
@@ -130,4 +138,8 @@ circom-gadget-guardian: 8/8 pass
 
 Reproduce it yourself with the commands above — an independent transcript from
 a second machine, matching or refuting these numbers, is exactly the kind of
-contribution the position protocol welcomes.
+contribution the position protocol welcomes. **File your run** through the
+`verification-run` issue template (the `runtimes/ceremony-orchestrator/` flow
+prints a paste-ready submission); accepted runs are logged publicly on the
+repo's Pages registry. Circuit digests must match; setup-chain digests will
+legitimately differ (see the caveat section above).

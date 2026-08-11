@@ -168,6 +168,19 @@ budget; the ~5 MB proving key is the artifact a wallet must hold per circuit.
 - Test Z5 intentionally triggers a witness-generation constraint failure; snarkjs prints an
   `ERROR ... line: 111` (the `mt.root === root` constraint) — expected, and labelled in the
   test output.
+- **Setup-artifact determinism: REFUTED empirically (2026-08-11).** A full fresh rebuild of
+  all three circuits in a second directory *on the same machine* (same lockfile, same fixed
+  entropy string) produced **byte-identical r1cs and wasm** but **divergent `pot14_final.ptau`,
+  both zkeys, and vkeys** — `snarkjs powersoftau contribute` and `zkey contribute` mix their
+  own CSPRNG randomness into every contribution regardless of the `-e` string (which is,
+  incidentally, correct ceremony hygiene on snarkjs's part: a contribution SHOULD never be
+  fully attacker-predictable). Consequence for independent verification (X10 lane 1): the
+  byte-exact claim holds for the **compiled circuit only** (r1cs digest + wasm digest +
+  constraint counts, `acceptance: required` in `artifacts.manifest.json`); the setup chain is
+  machine-local (`acceptance: advisory` — divergence is recorded, not fatal), and the
+  proving-system evidence is the volunteer's own suites running green against their own build.
+  Earlier "any two machines build byte-identical artifacts" phrasing (CIRCUITS.md, call
+  companion) was an overclaim and is corrected to circuit-level byte-exactness.
 
 ## Files
 
