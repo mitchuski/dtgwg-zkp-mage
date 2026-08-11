@@ -42,6 +42,8 @@ function run(cmd, label) {
 }
 
 export function ensureDualArtifacts() {
+  mkdirSync(BUILD, { recursive: true }); // fresh clone: build/ is gitignored
+
   // 1. compile (--O2 — see header)
   if (!existsSync(DUAL_ARTIFACTS.r1cs) || !existsSync(DUAL_ARTIFACTS.wasm)) {
     run(

@@ -52,6 +52,8 @@ function newerThan(a, b) {
 }
 
 export function ensureGuardianArtifacts() {
+  mkdirSync(BUILD, { recursive: true }); // fresh clone: build/ is gitignored
+
   // 0. invalidate stale artifacts (circuit edited after last compile)
   if (existsSync(GUARDIAN_ARTIFACTS.r1cs) && newerThan(CIRCUIT, GUARDIAN_ARTIFACTS.r1cs)) {
     process.stdout.write('  .. circuit source newer than r1cs — invalidating r1cs/wasm/zkey/vkey (ptau kept)\n');

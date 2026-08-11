@@ -11,7 +11,7 @@
 // entropy, modulo snarkjs's own internal randomness in contributions).
 
 import { execSync } from 'node:child_process';
-import { existsSync, statSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, statSync, rmSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -41,6 +41,10 @@ function newerThan(a, b) {
 }
 
 export function ensureArtifacts() {
+  // build/ is gitignored — a fresh clone has none, and circom refuses to
+  // create its own -o path (first cold-clone volunteer run found this)
+  mkdirSync(BUILD, { recursive: true });
+
   // 0. invalidate stale artifacts (circuit edited after last compile)
   if (existsSync(ARTIFACTS.r1cs) && newerThan(CIRCUIT, ARTIFACTS.r1cs)) {
     process.stdout.write('  .. circuit source newer than r1cs — invalidating r1cs/wasm/zkey/vkey (ptau kept)\n');
