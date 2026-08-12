@@ -1,0 +1,171 @@
+{
+  "formatVersion": "x10-submission/v0",
+  "seat": {
+    "id": "seat-7f",
+    "name": "Pseudonymous seat",
+    "affiliation": "admission-gated · name withheld"
+  },
+  "date": "2026-08-12 15:19 UTC",
+  "position": "build",
+  "tallies": "accepted via accept.mjs — verify-run verdict ACCEPT",
+  "role": "Second pseudonymous-seat run. Ran on maintainer hardware as a demonstration of admission-without-identity, not as independent verification.",
+  "verdict": {
+    "accept": true,
+    "findings": []
+  },
+  "reports": [
+    {
+      "pinned": {
+        "formatVersion": "x10-verification/v0",
+        "circuit": "nullifier_membership",
+        "compileFlags": "--O1",
+        "constraints": {
+          "nConstraints": 11523,
+          "nVars": 11548,
+          "nPubInputs": 4
+        },
+        "artifacts": {
+          "r1cs": {
+            "sha256": "ca03d12207d03aae83926a8e760b90a4ccaa8016b64712fa50cc2d36c439e6e8",
+            "bytes": 1543152
+          },
+          "ptau_final": {
+            "sha256": "955c56c2c72f4e15bc566515026475e153e02a1043970467bbec77a1c9fb21cd",
+            "bytes": 18875821
+          },
+          "zkey_0000": {
+            "sha256": "15ab63c1c23dd351cffaf3fddba1a825317f1d252727e87469097941394532d4",
+            "bytes": 5225328
+          },
+          "zkey_final": {
+            "sha256": "938545ad3a859de91c0773acad4a53cb15dbb94a5e91625222c17f8a975ae0bf",
+            "bytes": 5225733
+          },
+          "vkey": {
+            "sha256": "1a43e04504dd7f250505aa5a45d984c66c5e018d22f01296799c2189f944bce2",
+            "bytes": 3473
+          },
+          "wasm": {
+            "sha256": "af3815ae1d0e01e6fcef9016c50b7f63c78d265bcae4077c9d19295e42717f1c",
+            "bytes": 2225737
+          }
+        }
+      },
+      "informative": {
+        "tools": {
+          "node": "v22.20.0",
+          "circom": "circom compiler 2.2.3",
+          "snarkjs": "0.7.6"
+        },
+        "platform": {
+          "os": "win32",
+          "arch": "x64",
+          "cpu": "Intel(R) Core(TM) i5-14400F"
+        },
+        "date": "2026-08-12 15:19 UTC"
+      }
+    },
+    {
+      "pinned": {
+        "formatVersion": "x10-verification/v0",
+        "circuit": "dual_issuer",
+        "compileFlags": "--O2",
+        "constraints": {
+          "nConstraints": 10717,
+          "nVars": 10762,
+          "nPubInputs": 4
+        },
+        "artifacts": {
+          "r1cs": {
+            "sha256": "583821707a95615b79d1c018016263a270f9ad1a2fed8f80fc0a95af86f3ba89",
+            "bytes": 5073012
+          },
+          "ptau_final": {
+            "sha256": "955c56c2c72f4e15bc566515026475e153e02a1043970467bbec77a1c9fb21cd",
+            "bytes": 18875821
+          },
+          "zkey_0000": {
+            "sha256": "829d22ae39cf77ae9d2f217bb7804942076f4b1a377d86421948602c376b0229",
+            "bytes": 6383876
+          },
+          "zkey_final": {
+            "sha256": "6d18a83c71ad09ad8075acdd62073dd82387729205e9d6277d38a01e3817c5c5",
+            "bytes": 6384281
+          },
+          "vkey": {
+            "sha256": "d7d3f1f30ebc1caab8905033284e87ad955573ab865df6957485e1883021ae2b",
+            "bytes": 3476
+          },
+          "wasm": {
+            "sha256": "737e956f88827e6e257ff51fd806272ceff5fbb43fa4d90d3b3828cfd87c967a",
+            "bytes": 2272297
+          }
+        }
+      },
+      "informative": {
+        "tools": {
+          "node": "v22.20.0",
+          "circom": "circom compiler 2.2.3",
+          "snarkjs": "0.7.6"
+        },
+        "platform": {
+          "os": "win32",
+          "arch": "x64",
+          "cpu": "Intel(R) Core(TM) i5-14400F"
+        },
+        "date": "2026-08-12 15:19 UTC"
+      }
+    },
+    {
+      "pinned": {
+        "formatVersion": "x10-verification/v0",
+        "circuit": "guardian_threshold",
+        "compileFlags": "--O2",
+        "constraints": {
+          "nConstraints": 16078,
+          "nVars": 16145,
+          "nPubInputs": 6
+        },
+        "artifacts": {
+          "r1cs": {
+            "sha256": "758ed96dcbb8f348cb4c694b975be1d91a245e623f6e7d1ab2b6a008c8106f91",
+            "bytes": 7609832
+          },
+          "ptau_final": {
+            "sha256": "955c56c2c72f4e15bc566515026475e153e02a1043970467bbec77a1c9fb21cd",
+            "bytes": 18875821
+          },
+          "zkey_0000": {
+            "sha256": "dcbb4a7647a311400bdc4467f29bfea3f299e9e4c56cec456c5e50ef9988be5b",
+            "bytes": 9051996
+          },
+          "zkey_final": {
+            "sha256": "5992d4560731494716cfbd1e273f9e1465e0232376ff59ae7ad0ec909c154505",
+            "bytes": 9052401
+          },
+          "vkey": {
+            "sha256": "60ab431a97e43ba514471f671928177e4357a8de95d75fd57b4ce9cdcb0ed80a",
+            "bytes": 3840
+          },
+          "wasm": {
+            "sha256": "e324af92c7c0c8415989491feefa612621deb4370454daf9a82868ada0c38596",
+            "bytes": 2293918
+          }
+        }
+      },
+      "informative": {
+        "tools": {
+          "node": "v22.20.0",
+          "circom": "circom compiler 2.2.3",
+          "snarkjs": "0.7.6"
+        },
+        "platform": {
+          "os": "win32",
+          "arch": "x64",
+          "cpu": "Intel(R) Core(TM) i5-14400F"
+        },
+        "date": "2026-08-12 15:19 UTC"
+      }
+    }
+  ]
+}
