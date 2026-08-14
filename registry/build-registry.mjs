@@ -230,8 +230,13 @@ node setup-guardian.mjs &amp;&amp; node test-guardian.mjs   # 8/8
 node report.mjs                                     # digests + run record
 node verify-run.mjs build/report.*.json             # verdict vs the manifest
 </code></pre>
-    <p class="note">Or let the orchestrator drive the whole flow and print a paste-ready submission
-    (seat ids are the task force admission list &mdash; ask in the upstream Discord channel or an issue):</p>
+    <p class="note">Or let the orchestrator drive the whole flow and print a paste-ready submission.
+    Seat ids are the task force admission list (governance data, no security claim) &mdash; if you don't
+    have one yet, <strong>file the verification-run issue with a self-chosen id</strong>: the filing is
+    itself the seat request, and the seat can be granted after the run
+    (<a href="https://github.com/mitchuski/dtgwg-zkp-mage/blob/main/registry/ACCEPTANCE-FLOW.md">acceptance flow</a>).
+    To make the orchestrator print before you're admitted, add your id to your local
+    <code>seats.json</code> &mdash; the admission check that matters runs on the maintainer's side:</p>
 <pre><code>cd ../ceremony-orchestrator
 node orchestrate.mjs &lt;your-seat-id&gt;
 </code></pre>

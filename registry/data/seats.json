@@ -13,6 +13,12 @@
       "name": "Pseudonymous seat",
       "affiliation": "admission-gated · name withheld",
       "status": "active"
+    },
+    {
+      "id": "gg-affinidi",
+      "name": "Glenn Gore",
+      "affiliation": "Affinidi",
+      "status": "active"
     }
   ]
 }

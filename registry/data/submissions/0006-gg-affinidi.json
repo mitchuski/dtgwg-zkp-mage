@@ -1,0 +1,232 @@
+{
+  "formatVersion": "x10-submission/v0",
+  "seat": {
+    "id": "gg-affinidi",
+    "name": "Glenn Gore",
+    "affiliation": "Affinidi"
+  },
+  "date": "2026-08-14 13:19 UTC",
+  "position": "ratify",
+  "tallies": "accepted via accept.mjs — verify-run verdict ACCEPT",
+  "role": "first external run · darwin/arm64 · filed via issue #2; reports reconstructed from the issue's pinned sections by the maintainer's agent, verdict re-derived locally",
+  "verdict": {
+    "accept": true,
+    "findings": [
+      {
+        "circuit": "nullifier_membership",
+        "code": "artifact-hash-advisory:ptau_final",
+        "fatal": false
+      },
+      {
+        "circuit": "nullifier_membership",
+        "code": "artifact-hash-advisory:zkey_0000",
+        "fatal": false
+      },
+      {
+        "circuit": "nullifier_membership",
+        "code": "artifact-hash-advisory:zkey_final",
+        "fatal": false
+      },
+      {
+        "circuit": "nullifier_membership",
+        "code": "artifact-hash-advisory:vkey",
+        "fatal": false
+      },
+      {
+        "circuit": "dual_issuer",
+        "code": "artifact-hash-advisory:ptau_final",
+        "fatal": false
+      },
+      {
+        "circuit": "dual_issuer",
+        "code": "artifact-hash-advisory:zkey_0000",
+        "fatal": false
+      },
+      {
+        "circuit": "dual_issuer",
+        "code": "artifact-hash-advisory:zkey_final",
+        "fatal": false
+      },
+      {
+        "circuit": "dual_issuer",
+        "code": "artifact-hash-advisory:vkey",
+        "fatal": false
+      },
+      {
+        "circuit": "guardian_threshold",
+        "code": "artifact-hash-advisory:ptau_final",
+        "fatal": false
+      },
+      {
+        "circuit": "guardian_threshold",
+        "code": "artifact-hash-advisory:zkey_0000",
+        "fatal": false
+      },
+      {
+        "circuit": "guardian_threshold",
+        "code": "artifact-hash-advisory:zkey_final",
+        "fatal": false
+      },
+      {
+        "circuit": "guardian_threshold",
+        "code": "artifact-hash-advisory:vkey",
+        "fatal": false
+      }
+    ]
+  },
+  "reports": [
+    {
+      "pinned": {
+        "formatVersion": "x10-verification/v0",
+        "circuit": "nullifier_membership",
+        "compileFlags": "--O1",
+        "constraints": {
+          "nConstraints": 11523,
+          "nVars": 11548,
+          "nPubInputs": 4
+        },
+        "artifacts": {
+          "r1cs": {
+            "sha256": "ca03d12207d03aae83926a8e760b90a4ccaa8016b64712fa50cc2d36c439e6e8",
+            "bytes": 1543152
+          },
+          "ptau_final": {
+            "sha256": "e35f0590f14a89909a008f35a131c98afb3bc75d6462f0abedb84a9ef69355cc",
+            "bytes": 18875821
+          },
+          "zkey_0000": {
+            "sha256": "f7c5eb3bd382ebf9d68ab8e0ec50762bf5b5da2575916efdfa938b8698fae586",
+            "bytes": 5225328
+          },
+          "zkey_final": {
+            "sha256": "7350c3be4a91c785d9a7573ba43220aa670ad6e58fb44e3ed5fbeb63412d4618",
+            "bytes": 5225733
+          },
+          "vkey": {
+            "sha256": "0a085853c6c9a13167b2dc7da80eac3db081dbad76a58025e6e163e0c8268b88",
+            "bytes": 3477
+          },
+          "wasm": {
+            "sha256": "af3815ae1d0e01e6fcef9016c50b7f63c78d265bcae4077c9d19295e42717f1c",
+            "bytes": 2225737
+          }
+        }
+      },
+      "informative": {
+        "tools": {
+          "node": "v26.7.0",
+          "circom": "circom compiler 2.2.3",
+          "snarkjs": "0.7.6"
+        },
+        "platform": {
+          "os": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M5 Max"
+        },
+        "date": "2026-08-14 13:19 UTC"
+      }
+    },
+    {
+      "pinned": {
+        "formatVersion": "x10-verification/v0",
+        "circuit": "dual_issuer",
+        "compileFlags": "--O2",
+        "constraints": {
+          "nConstraints": 10717,
+          "nVars": 10762,
+          "nPubInputs": 4
+        },
+        "artifacts": {
+          "r1cs": {
+            "sha256": "583821707a95615b79d1c018016263a270f9ad1a2fed8f80fc0a95af86f3ba89",
+            "bytes": 5073012
+          },
+          "ptau_final": {
+            "sha256": "e35f0590f14a89909a008f35a131c98afb3bc75d6462f0abedb84a9ef69355cc",
+            "bytes": 18875821
+          },
+          "zkey_0000": {
+            "sha256": "a3bded2850389cb0970a504083b038ed7e09699ef34dd00e2313a71f7f57084c",
+            "bytes": 6383876
+          },
+          "zkey_final": {
+            "sha256": "859cf051642909425997df3bbfd4663b5714a621af9b6c93de474d9e3309b556",
+            "bytes": 6384281
+          },
+          "vkey": {
+            "sha256": "195e8c1bcda722d67dd92bc3ae3a2baa779d715b2616772d36ae39f6f875e161",
+            "bytes": 3478
+          },
+          "wasm": {
+            "sha256": "737e956f88827e6e257ff51fd806272ceff5fbb43fa4d90d3b3828cfd87c967a",
+            "bytes": 2272297
+          }
+        }
+      },
+      "informative": {
+        "tools": {
+          "node": "v26.7.0",
+          "circom": "circom compiler 2.2.3",
+          "snarkjs": "0.7.6"
+        },
+        "platform": {
+          "os": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M5 Max"
+        },
+        "date": "2026-08-14 13:19 UTC"
+      }
+    },
+    {
+      "pinned": {
+        "formatVersion": "x10-verification/v0",
+        "circuit": "guardian_threshold",
+        "compileFlags": "--O2",
+        "constraints": {
+          "nConstraints": 16078,
+          "nVars": 16145,
+          "nPubInputs": 6
+        },
+        "artifacts": {
+          "r1cs": {
+            "sha256": "758ed96dcbb8f348cb4c694b975be1d91a245e623f6e7d1ab2b6a008c8106f91",
+            "bytes": 7609832
+          },
+          "ptau_final": {
+            "sha256": "e35f0590f14a89909a008f35a131c98afb3bc75d6462f0abedb84a9ef69355cc",
+            "bytes": 18875821
+          },
+          "zkey_0000": {
+            "sha256": "fbbcae99d8f2401e76a2ee1550a5fce214bf56ca73d403fd87b84d2b99ef59a4",
+            "bytes": 9051996
+          },
+          "zkey_final": {
+            "sha256": "4769676804ed8129a2e04580f11c39dfbbc3cae636f02ffe29898786a3affd51",
+            "bytes": 9052401
+          },
+          "vkey": {
+            "sha256": "84b273787f7f2ddfb978891a7d56079c34c9d0200aac4a2f918fe51296437feb",
+            "bytes": 3844
+          },
+          "wasm": {
+            "sha256": "e324af92c7c0c8415989491feefa612621deb4370454daf9a82868ada0c38596",
+            "bytes": 2293918
+          }
+        }
+      },
+      "informative": {
+        "tools": {
+          "node": "v26.7.0",
+          "circom": "circom compiler 2.2.3",
+          "snarkjs": "0.7.6"
+        },
+        "platform": {
+          "os": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M5 Max"
+        },
+        "date": "2026-08-14 13:19 UTC"
+      }
+    }
+  ]
+}
