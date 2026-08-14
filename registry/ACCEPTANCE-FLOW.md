@@ -96,6 +96,14 @@ seats, submission, rebuilt site — is the maintainer's act alone. Acceptance an
 are separate on purpose: the row exists and is inspectable locally before anything is public,
 and the public history shows exactly one deciding hand.
 
+Once the row is live, the submission issue is **closed with a pointer** (on maintainer
+authorization, never silently and never before publication): a short comment carrying the
+verdict, the link to the published row, and the link to this flow. The issue is the intake
+vehicle; the registry row is the durable record. The lifecycle stays legible at a glance —
+**open = pending review, closed = processed, row = the record.** Position issues (ratify /
+refine / refute records that aren't verification submissions) are *not* closed on
+processing — they stay open as standing threads others can add positions to.
+
 **G.1 · The publication rite (explorative trust task).** Before the push, the agent serves
 the maintainer a **proverb** — one line that compresses what this specific publication means
 — and the maintainer answers with a spoken (or typed) **activation** as proof of
@@ -116,7 +124,8 @@ publication.
 - never edit `artifacts.manifest.json` in this flow — a manifest change is a different act
   with its own review;
 - never file without an explicit `--id`;
-- never push, never close the issue;
+- never push; never close an issue before its row is published or without maintainer
+  authorization (closure is gate G's final step, always with the pointer comment);
 - never post without the process note;
 - never treat the submitter's verdict line as the verdict.
 
