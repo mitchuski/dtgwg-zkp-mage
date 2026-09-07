@@ -1,0 +1,49 @@
+{
+  "specs": [
+    {
+      "title": "Decentralized Trust Graph — Zero-Knowledge Proof Specification",
+      "description": "The zero-knowledge layer of the Decentralized Trust Graph as construction records: for each proof the trust graph needs, what a verifier learns, from whom, without what — witness, public inputs, method clauses bound to gadgets, disclosure set, negative space, adversary, horizon, conformance fixtures, construction options across proving systems, issuance requirements — generated from machine-checked records with a stated evidence state.",
+      "author": "Trust over IP Foundation — DTG ZKP Task Force (working draft, evidence repository edition)",
+      "spec_directory": "./spec",
+      "spec_terms_directory": "terms-definitions",
+      "output_path": "./docs",
+      "markdown_paths": [
+        "header.md",
+        "intro.md",
+        "terms-and-definitions-intro.md",
+        "records.md",
+        "primer.md",
+        "pantry.md",
+        "recipes.md",
+        "stacks.md",
+        "considerations.md",
+        "privacy-derived.md",
+        "conformance.md",
+        "references.md",
+        "appendix.md"
+      ],
+      "logo": "https://raw.githubusercontent.com/trustoverip/spec-up-t/refs/heads/master/src/install-from-boilerplate/boilerplate/static/logo.svg",
+      "logo_link": "https://github.com/trustoverip/spec-up-t",
+      "favicon": "https://raw.githubusercontent.com/trustoverip/spec-up-t/refs/heads/master/src/install-from-boilerplate/boilerplate/static/favicon.ico",
+      "source": {
+        "host": "github",
+        "account": "mitchuski",
+        "repo": "dtgwg-zkp-mage"
+      },
+      "external_specs": [
+        {
+          "external_spec": "ToIP_Glossary",
+          "gh_page": "https://glossary.trustoverip.org",
+          "url": "https://github.com/trustoverip/ctwg-main-glossary"
+        },
+        {
+          "external_spec": "DTG_CRED",
+          "gh_page": "https://trustoverip.github.io/dtgwg-cred-spec/",
+          "url": "https://github.com/trustoverip/dtgwg-cred-spec"
+        }
+      ],
+      "katex": false,
+      "anchor_symbol": "§"
+    }
+  ]
+}

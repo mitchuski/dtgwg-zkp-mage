@@ -1,7 +1,7 @@
 # DTG Knowledge Base — portable projection
 
-Built by `tools/build-kb.mjs` (zero-dep Node ESM, deterministic). **76 pages**:
-root 4 · decision 36 · explorations 19 · lab 15 · chronicles 2.
+Built by `tools/build-kb.mjs` (zero-dep Node ESM, deterministic). **78 pages**:
+root 4 · decision 36 · explorations 21 · lab 15 · chronicles 2.
 
 Rebuild any time with:
 

@@ -7,6 +7,15 @@ order: 2
 ---
 # Integration Map — DTG Credentials Core Spec → agentprivacy system
 
+*2026-08-12 dream-loop refresh: the ZK-mage arc (X10 ceremony-as-trust-task + the live verification
+registry at mitchuski.github.io/dtgwg-zkp-mage, lab 18/178 green, entries 0000–0005) is now recorded
+across the suite — spellweb `chronicles/DREAM-2026-08-12.md` (KG voice), cityofmages
+`chronicles/DREAM-2026-08-12.md` (City ledger, binding-form ruling pending), agentprivacy-docs
+`chronicles/2026-08-12_ceremony_trust_task_registry_live.md` + INDEX row, agentprivacy_master
+chronicles 4–5 of the arc. All suite-side records uncommitted. Open on this map: spellweb
+`concept-verification-registry` node not yet minted; X10 honest-unknowns platform-correlator line
+pending.*
+
 *2026-07-16, status refreshed 2026-07-17. Mage layer. The display-surface rows (master, skills,
 spellweb) were **EXECUTED 2026-07-16/17** as part of the display & distribution cycle — working-tree
 edits, uncommitted, carried into the guide snapshot by the two re-sync trains. Per-surface status

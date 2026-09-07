@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>run r1 — dual-agent harness</title>
+<style>
+  :root { --bg:#0d1117; --panel:#161b22; --edge:#30363d; --ink:#c9d1d9; --dim:#8b949e;
+          --green:#3fb950; --amber:#d29922; --red:#f85149; --grey:#8b949e; --accent:#a5b4fc; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:2rem 1rem 4rem; background:var(--bg); color:var(--ink);
+         font:15px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  main { max-width: 60rem; margin: 0 auto; }
+  h1 { font-size:1.3rem; margin:0 0 .3rem; } h4 { margin:0 0 .5rem; font-size:1rem; }
+  a { color: var(--accent); }
+  .inscription { color:var(--accent); letter-spacing:.03em; margin:.2rem 0 .8rem; }
+  .disclaimer { border:1px solid var(--edge); border-left:3px solid var(--grey); background:var(--panel);
+                color:var(--dim); padding:.6rem .9rem; margin:0 0 1.4rem; font-size:.85rem; }
+  .voidbanner { border:2px solid var(--red); background:#3d1418; color:#ffb3ad; padding:.9rem 1rem;
+                margin:0 0 1.4rem; font-weight:bold; }
+  section.phase { border:1px solid var(--edge); border-radius:6px; background:var(--panel);
+                  margin:0 0 1rem; padding:1rem 1.2rem; }
+  section.phase > h2 { margin:0 0 .15rem; font-size:1.05rem; }
+  section.phase > p.mandate { margin:0 0 .9rem; color:var(--dim); font-size:.85rem; }
+  .arrow { text-align:center; color:var(--dim); margin:-.4rem 0 .6rem; }
+  .card { border:1px solid var(--edge); border-radius:6px; padding: .8rem 1rem; margin:0 0 .8rem; background:var(--bg); }
+  .chip { display:inline-block; padding:.05rem .55rem; border-radius:999px; font-size:.75rem;
+          font-weight:bold; vertical-align:middle; border:1px solid; }
+  .chip.validated { color:var(--green); border-color:var(--green); background:#12261a; }
+  .chip.mirage    { color:var(--amber); border-color:var(--amber); background:#2b2211; }
+  .chip.blocked   { color:var(--red);   border-color:var(--red);   background:#3d1418; }
+  .chip.other     { color:var(--grey);  border-color:var(--grey);  background:#1c2128; }
+  .badge { display:inline-block; padding:.1rem .6rem; font-weight:bold; border-radius:4px; margin-bottom:.4rem; }
+  .badge.match    { background:#12261a; color:var(--green); border:1px solid var(--green); }
+  .badge.mismatch { background:var(--red); color:#fff; }
+  .badge.other    { background:#1c2128; color:var(--grey); border:1px solid var(--grey); }
+  .hashbox { border-radius:6px; padding:.6rem .8rem; margin:0 0 .6rem; border:1px solid var(--edge); }
+  .hashbox.match { border-color:var(--green); } .hashbox.incomplete { border-color:var(--grey); }
+  .hashbox.mismatch { border:2px solid var(--red); background:#2a0e11; }
+  dl { display:grid; grid-template-columns:max-content 1fr; gap:.15rem .9rem; margin:.4rem 0; }
+  dt { color:var(--dim); } dd { margin:0; overflow-wrap:anywhere; }
+  pre { background:#0a0d12; border:1px solid var(--edge); border-radius:6px; padding:.7rem .9rem;
+        overflow-x:auto; white-space:pre-wrap; overflow-wrap:anywhere; font-size:.82rem; margin:.4rem 0; }
+  details { margin:.4rem 0; } summary { cursor:pointer; color:var(--dim); }
+  table { border-collapse:collapse; width:100%; font-size:.85rem; }
+  th, td { border:1px solid var(--edge); padding:.35rem .6rem; text-align:left; vertical-align:top; }
+  th { color:var(--dim); font-weight:normal; }
+  .missing { color:var(--dim); font-style:italic; } .note { color:var(--dim); font-size:.85rem; }
+  .delta { color:var(--accent); }
+  .tally .chip { margin-right:.4rem; }
+  footer { color:var(--dim); font-size:.8rem; margin-top:2rem; border-top:1px solid var(--edge); padding-top:.8rem; }
+</style></head><body><main>
+<h1>run r1 · spec_harness</h1>
+<p class="inscription">(⚔️⊥⿻⊥🧙)😊 = neg ⊕ bnot → succ</p>
+<p class="disclaimer">generated projection — never hand-edited, never authoritative; the run directory is the record.
+Rendered 2026-08-18T17:40:55.726Z by tools/render_run.mjs from <code>C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness/runs/r1</code>.
+Re-derive anything you care about from the files themselves.</p>
+
+<p class="tally">2 proposal(s) · <span class="chip validated">VALIDATED</span> 2 <span class="chip mirage">MIRAGE</span> 0 <span class="chip blocked">BLOCKED</span> 0 <span class="chip other">NO VERDICT</span> 0</p>
+<section class="phase"><h2>1 · Measure</h2><p class="mandate">frontier numbers only, no advocacy</p><p>Numbers cited from <code>frontier.json</code> — the sole authority (GR-1). Prose never restates them.</p>
+<dl><dt>objective</dt><dd>words</dd><dt>baseline</dt><dd>980</dd><dt>best</dt><dd>863</dd><dt>best levers</dt><dd>restructure-telegraphic-tables</dd><dt>updated</dt><dd>2026-08-18</dd></dl>
+<p class="delta">frontier delta to date: 980 → 863 (-117)</p>
+<p class="note">no measure.json — the reference engine returns measure output to the orchestrator without persisting it.</p></section>
+<div class="arrow">▼</div><section class="phase"><h2>2 · Propose</h2><p class="mandate">soulbae 🧙 (bnot) — blind lenses in parallel</p><div class="card"><h4>r1.1/p1-line-edit-pass-1</h4><dl><dt>leverId</dt><dd>line-edit-pass-1</dd><dt>title</dt><dd>Sentence-level tightening: cut filler, activate passives, dedupe connective tissue — zero facts dropped</dd><dt>lens</dt><dd>line-editor</dd><dt>expectedMetric</dt><dd>940</dd><dt>hardConstraintNote</dt><dd>The candidate remains a self-contained spec draft: full frontmatter survives with status meaning intact and verbatim labels 'RESEARCH-ROOT SPEC DRAFT' and 'NOT upstreamed' (GR-5 honest labels), all three provenance paths, both sibling variants, all six sections, all five state names and transitions with their mechanisms (offered address/carried resolver/never venue mDNS; gateway page/302 soft-degrade; comprehension-not-copy; bilateral IEEE Std 7012-2025 MyTerms seal with three registers — plain language, legal Customer Commons canonical, machine-readable JSON-LD/W3C DPV; broker-mediated host-scoped grants), the complete five-row slug table with issuer-&gt;recipient, sideEffects, and exposure columns verbatim (including actsAsSubject: false), all five error codes verbatim, both postures of the admission-ceremony relation, all five hardening items (SD-BASE/PDC-AI roster, witness-draw, vault/proxy-login generalisation, normative state machine with the two 502 lessons, mage.mesh non-canonisation), and every cross-reference. Only phrasing was compressed; no state name, mechanism, slug row, error code, register, standard name, or hardening item was deleted, so every census fact expressible from the original remains derivable from the text alone.</dd></dl><details><summary>rationale</summary><pre>The draft carries removable connective tissue: 'promotion of the' -&gt; 'promotes the'; 'has *read the room's terms and understood them*' -&gt; 'has read and understood the room's terms'; 'and only then opens' -&gt; 'then opens'; 'must be able to attest the ceremony happened, without becoming the authority for what it means' -&gt; 'must attest the ceremony happened without becoming the authority for its meaning'; passive 'The agent is pointed at a gateway document' -&gt; active 'The host points the agent at a gateway document'; 'The front door serves a catch-all so near-misses degrade soft' -&gt; 'A catch-all front door degrades near-misses soft'; 'the same primitive as the Gatehouse understanding challenge and the sigil-gate proverb, in its consent-first peer form' -&gt; 'the Gatehouse understanding-challenge and sigil-gate-proverb primitive in its consent-first peer form'; 'are the fabric around it' -&gt; 'are fabric'; 'three registers stay in correspondence' -&gt; 'three registers correspond'; 'already contains the pattern' -&gt; 'already holds the pattern'; 'distinguishing a session outcome from released' -&gt; 'separating session outcome from released'; 'the SUPERVISED variant:' -&gt; 'SUPERVISED:' (and likewise CONSENT-FIRST PEER); 'This is the credential/artifact wall again' -&gt; 'The credential/artifact wall again'; 'how the agreement is referenced from understanding/seal' -&gt; 'how understanding/seal references the agreement'; 'the witness-draw mechanism from the admission ceremony' -&gt; 'the admission ceremony's witness-draw mechanism'; 'State the grant-mediation pattern abstractly' -&gt; 'State grant-mediation abstractly'; 'reads as one instance of it' -&gt; 'reads as one instance'; 'the david.local case is the proof' -&gt; 'proves it'. Frontmatter provenance paths, the lintel blockquote, the state diagram, the full slug table, all five error codes, and all cross-reference slugs are untouched. Measured by the frontier's mandated counting rule (tr -s whitespace | grep -c .) on the exact candidate text: 940, vs baseline 980 cited from frontier.json.</pre></details></div>
+<div class="card"><h4>r1.1/p2-restructure-telegraphic-tables</h4><dl><dt>leverId</dt><dd>restructure-telegraphic-tables</dd><dt>title</dt><dd>Full telegraphic restructure: numbered-transition state machine, collapsed preamble, fact-dense normative statements</dd><dt>lens</dt><dd>restructurer</dd><dt>expectedMetric</dt><dd>863</dd><dt>hardConstraintNote</dt><dd>The candidate remains a self-contained spec draft: title, version, date, and the honest status labels survive with meaning intact (RESEARCH-ROOT SPEC DRAFT, NOT upstreamed, upstream-only-after-Wave-1–2 condition, full provenance and siblings — GR-5). Every state name, transition mechanism, slug row with issuer/sideEffects/exposure, error code, register name, standard name (IEEE Std 7012-2025, Customer Commons, JSON-LD/W3C DPV, SD-BASE/PDC-AI), hardening item, and cross-reference is present and derivable from the text alone; the lintel quote is verbatim. No census content was targeted or optimised for — I did not read census.json (T2/GR-4); the strategy is preserve-everything, compress only the prose around it.</dd></dl><details><summary>rationale</summary><pre>Structure-level rewrite of the whole draft: (a) §2's five prose transition paragraphs become five telegraphic numbered items keyed to the state arrows, each keeping its name, mechanism, and lesson (consent-not-scan, carried-resolver/never-mDNS, david.local, 302 soft-degrade, comprehension-not-copy, bilateral 7012 two-party seal with three registers, brokered cookie-jar grant); (b) §1/§3/§4 narrative framing collapses into single normative sentences around the verbatim lintel quote, the vault/proxy-login mapping, and the two-posture contrast; (c) the slug table, error-code list, five hardening items, and cross-reference lists survive verbatim in meaning; (d) frontmatter keeps full provenance with only connective words trimmed. Measured by the frontier's counting rule (tr -s whitespace | grep -c .) the candidate is 863 words vs the 980 baseline cited from frontier.json — a 117-word beat. The frontier's descriptive ~700 ceiling proved optimistic against this draft's fact verbosity (30-word verbatim quote, three long provenance paths, five multi-clause mechanisms); pushing below ~850 required deleting only connective tissue, and pushing below ~800 would start consuming fact-bearing phrases, so I claim the measured 863 rather than the ceiling (seat failure mode: overclaiming expectedMetric).</pre></details></div></section>
+<div class="arrow">▼</div><section class="phase"><h2>3 · Hold-apart</h2><p class="mandate">the Gap ⿻ (xor) — hash the proposal, derive the witnesses</p><div class="card"><h4>r1.1/p1-line-edit-pass-1</h4><div class="hashbox match"><span class="badge match">MATCH ✓</span> <span class="badge other" title="drawn before the D1 salt; the seed is the bare proposal hash and a resubmitting proposer could have ground it">legacy-seed</span>
+<p>The witnesses derive from the proposal's own bytes. soulbae could not have known them — but under the legacy rule a resubmitting proposer could have ground the draw; salted runs close that.</p>
+<dl><dt>mode</dt><dd>LEGACY — seed = sha256(proposal_canon.json); pre-salt run</dd><dt>recorded seedHex (gap.json)</dt><dd>353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da</dd><dt>derived sha256(proposal_canon.json), computed at render time</dt><dd>353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da</dd></dl></div><details><summary>the draw (questions + expected answers)</summary><pre>CENSUS: identity draw over the full frozen 40-fact list in id order — drawIndices [1..40] = F1..F40, every fact probed, no sampling (census.json N=40 is the whole witness set); seed 353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da is the Fiat-Shamir binding of this witness set to the exact canonical proposal bytes (GR-4; a revised proposal re-derives); LEGACY mode, no salt.</pre></details><details><summary>transcript (third-party re-derivable)</summary><pre>GAP SEAT ⿻ HOLD-APART TRANSCRIPT — instance C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness, run r1/r1.1, proposal p1-line-edit-pass-1 (lever line-edit-pass-1). LEGACY mode: no salt supplied.
+
+[1] SERIALIZATION. The proposal artifact was taken EXACTLY as given in the seat prompt and canonically serialized: JSON, recursive sorted keys, no whitespace, UTF-8, no trailing newline. Top-level keys in sorted order: compressedText, expectedMetric, hardConstraintNote, killedLeverCitations, lens, leverId, rationale, title. The exact bytes hashed (10968 bytes) are persisted at C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness/runs/r1/r1.1/p1-line-edit-pass-1/proposal_canon.json (GR-4 / seat card step 3: the auditor hashes a file, not a reconstruction).
+
+[2] SEED. Exact command run and its output:
+$ sha256sum &quot;C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness/runs/r1/r1.1/p1-line-edit-pass-1/proposal_canon.json&quot;
+353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da *C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness/runs/r1/r1.1/p1-line-edit-pass-1/proposal_canon.json
+seedHex = 353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da. Mechanical re-check for any third party: sha256sum proposal_canon.json must equal seedHex or the round is void.
+
+[3] DRAW RULE (deterministic, printed). This is a CENSUS gate per frontier.json objective.gate: the census is FROZEN at N=40 (census.json, keystone-enumerated 2026-08-18) and EVERY fact is probed — no sampling, no selection, no replacement question. Draw = the identity draw over the full frozen list in id order: drawIndices = [1..40] ↦ F1..F40. Because the witness set is the whole census, the seed selects nothing; it stands as the Fiat-Shamir binding of this witness set to these exact proposal bytes — a revised proposal is a new artifact and re-derives (GR-4; seat hard rule: never reuse a seed). No witness was accepted from, suggested by, or influenced by the proposer; all forty probes are transcribed from census.json alone.
+
+[4] WITNESS QUESTIONS — one comprehension question per fact, F1..F40 in order. Each EXPECTED answer quotes the frozen census fact verbatim. The assay seat must answer every question from the compressed candidate text ALONE; 40/40 or the round is zero (T5).
+
+Q1 (F1): By what is access earned in this spec, and by what is it explicitly not earned? EXPECTED: &quot;The rule: access is earned by understanding, not credential.&quot;
+Q2 (F2): What does the lintel over the door say about a trust that certifies itself, and on what does trust always wait? EXPECTED: &quot;The lintel: a trust that certifies itself is the one you cannot trust — trust, like truth, always waits on a witness from beyond the system that holds it.&quot;
+Q3 (F3): Who may never issue the seal, and what must something outside the two parties be able to do — without becoming what? EXPECTED: &quot;The seal is never self-issued: something outside the two parties — a witness artifact, a broker, an externally-anchored record — must be able to attest the ceremony happened, without becoming the authority for what it means.&quot;
+Q4 (F4): Name the ceremony's five per-participant states in order. EXPECTED: &quot;The ceremony is a per-participant state machine of five states: unresolved → resolved → handshook → exchanged → sealed.&quot;
+Q5 (F5): What two structural properties does the state sequence have? EXPECTED: &quot;The states are monotone, with no skips.&quot;
+Q6 (F6): From which prior design does the state machine borrow its shape, and at which point? EXPECTED: &quot;The state-machine shape borrows the Game-of-42 TRUST-PROTOCOL group-seal shape at p=sealed.&quot;
+Q7 (F7): In the naming transition, how does the host learn the joining agent's address — and what is this contrasted against? EXPECTED: &quot;unresolved → resolved is naming: the joining agent OFFERS its address — consent, not scan.&quot;
+Q8 (F8): By what mechanism does the host resolve the offered address, and what mechanism is forbidden? EXPECTED: &quot;The host resolves the offered address det
+… (truncated — read the file itself)</pre></details></div>
+<div class="card"><h4>r1.1/p2-restructure-telegraphic-tables</h4><div class="hashbox match"><span class="badge match">MATCH ✓</span> <span class="badge other" title="drawn before the D1 salt; the seed is the bare proposal hash and a resubmitting proposer could have ground it">legacy-seed</span>
+<p>The witnesses derive from the proposal's own bytes. soulbae could not have known them — but under the legacy rule a resubmitting proposer could have ground the draw; salted runs close that.</p>
+<dl><dt>mode</dt><dd>LEGACY — seed = sha256(proposal_canon.json); pre-salt run</dd><dt>recorded seedHex (gap.json)</dt><dd>7175b373710bc8974bfd03fdba0d4ce3723df72cce87b48a9c4f0a4829dfa808</dd><dt>derived sha256(proposal_canon.json), computed at render time</dt><dd>7175b373710bc8974bfd03fdba0d4ce3723df72cce87b48a9c4f0a4829dfa808</dd></dl></div><details><summary>the draw (questions + expected answers)</summary><pre>CENSUS: every fact of the frozen census.json (N=40), F1..F40 in id order — exhaustive, deterministic, without replacement, no sampling. In census mode the seed does not select witnesses (all are drawn); it binds this witness set to the exact bytes of proposal_canon.json, so a revised proposal re-derives (GR-4). drawIndices = 1..40.</pre></details><details><summary>transcript (third-party re-derivable)</summary><pre>GAP TRANSCRIPT — seat hold-apart ⿻ (xor) · LEGACY mode (no salt supplied) · 2026-08-18
+Instance: C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness · run r1/r1.1 · proposal p2-restructure-telegraphic-tables
+
+1. SERIALIZATION. The proposal artifact was taken EXACTLY as given in the seat prompt and canonically serialized: JSON, recursive lexicographically sorted keys at every level, no whitespace, raw UTF-8 (no ASCII escaping of non-ASCII characters), no trailing newline. Top-level key order after sort: compressedText, expectedMetric, hardConstraintNote, killedLeverCitations, lens, leverId, rationale, title. The exact bytes hashed are persisted at runs/r1/r1.1/p2-restructure-telegraphic-tables/proposal_canon.json (9318 bytes).
+
+2. SEED. Command run (Git Bash, in the proposal scratch dir):
+   sha256sum proposal_canon.json
+   =&gt; 7175b373710bc8974bfd03fdba0d4ce3723df72cce87b48a9c4f0a4829dfa808
+   seedHex = 7175b373710bc8974bfd03fdba0d4ce3723df72cce87b48a9c4f0a4829dfa808
+   Anyone may re-derive: sha256sum of the persisted file must equal seedHex or the round is void.
+
+3. DRAW RULE (printed per seat card). This instance's gate is a CENSUS (frontier.json objective.gate: census over the frozen 40-fact list, every fact probed, 40/40 or the round is zero — T5). Draw rule: take census.json (frozen, N=40, keystone-enumerated 2026-08-18) and probe EVERY fact F1..F40 in id order — deterministic, exhaustive, without replacement, no sampling and hence no seed-dependent selection. The seed's role in census mode is binding, not selection: it ties this witness set to these exact proposal bytes, so a revised proposal is a new artifact and re-derives (GR-4). drawIndices = [1..40]. No witness was suggested by, seen by, or influenced by the proposer; the proposer states it did not read census.json, and this seat drew from the frozen census file only.
+
+4. WITNESS QUESTIONS — one comprehension question per fact, answerable from the compressed text ALONE; the expected answer quotes the census fact (verbatim, after EXPECTED:). The assay seat must find each answer derivable from the candidate text with no other source.
+
+Q1 (F1): Under the ceremony's rule, what earns access, and what does not? EXPECTED: The rule: access is earned by understanding, not credential.
+Q2 (F2): Quote the lintel in full. EXPECTED: The lintel: a trust that certifies itself is the one you cannot trust — trust, like truth, always waits on a witness from beyond the system that holds it.
+Q3 (F3): What must never be self-issued about the seal, what kinds of outside things may attest, and what must the attester not become? EXPECTED: The seal is never self-issued: something outside the two parties — a witness artifact, a broker, an externally-anchored record — must be able to attest the ceremony happened, without becoming the authority for what it means.
+Q4 (F4): Name the ceremony's state machine per participant: how many states, in what order? EXPECTED: The ceremony is a per-participant state machine of five states: unresolved → resolved → handshook → exchanged → sealed.
+Q5 (F5): What two structural properties do the states have? EXPECTED: The states are monotone, with no skips.
+Q6 (F6): Which prior shape does the state machine borrow, and at which point? EXPECTED: The state-machine shape borrows the Game-of-42 TRUST-PROTOCOL group-seal shape at p=sealed.
+Q7 (F7): In the unresolved → resolved transition, who does what with the address, and what is the contrast pair? EXPECTED: unresolved → resolved is naming: the joining agent OFFERS its address — consent, not scan.
+Q8 (F8): How does the host resolve the offered address, and what must it never use? EXPECTED: The host resolves the offered address deterministically with a carried resolver, never venue mDNS.
+Q9 (F9): How many names per instance, and what is everything else? EXPECTED: One name per instance; everything else is a path.
+Q10 (F10): What is worse than a name that never resolves, and what case is the proof? EXPECTED: A name tha
+… (truncated — read the file itself)</pre></details></div></section>
+<div class="arrow">▼</div><section class="phase"><h2>4 · Assay</h2><p class="mandate">soulbis ⚔️ (neg) — the full gate, VALIDATED / MIRAGE / BLOCKED</p><div class="card"><h4>r1.1/p1-line-edit-pass-1 <span class="chip validated">VALIDATED</span> <span class="chip validated" title="every witness probed">CENSUS 40/40</span></h4><dl><dt>leverId</dt><dd>line-edit-pass-1</dd><dt>metric</dt><dd>940</dd><dt>gateResult</dt><dd>40/40</dd><dt>coverage</dt><dd>CENSUS — every witness probed (detection 1.0).</dd><dt>scratchDir</dt><dd>C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness/runs/r1/r1.1/p1-line-edit-pass-1</dd><dt>candidate.md</dt><dd>present</dd></dl><details><summary>evidence</summary><pre>Seed re-derived: sha256sum runs/r1/r1.1/p1-line-edit-pass-1/proposal_canon.json = 353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da (matches Gap seedHex). candidate.md written verbatim from the hashed canon bytes (compressedText, 7033 bytes). CENSUS gate: identity draw F1..F40, every question answered from candidate.md alone; all 40 expected facts present in meaning (incl. all five understanding/* table rows with actsAsSubject:false, all five error codes, all five hardening items, mage.mesh non-canonisation) = 40/40 full pass. Metric: tr -s '[:space:]' '\n' &lt; candidate.md | grep -c . =&gt; 940 words, beats frontier.json best 980. Hard constraint holds: self-contained spec draft; RESEARCH-ROOT / NOT-upstreamed status and provenance survive in meaning.</pre></details></div>
+<div class="card"><h4>r1.1/p2-restructure-telegraphic-tables <span class="chip validated">VALIDATED</span> <span class="chip validated" title="every witness probed">CENSUS 40/40</span></h4><dl><dt>leverId</dt><dd>restructure-telegraphic-tables</dd><dt>metric</dt><dd>863</dd><dt>gateResult</dt><dd>40/40</dd><dt>coverage</dt><dd>CENSUS — every witness probed (detection 1.0).</dd><dt>failingCheck</dt><dd>none</dd><dt>scratchDir</dt><dd>C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness/runs/r1/r1.1/p2-restructure-telegraphic-tables</dd><dt>candidate.md</dt><dd>present</dd></dl><details><summary>evidence</summary><pre>Seed: sha256sum proposal_canon.json =&gt; 7175b373710bc8974bfd03fdba0d4ce3723df72cce87b48a9c4f0a4829dfa808 (9318 bytes) == seedHex, reproduces. Gate: census mode, drawIndices 1..40, every question F1..F40 answered from candidate.md alone and graded against census expected text — 40/40 correct (rows Q25-Q29 incl. actsAsSubject:false, all five error codes Q30, all five hardening items Q36-Q40 present). Metric: tr -s '[:space:]' '\n' &lt; candidate.md | grep -c . =&gt; 863; frontier best 980 (frontier.json) =&gt; beat by 117 words. Hard constraint: self-contained spec draft with frontmatter; status RESEARCH-ROOT SPEC DRAFT / NOT upstreamed and provenance survive in meaning. T5 product: gate pass x constraint x metric win, no zero factor.</pre></details></div></section>
+<div class="arrow">▼</div><section class="phase"><h2>5 · Critic</h2><p class="mandate">classifies the whole round: structural / probe-limited / noise</p><p class="note">no critic.json — the reference engine returns the critic's classification to the orchestrator without persisting it; the chronicle draft carries the round's reading.</p></section>
+<div class="arrow">▼</div><section class="phase"><h2>6 · Chronicle</h2><p class="mandate">drafts the record — verdict first</p><div class="card"><h4>r1.1/CHRONICLE_DRAFT.md <span class="chip other">DRAFT — keystone reviews and files</span></h4><pre>---
+date: 2026-08-18
+seat: chronicle
+runId: r1.1
+verdict: Both proposals VALIDATED at the full 40/40 census gate — restructure-telegraphic-tables at 863 words is the round's winner (beats frontier.json best 980 by 117); line-edit-pass-1 at 940 also beats but is strictly dominated. Keystone fold pending.
+---
+
+# 2026-08-18 — r1.1 double validation, restructurer dominates
+
+## Verdict
+
+Two levers, two full-gate passes, one dominant winner. The restructurer's
+`restructure-telegraphic-tables` candidate measured **863 words** against the
+frontier.json best of **980** — a 117-word beat at the full 40/40 census gate
+with the hard constraint intact (self-contained spec draft; RESEARCH-ROOT /
+NOT-upstreamed status and provenance surviving in meaning). The line-editor's
+`line-edit-pass-1` also passed 40/40 at **940 words** — a true win, but
+strictly dominated by its sibling on the same gate. The critic classifies both
+wins as **structural** (draw-independent: the census probes every fact, so no
+witness draw can shift the result). Recommendation to the keystone: fold
+`restructure-telegraphic-tables` only. Frontier.json remains at best 980 until
+the keystone folds and writes (GR-10); OT-1 (&quot;below 980 at the full gate&quot;) is
+answered in evidence and awaits serialisation.
+
+## What happened
+
+- **Measure.** Fresh run of the mandated rule on `artifact/SPEC.md` gave 980,
+  equal to frontier.json baseline and best — frontier current, not stale.
+  `census.json` parses and holds exactly 40 facts. Lever pricing was
+  descriptive, not advocacy: line-editor priced low-cost with a ~850-word
+  ceiling; restructurer priced high-cost (full rewrite, elevated 40/40
+  gate-failure risk) with a ~700-word ceiling and an estimated floor of
+  ~600-650 from 40 facts × ~13-15 words/fact plus scaffolding.
+- **Proposals.** Two orthogonal lenses: `line-edit-pass-1` (line-editor,
+  expected 940) and `restructure-telegraphic-tables` (restructurer, expected
+  863).
+- **Gap seeds.** Both seeds re-derived from the hashed proposal canon bytes
+  (GR-4): p1 canon sha256 `353a8910…c2898da` (7033-byte compressedText),
+  p2 canon sha256 `7175b373…829df808` (9318 bytes) — both match their
+  seedHex, both reproduce.
+- **Assay.** Census mode, identity draw F1..F40, detection 1.0 — every
+  question answered from each candidate.md alone and graded against census
+  expected text. Both candidates: 40/40, including all five understanding/*
+  table rows with `actsAsSubject:false`, all five error codes, all five
+  hardening items, and mage.mesh non-canonisation. Metrics by the frozen
+  rule (`tr -s '[:space:]' '\n' &lt; candidate.md | grep -c .`): 940 and 863.
+  Hard constraint held in both. T5 product intact: gate pass × constraint ×
+  metric win, no zero factor.
+- **Critic.** Both classified structural. Red-team notes on record: the
+  line-editor's implicit premise (&quot;the fat is in the sentences&quot;) only
+  partially borne out — 40 words found where the restructurer found 117 on
+  the same gate; fold the sibling, not this. On the restructurer:
+  expectedMetric equalling achieved (863) shows the proposer measured a
+  drafted candidate pre-proposal — legitimate under a census gate, which has
+  no held-out component to game (GR-4 unthreatened: the Gap seed selects
+  nothing in an identity draw). Keystone-ear corollary, not a mis-gate: with
+  a census gate the Fiat-Shamir seeding is ceremonial, and separation rests
+  on the prover's independent grading.
+
+## Reversals
+
+Nothing reversed and no levers killed this round
+(`killedLeverDrafts: []`). Two standing observations at win-prominence:
+
+- **line-edit-pass-1 is a true win the keystone should decline to fold** —
+  validated, but strictly dominated by `restructure-telegraphic-tables` on
+  the identical gate. Folding both would be incoherent; the lens itself
+  stays alive for re-use (see handoff).
+- **The measure seat's ceiling estimates ran conservative in opposite
+  directions**: the line-editor fell short of its priced ~850 ceiling (940
+  achieved), while the restructurer's priced ~700 ceiling remains open below
+  the achieved 863 — the priced floor (~600-650) has not been probed.
+
+&gt; *MYTH (fenced, capture only): the Swordsman graded forty questions with the
+&gt; Gap's seal on each seed, and the Mage's boldest cut — the numbered-transition
+&gt; state machine — held every one. The ceremonial seed did not choose the
+&gt; witnesses; the census left it nothing to choose. The door stays shut until
+&gt; the First Person opens it.*
+
+## Ledger entries returned
+
+For the keystone to serialise (GR-10) — proposed, not written:
+
+**claims_register.md — proposed entries:**
+
+1. **PROVEN** — `restructure-telegraphic-tables` (restructurer lens):
+   candidate at 863 words passes the frozen 40/40 census gate with hard
+   constraint intact; seed reproduces from proposal_canon.json sha256
+   `7175b3737…829df808`; evidence in
+   `runs/r1/r1.1/p2-restructure-telegraphic-tables/`. Beats frontier.json
+   best (980) by 117. Compression source: collapsed preamble + numbered-
+   transition state machine (structural, per critic).
+2. **PROVEN** — `line-edit-pass-1` (line-editor lens): candidate at 940 words
+   passes the same 40/40 gate, constraint intact; seed reproduces from canon
+   sha256 `353a8910…c2898da`; evidence in
+   `runs/r1/r1.1/p1-line-edit-pass-1/`. Validated but strictly dominated;
+   returned for the record, not for folding.
+3. **OPEN** — restructurer-priced floor ~600-650 words (40 facts ×
+   ~13-15 words/fact + scaffolding) unprobed; settled by a future round
+   driving below it or failing the gate trying.
+
+**frontier.json — proposed update (keystone-only write):** best → 863,
+leverIds `[&quot;restructure-telegraphic-tables&quot;]`, history append; OT-1 remains
+OPEN (statement targets &quot;below 980&quot; — met, but the critic's nextLead targets
+sub-800, so the keystone may restate or close-and-reopen).
+
+**KILLED_LEVERS.md:** no entries this round.
+
+## Handoff
+
+- **Open questions:** Does the validated line-editor lens find further
+  sentence-level slack in the folded telegraphic text (its dense normative
+  statements and table rows have never been tightened)? Is the priced
+  ~600-650 floor real, or does the census gate break first?
+- **Blocked items:** Fold of `restructure-telegraphic-tables` into
+  `artifact/SPEC.md` + `frontier.json` / `claims_register.md` writes —
+  keystone-only (GR-10). Any push/publish of the folded spec — First Person
+  only (T6/GR-8).
+- **Single next action:** Compose the two validated orthogonal levers: after
+  the keystone folds `restructure-telegraphic-tables` (863 words, new best),
+  run the validated line-editor lens over the folded telegraphic text as a
+  new proposal — its dense normative statements and table rows have never
+  been sentence-level tightened. Same frozen 40/40 census gate, same hard
+  constraint (self-contained draft, RESEARCH-ROOT / NOT-upstreamed provenance
+  surviving in meaning), target sub-800 words.
+</pre></div></section>
+<footer>
+<p>Conformance (G0): <code>harness.config.mjs</code> present at the instance root —
+this page does not run the gate; run it yourself: <code>node engine/conform.mjs .</code>.
+The gate proves <code>(⚔️⊥⿻⊥🧙)😊 = neg ⊕ bnot → succ</code> on Z/64Z every time rather than taking it on faith.</p>
+<p>The frontier does not move here. Folding is the keystone's; the door is the First Person's (T6/GR-8).</p>
+</footer>
+</main></body></html>

@@ -3,7 +3,7 @@ title: "Lab — guardian-recovery"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/guardian-recovery/NOTES.md"
 built_from_commitish: "working-tree"
-order: 67
+order: 69
 ---
 # Guardian recovery — the social-threshold pattern (X9 as a runnable reference)
 

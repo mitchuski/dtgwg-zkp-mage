@@ -327,5 +327,37 @@ let a1Statement;
 }
 
 // ---------------------------------------------------------------------------
+// X8-B — biometric dependency axis (discussion #12, refinement 2): legally
+// separate issuers sharing a biometric model / vendor / enrolment data are ONE
+// independence component, and the bound weakens to the group's worst ε.
+{
+  const bioRegistry = makeIssuerRegistry({
+    epoch: 'epoch:2026-Q3',
+    effectiveTime: '2026-07-01T00:00:00Z',
+    issuers: [
+      // legally separate corporates, same underlying biometric model
+      { id: 'iss:bio-a', epsilon: 0.01, epsilonEffectiveTime: '2026-07-01T00:00:00Z', epsilonHorizon: '2027-01-01T00:00:00Z', dependencyClasses: ['parent:corpA', 'model:facematch-9'] },
+      { id: 'iss:bio-b', epsilon: 0.03, epsilonEffectiveTime: '2026-07-01T00:00:00Z', epsilonHorizon: '2027-01-01T00:00:00Z', dependencyClasses: ['parent:corpB', 'model:facematch-9'] },
+      // independent model, but shares enrolment data with bio-b's vendor pool
+      { id: 'iss:bio-c', epsilon: 0.02, epsilonEffectiveTime: '2026-07-01T00:00:00Z', epsilonHorizon: '2027-01-01T00:00:00Z', dependencyClasses: ['model:irisnet-2', 'enrolment-data:pool-7'] },
+      // fully independent on the biometric axis
+      { id: 'iss:bio-d', epsilon: 0.04, epsilonEffectiveTime: '2026-07-01T00:00:00Z', epsilonHorizon: '2027-01-01T00:00:00Z', dependencyClasses: ['model:palm-1', 'vendor:solo'] },
+    ],
+  });
+  const shared = effectiveK(['iss:bio-a', 'iss:bio-b'], bioRegistry);
+  ok('X8-B1 shared model collapses legally separate issuers to one component',
+    shared.effectiveK === 1);
+  const { bound } = aggregateBound(['iss:bio-a', 'iss:bio-b'], bioRegistry, NOW);
+  ok('X8-B2 collapsed model-sharing group bounds at its worst ε (weaken-only)',
+    near(bound, 0.03));
+  const mixed = aggregateBound(['iss:bio-a', 'iss:bio-b', 'iss:bio-d'], bioRegistry, NOW);
+  ok('X8-B3 biometric-independent issuer still multiplies the bound',
+    mixed.effectiveK === 2 && near(mixed.bound, 0.03 * 0.04));
+  const dataShare = effectiveK(['iss:bio-c', 'iss:bio-d'], bioRegistry);
+  ok('X8-B4 distinct models with distinct enrolment data stay independent',
+    dataShare.effectiveK === 2);
+}
+
+// ---------------------------------------------------------------------------
 console.log(`\nmulti-issuer: ${passCount}/${passCount + failCount} pass\n`);
 process.exit(failCount === 0 ? 0 : 1);

@@ -3,7 +3,7 @@ title: "Lab — 01-uniqueness-nullifier"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/01-uniqueness-nullifier/NOTES.md"
 built_from_commitish: "working-tree"
-order: 60
+order: 62
 ---
 # 01 — Uniqueness within a context (nullifier) — notes
 

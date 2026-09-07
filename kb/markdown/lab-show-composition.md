@@ -3,7 +3,7 @@ title: "Lab — show-composition"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/show-composition/NOTES.md"
 built_from_commitish: "working-tree"
-order: 72
+order: 74
 ---
 # show-composition — the show is one transcript (X3, M2 + M4)
 

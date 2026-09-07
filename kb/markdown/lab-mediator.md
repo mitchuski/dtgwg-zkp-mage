@@ -3,7 +3,7 @@ title: "Lab — mediator"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/mediator/NOTES.md"
 built_from_commitish: "working-tree"
-order: 68
+order: 70
 ---
 # Mediated-proving reference model (X7 · M2 + M3)
 

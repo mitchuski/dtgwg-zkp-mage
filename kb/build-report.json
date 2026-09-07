@@ -4,11 +4,11 @@
   "sections": {
     "root": 4,
     "decision": 36,
-    "explorations": 19,
+    "explorations": 21,
     "lab": 15,
     "chronicles": 2
   },
-  "totalPages": 76,
+  "totalPages": 78,
   "pages": [
     {
       "slug": "dtg-research-root",
@@ -424,123 +424,137 @@
       "order": 58
     },
     {
+      "slug": "x10-ceremony-as-trust-task",
+      "title": "X10 — Ceremony as Trust Task",
+      "section": "explorations",
+      "source": "explorations/X10-ceremony-as-trust-task.md",
+      "order": 59
+    },
+    {
+      "slug": "x11-field-guide-deployment",
+      "title": "X11 — The Field Guide Deployment",
+      "section": "explorations",
+      "source": "explorations/X11-field-guide-deployment.md",
+      "order": 60
+    },
+    {
       "slug": "lab-runtimes",
       "title": "Lab — Runtimes",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/README.md",
-      "order": 59
+      "order": 61
     },
     {
       "slug": "lab-01-uniqueness-nullifier",
       "title": "Lab — 01-uniqueness-nullifier",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/01-uniqueness-nullifier/NOTES.md",
-      "order": 60
+      "order": 62
     },
     {
       "slug": "lab-07-trust-graph-formation",
       "title": "Lab — 07-trust-graph-formation",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/07-trust-graph-formation/NOTES.md",
-      "order": 61
+      "order": 63
     },
     {
       "slug": "lab-circom-gadget",
       "title": "Lab — circom-gadget",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/circom-gadget/NOTES.md",
-      "order": 62
+      "order": 64
     },
     {
       "slug": "lab-consumer-py",
       "title": "Lab — consumer-py",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/consumer-py/NOTES.md",
-      "order": 63
+      "order": 65
     },
     {
       "slug": "lab-context-card",
       "title": "Lab — context-card",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/context-card/NOTES.md",
-      "order": 64
+      "order": 66
     },
     {
       "slug": "lab-erosion-record",
       "title": "Lab — erosion-record",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/erosion-record/NOTES.md",
-      "order": 65
+      "order": 67
     },
     {
       "slug": "lab-fixtures",
       "title": "Lab — fixtures",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/fixtures/NOTES.md",
-      "order": 66
+      "order": 68
     },
     {
       "slug": "lab-guardian-recovery",
       "title": "Lab — guardian-recovery",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/guardian-recovery/NOTES.md",
-      "order": 67
+      "order": 69
     },
     {
       "slug": "lab-mediator",
       "title": "Lab — mediator",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/mediator/NOTES.md",
-      "order": 68
+      "order": 70
     },
     {
       "slug": "lab-multi-issuer",
       "title": "Lab — multi-issuer",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/multi-issuer/NOTES.md",
-      "order": 69
+      "order": 71
     },
     {
       "slug": "lab-quiet-presentation",
       "title": "Lab — quiet-presentation",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/quiet-presentation/NOTES.md",
-      "order": 70
+      "order": 72
     },
     {
       "slug": "lab-rotation",
       "title": "Lab — rotation",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/rotation/NOTES.md",
-      "order": 71
+      "order": 73
     },
     {
       "slug": "lab-show-composition",
       "title": "Lab — show-composition",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/show-composition/NOTES.md",
-      "order": 72
+      "order": 74
     },
     {
       "slug": "lab-witness-seat",
       "title": "Lab — witness-seat",
       "section": "lab",
       "source": "../dtgwg-zkp-tf-mage/runtimes/witness-seat/NOTES.md",
-      "order": 73
+      "order": 75
     },
     {
       "slug": "chronicle-2026-07-16-trust-graph-formation-dream-cycle",
       "title": "Chronicle 2026-07-16 — Trust-Graph Formation Dream Cycle",
       "section": "chronicles",
       "source": "../agentprivacy_master/docs/chronicles/2026-07-16_trust-graph-formation-dream-cycle.md",
-      "order": 74
+      "order": 76
     },
     {
       "slug": "chronicle-2026-07-18-the-first-circuit",
       "title": "Chronicle 2026-07-18 — The First Circuit",
       "section": "chronicles",
       "source": "../agentprivacy_master/docs/chronicles/2026-07-18_the-first-circuit.md",
-      "order": 75
+      "order": 77
     }
   ],
   "sourcesManifested": [
@@ -568,6 +582,8 @@
     "explorations/X7-mediated-proving-profile.md",
     "explorations/X8-multi-issuer-aggregation.md",
     "explorations/X9-guardian-recovery.md",
+    "explorations/X10-ceremony-as-trust-task.md",
+    "explorations/X11-field-guide-deployment.md",
     "../dtgwg-zkp-tf-mage/runtimes/README.md",
     "../dtgwg-zkp-tf-mage/runtimes/01-uniqueness-nullifier/NOTES.md",
     "../dtgwg-zkp-tf-mage/runtimes/07-trust-graph-formation/NOTES.md",
@@ -659,6 +675,10 @@
     "../agentprivacy_master/docs/chronicles/2026-06-30_production_push_run.md",
     "../agentprivacy_master/docs/chronicles/2026-07-13_harness_workshops_island_open_dag.md",
     "../agentprivacy_master/docs/chronicles/2026-07-28_the-thread-returns.md",
+    "../agentprivacy_master/docs/chronicles/2026-08-11_the-registry-opens.md",
+    "../agentprivacy_master/docs/chronicles/2026-08-12_both-faces-on-the-table.md",
+    "../agentprivacy_master/docs/chronicles/2026-08-14_the-seat-follows-the-run.md",
+    "../agentprivacy_master/docs/chronicles/2026-08-17_field_guide_convergence.md",
     "../agentprivacy_master/docs/chronicles/ACT1_INSCRIPTION_CHRONICLE.md",
     "../agentprivacy_master/docs/chronicles/ACT10_INSCRIPTION_CHRONICLE.md",
     "../agentprivacy_master/docs/chronicles/ACT11_INSCRIPTION_CHRONICLE.md",
@@ -759,12 +779,22 @@
     "../dtgwg-zkp-tf-mage/runtimes/04-holder-binding/STUB.md",
     "../dtgwg-zkp-tf-mage/runtimes/05-freshness/STUB.md",
     "../dtgwg-zkp-tf-mage/runtimes/06-demographic-range/STUB.md",
+    "../dtgwg-zkp-tf-mage/runtimes/ceremony-orchestrator/NOTES.md",
     "../dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-COHERENCE.md",
     "../dtgwg-zkp-tf-mage/runtimes/CRED-SPEC-OPPORTUNITIES.md",
     "../dtgwg-zkp-tf-mage/runtimes/STRAWMAN-COHERENCE-EDITS.md",
     "AGENTS.md",
     "CALL-PREP-2026-08-04.md",
+    "CEREMONY-PROPOSAL-DRAFT.md",
+    "chronicles/2026-07-16_trust-graph-formation-dream-cycle.md",
+    "chronicles/2026-07-18_the-first-circuit.md",
+    "chronicles/2026-07-28_the-thread-returns.md",
+    "chronicles/2026-08-11_the-registry-opens.md",
+    "chronicles/2026-08-12_both-faces-on-the-table.md",
+    "chronicles/2026-08-14_the-seat-follows-the-run.md",
+    "chronicles/README.md",
     "CIRCUITS.md",
+    "DISCUSSION-DRAFTS-2026-08-11.md",
     "dtgwg-cred-spec-main/CONTEXT.md",
     "dtgwg-cred-spec-main/README.md",
     "dtgwg-cred-spec-main/spec/appendix.md",
@@ -823,8 +853,10 @@
     "dtgwg-cred-spec-main/spec/terms-definitions/vtn_invitation_credential.md",
     "dtgwg-cred-spec-main/spec/terms-definitions/vtn_member.md",
     "dtgwg-cred-spec-main/spec/terms-definitions/vtn_trust_anchor.md",
+    "ISSUE-2-REPLY-DRAFT-2026-08-14.md",
     "MY-CALLS-2026-07-18.md",
     "PATH-MAP.md",
+    "registry/ACCEPTANCE-FLOW.md",
     "runtimes/01-uniqueness-nullifier/NOTES.md",
     "runtimes/02-liveness-attestation/STUB.md",
     "runtimes/03-personhood-set-membership/STUB.md",
@@ -832,6 +864,7 @@
     "runtimes/05-freshness/STUB.md",
     "runtimes/06-demographic-range/STUB.md",
     "runtimes/07-trust-graph-formation/NOTES.md",
+    "runtimes/ceremony-orchestrator/NOTES.md",
     "runtimes/circom-gadget/NOTES.md",
     "runtimes/consumer-py/NOTES.md",
     "runtimes/context-card/NOTES.md",
@@ -853,7 +886,7 @@
     "TRUST-TASKS-FIT-MAP-2026-07-18.md"
   ],
   "gate": {
-    "pagesScanned": 76,
+    "pagesScanned": 78,
     "hits": 0
   }
 }

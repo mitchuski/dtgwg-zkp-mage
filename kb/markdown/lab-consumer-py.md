@@ -3,7 +3,7 @@ title: "Lab — consumer-py"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/consumer-py/NOTES.md"
 built_from_commitish: "working-tree"
-order: 63
+order: 65
 ---
 # consumer-py — the second-language consumer (X1 milestone M5)
 

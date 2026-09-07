@@ -1,0 +1,99 @@
+{
+  "id": "004",
+  "name": "Holder binding (key from secret)",
+  "kind": "primitive",
+  "state": "carded",
+  "priority": "P2",
+  "owner": "mitchuski",
+  "request": {
+    "issue": "zkp-tf #18",
+    "by": "ScottJeezey",
+    "need": "PR-HLD / ADR-001 S4: the presenter is the subject, not a party holding a copy"
+  },
+  "dish": "A verifier learns that the presenting key is derived from the same secret the credentials were issued to, without learning the secret or any long-term key.",
+  "ingredients": [
+    "holder PRF key / secret",
+    "derivation randomness"
+  ],
+  "pantry": [
+    "presentation key or its commitment",
+    "transcriptDigest"
+  ],
+  "method": [
+    {
+      "clause": "pk_presentation = PRF(secret, context) and the credential commitment opens to the same secret",
+      "gadget": "key-binding",
+      "runtime": ""
+    }
+  ],
+  "yield": [
+    "presentation key (context-scoped)"
+  ],
+  "doesNotEstablish": [
+    "non-transfer of the secret",
+    "absence of coercion or account sharing",
+    "agent authority or consent"
+  ],
+  "adversary": [
+    {
+      "claim": "long-term key hidden",
+      "against": [
+        "verifier",
+        "issuer-verifier-colluding"
+      ]
+    }
+  ],
+  "horizon": [
+    "key cryptoperiod",
+    "credential validity"
+  ],
+  "tasting": {
+    "families": [
+      "accepts",
+      "rejects-unsat"
+    ],
+    "rejectionCodes": [
+      "key-not-derived-from-secret"
+    ]
+  },
+  "substitutions": [
+    {
+      "route": "EdDSA/Baby-Jubjub identity in-circuit (lab plan)",
+      "cost": "unmeasured",
+      "measured": false,
+      "source": "PATH-MAP P4 open item"
+    },
+    {
+      "route": "L_PRF Schnorr proof of PRF-key ownership (paper §9.1)",
+      "cost": "one Schnorr proof",
+      "measured": false,
+      "source": "ePrint 2026/333 §7.2.2, §9.1"
+    }
+  ],
+  "issuance": [
+    "issuer binds the credential to a commitment to the holder secret (pk_U ‖ com_att signed — paper §2.4)"
+  ],
+  "provenance": {
+    "spec": [
+      "liveness reqs v0.4 PR-HLD",
+      "ADR-001 S4"
+    ],
+    "commit": "github.com/mitchuski/dtgwg-zkp-mage (runtimes/04 = stub)"
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board",
+      "task": "board/request"
+    },
+    {
+      "to": "carded",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "runtimes/04-holder-binding STUB.md + paper §7.2 languages",
+      "task": "board/card"
+    }
+  ]
+}

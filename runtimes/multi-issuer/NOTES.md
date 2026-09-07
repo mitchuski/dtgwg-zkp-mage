@@ -115,3 +115,18 @@ for EPP PR-PER**; plus the registry-field proposal (ε + dependency classes +
 horizons) to the Credentials TF along the §27.3 boundary — they own the
 register's institutional legitimacy; we own the statement, the bound, and
 these fixtures.
+
+## 2026-08-25 — biometric dependency axis (upstream discussion #12, refinement 2)
+
+Scott's second refinement accepted in-thread and built the same day: legally
+separate issuers may share the biometric model, capture/matching vendor, or
+enrolment data — correlated-failure modes the legal structure hides. Now
+first-class in `registry.mjs` (`BIOMETRIC_DEPENDENCY_CLASSES`: `model:` /
+`vendor:` / `enrolment-data:` prefixes) with X8-B1..B4 in `test.mjs` (14/14):
+shared model collapses two legally separate issuers to one component (B1), the
+collapsed group bounds at its worst ε — weaken-only (B2), a biometrically
+independent issuer still multiplies the bound (B3), distinct models with
+distinct enrolment data stay independent (B4). Granularity (model family vs
+version vs training corpus) is the deploying authority's declaration — the
+register records it, the collapse rule does the rest. Matches merged v0.4,
+which names shared models/vendors on the requirements side.

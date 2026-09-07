@@ -1,0 +1,210 @@
+[
+  {
+    "id": "D1",
+    "title": "cred-spec #9 — the common-control linkage, answered from the proof layer",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/issues/9",
+    "what": "#31 (09-02) says #9 'stays open and gains weight … cross-TF work with the ZKP task force'. Card 007 is the answer-shape; the voucher-side asymmetry is the sentence nobody has written.",
+    "status": "drafted",
+    "draft": "F",
+    "cards": [
+      "007",
+      "010",
+      "011"
+    ],
+    "actor": "Mitch posts"
+  },
+  {
+    "id": "D2",
+    "title": "zkp-tf #18 — seed set update (12 cards; Scott's four #39/#40 items placed)",
+    "where": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/18",
+    "what": "Scott named four ZKP TF work items on cred-tf #39/#40; none is on #18 yet. WD02 adds two more. One short follow-up puts the board's substance where the board thread is.",
+    "status": "drafted",
+    "draft": "G",
+    "cards": [
+      "001",
+      "006",
+      "007",
+      "008",
+      "012",
+      "020"
+    ],
+    "actor": "Mitch posts"
+  },
+  {
+    "id": "D3",
+    "title": "zkp-tf — post R (the consolidated anchor: the draft, its nature, and the review rounds), then open the dtgwg-zkp-spec PR with body P",
+    "where": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/new?category=ideas",
+    "what": "One post in place of H and M: what the working draft contains, what kind of document it is, the three repositories, who wrote it and why that is said out loud, and the four review rounds (shape · record by record · evidence · deliverable process) with round 1 opened by three questions. H and M stay in the reader as the long forms; do not post all three.",
+    "status": "drafted",
+    "draft": "R",
+    "cards": [],
+    "actor": "Mitch posts H; pushes zk-book; opens the PR with P"
+  },
+  {
+    "id": "D4",
+    "title": "cred-spec PR #26 — bmiller59's statement-3 carve-out converges with card 010",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/pull/26",
+    "what": "bmiller59 (09-02) asks for a carve-out: statement 3 proves the grant half only. Card 010 already says so. Optional short confirmation + the WD02 co-control precision. Draft B was retired as approval-only; this is substance.",
+    "status": "drafted",
+    "draft": "I",
+    "cards": [
+      "010"
+    ],
+    "actor": "Mitch decides"
+  },
+  {
+    "id": "D5",
+    "title": "zkp-tf PR #21 — unreviewed since 08-29",
+    "where": "https://github.com/trustoverip/dtgwg-zkp-tf/pull/21",
+    "what": "DCO green, mergeable, no review. A co-chair nudge to Scott on the next call or by DM; stale branches agent-runtimes / agent-runtimes-doc still need an admin delete.",
+    "status": "open",
+    "draft": "",
+    "cards": [],
+    "actor": "Mitch → Scott"
+  },
+  {
+    "id": "D6",
+    "title": "cred-tf #41 — DTGWG objection window on three scopes (talltree 09-01 mailing-list call)",
+    "where": "https://github.com/trustoverip/dtgwg-cred-tf/discussions/41",
+    "what": "Silence = assent on the three-value resolution. The ZKP TF has a stake (cards 007/012 depend on it). A one-line 'no objection from the proof layer; two recipes already written to it' is on-record support — or stay silent deliberately.",
+    "status": "open",
+    "draft": "",
+    "cards": [
+      "007",
+      "012"
+    ],
+    "actor": "Mitch decides"
+  },
+  {
+    "id": "D7",
+    "title": "Card 007 — one compile settles the cost line",
+    "where": "runtimes/circom-gadget",
+    "what": "Two Poseidon openings sharing a secret input: ~30 minutes in the existing circom lab turns the 007 conjecture into a measurement and moves the card to constructed. Same for 008 route 1.",
+    "status": "open",
+    "draft": "",
+    "cards": [
+      "007",
+      "008"
+    ],
+    "actor": "lab run (any constructor)"
+  },
+  {
+    "id": "D8",
+    "title": "Board item 010 detail thread (draft D) — no Projects board yet",
+    "where": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/18",
+    "what": "Scott said he would set up the board (08-27); nothing visible by 09-05. Either wait, or post D as a standalone construction-detail thread and link it from #18 so the row has something to point at when the board appears.",
+    "status": "waiting",
+    "draft": "D",
+    "cards": [
+      "010"
+    ],
+    "actor": "Mitch decides"
+  },
+  {
+    "id": "D9",
+    "title": "Berkeley meeting 8 Sept (Scott, cred-tf #39) — questions the cards can carry",
+    "where": "https://github.com/trustoverip/dtgwg-cred-tf/discussions/39",
+    "what": "Scott is taking the artifact gap, the blinded binder and the set-root primitive to the personhood-credentials authors on 8 Sept. Cards 008 and 006's set-root route are the written form of those questions; sending Scott the renders before the call is cheap.",
+    "status": "open",
+    "draft": "",
+    "cards": [
+      "006",
+      "008"
+    ],
+    "actor": "Mitch → Scott (before 09-08)"
+  },
+  {
+    "id": "D10",
+    "title": "Flock — measure recipe 001 over a BLAKE3 Merkle tree",
+    "where": "https://github.com/succinctlabs/flock",
+    "what": "Flock proves standard hashes at <250× native; a depth-20 BLAKE3 path + nullifier is a batch of compressions. One measured row would give the book its first post-quantum, transparent, no-hash-migration option — and test whether the set-root pantry can stay on the hashes registries already publish.",
+    "status": "open",
+    "draft": "",
+    "cards": [
+      "001",
+      "003",
+      "006"
+    ],
+    "actor": "lab run (Rust; the local flock-challenge clone has the prover crates)"
+  },
+  {
+    "id": "D11",
+    "title": "cred-spec #31 — one-paragraph pointer: #9 row → construction 007; xref path (after F)",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/issues/31",
+    "what": "geoffturk's plan names #9 as cross-TF work; J gives it the record id and the two rows where plan and records agree (digestMultibase, three scopes).",
+    "status": "drafted",
+    "draft": "J",
+    "cards": [
+      "007"
+    ],
+    "actor": "Mitch posts after F"
+  },
+  {
+    "id": "D12",
+    "title": "cred-tf #39 — Scott's four work items as records + Flock (before the 8 Sept Berkeley call)",
+    "where": "https://github.com/trustoverip/dtgwg-cred-tf/discussions/39",
+    "what": "K gives 008 / 001-alias / 020 / 006-route their ids and puts the hash-side X3 relief on the table; send Scott the record renders as well.",
+    "status": "drafted",
+    "draft": "K",
+    "cards": [
+      "001",
+      "006",
+      "008",
+      "020"
+    ],
+    "actor": "Mitch posts before 09-08"
+  },
+  {
+    "id": "D13",
+    "title": "zkp-tf #17 — SIROS manifest v1 facts; as-signed proving-system entry; pilot entry named",
+    "where": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/17",
+    "what": "L names the fourteen entries, seats the catalog as substrate, and makes the pilot concrete with longfellow-libzk-v1_8_1_4259_2945; ends with the reproduction-field question for the SIROS team.",
+    "status": "drafted",
+    "draft": "L",
+    "cards": [],
+    "actor": "Mitch posts"
+  },
+  {
+    "id": "D14",
+    "title": "zkp-tf #14 — three repositories, one rule; the ZK Book edition (after H)",
+    "where": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/14",
+    "what": "M lays out the TF / spec / evidence relationship, the path a claim takes, what crosses (records, fixtures, row ids) and what never does (dependency), and why the evidence repository keeps the specification as the ZK Book with the working shown. — FOLDED INTO R (2026-09-07): the three-repository map and the book edition are a section of the consolidated anchor. Post M separately only if #14 needs its own reply after R lands.",
+    "status": "folded",
+    "draft": "M",
+    "cards": [],
+    "actor": "Mitch posts after H"
+  },
+  {
+    "id": "D15",
+    "title": "cred-spec (new discussion) — an agents-only VTC on OpenVTC: the mages.city twin and five vocabulary questions",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/discussions",
+    "what": "A standing update, not a reply: the agents-only community policy on the unmodified VTI, the gate mapped onto VIC/VMC/VEC/VRC/VWC, two candidate task families (names, exchange), the provenance record from the Community Security Agent, the City Key as the proof carrier, three zones, five questions. Honest envelope: local twin only.",
+    "status": "drafted",
+    "draft": "Q",
+    "cards": [],
+    "actor": "Mitch posts"
+  },
+  {
+    "id": "D16",
+    "title": "cred-spec #38 — blinded binders: the cross-TF coordination ask lands on card 008",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/issues/38",
+    "what": "geoffturk filed it 09-05; its third tracked item is coordination with the ZKP TF's Q2. Card 008 is that work; the reply names the three things WD03 must decide (entropy, salt inside the hashed block, one encoding) and the plaintext-beside-commitment lint.",
+    "status": "drafted",
+    "draft": "N",
+    "cards": [
+      "008"
+    ],
+    "actor": "Mitch posts"
+  },
+  {
+    "id": "D17",
+    "title": "cred-spec PR #19 merged (VDC) — card 020 issuance clause can cite a merged credential type",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/pull/19",
+    "what": "The verifiable delegation credential merged 2026-09-06 with acceptance required and a directed delegator identifier. Card 020 was carded against the PR; its issuance and provenance lines should be re-read against the merged text before the spec PR opens.",
+    "status": "open",
+    "cards": [
+      "020"
+    ],
+    "actor": "Mitch reads the merged text, then re-cards 020 if it moved"
+  }
+]

@@ -91,6 +91,8 @@ export const SOURCES = [
   { path: 'explorations/X7-mediated-proving-profile.md', slug: 'x7-mediated-proving-profile', section: 'explorations', title: 'X7 — Mediated Proving Profile' },
   { path: 'explorations/X8-multi-issuer-aggregation.md', slug: 'x8-multi-issuer-aggregation', section: 'explorations', title: 'X8 — Multi-Issuer Aggregation' },
   { path: 'explorations/X9-guardian-recovery.md', slug: 'x9-guardian-recovery', section: 'explorations', title: 'X9 — Guardian Recovery' },
+  { path: 'explorations/X10-ceremony-as-trust-task.md', slug: 'x10-ceremony-as-trust-task', section: 'explorations', title: 'X10 — Ceremony as Trust Task' },
+  { path: 'explorations/X11-field-guide-deployment.md', slug: 'x11-field-guide-deployment', section: 'explorations', title: 'X11 — The Field Guide Deployment' },
 
   // -- lab (workbench evidence layer) ----------------------------------------
   { path: '../dtgwg-zkp-tf-mage/runtimes/README.md', slug: 'lab-runtimes', section: 'lab', title: 'Lab — Runtimes' },

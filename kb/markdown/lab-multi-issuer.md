@@ -3,7 +3,7 @@ title: "Lab — multi-issuer"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/multi-issuer/NOTES.md"
 built_from_commitish: "working-tree"
-order: 69
+order: 71
 ---
 # multi-issuer — X8 M3 reference model
 

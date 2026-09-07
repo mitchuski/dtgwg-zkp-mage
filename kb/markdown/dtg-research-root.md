@@ -27,8 +27,9 @@ knowledge-base projection. Same content also ships as FedWiki page JSON in `kb/f
 
 ## The lab — `runtimes/`
 
-17 suites, 170 properties, all green. 14 suites are **zero-dependency** (Node stdlib + Python stdlib) —
-clone and run, nothing to install:
+18 suites, 178 properties, all green. 14 suites are **zero-dependency** (Node stdlib + Python stdlib) —
+clone and run, nothing to install (`ceremony-orchestrator` is zero-dep too, but verifies the circuit
+build, so it runs after the circom setups):
 
 ```sh
 cd runtimes/canonical      && node test.mjs   # §6.2 descriptor + §15.2 transcript encodings, 11/11
@@ -44,6 +45,26 @@ cd runtimes/consumer-py    && python test.py  # second-language consumer: 29/29 
 | Presentation | `context-card` · `show-composition` · `quiet-presentation` | context legibility; atomic bundle shows; observer leakage budget |
 | Lifecycle | `rotation` · `guardian-recovery` · `erosion-record` · `multi-issuer` · `mediator` · `witness-seat` | key rotation w/o re-enrolment; t-of-n guardian recovery; assurance horizons; issuer independence collapse; mediated proving tiers; VWC witness seat |
 | Circuits | `circom-gadget` (needs `npm install` + `node setup.mjs`) | **real Groth16**: nullifier+membership+transcript-binding 11,523 constraints / ~680 ms prove / 721 B proof; dual-issuer k=2 (10,717); guardian t=3 (16,078). Lab-only trusted setup — stated, not hidden. **Full answer + run transcript: `./CIRCUITS.md`** |
+| Verification (X10 lane 1) | `ceremony-orchestrator` | seat-gated volunteer flow: rebuild → suites → digest report → acceptance vs the pinned manifest; lane-3 ceremony endpoint structurally unconstructable (`phase2-gate-closed`); lifetime-view secret scan ready for lane 2 |
+
+## The verification registry
+
+Independent runs of the three circuits are logged publicly on this repo's **GitHub Pages registry**
+(`registry/` — prebuilt, deterministic, deployed by `.github/workflows/pages.yml`). File your own run
+with the `.github/ISSUE_TEMPLATE/verification-run.yml` — the
+orchestrator prints the submission body for you:
+
+```sh
+cd runtimes/ceremony-orchestrator && node orchestrate.mjs <your-seat-id>
+```
+
+Acceptance is decided by `runtimes/circom-gadget/verify-run.mjs` against `artifacts.manifest.json`:
+the **compiled circuit** (r1cs / wasm / constraint counts) must match byte-exact; the **setup chain**
+(ptau / zkeys / vkey) is machine-local — snarkjs mixes its own randomness into every contribution
+regardless of the fixed entropy string (established empirically 2026-08-11) — so those digests are
+recorded as advisory and your own green suites carry the proving-system claim. The wider frame
+(ceremony-as-trust-task, the three lanes, why phase-2 is gated behind §25) is
+[X10 — Ceremony as Trust Task](x10-ceremony-as-trust-task.md).
 
 ## The decision layer
 
@@ -52,10 +73,10 @@ cd runtimes/consumer-py    && python test.py  # second-language consumer: 29/29 
   register with paired assurance/disclosure boundaries, context as governed linkability domain,
   nullifier = scoped reuse detection *not* "one unique human", construction-selection gate.
 - [Explorations Index](explorations.md) — O-series (charter register), VWC witness seat, and
-  X1–X9 (conformance fixtures, context legibility, show composition, observable-event minimisation,
+  X1–X10 (conformance fixtures, context legibility, show composition, observable-event minimisation,
   recovery/rotation, assurance horizons, mediated proving, multi-issuer aggregation, guardian
-  recovery) — every §-anchor of the decision doc has an exploration, and every exploration that
-  matured has a runnable suite in `runtimes/`.
+  recovery, ceremony-as-trust-task) — every §-anchor of the decision doc has an exploration, and
+  every exploration that matured has a runnable suite in `runtimes/`.
 - [Workflow — Workbench and Research Root](workflow.md) — how this repo relates to the upstream task force: draw-from ·
   promote · upstream · integrate. Only the TF process talks to upstream.
 

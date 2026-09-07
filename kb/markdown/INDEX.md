@@ -4,7 +4,7 @@
 
 - [DTG Research Root](./dtg-research-root.md) — Working lab + explorations for the ToIP DTG ZKP Task Force
 - [Workflow — Workbench and Research Root](./workflow.md) — 2026-07-17. The two roots are related, not separated: one is the workbench for direct working-group
-- [Integration Map](./integration-map.md) — 2026-07-16, status refreshed 2026-07-17. Mage layer. The display-surface rows (master, skills,
+- [Integration Map](./integration-map.md) — 2026-08-12 dream-loop refresh: the ZK-mage arc (X10 ceremony-as-trust-task + the live verification
 - [Briefing 2026-07-18 — ZKP Explorations](./briefing-2026-07-18-zkp-explorations.md) — Since the Credentials Core Specification (WD v1.0) and the Predicate & Assurance-Boundary Decision
 
 ## Decision — Predicate & Assurance-Boundary Decision Document (split per §)
@@ -67,6 +67,8 @@
 - [X7 — Mediated Proving Profile](./x7-mediated-proving-profile.md) — §21 permits mediated proving only as an explicit, separately assessed path: "A profile MAY support
 - [X8 — Multi-Issuer Aggregation](./x8-multi-issuer-aggregation.md) — §12.5 records, non-normatively, that when a show combines attestations from multiple issuers, "a
 - [X9 — Guardian Recovery](./x9-guardian-recovery.md) — X5 named it pattern 3 and deferred it; the rotation build (10/10) deferred it again — "needs its own
+- [X10 — Ceremony as Trust Task](./x10-ceremony-as-trust-task.md) — Raised on the 2026-08-11 call companion's tail: "would it make sense to host a site that allows our
+- [X11 — The Field Guide Deployment](./x11-field-guide-deployment.md) — Runtime 07 has been a reference model with no consumer. A production AR client needed exactly its
 
 ## Lab — workbench runtime evidence (NOTES)
 

@@ -3,7 +3,7 @@ title: "Chronicle 2026-07-18 — The First Circuit"
 section: "chronicles"
 source: "../agentprivacy_master/docs/chronicles/2026-07-18_the-first-circuit.md"
 built_from_commitish: "working-tree"
-order: 75
+order: 77
 ---
 # 2026-07-18 · The First Circuit
 

@@ -84,6 +84,19 @@ baseline itself** opens: each doc develops a §-anchor the baseline rules but do
 | [X8 — Multi-Issuer Aggregation](x8-multi-issuer-aggregation.md) | §12.5 · §29 · §2.4 | 🟠 | 🟢 reference ([Lab — multi-issuer](lab-multi-issuer.md) 10/10) | ∏ε_i as a theorem with assumptions explicit; the independence register makes A2 checkable; k IS the disclosure (governed k-tiers); honest about PR-PER vs PR-LIV |
 | [X9 — Guardian Recovery](x9-guardian-recovery.md) | §29 social leg · §13.4 · §22.2 | 🟠 | 🟢 reference ([Lab — guardian-recovery](lab-guardian-recovery.md) 12/12) | X5's deferred pattern 3: recovery-witness credential (VWC-shaped, own shape — threshold ≠ witness), expiring guardianship answers §22.2, personhood-gated guardians kill the Sybil-self-guardian attack, trust graph = guardian candidate set |
 
+**Fourth wave (2026-08-11)** — operations, not spec: the CIRCUITS.md production-ceremony caveat made actionable:
+
+| Doc | Decision-doc anchor | Leverage | Ladder | One line |
+|---|---|---|---|---|
+| [X10 — Ceremony as Trust Task](x10-ceremony-as-trust-task.md) | §15 · §19 · §25 · §7.3 | 🟠 | 📝 design doc | agents orchestrate entropy, never *are* the entropy (never-sees-the-secret guard inherited from the witness seat); three lanes — verification-transcript registry now, phase-1 powers-of-tau low-regret, phase-2 GATED behind §25; seat gating = governance, nullifier dedup advisory-only (the recursion labelled) |
+
+**Fifth wave (2026-08-15)** — the deployment bridge: the TF work reaching *out* into a shipping product
+(the reverse direction from X6):
+
+| Doc | Decision-doc anchor | Leverage | Ladder | One line |
+|---|---|---|---|---|
+| [X11 — The Field Guide Deployment](x11-field-guide-deployment.md) | rt 07 (all of it) · rt 01 (by absence) · X1 §7 · X6 §6 · X4 §5 | 🟢 | 🟢 reference (`field_guide_privacymage/runtimes/`: lab-bridge 10/10 importing rt 07 + rt 01 directly · meet-overlay 54/54 · fixtures 8/8 · consumer-py 15/15) | runtime 07's first external consumer — a walking AR game (Hitchhikers Field Guide / OASIS): six gates survive the phone-to-phone substrate change, the street adds exactly four asserted gates, and the deployment found the hole — rt 07 gates every edge on personhood, modelling only the community-anchored construction; the conformant *pairwise* case had never been exercised |
+
 Cross-links worth knowing: X1 is the format every other doc's fixtures inherit; X4's uniform-error rule
 is in deliberate tension with X1's reason register (resolved by splitting internal vocabulary from the
 external surface); X5 completes O2's open question; X6 is the research bridge to the PVM corpus

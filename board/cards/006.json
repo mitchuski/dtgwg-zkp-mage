@@ -1,0 +1,116 @@
+{
+  "id": "006",
+  "name": "Non-revocation against a status root",
+  "kind": "primitive",
+  "state": "carded",
+  "priority": "P1",
+  "owner": "mitchuski",
+  "request": {
+    "issue": "zkp-tf #18",
+    "by": "stormer78 (ADR-001 C1–C4)",
+    "need": "a proof must not verify if any credential it relies on is revoked, and checking must not identify the holder"
+  },
+  "dish": "A verifier learns that the credential's nullifier is not in the revocation set at the stated registry state, without the registry learning who asked.",
+  "ingredients": [
+    "the credential's revocation handle (scoped, never the static PHC attribute)",
+    "non-membership witness against rl_root"
+  ],
+  "pantry": [
+    "rl_root — revocation/status root at a stated epoch",
+    "epoch"
+  ],
+  "method": [
+    {
+      "clause": "non-membership of the handle in the set committed by rl_root (sorted-leaf neighbours or accumulator non-witness)",
+      "gadget": "non-revocation",
+      "runtime": ""
+    }
+  ],
+  "yield": [
+    "rl_root",
+    "epoch"
+  ],
+  "doesNotEstablish": [
+    "that revocation is instantaneous — only that the handle was not revoked as of `epoch` (C4's published bound)",
+    "that the registry's revocation decision was correct",
+    "that the verifier performed no live lookup — the card makes the presentation self-carrying (root + witness); whether a deployment still phones home is a profile statement, not a proof property"
+  ],
+  "adversary": [
+    {
+      "claim": "the status check does not identify the holder — requires bulk/anonymous root fetch, never a per-holder query",
+      "against": [
+        "registry-operator",
+        "issuer-verifier-colluding"
+      ]
+    }
+  ],
+  "horizon": [
+    "status freshness (C4 bound)",
+    "epoch rollover"
+  ],
+  "tasting": {
+    "families": [
+      "accepts",
+      "rejects-unsat",
+      "current"
+    ],
+    "rejectionCodes": [
+      "rl-root-stale",
+      "handle-revoked"
+    ]
+  },
+  "substitutions": [
+    {
+      "route": "sorted-leaf non-membership Merkle (indexed tree)",
+      "cost": "≈ 2× card 001",
+      "measured": false,
+      "source": "explorations/O4-registry-zk-revocation.md"
+    },
+    {
+      "route": "RL membership check inside f with nullifier as PHC attribute (paper §5.4) — carries the paper's own linkability caveat",
+      "cost": "depends on RL representation",
+      "measured": false,
+      "source": "ePrint 2026/333 §5.4"
+    },
+    {
+      "route": "set-root primitive (cred-tf #40 unification): a signed, published set root + a membership or non-membership proof carried in the presentation — accumulator non-membership witness as the ZK-friendly form; the same public-input object serves anchoring (card 001), revocation status (this card) and registry membership",
+      "cost": "unmeasured — ScottJeezey: \"ours to pressure-test\", priority",
+      "measured": false,
+      "source": "cred-tf #40 (stormer78 08-22; ScottJeezey 08-24) · cred-tf #39 (ScottJeezey 08-25)"
+    },
+    {
+      "route": "Flock-class prover over an indexed (sorted-leaf) non-membership tree built with the registry’s existing standard hash — the set-root primitive without a hash migration",
+      "cost": "unmeasured — conjecture ≈ 2× the standard-hash membership path",
+      "measured": false,
+      "source": "board/stacks/flock.json · cred-tf #40 (set-root primitive)"
+    }
+  ],
+  "issuance": [
+    "registry publishes rl_root per epoch, fetchable without identifying the fetcher (X4)"
+  ],
+  "provenance": {
+    "spec": [
+      "ADR-001 C1–C4, T2",
+      "explorations/O4",
+      "explorations/X4",
+      "explorations/X6",
+      "cred-tf #40 / #39: set-root-plus-proof as one primitive; \"no live lookups\" as the privacy-profile default (profile default, not absolute — Sankarshan)"
+    ]
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board",
+      "task": "board/request"
+    },
+    {
+      "to": "carded",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "O4 + X6 explorations; ADR-001 C-clauses",
+      "task": "board/card"
+    }
+  ]
+}

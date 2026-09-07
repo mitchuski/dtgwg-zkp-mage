@@ -1,0 +1,53 @@
+{
+  "id": "siros-longfellow",
+  "name": "SIROS circuit catalog — Longfellow libzk v1 (mDL / EUDI PID, as signed)",
+  "kind": "as-signed-catalog",
+  "maintainer": "SIROS Foundation (catalog); Google (Longfellow libzk)",
+  "frontend": "prebuilt circuits for ISO 18013-5 mDL and EUDI PID presentations over ECDSA-signed documents",
+  "proofSystem": "Longfellow libzk v1 (Google) — ZK over existing ECDSA/mdoc rails; also catalogued: Microsoft vega-prover fork (zk-cred-vega, P-256 mDL prover/verifier keys)",
+  "field": "as required by the signed document's curve (P-256)",
+  "setup": "per artifact — the catalog pins downloaded artifacts by sha256, not builds",
+  "postQuantum": "no (ECDSA rails)",
+  "credentialModel": "as-signed: proves statements over credentials exactly as issuers already issue them — no issuer change, no commitment choice; this is substrate for the legacy-rails route, not a DTG construction route",
+  "platforms": [
+    "as published per artifact"
+  ],
+  "verifier": [
+    "per system"
+  ],
+  "license": "BSD-2-Clause (catalog repo); per-entry `source.license` field",
+  "iprNote": "citable; artifacts stay in the catalog, the book cites entry ids",
+  "audit": {
+    "claim": "'Every circuit here is experimental and unvetted'",
+    "reviewedCommit": null,
+    "fileSet": null,
+    "source": "circuits.siros.org"
+  },
+  "maturity": "experimental catalog — 14 entries (manifest v1, 2026-09-05): 10 Longfellow libzk v1 (systemVersion 6/7/8, 1–4 attributes, ~300 KB each) + 4 vega-mc P-256 keys (r11 deprecated, r12 active, 135–157 MB)",
+  "independentImplementations": 0,
+  "provenance": {
+    "repo": "https://github.com/sirosfoundation/go-zk-circuits",
+    "manifest": "https://api.circuits.siros.org/v1/manifest.json",
+    "version": "manifestVersion 1",
+    "contentAddressed": true,
+    "entrySchema": "id · aliases · system · systemVersion · docTypes · published · status · params · artifact{url, sha256, size, zstd, uncompressed} · source{origin, toolchain, license, openSource} · publishedAt · notes"
+  },
+  "benchmarks": [],
+  "covers": {
+    "set-membership": "no (not a DTG statement)",
+    "nullifier": "no",
+    "transcript-bind": "challenge binding per system",
+    "key-binding": "device binding per mdoc",
+    "distinctness": "no",
+    "signature-verify": "yes — ECDSA over the signed document (the whole point)",
+    "non-revocation": "per system",
+    "range": "attribute predicates (age) — yes",
+    "commitment-open": "no",
+    "chain-resolve": "no"
+  },
+  "notes": [
+    "Legacy rails: prove over what was already signed. The DTG constructions assume issuers who can choose commitments; the two classes must stay visibly apart in any comparison.",
+    "The catalog records provenance (content-addressed bytes, origin commit, toolchain, licence) and declines to claim correctness; the registry records independent reproduction — complementary halves (zkp-tf #17, 2026-08-25). Pilot: run one entry (`longfellow-libzk-v1_8_1_4259_2945`) through the acceptance flow."
+  ],
+  "verified": "2026-09-05 — api.circuits.siros.org/v1/manifest.json, go-zk-circuits README"
+}

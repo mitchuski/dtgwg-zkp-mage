@@ -3,7 +3,7 @@ title: "Lab — fixtures"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/fixtures/NOTES.md"
 built_from_commitish: "working-tree"
-order: 66
+order: 68
 ---
 # Conformance fixtures — X1 as a runnable reference
 

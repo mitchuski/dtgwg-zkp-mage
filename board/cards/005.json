@@ -1,0 +1,110 @@
+{
+  "id": "005",
+  "name": "Distinct member / distinct issuer",
+  "kind": "primitive",
+  "state": "constructed",
+  "priority": "P1",
+  "owner": "mitchuski",
+  "request": {
+    "issue": "zkp-tf #18",
+    "by": "mitchuski",
+    "need": "ADR-001 needs an S6: the voucher is not the holder; multi-issuer needs k distinct accredited issuers"
+  },
+  "dish": "A verifier learns that two credentials in one proof come from two distinct members (or issuers), with the duplicate case unsatisfiable rather than merely rejected.",
+  "ingredients": [
+    "two credential leaves/secrets and their paths"
+  ],
+  "pantry": [
+    "root(s)",
+    "the two nullifiers or issuer ids as constrained public signals"
+  ],
+  "method": [
+    {
+      "clause": "leaf_a ≠ leaf_b (or issuer_a ≠ issuer_b) enforced as a non-zero inverse constraint — no witness exists for equality",
+      "gadget": "distinctness",
+      "runtime": "runtimes/circom-gadget/circuits/dual_issuer.circom"
+    }
+  ],
+  "yield": [
+    "that the two are distinct — nothing about which two"
+  ],
+  "doesNotEstablish": [
+    "that the two parties are independent in the accreditation sense (declared, not proven — X8)",
+    "that either is honest"
+  ],
+  "adversary": [
+    {
+      "claim": "identities of both hidden",
+      "against": [
+        "verifier",
+        "verifiers-colluding"
+      ]
+    }
+  ],
+  "horizon": [
+    "root cryptoperiod"
+  ],
+  "tasting": {
+    "families": [
+      "accepts",
+      "rejects-unsat"
+    ],
+    "vectors": "runtimes/fixtures/vectors",
+    "rejectionCodes": [
+      "duplicate-issuer-unsatisfiable",
+      "duplicate-seat-unsatisfiable"
+    ]
+  },
+  "substitutions": [
+    {
+      "route": "dual_issuer k=2 (lab)",
+      "cost": "10,717 constraints (--O2) · ~740 ms · ~8 ms · 725 B",
+      "measured": true,
+      "source": "CIRCUITS.md"
+    },
+    {
+      "route": "guardian_threshold t=3 (lab)",
+      "cost": "16,078 constraints · ~830 ms · ~10 ms",
+      "measured": true,
+      "source": "CIRCUITS.md"
+    },
+    {
+      "route": "f_distinct over context pseudonyms (paper §5.3)",
+      "cost": "predicate inside the commit-and-prove SNARK",
+      "measured": false,
+      "source": "ePrint 2026/333 §5.3"
+    }
+  ],
+  "issuance": [],
+  "provenance": {
+    "spec": [
+      "X8 multi-issuer aggregation",
+      "ePrint 2026/333 §5.3 f_distinct"
+    ],
+    "registry": "0002–0006",
+    "commit": "github.com/mitchuski/dtgwg-zkp-mage"
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board",
+      "task": "board/request"
+    },
+    {
+      "to": "carded",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "X8 + dual_issuer design",
+      "task": "board/card"
+    },
+    {
+      "to": "constructed",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "dual_issuer 7/7, guardian 8/8; duplicate = no witness",
+      "task": "board/construct"
+    }
+  ]
+}

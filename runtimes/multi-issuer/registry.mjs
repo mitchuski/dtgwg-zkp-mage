@@ -35,6 +35,23 @@ export const DOMAIN_REGISTRY = 'dtg-zkp/issuer-registry/v0';
 //   dependencyClasses     declared correlated-failure classes, e.g.
 //                         'vendor:X' | 'pipeline:Y' | 'parent:Z' |
 //                         'jurisdiction:J' | 'enrolment-infra:W'
+//
+// Biometric axis (upstream discussion #12, refinement 2; v0.4 names shared
+// models/vendors on the requirements side): legally separate issuers may share
+// the biometric model, the capture/matching vendor, or enrolment data — each a
+// correlated-failure mode the legal structure hides. First-class prefixes:
+//   'model:M'           same biometric model or model family
+//   'vendor:V'          same capture/matching vendor stack
+//   'enrolment-data:D'  shared or overlapping enrolment/training data
+// Granularity (model family vs version vs training corpus) is the deploying
+// authority's declaration — the register records it, the collapse rule does
+// the rest: sharing ANY class ⇒ one component, group ε = max (weaken-only).
+export const BIOMETRIC_DEPENDENCY_CLASSES = Object.freeze([
+  'model',
+  'vendor',
+  'enrolment-data',
+]);
+
 const MEMBER_FIELDS = [
   'id',
   'epsilon',

@@ -1,0 +1,299 @@
+{
+  "id": "ADR-001",
+  "kind": "architecture-decision-record",
+  "title": "Community-Anchored Proof",
+  "subtitle": "Choosing the first zero-knowledge use case to implement against DTG credentials — and what any implementation of it must satisfy.",
+  "author": "Glenn Gore (stormer78), First Person Project",
+  "status": "Proposed",
+  "date": "2026-08-25",
+  "audience": "Four working groups: DTG Credentials · ZKP · Trust Registry · Governance",
+  "source": {
+    "url": "https://docs.fpp.storm.ws/ (ADR-001)",
+    "archived": "~/BGIN_IKP/zkp-dtg-bridge/dtg-community-anchored-proof-adr_archived-2026-08-27.html (local archive, 2026-08-27)",
+    "named": "zkp-tf #18 — ScottJeezey 2026-08-27: 'a natural first one to seed it with'",
+    "note": "Clause texts below are close paraphrases for crosswalk purposes; the record of authority is Glenn's document. The ADR is deliberately format-agnostic and 'does not choose how to build it' — the construction record is the how."
+  },
+  "decision": "The first zero-knowledge proof implemented against DTG credentials is the Community-Anchored Proof the Credentials Core Specification already describes: a relationship exists inside a shared community, without revealing who is in it.",
+  "whyThisOne": [
+    "small enough to build, specific enough that succeeding proves something real",
+    "already described in the specification — implementing it is conformance, not invention",
+    "cannot be quietly satisfied by disclosing fewer fields: clause 3 is a statement about someone else's credential"
+  ],
+  "statement": "A member of community C has a working relationship with me, and I am also a member of community C.",
+  "mustProve": [
+    {
+      "n": 1,
+      "text": "the holder possesses a valid relationship credential"
+    },
+    {
+      "n": 2,
+      "text": "the holder possesses a valid membership credential from community C"
+    },
+    {
+      "n": 3,
+      "text": "the party who issued that relationship credential also holds a valid membership credential from the same community C — 'the hard one': a statement about someone else's credential, proven without the other party online, asked, or aware"
+    }
+  ],
+  "recipe": "010",
+  "clauses": [
+    {
+      "id": "P1",
+      "group": "privacy",
+      "text": "reveals no relationship identifier from the relationship credential",
+      "boundTo": "010 adversary (verifier · verifiers-colluding)",
+      "status": "covered"
+    },
+    {
+      "id": "P2",
+      "group": "privacy",
+      "text": "reveals no identifier of the counterparty who issued it",
+      "boundTo": "010 adversary",
+      "status": "covered"
+    },
+    {
+      "id": "P3",
+      "group": "privacy",
+      "text": "reveals no identifier of the holder beyond attributes the holder deliberately discloses",
+      "boundTo": "010 yield (deliberate disclosure line)",
+      "status": "covered"
+    },
+    {
+      "id": "P4",
+      "group": "privacy",
+      "text": "two proofs from the same credentials cannot be linked — by one verifier or by verifiers comparing notes",
+      "boundTo": "010 method (nullifier clause, parameterised) · adversary (verifiers-colluding)",
+      "status": "refined",
+      "refinement": "full show-unlinkability cannot coexist with reuse detection in the same context (ePrint 2026/333 §5.3); parameterise by context: unlinkable across contexts, the declared nullifier the only link within a reuse-detecting one"
+    },
+    {
+      "id": "P5",
+      "group": "privacy",
+      "text": "a verifier learns the outcome and deliberately disclosed attributes, nothing further",
+      "boundTo": "010 yield",
+      "status": "covered"
+    },
+    {
+      "id": "S1",
+      "group": "soundness",
+      "text": "a party lacking the required credentials cannot produce a verifying proof",
+      "boundTo": "010 method 1–3 · conformance fixtures rejects-unsat / rejects-verify",
+      "status": "covered"
+    },
+    {
+      "id": "S2",
+      "group": "soundness",
+      "text": "clause 3 cannot be satisfied unless the counterparty genuinely holds a membership credential from the same community",
+      "boundTo": "010 method (set-membership on the voucher's grant leaf, card 001)",
+      "status": "refined",
+      "refinement": "proves the community-issued grant half only (cred-spec PR #12 pair; PR #26 carve-out) — the acknowledgement is not in the presenter's hands"
+    },
+    {
+      "id": "S3",
+      "group": "soundness",
+      "text": "the counterparty need not be online, consulted, or aware",
+      "boundTo": "010 witness (proven from root_C, not from the voucher)",
+      "status": "refined",
+      "refinement": "under WD02 pairwise identifiers the voucher's linkage (VRC-side ↔ VMC-side identifier) must have been supplied at issuance or avoided by one directed identifier — card 007 / HR-2; otherwise clause 3 is unprovable offline"
+    },
+    {
+      "id": "S4",
+      "group": "soundness",
+      "text": "the presenter proves they are the subject of the credentials, not merely a holder of copies",
+      "boundTo": "010 method (key-binding, card 004)",
+      "status": "covered"
+    },
+    {
+      "id": "S5",
+      "group": "soundness",
+      "text": "bound to a verifier challenge; not replayable to another verifier or time",
+      "boundTo": "010 method (transcript-bind, card 003) · public inputs transcriptDigest",
+      "status": "covered"
+    },
+    {
+      "id": "S6",
+      "group": "soundness",
+      "text": "(added by the ZKP TF) the voucher is not the holder — a self-vouch is unsatisfiable",
+      "boundTo": "010 method (distinctness, card 005)",
+      "status": "added",
+      "refinement": "without it a member with two identifiers vouches for themselves and clauses 1–3 verify"
+    },
+    {
+      "id": "S7",
+      "group": "soundness",
+      "text": "(added, WD02) the identifiers a party used in the VRC and in their VMC are controlled by one secret",
+      "boundTo": "010 method (key-binding, card 007)",
+      "status": "added",
+      "refinement": "cred-spec PR #30 §Community-Anchored: 'the proof must additionally establish common control'"
+    },
+    {
+      "id": "C1",
+      "group": "currency",
+      "text": "does not verify if any relied-on credential is revoked or suspended",
+      "boundTo": "010 method (non-revocation, card 006)",
+      "status": "covered"
+    },
+    {
+      "id": "C2",
+      "group": "currency",
+      "text": "states the registry state it was made against; the verifier judges recency",
+      "boundTo": "010 public inputs (root_C, rl_root, epoch) · yield",
+      "status": "covered"
+    },
+    {
+      "id": "C3",
+      "group": "currency",
+      "text": "establishing currency must not itself identify the holder",
+      "boundTo": "010 adversary (registry-operator · issuer-verifier-colluding)",
+      "status": "covered",
+      "refinement": "holds only if roots are fetched without a per-holder query — stated as the condition"
+    },
+    {
+      "id": "C4",
+      "group": "currency",
+      "text": "the delay between a change and proofs reflecting it is bounded and published",
+      "boundTo": "010 horizon (status freshness, C4 bound)",
+      "status": "open",
+      "refinement": "the bound is a registry/governance publication, not a proof property — construction carries it as a horizon input"
+    },
+    {
+      "id": "T1",
+      "group": "registry",
+      "text": "a verifier confirms the community is one it recognises without learning which member",
+      "boundTo": "010 public inputs (root_C at a stated registry state)",
+      "status": "covered"
+    },
+    {
+      "id": "T2",
+      "group": "registry",
+      "text": "whatever the proof relies on from a registry is independently checkable by a party that did not create it",
+      "boundTo": "006 set-root primitive route · public inputs set roots",
+      "status": "refined",
+      "refinement": "the set-root primitive (cred-tf #40): signed published root + (non-)membership witness carried in the presentation; no live lookup"
+    },
+    {
+      "id": "T3",
+      "group": "registry",
+      "text": "two verifiers checking against the same registry state reach the same verdict",
+      "boundTo": "010 conformance fixtures (current family) · fixtures determinism",
+      "status": "covered"
+    },
+    {
+      "id": "T4",
+      "group": "registry",
+      "text": "a registry's obligations are stated as an interface so any conformant registry can serve these proofs",
+      "boundTo": "— (Trust Registry TF)",
+      "status": "open"
+    },
+    {
+      "id": "D1",
+      "group": "deployment",
+      "text": "proving is feasible on the devices that hold credentials — a phone or an agent — within a stated time and memory budget",
+      "boundTo": "010 substitutions (Groth16 est. ≈35–45k constraints ~2 s; blackbox 0.03 s/vouch) · stacks layer (ProveKit phone numbers)",
+      "status": "partial",
+      "refinement": "budgets not yet stated by the TF; the options layer supplies measured numbers per stack for the gate to set them"
+    },
+    {
+      "id": "D2",
+      "group": "deployment",
+      "text": "verification is cheap enough to run inline",
+      "boundTo": "lab: ~8–10 ms verify (Groth16)",
+      "status": "covered"
+    },
+    {
+      "id": "D3",
+      "group": "deployment",
+      "text": "a proof fits the transports DTG credentials already travel over",
+      "boundTo": "stacks layer: proof size column (721 B Groth16 vs ~716 KB WHIR)",
+      "status": "open",
+      "refinement": "a profile decision; the options table shows both numbers"
+    },
+    {
+      "id": "X1",
+      "group": "conformance",
+      "text": "published test vectors covering proofs that must verify and proofs that must fail",
+      "boundTo": "010 conformance fixtures families · runtimes/fixtures format (accept/reject/lint vectors, rejection-reason register)",
+      "status": "partial",
+      "refinement": "format exists and is consumed cross-language; 010's own vector family not yet cut"
+    },
+    {
+      "id": "X2",
+      "group": "conformance",
+      "text": "an independent implementation can verify another's proofs",
+      "boundTo": "registry (independent reproduction) · consumer-py (zero-shared-code consumer)",
+      "status": "partial",
+      "refinement": "reproduced for cards 001/002/003/005; 010 composition not yet built"
+    },
+    {
+      "id": "X3",
+      "group": "conformance",
+      "text": "any requirement on how credentials are issued is stated explicitly and early",
+      "boundTo": "010 issuance (ZK-friendly signature or published commitment; issuer linkage MAY) · cred-spec #17",
+      "status": "covered"
+    },
+    {
+      "id": "G1",
+      "group": "governance",
+      "text": "a community declares whether private presentation is required, default, or optional",
+      "boundTo": "— (Governance; cred-spec §Governance Considerations)",
+      "status": "open"
+    },
+    {
+      "id": "G2",
+      "group": "governance",
+      "text": "the assurance a proof carries is traceable to the governance of the issuing community",
+      "boundTo": "010 yield (assurance class via C's governance) · doesNotEstablish (admission correctness)",
+      "status": "covered"
+    }
+  ],
+  "acceptanceTests": [
+    {
+      "name": "Accepts",
+      "text": "a valid proof verifies and a written analysis shows the verifier learned the outcome and nothing more",
+      "family": "accepts"
+    },
+    {
+      "name": "Rejects",
+      "text": "with the voucher not a member of C the proof cannot be produced or does not verify — clause 3 does real work",
+      "family": "rejects-unsat / rejects-verify (the construction distinguishes the two)"
+    },
+    {
+      "name": "Unlinkable",
+      "text": "two proofs from the same credentials given to two verifiers who compare cannot be linked",
+      "family": "unlinkable"
+    },
+    {
+      "name": "Current",
+      "text": "after the voucher's membership is revoked a proof relying on it stops verifying within the published bound",
+      "family": "current"
+    }
+  ],
+  "outOfScope": [
+    "the proof system (format-agnostic)",
+    "the construction — how the three clauses combine into one proof (the construction record's method)",
+    "how a registry publishes what proofs rely on (the set-root primitive is one answer)",
+    "encodings and wire formats",
+    "identity proofing itself",
+    "delegation chains — 'the natural next case' → construction 020"
+  ],
+  "workingGroupAsks": {
+    "DTG Credentials": "confirm the three clauses match the specified Community-Anchored Proof; identify issuance requirements",
+    "ZKP": "choose the construction, build a reference prover and verifier, publish X1/X2 vectors",
+    "Trust Registry": "define what a registry exposes for a proof to rely on; how currency and revocation are expressed",
+    "Governance": "how a community declares private presentation policy; how assurance traces to governance"
+  },
+  "consequencesNamed": [
+    "requirements on issuance reach every issuer — hence X3 early",
+    "registries gain a new obligation; revocation must be rethought so currency checks do not undo privacy",
+    "real cost on holder devices — hence D1",
+    "a harder first milestone by intent"
+  ],
+  "crosswalkSummary": {
+    "covered": 17,
+    "refined": 5,
+    "added": 2,
+    "partial": 3,
+    "open": 4,
+    "total": 31,
+    "note": "counts include S6/S7 (added by the TF); 26 original clauses + 4 acceptance tests + the 3 must-prove clauses are the record's testable content"
+  }
+}

@@ -3,7 +3,7 @@ title: "Lab — witness-seat"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/witness-seat/NOTES.md"
 built_from_commitish: "working-tree"
-order: 73
+order: 75
 ---
 # Witness seat — notes
 

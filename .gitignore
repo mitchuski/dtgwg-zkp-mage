@@ -8,3 +8,10 @@ __pycache__/
 
 # Local scratch
 .scratch/
+
+# Upstream survey snapshots (public GitHub data, bulky, regenerable via board.mjs survey) — WATCH.md digest is tracked
+board/survey/*.json
+
+# Call working directory: pulled ToIP wiki pages (others' content, readable upstream) + private call prep.
+# Reviewed and edited here; shared by posting upstream, not by republishing in this repo.
+calls/

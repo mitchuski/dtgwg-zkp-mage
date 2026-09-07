@@ -3,7 +3,7 @@ title: "Lab — erosion-record"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/erosion-record/NOTES.md"
 built_from_commitish: "working-tree"
-order: 65
+order: 67
 ---
 # erosion-record — X6 assurance horizons and erosion clocks (the PVM reading)
 

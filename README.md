@@ -7,7 +7,23 @@ This is **evidence, not spec**: runnable reference models, real circuits with be
 cross-language interop proofs, and design explorations — each anchored to the task force's
 [Predicate & Assurance-Boundary decision frame](./predicate-assurance-boundary-decision.md) and the
 [DTG Credentials Core Specification](https://trustoverip.github.io/dtgwg-cred-spec/). Spec text goes
-through the upstream repo and TF process; this repo is the bench the proposals were tested on.
+through the upstream repositories and the TF process; this repo is the bench the proposals were tested on.
+
+## Three repositories, one rule — and the ZK Book edition
+
+| repository | holds | what leaves it |
+|---|---|---|
+| [`trustoverip/dtgwg-zkp-tf`](https://github.com/trustoverip/dtgwg-zkp-tf) | requirements (v0.4), drafting rules, discussions, the board thread (#18), `AGENT-RUNTIMES.md` | decisions and requests |
+| [`trustoverip/dtgwg-zkp-spec`](https://github.com/trustoverip/dtgwg-zkp-spec) | the specification as **construction records**, the requests they answer, public-input conventions, proving-system entries, considerations, conformance — and `conformance/`, the validator + CI that check the generated text against the records | the rendered specification; record ids others may `[[xref]]` |
+| this repository | the evidence: runtimes with measured costs, fixtures, the verification registry, the **board** where records are written and advanced, the generator (`board/tools/board.mjs spec`) that renders records into specification text, and the **ZK Book** edition (`zkbook/`) | data — records, fixtures, registry row ids — never a dependency |
+
+The rule: nothing in the specification says more than a record shows; no record says more than a runtime
+measured; no runtime says more than a stranger reproduced. The **ZK Book** (`zkbook/`) is this repository's
+edition of the same records in the same chapters, kept beside what a specification cannot carry — the board
+with each record's state and history, the drafts and the rite that gates them, the watch over upstream
+threads, the run notes and the chronicles. Reading the specification is reading the book with the working
+removed. `node tools/zkbook-export.mjs` writes the specification into a clone of the spec repository in its
+own skeleton; see `zkbook/README.md` and `zkbook/COMMIT-PLAN.md`.
 
 **Task force members, start here:** [`THE-WORK-SO-FAR.md`](./THE-WORK-SO-FAR.md) is the
 4-minute human summary. Point your AI assistant at [`AGENTS.md`](./AGENTS.md) (its

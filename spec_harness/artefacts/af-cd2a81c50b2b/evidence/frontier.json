@@ -1,0 +1,57 @@
+{
+  "authority": "This file is the single source of truth for numbers (GR-1). No metric appears in prose except as a citation of this file. Keystone-only writes.",
+  "updated": "2026-08-18",
+  "objective": {
+    "metric": "words",
+    "gate": "census over the frozen 40-fact list (census.json): every fact probed from the compressed text alone, 40/40 or the round is zero (T5)",
+    "hardConstraint": "the compressed spec remains a self-contained spec draft; status/provenance labels survive in meaning (RESEARCH-ROOT, NOT upstreamed — GR-5); every census fact derivable from the text alone"
+  },
+  "baseline": {
+    "metric": 980,
+    "date": "2026-08-18",
+    "how": "tr -s '[:space:]' '\n' < artifact/SPEC.md | grep -c .  (whitespace-split tokens of the full markdown file)"
+  },
+  "best": {
+    "metric": 863,
+    "leverIds": [
+      "restructure-telegraphic-tables"
+    ],
+    "evidence": "r1.1 VALIDATED 40/40 census (coverage detection 1.0), seed re-derived by prover AND keystone (verify_run RUN VERIFIED after the defect-13 census fix), keystone spot-audit of fragile facts (actsAsSubject:false, five error codes, mage.mesh non-canonisation, NOT-upstreamed labels) all present, word count re-derived 863. Sibling line-edit-pass-1 (940, VALIDATED 40/40) dominated — standing fallback. Scratch: runs/r1/r1.1/p2-restructure-telegraphic-tables/. Folded to artifact/SPEC.md; the lane's original SPEC-DRAFT file is untouched (promotion = the First Person's door)."
+  },
+  "history": [
+    {
+      "metric": 980,
+      "date": "2026-08-18",
+      "lever": null,
+      "note": "baseline — the moving ceiling's start; census frozen at 40 facts"
+    },
+    {
+      "metric": 863,
+      "date": "2026-08-18",
+      "lever": "restructure-telegraphic-tables",
+      "target": "OT-1",
+      "coverage": {
+        "mode": "census",
+        "N": 40,
+        "n": 40,
+        "detection": 1.0
+      },
+      "coverageNote": "VALIDATED_CENSUS: every one of the 40 frozen facts probed and answered from the candidate alone.",
+      "chronicle": "chronicles/2026-08-18_r1_fold_863.md"
+    }
+  ],
+  "openTarget": {
+    "id": "OT-2",
+    "statement": "below 863 words at the full 40/40 census gate — compose a line-edit pass over the folded telegraphic restructure (the field-guide OT-2/OT-3 pattern); the dominated 940 line-edit lever family is the standing fallback",
+    "status": "OPEN"
+  },
+  "closedTargets": [
+    {
+      "id": "OT-1",
+      "statement": "below 980 words at the full 40/40 census gate with the hard constraint intact",
+      "status": "MET",
+      "date": "2026-08-18",
+      "evidence": "best.leverIds — 863, a 117-word beat; the dominated sibling 940 also cleared the census"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+## Security Considerations
+
+This section is informative.
+
+1. **Soundness is a property of a construction, not of this document.** A construction record states clauses; only a runtime realises them, and only an independent reproduction shows that the realisation behaves. A record at state `carded` has not been shown sound by anyone. Readers MUST NOT read a record's presence in this specification as a claim that its construction is secure.
+2. **Reproduction is not audit.** The verification registry establishes that a published source builds bit-identically on independent hardware and that its behavioural fixtures hold there. It does not establish that the circuit is free of under-constrained signals, unchecked booleanity or interface drift between an audited commit and a shipped one. An audit claim in a proving-system entry that names no reviewed commit and file set is printed as "claimed; not located".
+3. **Trusted setup.** Constructions on pairing-based proving systems depend on a setup whose entropy must be destroyed. The reference constructions' setup is a fixed-entropy laboratory setup, unusable in production and marked as such; production deployment requires a ceremony, and the registry treats setup-chain digests as advisory because a real ceremony is machine-local by design.
+4. **Composition.** Two constructions that are individually sound may leak jointly. Composed construction records are required to declare their own disclosure set and negative space rather than inherit the union of their parts, and are bound to one presentation transcript. Implementations MUST NOT present the components of a composed construction as separate proofs and claim the composed record's properties.
+5. **Common control.** Under the Credentials Core Specification's three correlation scopes, two `pairwise` identifiers of one party differ by construction. A construction that reads one party out of two credentials must prove common control of both identifiers (construction 007) or rely on the party having declared one `directed` identifier; a presenter cannot prove a counterparty's common control without the counterparty's witness or attestation. Records that need it say so; implementations that assume it silently are unsound.
+6. **Self-vouching.** A community-anchored proof without a distinctness clause (S6) accepts a member vouching for themselves under two identifiers. The clause is added in construction 010 and is required of any implementation of that record.
+7. **Replay and transcript binding.** Every construction is bound to one canonical transcript digest. A proof presented against a different transcript is a different proof and MUST fail verification.
+8. **Post-quantum horizon.** Pairing-based constructions have no post-quantum path; hash-based proving systems do, at a cost in proof size. Each record's horizon and each proving system's entry state which applies. Suite agility requirements are those of [DTG-ZKP-REQ] §9.9.
+
+## Privacy Considerations
+
+This section is informative. Items 1–6 are written by the editors; the numbered list that follows them is generated from the construction records' adversary and negative-space fields and is regenerated whenever a record changes.
+
+1. **A privacy claim without an adversary is not a claim.** Every privacy property in a construction record names the party it holds against — the verifier, verifiers colluding, issuer and verifier colluding, or the registry operator — and the horizon over which it holds. Properties not named are not claimed.
+2. **Nullifiers are declared links.** A scoped nullifier is emitted only in contexts that declare reuse detection, and within such a context it is the only link between presentations by one holder. Full unlinkability and reuse detection cannot coexist in one context ([PoP-2026] §5.3); records parameterise the choice by context descriptor rather than promising both.
+3. **Registry state fetches.** Establishing that a credential is current must not itself identify the holder. Constructions carry the set root and the (non-)membership witness in the presentation so that no live lookup is needed; a deployment that still fetches state MUST state the correlation surface it thereby opens. "No live lookups" is a profile default, not an absolute.
+4. **Proof size as a correlator.** Proof size, timing and error surface can distinguish constructions and therefore holders. Records list proof size per option; profiles should fix one option per context so that the choice of construction does not itself disclose.
+5. **What the credential layer holds.** A construction can blind only what the credential or framework gives it in committed form. Durable correlators that live in Trust Task artefacts — identifiers, thread identifiers, the task-context pairing — are outside any construction's protection until the framework commits to them (construction 008, [DTG-CRED-TF-39]).
+6. **Intentional correlation is the holder's act.** A proof of common control across identifiers (constructions 007, 012) discloses to the party it is made to and widens no identifier's declared scope. Verifiers MUST NOT infer from such a proof that the identifiers may be correlated elsewhere.
+
+## Governance Considerations
+
+This section is informative.
+
+1. **Which half a membership proof reaches.** A membership is a mutually issued pair; a community-anchored proof establishes the community-issued grant half only. Communities whose governance requires member acknowledgement for a membership to count MUST say so, and verifiers MUST NOT read the grant half as the pair.
+2. **Assurance is traceable to governance.** Whatever assurance a proof carries — personhood, accreditation, an assurance class — is inherited from the governance of the community that issued the membership credentials (ADR-001 G2). A construction record does not establish that a community's admission decision was correct.
+3. **Declared scope and community disclosure.** A member's `pairwise` declaration constrains the member's own disclosure. A community that publishes a directory or presents member-issued credentials widens the exposure of that identifier; the Credentials Core Specification requires a community's governance framework to state its disclosure practice, and constructions over such identifiers inherit that statement.
+4. **Publication of set roots.** A community or registry that publishes membership and revocation roots for proofs to rely on takes on an obligation of currency: the delay between a change and proofs reflecting it MUST be bounded and published (ADR-001 C4). This specification takes the bound as a horizon input and does not set it.
+5. **Recommendations are evidence, not endorsement.** A proving system is RECOMMENDED here only when independent parties have reproduced a construction on it across architectures; the recommendation names the version and drops when the version changes. It is not an endorsement of a vendor.
+
+## Internationalization Considerations
+
+This section is informative.
+
+Construction records, fixture families and rejection codes are identified by ASCII identifiers that are not localised. Human-readable statements in records are written in English and MAY be translated; the machine-readable record is authoritative. Canonical transcripts are encoded under [RFC8785] so that string ordering and Unicode normalisation do not vary by locale; implementations MUST canonicalise before digesting.
+
+## Accessibility Considerations
+
+This section is informative.
+
+The presentation of a zero-knowledge proof imposes a proving-time and memory cost on the holder's device. Construction options record proving time on representative consumer devices, including low-memory devices, so that profiles can be chosen that do not exclude holders with older or constrained hardware. Mediated proving, where a holder delegates proving to an agent, is addressed by the requirements document's agent-mediated profile and by the mediator instrument of the evidence repository; it MUST NOT be the only path available to a holder.

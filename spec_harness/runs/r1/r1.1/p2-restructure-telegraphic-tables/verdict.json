@@ -1,0 +1,10 @@
+{
+  "leverId": "restructure-telegraphic-tables",
+  "status": "VALIDATED",
+  "metric": 863,
+  "gateResult": "40/40",
+  "coverage": { "mode": "census", "N": 40, "detection": 1.0 },
+  "failingCheck": "none",
+  "evidence": "Seed: sha256sum proposal_canon.json => 7175b373710bc8974bfd03fdba0d4ce3723df72cce87b48a9c4f0a4829dfa808 (9318 bytes) == seedHex, reproduces. Gate: census mode, drawIndices 1..40, every question F1..F40 answered from candidate.md alone and graded against census expected text — 40/40 correct (rows Q25-Q29 incl. actsAsSubject:false, all five error codes Q30, all five hardening items Q36-Q40 present). Metric: tr -s '[:space:]' '\\n' < candidate.md | grep -c . => 863; frontier best 980 (frontier.json) => beat by 117 words. Hard constraint: self-contained spec draft with frontmatter; status RESEARCH-ROOT SPEC DRAFT / NOT upstreamed and provenance survive in meaning. T5 product: gate pass x constraint x metric win, no zero factor.",
+  "scratchDir": "C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness/runs/r1/r1.1/p2-restructure-telegraphic-tables"
+}

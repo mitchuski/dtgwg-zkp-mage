@@ -1,0 +1,176 @@
+{
+  "title": "Posting run — the weekend's work, exposed in order",
+  "dates": "prepared 2026-09-07 · for the working group call Tuesday 2026-09-08, 11:00 ET / 15:00 UTC",
+  "lead": "Everything built between 5 and 7 September, in the order it should leave the machine. Each step names what it exposes, where it goes, which draft carries it, and what gates it. Steps are not independent: a later step reads wrong if an earlier one has not happened, and the order below is the only claim this page makes. Nothing here posts itself.",
+  "phases": [
+    {
+      "id": "A",
+      "title": "Before anything leaves the machine",
+      "why": "Two sentences are missing from the draft and both are the author's to write. Neither is hard; both are visible on the rendered title page, which is why they come before the first commit rather than after it.",
+      "steps": [
+        {
+          "n": 1,
+          "act": "Write the relicensing sentence into the specification's appendix",
+          "where": "~/dtgwg-zkp-spec (branch zk-book) · spec/appendix.md",
+          "gate": "author's own words — no tool writes this",
+          "state": "blocked",
+          "why": "The Cryptographic Background is adapted from the author's earlier expository work. The appendix must say so and state the licence under which it enters a ToIP deliverable. It is the sentence a Linux Foundation reviewer looks for first."
+        },
+        {
+          "n": 2,
+          "act": "Confirm the editors line with the chair",
+          "where": "spec/header.md — currently editor: Mitchell Travers; Scott Jones under contributors",
+          "gate": "a reply from the chair",
+          "state": "blocked",
+          "why": "It appears on the rendered title page of a working group deliverable. Cheaper to agree before the commit than to amend after it."
+        },
+        {
+          "n": 3,
+          "act": "Run the checks one last time",
+          "where": "node board/test.mjs · node tools/zkbook-export.mjs --check · cd ~/dtgwg-zkp-spec && npm run render && node conformance/test.mjs",
+          "gate": "all green, or stop",
+          "state": "ready",
+          "why": "The export is byte-stable and the suite is 47/47 as of 2026-09-07. Re-running costs a minute and makes the pull request's first CI run boring, which is what a first CI run should be."
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "title": "The specification repository — the pull request",
+      "why": "This is the single highest-value act of the run. It turns 'a draft is ready' into a link the task force can read, and every post in phase C is easier to write once it exists. Three commits, each readable alone, each carrying the rite footer above its sign-off.",
+      "steps": [
+        {
+          "n": 4,
+          "act": "Commit C1 — front matter and repository description",
+          "where": "specs.json · README.md · spec/header.md · spec/intro.md · spec/terms-and-definitions-intro.md · spec/appendix.md · the two placeholder terms removed",
+          "gate": "push-rite serve → speak → footer, then git commit -s; no AI co-author trailer on upstream commits",
+          "state": "ready-after-A",
+          "why": "Readable alone: what the specification is, how it is produced, that generated sections carry a source digest."
+        },
+        {
+          "n": 5,
+          "act": "Commit C2 — the conformance apparatus and its CI",
+          "where": "conformance/records · requests · stacks · schema · validate.mjs · test.mjs · README.md · .github/workflows/validate-conformance.yml",
+          "gate": "its own rite entry; DCO",
+          "state": "ready-after-A",
+          "why": "A reviewer who trusts nothing else can read this commit and run it. The validator's refusals are register strings; the test fails when generated text is stale."
+        },
+        {
+          "n": 6,
+          "act": "Commit C3 — the body and the generated terms",
+          "where": "spec/body.md · spec/terms-definitions/g-*.md",
+          "gate": "its own rite entry; DCO; the digest stamp must match C2's records",
+          "state": "ready-after-A",
+          "why": "Generated from C2. Reviewers who distrust generated prose read C3 against C2 and run the test rather than taking anyone's word."
+        },
+        {
+          "n": 7,
+          "act": "Push the branch and open the pull request",
+          "where": "trustoverip/dtgwg-zkp-spec — compare main...zk-book",
+          "draft": "P",
+          "gate": "ledger 26 spoken",
+          "state": "ready-after-A",
+          "why": "Body P says what is generated and what is written, how to review each commit, and what the draft does not do: it selects no construction and claims no soundness."
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "title": "Expose the weekend's work — the posts, in order",
+      "why": "Four posts carry the whole weekend. The first is the anchor and the others read as its consequences; posted in any other order they read as four unrelated announcements. The last three are timed to the call: two of them are cross-task-force and land better before Tuesday than after it.",
+      "steps": [
+        {
+          "n": 8,
+          "act": "Post the consolidated anchor — what the draft is, what kind of document it is, who wrote it, and the four review rounds",
+          "where": "trustoverip/dtgwg-zkp-tf — new discussion",
+          "draft": "R",
+          "gate": "ledger 32 spoken",
+          "state": "ready",
+          "why": "One post in place of the two long forms. It opens review round 1 with three questions, and it says plainly that the author co-chairs the task force and that nothing should be adopted because of the seat. Add the pull-request link from step 7 before posting.",
+          "supersedes": "H, M"
+        },
+        {
+          "n": 9,
+          "act": "Post the four work items with their record identifiers, plus Flock",
+          "where": "trustoverip/dtgwg-cred-tf — discussion #39",
+          "draft": "K",
+          "gate": "ledger 28 spoken",
+          "state": "ready",
+          "why": "The chair takes the artifact gap to the paper's authors on Tuesday. His four items each having a record identifier changes what he can ask them. Before the call, not after."
+        },
+        {
+          "n": 10,
+          "act": "Answer the blinded-binder coordination request",
+          "where": "trustoverip/dtgwg-cred-spec — issue #38",
+          "draft": "N",
+          "gate": "ledger 31 spoken",
+          "state": "ready",
+          "why": "Filed 5 September; its third tracked item is coordination with this task force's Q2. That is record 008. It is also an agenda row, and answering beforehand means the row reports rather than promises."
+        },
+        {
+          "n": 11,
+          "act": "Place the seed set as record form",
+          "where": "trustoverip/dtgwg-zkp-tf — discussion #18",
+          "draft": "G",
+          "gate": "ledger 23 spoken",
+          "state": "ready",
+          "why": "The board thread has not seen the twelve records or the four proving systems. Can follow the call rather than precede it — it is a working-list update, not a decision."
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "title": "Prep for the working group call",
+      "why": "The chair drafted Tuesday's agenda on the wiki and left four questions addressed to the co-chair. Answering them in his draft rather than on the call is most of the preparation.",
+      "steps": [
+        {
+          "n": 12,
+          "act": "Send the agenda proposal to the chair",
+          "where": "calls/2026-09-08/AGENDA-PROPOSED.md — his four bracketed questions answered, a nine-row table, a replacement reference list, five decisions and seven action items",
+          "gate": "none — it is a proposal, and the agenda is his",
+          "state": "ready",
+          "why": "Two new rows (where the work lands · blinded binders) and a stated fallback that collapses them into one eight-minute item if the Berkeley conversation runs long."
+        },
+        {
+          "n": 13,
+          "act": "Update the meeting-notes page, if he wants it done directly",
+          "where": "calls/2026-09-08/confluence-update.storage.xml → tools/confluence-page.mjs push",
+          "gate": "CONFLUENCE_EMAIL + CONFLUENCE_API_TOKEN in the shell; CONFLUENCE_EXPECT_VERSION=2",
+          "state": "optional",
+          "why": "The whole body, built by editing the pulled page rather than rewriting it. Three things change someone else's draft — read the directory's README before pushing."
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "title": "Side notes — disclosed, not proposed",
+      "why": "Two projects of the author's own touch this work. Both are named on the record so that neither surfaces later as a surprise, and neither asks for anything to be adopted.",
+      "steps": [
+        {
+          "n": 14,
+          "act": "Disclose the agent-first verifiable trust agent implementation as a testbed",
+          "where": "trustoverip/dtgwg-zkp-tf — a comment on pull request #21, or a short reply under the anchor",
+          "draft": "S",
+          "gate": "ledger 33 spoken",
+          "state": "ready",
+          "why": "Record 020 and the agent-runtimes document describe an agent acting for a member within a scope, and neither has an implementation to fail against. This is an attempt at one, inverted: the agent is the member being admitted rather than an accessory to a human who is really the member. Post last, and after the pull request is open, so it reads as a footnote to the delegation lane rather than as a pitch."
+        },
+        {
+          "n": 15,
+          "act": "The credentials-side long form, if a thread asks for it",
+          "where": "trustoverip/dtgwg-cred-spec — a new discussion",
+          "draft": "Q",
+          "gate": "proverb unserved — serve one at posting time",
+          "state": "held",
+          "why": "The same project read against the credential vocabulary, with five questions about issuance, lapsing roles and what counts as edge evidence. Do not post it in the same week as the side note above; one disclosure at a time."
+        }
+      ]
+    }
+  ],
+  "afterwards": [
+    "F (cred-spec #9, the common-control linkage) and J (cred-spec #31, the merge plan pointer) — both fine after the call.",
+    "L (zkp-tf #17, the SIROS catalog as an as-signed proving-system entry) — pairs with whatever the call decides about construction selection.",
+    "I (cred-spec PR #26 carve-out) is optional; D (the board-item detail thread) waits for a Projects board that does not exist yet.",
+    "Re-read card 020's issuance clauses against the merged delegation credential text (door D17), and measure what the records currently call conjecture: construction 001 over a BLAKE3 tree, construction 007's compile."
+  ]
+}

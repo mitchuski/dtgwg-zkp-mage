@@ -3,7 +3,7 @@ title: "Lab — quiet-presentation"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/quiet-presentation/NOTES.md"
 built_from_commitish: "working-tree"
-order: 70
+order: 72
 ---
 # quiet-presentation — X4 observable-event minimisation as a runnable reference
 

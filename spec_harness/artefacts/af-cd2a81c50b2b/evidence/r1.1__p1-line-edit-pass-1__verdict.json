@@ -1,0 +1,9 @@
+{
+  "leverId": "line-edit-pass-1",
+  "status": "VALIDATED",
+  "metric": 940,
+  "gateResult": "40/40",
+  "coverage": { "mode": "census", "N": 40, "detection": 1.0 },
+  "evidence": "Seed re-derived: sha256sum runs/r1/r1.1/p1-line-edit-pass-1/proposal_canon.json = 353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da (matches Gap seedHex). candidate.md written verbatim from the hashed canon bytes (compressedText, 7033 bytes). CENSUS gate: identity draw F1..F40, every question answered from candidate.md alone; all 40 expected facts present in meaning (incl. all five understanding/* table rows with actsAsSubject:false, all five error codes, all five hardening items, mage.mesh non-canonisation) = 40/40 full pass. Metric: tr -s '[:space:]' '\\n' < candidate.md | grep -c . => 940 words, beats frontier.json best 980. Hard constraint holds: self-contained spec draft; RESEARCH-ROOT / NOT-upstreamed status and provenance survive in meaning.",
+  "scratchDir": "C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness/runs/r1/r1.1/p1-line-edit-pass-1"
+}

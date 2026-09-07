@@ -3,7 +3,7 @@ title: "Lab — 07-trust-graph-formation"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/07-trust-graph-formation/NOTES.md"
 built_from_commitish: "working-tree"
-order: 61
+order: 63
 ---
 # 07 — Trust-graph formation (the dream-agent cycle) — notes
 

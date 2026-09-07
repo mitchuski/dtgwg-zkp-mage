@@ -1,0 +1,97 @@
+{
+  "feed": "dual-agent-harness/runtime-feed.v1",
+  "instance": "spec_harness",
+  "updated": "2026-08-18",
+  "movingCeiling": {
+    "metric": "words",
+    "direction": "down",
+    "baseline": 980,
+    "best": 863,
+    "ratioNow": 0.8806,
+    "open": {
+      "id": "OT-2",
+      "statement": "below 863 words at the full 40/40 census gate — compose a line-edit pass over the folded telegraphic restructure (the field-guide OT-2/OT-3 pattern); the dominated 940 line-edit lever family is the standing fallback",
+      "status": "OPEN"
+    },
+    "series": [
+      {
+        "label": "baseline — the moving ceiling's start; census frozen at 40 facts",
+        "value": 980,
+        "ratio": 1,
+        "date": "2026-08-18",
+        "lever": null,
+        "target": null,
+        "coverage": null,
+        "note": "baseline — the moving ceiling's start; census frozen at 40 facts",
+        "chronicle": null
+      },
+      {
+        "label": "OT-1",
+        "value": 863,
+        "ratio": 0.8806,
+        "date": "2026-08-18",
+        "lever": "restructure-telegraphic-tables",
+        "target": "OT-1",
+        "coverage": {
+          "mode": "census",
+          "N": 40,
+          "n": 40,
+          "detection": 1
+        },
+        "note": "VALIDATED_CENSUS: every one of the 40 frozen facts probed and answered from the candidate alone.",
+        "chronicle": "chronicles/2026-08-18_r1_fold_863.md"
+      }
+    ]
+  },
+  "objective": {
+    "metric": "words",
+    "gate": "census over the frozen 40-fact list (census.json): every fact probed from the compressed text alone, 40/40 or the round is zero (T5)",
+    "hardConstraint": "the compressed spec remains a self-contained spec draft; status/provenance labels survive in meaning (RESEARCH-ROOT, NOT upstreamed — GR-5); every census fact derivable from the text alone"
+  },
+  "coverageNote": null,
+  "closedTargets": [
+    {
+      "id": "OT-1",
+      "statement": "below 980 words at the full 40/40 census gate with the hard constraint intact",
+      "status": "MET",
+      "date": "2026-08-18"
+    }
+  ],
+  "verdicts": {
+    "VALIDATED": 2,
+    "MIRAGE": 0,
+    "BLOCKED": 0
+  },
+  "runs": [
+    {
+      "id": "r1",
+      "proposals": 2,
+      "tally": {
+        "VALIDATED": 2,
+        "MIRAGE": 0,
+        "BLOCKED": 0
+      },
+      "view": "runs/r1/run.html"
+    }
+  ],
+  "killedLevers": {
+    "count": 1,
+    "ids": [
+      "K-1"
+    ]
+  },
+  "lattice": null,
+  "artefacts": [
+    {
+      "id": "af-cd2a81c50b2b",
+      "kappa": "sha256:c5ed5c7c80aca6c620842f0e894c8b5109c02f561e435347b067065d6b1f8680",
+      "run": "r1",
+      "beat": true,
+      "best": 863
+    }
+  ],
+  "door": "first-person",
+  "inscription": "(⚔️⊥⿻⊥🧙)😊 = neg ⊕ bnot → succ",
+  "note": "A projection of runtime state for the model instruments (/star · game42 · spellweb). The run directory and frontier.json are authoritative; wiring a consumer is the First Person’s (T6).",
+  "κ": "sha256:02992cf7f3b35ddb9c2d28e9537f9cbbd19336263d479f01dff01d594a8a5ae4"
+}

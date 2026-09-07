@@ -1,0 +1,249 @@
+{
+  "source": {
+    "title": "The Zero Knowledge Spellbook (zk_grimoire v3.0)",
+    "author": "privacymage (Mitchell Travers)",
+    "path": "C:/Users/mitch/.wiki/research.localhost/assets/grimoire-the-zero-knowledge-spellbook/zk_grimoire_v3_0.md",
+    "structure": "30 tales; each tale = **Concepts** line + '#### The Story' (narrative — never transferred) + '#### The Spell Inscription' (compressed lore symbols — not transferred) + '#### Technical Bridge' (the explanatory, non-narrative part — transferred, cleaned)",
+    "licence": "source declares 'Shared under relationship proverb protocol'; transfer into a CC BY 4.0 ToIP deliverable is the author's relicensing decision — flagged, not assumed",
+    "cleaning": "drop 'Geometric Interpretation' paragraphs, italic closing proverbs, Vertex/lattice-coordinate lines and RPP bracket lines; keep interfaces, tables, code, cost figures, 'Applied to' lines",
+    "frontier": [
+      "C:/Users/mitch/zero spells/32-tale-32.md"
+    ],
+    "frontierNote": "Zero Spellbook Part VIII frontier tales (v2.1 form) — Technical Bridge only, same parser, same exclusions; the v3.0 compilation and the Zero Spellbook are parallel works (grimoire v10.4 narrative_sync ruling) and are never merged here, only both read",
+    "specRegister": "In the specification text the source is not named as a spellbook or by tale: subsections carry the plain titles in `topics`, the source work is cited once in References as the agentprivacy body of work, and the licence statement lives in the appendix. The tale machinery below is internal to this repository."
+  },
+  "sections": [
+    {
+      "id": "P1",
+      "title": "What a proof is, and what a transcript binds",
+      "tales": [
+        1,
+        2,
+        3
+      ],
+      "lead": "A zero-knowledge proof is a transcript with three properties: it convinces (completeness), it cannot be faked (soundness), and it reveals nothing beyond the statement (zero knowledge). Making it non-interactive — a Fiat–Shamir hash standing in for the verifier's challenge — is exactly why every construction binds a transcript digest: the digest *is* the challenge the proof answers, and a proof that answers a different transcript is a different proof. The common reference string a construction may need is where trust enters before any proof is made.",
+      "uses": [
+        "construction 003 (transcript binding)",
+        "public inputs: transcript digest",
+        "proving systems: setup column",
+        "ePrint 2026/333 Def. 5 (tag-based SE-NIZK: the tag is the transcript)"
+      ]
+    },
+    {
+      "id": "P2",
+      "title": "Fields, curves and why the issuer's signature matters",
+      "tales": [
+        4
+      ],
+      "lead": "Every constraint a circuit checks is arithmetic in one finite field, and every signature a credential carries lives on one curve. When the two do not match — an Ed25519 signature checked inside a BN254 circuit — the proof pays for the translation in constraints, seconds and payload. That mismatch is the X3 requirement in construction form: the credential layer must sign, or additionally commit, in a form the proof layer can open cheaply. Binary-field systems change the arithmetic itself: a prover that works in GF(2^k) treats SHA-256 or BLAKE3 as its native operation, which is why the Flock stack — built for Ethereum’s post-quantum transition — can prove the hashes registries already use at under 250× their native cost, and why the hash side of X3 is a stack decision rather than an issuer obligation.",
+      "uses": [
+        "construction 007 / 010 issuance (X3)",
+        "cred-spec #17",
+        "proving systems: field column",
+        "the legacy-rails class (SIROS Longfellow / Vega) as the case where the issuer cannot change",
+        "proving system flock (binary fields; standard hashes at near-native cost)"
+      ]
+    },
+    {
+      "id": "P3",
+      "title": "Constraints, witnesses and public inputs — the construction form itself",
+      "tales": [
+        5,
+        6,
+        7
+      ],
+      "lead": "An arithmetic circuit turns a statement into constraints over a witness. The witness stays with the prover; the public inputs are what the verifier supplies and sees. A construction record's *witness* and *public inputs* are the R1CS split written as fields of the record, so that what leaves the holder is a decision made on the page, not discovered in the code. Constraint counts are the first cost every option row reports.",
+      "uses": [
+        "record fields witness / public inputs / method",
+        "options: constraintsOrGates",
+        "construction 001 (11,523 constraints measured)"
+      ]
+    },
+    {
+      "id": "P4",
+      "title": "Commitments and the setup question",
+      "tales": [
+        9,
+        10,
+        17,
+        18
+      ],
+      "lead": "A commitment binds a value now and hides it until opened; polynomial commitments do this for whole computations. Which commitment a stack uses decides its trust story: KZG gives constant-size proofs but needs a trusted setup whose toxic waste must be destroyed; hash-based commitments need no ceremony but cost proof size. The lab's fixed-entropy setup is unusable for production for exactly this reason, and the registry treats setup-chain digests as advisory because a real ceremony is machine-local by design.",
+      "uses": [
+        "proving systems: setup / postQuantum columns",
+        "construction 001 KZG substitution (paper §3.7 hiding KZG, HR-6)",
+        "registry: advisory setup chain",
+        "runtimes/ceremony-orchestrator"
+      ]
+    },
+    {
+      "id": "P5",
+      "title": "Transparent and hash-based proving",
+      "tales": [
+        11,
+        13,
+        14,
+        32
+      ],
+      "lead": "Where a pairing-based SNARK buys tiny proofs with a ceremony, transparent systems buy the absence of a ceremony with larger proofs: FRI and its descendants (WHIR) commit to evaluations with Merkle trees and test low degree by queries; sumcheck-based provers (Spartan) trade prover memory for round-by-round polynomial checks; inner-product arguments (Bulletproofs, Halo2) sit between. This is the axis on which ProveKit's numbers read: ~2.5 MB of proving payload and a 716 KB proof against Groth16's hundreds of megabytes and 1 KB. Flock sits at the far end of this axis: a hash-based, transparent SNARK for batches of Boolean computation whose whole purpose is to make standard hashes cheap to prove — the property Ethereum needs to aggregate hash-based signatures after the quantum transition, and the property a trust graph needs if its roots and digests are to stay on ordinary hashes.",
+      "uses": [
+        "proving system provekit (Noir → WHIR/Spartan)",
+        "options: proofKB vs payloadMB",
+        "ADR-001 D1/D3",
+        "proving system flock (Ligerito commitment, binary fields, transparent, post-quantum rationale)",
+        "the Flock subsection below — this section’s post-quantum case"
+      ]
+    },
+    {
+      "id": "P6",
+      "title": "Recursion and folding — chains of delegation",
+      "tales": [
+        8,
+        12,
+        15,
+        16
+      ],
+      "lead": "A proof can verify another proof. Folding schemes (Nova) accumulate many steps into one instance; recursive verifiers wrap a large transparent proof in a small pairing-based one for a verifier that needs 1 KB. For the trust graph this is the shape of a delegation chain: each hop's grant nests inside its parent's, and the chain is proven either hop-by-hop with folding or flattened into one circuit. PLONKish arithmetisation with custom gates and lookups is the counter-proposal the lab's Groth16 baseline invites through the same gate.",
+      "uses": [
+        "construction 020 (chain-resolve gadget)",
+        "proving system provekit: Groth16 recursive wrapper",
+        "options: recursion column",
+        "PATH-MAP P4: PLONKish/folding counter-proposal welcome"
+      ]
+    },
+    {
+      "id": "P7",
+      "title": "Commit, prove membership, nullify — the shape every construction inherits",
+      "tales": [
+        23,
+        24
+      ],
+      "lead": "The mixer circuit is the ancestor of every construction in this specification: commit to a secret, insert the commitment in a Merkle tree, later prove membership of a hidden leaf under the public root and emit a nullifier derived from the secret so the same leaf cannot be spent twice — without revealing which leaf. Replace 'deposit' with 'membership grant', 'pool' with 'community root', 'withdrawal' with 'presentation', and 'spent twice' with 'presented twice in one context' and you have constructions 001 and 002 exactly; the compliance variant — in the pool and *not* in the sanctions list — is construction 006's non-membership. The anonymity set is the size of the community root; the relayer is the mediator.",
+      "uses": [
+        "construction 001 (set membership)",
+        "construction 002 (scoped nullifier)",
+        "construction 006 (non-revocation)",
+        "lab circuit nullifier_membership (the same shape, measured)",
+        "runtimes/mediator (the relayer's role, as a trust task)"
+      ]
+    },
+    {
+      "id": "P8",
+      "title": "Circuits in practice and their failure modes",
+      "tales": [
+        21,
+        26
+      ],
+      "lead": "Circom's signals, templates and constraint compilation are what the lab's three circuits are written in; the vulnerability codex is why the book's rule is what it is. Under-constrained signals, unchecked booleanity, audited interfaces that are not the shipped interfaces, setup failures — none of these is caught by a proof verifying. Reproduction on a stranger's machine catches the build; behavioural fixtures catch the properties; neither is an audit, and every record says so.",
+      "uses": [
+        "stack lab-groth16-circom",
+        "requirements v0.4 §16.1 audit scope ('audited MUST name the reviewed commit and file set')",
+        "NOTE-2026-08-19 zk-kit evaluation (MultiMux1 booleanity; audited-commit drift)",
+        "registry: reproduction ≠ audit"
+      ]
+    },
+    {
+      "id": "P9",
+      "title": "Agents that prove: the separation of proving from acting",
+      "tales": [
+        30
+      ],
+      "lead": "An agent acting for a person can carry proofs the person could make, within a scope the person granted, without the verifier learning who the person is. That is construction 020's statement and the reason the task force answers delegation early: chain resolution is a disclosure boundary of the same kind as completion evidence, and an agent that cannot prove its bounds is an agent nobody should accept a presentation from. The tooling that produced this specification runs under the same rule at a different scale: an assistant composes, reconstructs and drafts; a person signs, admits and publishes.",
+      "uses": [
+        "construction 020 (delegation chain)",
+        "construction 004 (holder binding)",
+        "cred-tf #40 (delegation as a design-time case)",
+        "the mediator instrument of the evidence repository (proving tiers; the four exits from a failed local proof)",
+        "AGENT-RUNTIMES.md (dtgwg-zkp-tf PR #21)",
+        "ePrint 2026/333 App. B.1 (AI agent reputation)"
+      ],
+      "body": "#### The separation of proving from acting\n\nAn agent presents on a person's behalf in two roles, and the constructions in this specification assume the two are held by two distinct processes.\n\n```\nprincipal — holds the credentials and the holder secret\n   │  issues a delegation: scope, validity, and an acceptance the delegate countersigns\n   ▼\nacting process ── composes presentations, chooses what to disclose, requests signatures ──▶ verifier\n   │              never holds the holder secret; sees only what it composes\n   ▼\nboundary process ── holds the holder secret and keys; signs only acts that are in scope, chained to the\n                    delegation, and not already signed; keeps an append-only record of what it signed;\n                    refuses everything else — as values, never as errors\n```\n\nThe boundary process is the party that can be held to the drafting rules. It knows the adversary it protects against — the acting process itself and everything the acting process talks to — the horizon of every key it holds, and what it does not establish: that an act was wise, only that it was in scope. The acting process is the party that can be delegated, replaced, or run by a third party without the secret leaving the holder. What passes between them is a request and a signature; what never passes is the secret. A verifier sees a proof that an agent acting for a member of a recognised community did so within a stated scope before a stated time — construction 020 — and learns neither which member nor what else the agent may do.\n\nConstruction records use this separation without naming it. The witness of every record is what the boundary process holds; the disclosure set is what the acting process is permitted to compose; holder binding (construction 004) is the clause that ties the two to one secret. The mediator instrument in the evidence repository specifies the tiers at which a third party may run the acting process — a mediator that proves on the holder's behalf must be unable to learn the witness or to correlate presentations — and the four exits from a failed local proving attempt, none of them silent."
+    }
+  ],
+  "excluded": [
+    {
+      "tales": [
+        19,
+        20,
+        22,
+        25,
+        27,
+        28
+      ],
+      "reason": "zkVM, Cairo, zkEVM, rollups, data availability and bridges — blockchain infrastructure outside the DTG ZKP scope; nothing in the recipes needs them"
+    },
+    {
+      "tales": [
+        29
+      ],
+      "reason": "zkML / verifiable inference — out of scope for V1 (requirements v0.4 §2.2); named here so the exclusion is deliberate"
+    },
+    {
+      "parts": [
+        "The Story",
+        "The Spell Inscription",
+        "Crystalline Field / lattice coordinates",
+        "Relationship Proverb Protocol sections",
+        "Spell Grimoire compression table"
+      ],
+      "reason": "narrative and lore — the book takes the knowledge, not the telling; the proverb protocol itself is honoured in the publication rite, not printed in the spec"
+    }
+  ],
+  "topics": {
+    "1": "Zero-knowledge proofs: completeness, soundness and zero knowledge",
+    "2": "Setup and the common reference string",
+    "3": "Non-interactivity: the Fiat–Shamir transformation",
+    "4": "Finite fields, elliptic curves and pairing-friendly curves",
+    "5": "Arithmetic circuits and rank-1 constraint systems",
+    "6": "From constraints to polynomials: quadratic arithmetic programs",
+    "7": "Witness and instance; knowledge soundness",
+    "8": "PLONKish arithmetisation: custom gates, lookups and permutation arguments",
+    "9": "Pairings, Groth16 and KZG commitments",
+    "10": "Polynomial commitment schemes: binding, hiding and their trade-offs",
+    "11": "FRI and hash-based low-degree testing",
+    "12": "Folding schemes and incrementally verifiable computation",
+    "13": "The sumcheck protocol and GKR",
+    "14": "Inner-product arguments and transparent setups",
+    "15": "Recursive proof composition and cycles of curves",
+    "16": "Cyclic recursion and circuit identity",
+    "17": "Universal setups and powers-of-tau ceremonies",
+    "18": "Trusted-setup failure modes and toxic waste",
+    "21": "Circom: signals, templates and R1CS compilation",
+    "23": "Shielded transactions: commitments, nullifiers and Merkle trees (Zcash)",
+    "24": "Mixers: anonymity sets, deposit–withdraw and set non-membership",
+    "26": "Vulnerability classes and audit practice",
+    "30": "Proof-carrying agents and verifiable delegation",
+    "32": "Binary-field SNARKs for standard hash functions (Flock)"
+  },
+  "excludeFromSpec": [
+    30
+  ],
+  "excludeFromSpecNote": "Source 30 is a system-architecture and roadmap sketch (implementation checklist, performance targets, product components) in the corpus's own vocabulary; it is not cryptographic background and does not enter the specification. P9 carries a hand-written body instead. The source remains mapped so the transfer report still lists it.",
+  "rewrites": [
+    [
+      "sovereignty protocols",
+      "g",
+      "self-sovereign identity protocols"
+    ],
+    [
+      "financial sovereignty",
+      "g",
+      "financial privacy"
+    ],
+    [
+      "sovereign history",
+      "g",
+      "verifiable history"
+    ],
+    [
+      "near-complete sovereignty architectures",
+      "g",
+      "large recursive-proof architectures"
+    ],
+    [
+      "agent sovereignty",
+      "g",
+      "agent accountability"
+    ]
+  ]
+}

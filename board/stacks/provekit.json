@@ -1,0 +1,84 @@
+{
+  "id": "provekit",
+  "name": "ProveKit (World) — Noir → WHIR client-side proving",
+  "kind": "general-stack",
+  "maintainer": "World Foundation · Atheon · Reilabs · Nethermind",
+  "frontend": "Noir (ACIR → R1CS lowering)",
+  "proofSystem": "Spartan-style prover with WHIR polynomial commitments; Skyscraper hash for BN254 commitments; optional Groth16 recursive wrapper (Go/gnark) for on-chain verification",
+  "field": "BN254 scalar field",
+  "setup": "transparent for the WHIR proof; the Groth16 wrapper reintroduces a trusted setup",
+  "postQuantum": "hash-based core — migration path plausible; the pairing-based wrapper is not",
+  "credentialModel": "issuer-agnostic: any statement Noir expresses; shipped statements prove over existing credentials (passport, WebAuthn) as signed",
+  "platforms": [
+    "rust",
+    "javascript-wasm (~340 KB)",
+    "swift (iOS)",
+    "kotlin (Android)",
+    "python",
+    "c-ffi"
+  ],
+  "verifier": [
+    "local",
+    "server",
+    "browser",
+    "on-chain (Groth16 wrapper)"
+  ],
+  "license": "MIT",
+  "iprNote": "compatible with an Apache-2.0 code / CC BY 4.0 docs deliverable",
+  "audit": {
+    "claim": "v1.0.0 described as 'the current stable, audited release'",
+    "reviewedCommit": null,
+    "fileSet": null,
+    "source": "docs.provekit.org"
+  },
+  "maturity": "production — 'used in production by World, Atheon, and a handful of other partners' (v1.0.0)",
+  "independentImplementations": 0,
+  "provenance": {
+    "repo": "https://github.com/worldfnd/provekit",
+    "version": "v1.0.0",
+    "contentAddressed": false
+  },
+  "benchmarks": [
+    {
+      "statement": "Passport P1",
+      "device": "iPhone SE 3",
+      "rate": "2.43 s prove · 2.55 MB payload · 716 KB proof",
+      "source": "provekit.org/benchmarks (v1.0.0)"
+    },
+    {
+      "statement": "WebAuthn",
+      "device": "Moto E15 (2 GB, 32-bit)",
+      "rate": "27.9 s prove · 2.39 MB payload · 716 KB proof · ~494 MB peak RSS",
+      "source": "same"
+    },
+    {
+      "statement": "OPRF",
+      "device": "iPhone SE 3",
+      "rate": "1.20 s prove · 1.65 MB payload · 635 KB proof",
+      "source": "same"
+    },
+    {
+      "statement": "baselines quoted by the vendor",
+      "device": "same devices",
+      "rate": "Circom+Groth16 payload 27–1754 MB, proof ~1 KB; Noir+Barretenberg payload ~271 MB, proof 16–21 KB",
+      "source": "same"
+    }
+  ],
+  "covers": {
+    "set-membership": "yes (Poseidon/Skyscraper Merkle in Noir) — unmeasured for our tree",
+    "nullifier": "yes — unmeasured",
+    "transcript-bind": "yes — unmeasured",
+    "key-binding": "yes — unmeasured",
+    "distinctness": "yes — unmeasured",
+    "signature-verify": "yes — ECDSA/RSA examples shipped (passport, WebAuthn)",
+    "non-revocation": "yes (indexed tree) — unmeasured",
+    "range": "yes",
+    "commitment-open": "yes",
+    "chain-resolve": "recursion via the Groth16 wrapper — unmeasured"
+  },
+  "notes": [
+    "Proof size ~700× Groth16; proving payload ~100× smaller — the trade the §25 gate weighs per profile (ADR-001 D1/D3).",
+    "The 'audited' claim names no commit or file set; the stack file says so until located (the §16.1 audit-scope rule)."
+  ],
+  "verified": "2026-09-05 — provekit.org, docs.provekit.org, github README"
+}

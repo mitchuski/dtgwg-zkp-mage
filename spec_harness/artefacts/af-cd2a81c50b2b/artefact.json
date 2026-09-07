@@ -1,0 +1,103 @@
+{
+  "artefact": "dual-agent-harness/artefact.v1",
+  "id": "af-cd2a81c50b2b",
+  "κ": "sha256:c5ed5c7c80aca6c620842f0e894c8b5109c02f561e435347b067065d6b1f8680",
+  "mintedAt": "2026-08-18T17:40:55.866Z",
+  "mintedBy": "node tools/mint_artefact.mjs C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness r1",
+  "status": "PREPARED",
+  "door": {
+    "owner": "first-person",
+    "actionsTaken": [],
+    "actionsAvailable": [
+      "git commit/push",
+      "fedwiki publish",
+      "gatehouse sigil-gate",
+      "send"
+    ],
+    "note": "Software prepared this bundle and stopped. Any outward movement is the First Person’s alone (T6/GR-8)."
+  },
+  "instance": {
+    "name": "dtg-credspec-spec",
+    "dir": "C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness"
+  },
+  "run": {
+    "runId": "r1",
+    "rounds": [
+      "r1.1"
+    ]
+  },
+  "frontier": {
+    "beat": true,
+    "objectiveMetric": "words",
+    "baseline": 980,
+    "best": 863,
+    "openTarget": "OT-2",
+    "updated": "2026-08-18",
+    "sha256": "a4c0b57e528f4dd5b95e5064a37c1972d979e49cf1bba5abd1d372939a9c6a7e"
+  },
+  "proposals": [
+    {
+      "leverId": "line-edit-pass-1",
+      "path": "runs/r1/r1.1/p1-line-edit-pass-1/",
+      "seedHex": "353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da",
+      "derivedSha256": "353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da",
+      "hashState": "MATCH",
+      "verdict": {
+        "status": "VALIDATED",
+        "metric": 940,
+        "gateResult": "40/40",
+        "coverage": {
+          "mode": "census",
+          "N": 40,
+          "detection": 1
+        }
+      },
+      "verdictSha256": "4515ac85a245ad713914ad1a00315e42aec46d173d42d878b00437e439da296c"
+    },
+    {
+      "leverId": "restructure-telegraphic-tables",
+      "path": "runs/r1/r1.1/p2-restructure-telegraphic-tables/",
+      "seedHex": "7175b373710bc8974bfd03fdba0d4ce3723df72cce87b48a9c4f0a4829dfa808",
+      "derivedSha256": "7175b373710bc8974bfd03fdba0d4ce3723df72cce87b48a9c4f0a4829dfa808",
+      "hashState": "MATCH",
+      "verdict": {
+        "status": "VALIDATED",
+        "metric": 863,
+        "gateResult": "40/40",
+        "coverage": {
+          "mode": "census",
+          "N": 40,
+          "detection": 1
+        }
+      },
+      "verdictSha256": "7fd57b915d994067251c43fbbb644e39db5e15d8a86c43cf3d6679ceeb926f02"
+    }
+  ],
+  "chronicle": {
+    "path": "runs/r1/r1.1/CHRONICLE_DRAFT.md",
+    "frontmatter": {
+      "note": "DRAFT — keystone has not filed it yet (GR-7)"
+    },
+    "sha256": "18dd7c26237b9515f736edbe9b03c5d036a69f0e2b8c9d5d0bc3fbf517bc6bd6"
+  },
+  "conform": {
+    "command": "node engine/conform.mjs C:/Users/mitch/dtgwg-cred-spec-main_mage/spec_harness",
+    "exit": 0,
+    "at": "2026-08-18T17:40:55.868Z"
+  },
+  "evidenceManifest": {
+    "evidence/r1.1__p1-line-edit-pass-1__proposal_canon.json": "353a891047ea7b775fd9e3aecd8f00be24b1f45958d72e8826181ca66f2898da",
+    "evidence/r1.1__p1-line-edit-pass-1__gap.json": "9a7c3c6661e25f66d8ff0f4fbc8ad09270a51211eb575b946e85e269cdc9666b",
+    "evidence/r1.1__p1-line-edit-pass-1__verdict.json": "4515ac85a245ad713914ad1a00315e42aec46d173d42d878b00437e439da296c",
+    "evidence/r1.1__p1-line-edit-pass-1__candidate.md": "0676a789128b065f753d994d5be7de7d735450c95eef70531b6c13551cadec16",
+    "evidence/r1.1__p2-restructure-telegraphic-tables__proposal_canon.json": "7175b373710bc8974bfd03fdba0d4ce3723df72cce87b48a9c4f0a4829dfa808",
+    "evidence/r1.1__p2-restructure-telegraphic-tables__gap.json": "4e013ec27d8a3f3e20bf5f4a544a4c7c757b49c3328da9e507f40119d21b2f65",
+    "evidence/r1.1__p2-restructure-telegraphic-tables__verdict.json": "7fd57b915d994067251c43fbbb644e39db5e15d8a86c43cf3d6679ceeb926f02",
+    "evidence/r1.1__p2-restructure-telegraphic-tables__candidate.md": "550b6dea7ca7bc45e90d62df4926245a6d1311533c6eaeacb8fcbbffa5f72991",
+    "evidence/frontier.json": "a4c0b57e528f4dd5b95e5064a37c1972d979e49cf1bba5abd1d372939a9c6a7e",
+    "evidence/runs__r1__r1.1__CHRONICLE_DRAFT.md": "18dd7c26237b9515f736edbe9b03c5d036a69f0e2b8c9d5d0bc3fbf517bc6bd6"
+  },
+  "mana": null,
+  "universe": null,
+  "inscription": "(⚔️⊥⿻⊥🧙)😊 = neg ⊕ bnot → succ"
+}

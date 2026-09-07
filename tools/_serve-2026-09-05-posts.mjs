@@ -1,0 +1,23 @@
+// one-shot: serve ledger entries 26–29 for drafts P, J, K, L (activated: null until posted) and refresh doors
+import { readFileSync, writeFileSync } from 'node:fs';
+const L = JSON.parse(readFileSync('proverb-ledger.json', 'utf8'));
+const have = new Set(L.entries.map(e => e.seq));
+const served = 'agent runtime (Claude Fable 5.1), session of 2026-09-05 (spec-repo posts, drafts P/J/K/L)';
+const add = [
+  { seq: 26, actType: 'push', actRef: 'trustoverip/dtgwg-zkp-spec PULL REQUEST (draft P — Working Draft 0.1: construction records, conformance apparatus, front matter; branch zk-book, commits C1–C3)', actMeaning: 'Offer the specification to the fold in the template’s own skeleton with its validation system and CI; every record informative; changes go to records, never to generated text.', proverb: 'What is offered to the fold is offered with its checks; the text may not say what the records cannot show.' },
+  { seq: 27, actType: 'post', actRef: 'trustoverip/dtgwg-cred-spec issue #31 (draft J — the #9 row has a home: construction 007; the xref path)', actMeaning: 'Point the WD02 merge plan at the proof layer’s answer and name the two rows where plan and records already agree.', proverb: 'The linkage no field may state is the requirement every field must serve.' },
+  { seq: 28, actType: 'post', actRef: 'trustoverip/dtgwg-cred-tf discussion #39 (draft K — the four ZKP TF work items now have construction records; Flock as the new proving-system entry; before the 8 September call)', actMeaning: 'Give each of Scott’s four work items a record id that can fail, and put the hash-side relief on the table before the Berkeley conversation.', proverb: 'Four asks were spoken in one thread; each now has a record that can fail.' },
+  { seq: 29, actType: 'post', actRef: 'trustoverip/dtgwg-zkp-tf discussion #17 (draft L — the SIROS catalog as a proving-system entry; pilot entry named)', actMeaning: 'Name the manifest facts, seat the catalog as an as-signed entry, and make the pilot concrete with one entry id.', proverb: 'A catalog says where a thing came from; a registry says a stranger made it again; one table, two columns.' },
+];
+for (const a of add) if (!have.has(a.seq)) L.entries.push({ seq: a.seq, date: '2026-09-05', actType: a.actType, actRef: a.actRef, actMeaning: a.actMeaning, proverb: a.proverb, servedBy: served, activated: null, activatedDate: null });
+writeFileSync('proverb-ledger.json', JSON.stringify(L, null, 1) + '\n');
+console.log('ledger entries:', L.entries.length);
+
+const doors = JSON.parse(readFileSync('board/doors.json', 'utf8'));
+const upsert = (d) => { const i = doors.findIndex(x => x.id === d.id); if (i >= 0) doors[i] = d; else doors.push(d); };
+upsert({ id: 'D3', title: 'zkp-tf — post H (the anchor: the specification\'s shape), then open the dtgwg-zkp-spec PR with body P', where: 'https://github.com/trustoverip/dtgwg-zkp-tf/discussions/new?category=ideas', what: 'H asks for shape objections; P is the PR description for branch zk-book (three commits with the rite footer + DCO). Preconditions: relicensing line in Appendix A; editors line confirmed with Scott.', status: 'drafted', draft: 'H', cards: [], actor: 'Mitch posts H; pushes zk-book; opens the PR with P' });
+upsert({ id: 'D11', title: 'cred-spec #31 — one-paragraph pointer: #9 row → construction 007; xref path (after F)', where: 'https://github.com/trustoverip/dtgwg-cred-spec/issues/31', what: 'geoffturk\'s plan names #9 as cross-TF work; J gives it the record id and the two rows where plan and records agree (digestMultibase, three scopes).', status: 'drafted', draft: 'J', cards: ['007'], actor: 'Mitch posts after F' });
+upsert({ id: 'D12', title: 'cred-tf #39 — Scott\'s four work items as records + Flock (before the 8 Sept Berkeley call)', where: 'https://github.com/trustoverip/dtgwg-cred-tf/discussions/39', what: 'K gives 008 / 001-alias / 020 / 006-route their ids and puts the hash-side X3 relief on the table; send Scott the record renders as well.', status: 'drafted', draft: 'K', cards: ['001', '006', '008', '020'], actor: 'Mitch posts before 09-08' });
+upsert({ id: 'D13', title: 'zkp-tf #17 — SIROS manifest v1 facts; as-signed proving-system entry; pilot entry named', where: 'https://github.com/trustoverip/dtgwg-zkp-tf/discussions/17', what: 'L names the fourteen entries, seats the catalog as substrate, and makes the pilot concrete with longfellow-libzk-v1_8_1_4259_2945; ends with the reproduction-field question for the SIROS team.', status: 'drafted', draft: 'L', cards: [], actor: 'Mitch posts' });
+writeFileSync('board/doors.json', JSON.stringify(doors, null, 2) + '\n');
+console.log('doors:', doors.length);

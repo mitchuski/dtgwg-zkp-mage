@@ -1,0 +1,119 @@
+{
+  "id": "007",
+  "name": "Common control across identifiers",
+  "kind": "primitive",
+  "state": "carded",
+  "priority": "P1",
+  "owner": "mitchuski",
+  "request": {
+    "issue": "cred-spec #9 (Sankarshan: identity linkages the ZKP constructions require) · cred-spec #31 (geoffturk 09-02: '#9 stays open — and gains weight'; four things lean on the unencoded common-control linkage) · cred-spec PR #30 §Community-Anchored ZKP ('the proof must establish common control across them')",
+    "by": "sankarshanmukhopadhyay / geoffturk / stormer78 (spec side) — carded by the ZKP TF co-chair",
+    "need": "under WD02's three correlation scopes, two `pairwise` identifiers differ by construction, so any proof that reads one party out of two credentials must first prove one holder controls both identifiers — without a field that says so"
+  },
+  "dish": "A verifier learns that two identifiers named in two credentials — declared pairwise, or otherwise distinct — are controlled by one holder secret, without learning that secret and without the proof minting a handle that recognises the holder in any other presentation.",
+  "ingredients": [
+    "the holder secret s",
+    "per-identifier derivation material: for each identifier, the salt or key-derivation path under which it was minted from s",
+    "the two credentials that name the identifiers (their bytes stay with the holder; only what the enclosing card discloses is shown)"
+  ],
+  "pantry": [
+    "the two identifiers exactly as the credentials carry them — or their ZK-openable commitments, when the identifiers themselves are hidden by the enclosing card",
+    "transcriptDigest — the presentation transcript this proof is bound to"
+  ],
+  "method": [
+    {
+      "clause": "identifier A's public key or commitment opens to (s, salt_A) and identifier B's opens to (s, salt_B) for one and the same s — a different secret behind either identifier is unsatisfiable",
+      "gadget": "key-binding"
+    }
+  ],
+  "yield": [
+    "the outcome (one controller / not shown)",
+    "transcriptDigest",
+    "the identifiers only as far as the enclosing card already discloses them — this card adds no identifier to the disclosure set"
+  ],
+  "doesNotEstablish": [
+    "that the controller is one natural person — two agents or two people sharing a secret satisfy the clause (that is card 002's uniqueness, under its own declaration)",
+    "that either credential is currently valid or unrevoked (card 006)",
+    "that the holder intended the two identifiers to be correlated beyond this verifier — the proof is a disclosure to the party it is made to, not a widening of either identifier's declared scope",
+    "the counterparty's common control: a presenter can prove only what is derived from a secret in the presenter's hands; a counterparty's linkage needs the counterparty's witness or the counterparty's own attestation (see card 010)"
+  ],
+  "adversary": [
+    {
+      "claim": "no cross-presentation handle: the proof is transcript-bound and emits no identifier-derived value; two verifiers comparing proofs learn only what the enclosing cards disclosed to each",
+      "against": [
+        "verifier",
+        "verifiers-colluding"
+      ]
+    },
+    {
+      "claim": "the secret s is never revealed and no per-identifier salt is; an issuer who minted one identifier's credential learns nothing about the other from the proof",
+      "against": [
+        "issuer-verifier-colluding"
+      ]
+    }
+  ],
+  "horizon": [
+    "the shorter of the two identifiers' key-validity periods — after a rotation the old key no longer opens to s under the recorded path and the clause must be re-proven against the rotated material",
+    "the hash/commitment cryptoperiod of the derivation"
+  ],
+  "tasting": {
+    "families": [
+      "accepts",
+      "rejects-unsat",
+      "rejects-verify",
+      "unlinkable"
+    ],
+    "rejectionCodes": [
+      "co-control-unproven (unsat: distinct secrets)",
+      "identifier-not-zk-openable (verify-fail: identifier carries no openable commitment — an issuance failure, X3)"
+    ]
+  },
+  "substitutions": [
+    {
+      "route": "no proof — the holder declares one `directed` identifier and uses it in both credentials (WD02 §Choosing a scope: correlation evident on the face of the credentials)",
+      "cost": "zero constraints; the cost is the declaration itself",
+      "measured": false,
+      "source": "cred-spec PR #30 §Choosing a scope / §Community-Anchored ZKP"
+    },
+    {
+      "route": "Groth16/Poseidon: two Poseidon commitment openings sharing the secret input (the circom-gadget leaf commitment, twice) — conjecture ~500–600 constraints total (~65%), unmeasured; one compile settles it",
+      "cost": "unmeasured (conjecture ≈ 2 × the lab's Poseidon leaf commitment)",
+      "measured": false,
+      "source": "runtimes/circom-gadget (Poseidon commitment + nullifier already bind a leaf to a secret)"
+    },
+    {
+      "route": "blackbox commit-and-prove: the same opening under the paper's hiding commitments (Construction II show, N=1)",
+      "cost": "paper Table 1 class",
+      "measured": false,
+      "source": "ePrint 2026/333 §7.2"
+    }
+  ],
+  "issuance": [
+    "each identifier that may need to be proven co-controlled must be, or carry, a ZK-openable commitment to the holder secret: a SNARK-native key (e.g. BabyJubJub did:key) or a published Poseidon/KZG commitment beside an Ed25519 key — the X3 requirement of card 010, now applied to identifiers rather than signatures (cred-spec #17)",
+    "the credential layer carries the requirement to be able to prove co-control, never a field that states the link (cred-spec #9, the 08-25 position)"
+  ],
+  "provenance": {
+    "spec": [
+      "cred-spec PR #30 §Correlation Scope / §Choosing a scope / §Community-Anchored Zero-Knowledge Proof (WD02 draft, 2026-09-02)",
+      "cred-spec #9 (identity linkages required by the ZKP constructions)",
+      "cred-spec #31 disposition table (#9 stays open and gains weight; cross-TF work with the ZKP TF)",
+      "ADR-001 S4 (holder binding) — generalised to two identifiers"
+    ]
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "geoffturk / stormer78 (cred-spec #31, PR #30) · sankarshanmukhopadhyay (cred-spec #9)",
+      "date": "2026-09-02",
+      "evidence": "cred-spec #31 disposition row for #9: 'four things lean on the unencoded common-control linkage … the resolution is cross-TF work with the ZKP task force'",
+      "task": "board/request"
+    },
+    {
+      "to": "carded",
+      "by": "mitchuski",
+      "date": "2026-09-05",
+      "evidence": "carded from PR #30's §Community-Anchored text + #9 + the lab's key-binding gadget shape; cost line labelled conjecture per drafting rule 4",
+      "task": "board/card"
+    }
+  ]
+}

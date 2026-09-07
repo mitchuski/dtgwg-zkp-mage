@@ -1,0 +1,137 @@
+{
+  "id": "020",
+  "name": "Delegation chain (VDC) — agent acts for a member",
+  "kind": "composed",
+  "state": "carded",
+  "priority": "P2",
+  "owner": "construction: sankarshanmukhopadhyay · DenisPopov15 · mitchuski (per ScottJeezey, cred-tf #40) · record: stormer78 (PR #19)",
+  "components": [
+    "001",
+    "003",
+    "004",
+    "006"
+  ],
+  "request": {
+    "issue": "cred-spec PR #19 open question 6; ADR-001 §05 'deserves its own record once this one is proven' · cred-tf #40 (stormer78 08-22 design note; ScottJeezey 08-24: \"on our list alongside Q2\") · cred-spec #31 pre-merge list for #19",
+    "by": "stormer78 / sankarshanmukhopadhyay",
+    "need": "prove an agent may act for a principal within scope S until T, chain attenuation-only, without revealing the principal — in the chained PROFILE only: the WD02 core VDC is single-hop, principal-issued, delegate-countersigned and needs no chain proof (cred-tf #40 §1)"
+  },
+  "dish": "A verifier learns that the presenting agent holds a delegation chain rooted at a principal who is a member of a recognised community, with scope narrowing at every hop, no hop expired or revoked, and every hop accepted by its delegate — without learning the principal. (Profile case; the core single-hop VDC is verified by five local checks and no proof.)",
+  "ingredients": [
+    "the VDC chain (grant credentials), each hop's scope, validUntil, maxDepth",
+    "the principal's membership leaf",
+    "the agent's key secret",
+    "each hop’s acceptance countersignature (`delegation.accepts` = SAID of the grant) — the acceptance is constitutive, not optional evidence (cred-tf #40 §3, KERI two-seal shape)"
+  ],
+  "pantry": [
+    "root_C, rl_root, epoch",
+    "the invoked scope term (disclosed)",
+    "transcriptDigest"
+  ],
+  "method": [
+    {
+      "clause": "act ∈ scope_n ⊆ … ⊆ scope_root, depth ≤ maxDepth, validUntil monotone along the chain, root hop signed by the principal (Scott’s predicate shape, cred-tf #40)",
+      "gadget": "chain-resolve"
+    },
+    {
+      "clause": "each hop’s delegate countersigned the grant: `accepts` matches the grant digest (digestMultibase, WD02 D-A) and verifies under the delegate’s key",
+      "gadget": "signature-verify"
+    },
+    {
+      "clause": "principal is a leaf of root_C",
+      "gadget": "set-membership",
+      "component": "001"
+    },
+    {
+      "clause": "the agent's presentation key derives from the leaf-hop delegate secret",
+      "gadget": "key-binding",
+      "component": "004"
+    },
+    {
+      "clause": "no hop revoked at epoch",
+      "gadget": "non-revocation",
+      "component": "006"
+    },
+    {
+      "clause": "bound to one transcript",
+      "gadget": "transcript-bind",
+      "component": "003"
+    }
+  ],
+  "yield": [
+    "the invoked scope term",
+    "root_C, rl_root, epoch",
+    "transcriptDigest"
+  ],
+  "doesNotEstablish": [
+    "that the principal authorised this specific act (grant ≠ invocation — the invocation is a trust-task artifact)",
+    "the principal's identity",
+    "that the agent is not also acting for others",
+    "that the principal has not declined renewal — in the core, revocation is non-renewal within one validUntil; the profile’s credentialStatus re-adds a live lookup and this card’s non-revocation leg is what lets the presentation carry it instead",
+    "what the delegate actually did in the principal’s name — the invocation record lives on the framework side (the artifact gap, cred-tf #40 Q8)"
+  ],
+  "adversary": [
+    {
+      "claim": "principal hidden; chain length hidden up to maxDepth",
+      "against": [
+        "verifier",
+        "verifiers-colluding"
+      ]
+    }
+  ],
+  "horizon": [
+    "the shortest validUntil in the chain",
+    "status freshness"
+  ],
+  "tasting": {
+    "families": [
+      "accepts",
+      "rejects-unsat",
+      "rejects-verify"
+    ],
+    "rejectionCodes": [
+      "scope-escalation (unsat)",
+      "depth-exceeded",
+      "hop-revoked"
+    ]
+  },
+  "substitutions": [
+    {
+      "route": "recursive/folding proof per hop",
+      "cost": "unmeasured",
+      "measured": false,
+      "source": "PATH-MAP P4 (PLONKish/folding counter-proposal welcome)"
+    }
+  ],
+  "issuance": [
+    "VDC as an edge credential type (cred-spec PR #19, rebased over WD02 vocabulary) with ZK-friendly signatures — X3 applies",
+    "the delegator’s identifier is `directed`, a context-scoped identifier per delegation, not `pairwise` (cred-spec #31 pre-merge note for #19)",
+    "grant and acceptance digests are digestMultibase (WD02 D-A); the acceptance is REQUIRED (cred-tf #40; review feedback folded per #31)",
+    "chaining (`parent`, `maxDepth`, `credentialStatus`) exists only in the opt-in profile, visible to the verifier, costs stated (cred-tf #40 §1)"
+  ],
+  "provenance": {
+    "spec": [
+      "cred-spec PR #19 (VDC draft)",
+      "liveness reqs v0.4 delegation evidence",
+      "ADR-001 §05",
+      "ePrint 2026/333 App. B.1",
+      "cred-tf #40 (delegation as a design-time case; the chain-resolution boundary) · cred-spec #31 (#19 pre-merge checklist)"
+    ]
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board",
+      "task": "board/request"
+    },
+    {
+      "to": "carded",
+      "by": "mitchuski",
+      "date": "2026-09-05",
+      "evidence": "ScottJeezey accepted delegation-chain validity as a ZKP TF target (cred-tf #40, 2026-08-24); predicate shape + acceptance clause + core/profile split from stormer78’s note; issuance lines from cred-spec #31",
+      "task": "board/card"
+    }
+  ]
+}

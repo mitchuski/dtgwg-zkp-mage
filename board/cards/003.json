@@ -1,0 +1,110 @@
+{
+  "id": "003",
+  "name": "Transcript binding",
+  "kind": "primitive",
+  "state": "constructed",
+  "priority": "P1",
+  "owner": "mitchuski",
+  "request": {
+    "issue": "zkp-tf #18",
+    "by": "ScottJeezey",
+    "need": "PR-FRE: a proof bound to this challenge and this presentation, unreplayable elsewhere"
+  },
+  "dish": "A verifier learns that this proof was made for exactly this presentation transcript (their challenge included), so replay under any other transcript fails cryptographically.",
+  "ingredients": [
+    "nothing extra — the transcript digest is bound as a public input inside the proof"
+  ],
+  "pantry": [
+    "transcriptDigest — JCS-canonicalised digest of the presentation transcript including the verifier's challenge"
+  ],
+  "method": [
+    {
+      "clause": "the proof's public signals include transcriptDigest and the circuit constrains it (cannot be swapped post hoc)",
+      "gadget": "transcript-bind",
+      "runtime": "runtimes/canonical + runtimes/circom-gadget (public signal 4)"
+    }
+  ],
+  "yield": [
+    "transcriptDigest"
+  ],
+  "doesNotEstablish": [
+    "freshness beyond what the challenge carries",
+    "that the verifier's challenge was itself honest"
+  ],
+  "adversary": [
+    {
+      "claim": "replay to another verifier or time fails",
+      "against": [
+        "verifier",
+        "verifiers-colluding"
+      ]
+    }
+  ],
+  "horizon": [
+    "the transcript's own validity window"
+  ],
+  "tasting": {
+    "families": [
+      "accepts",
+      "rejects-verify"
+    ],
+    "vectors": "runtimes/fixtures/vectors",
+    "rejectionCodes": [
+      "transcript-digest-mismatch",
+      "bare-nonce-insufficient"
+    ]
+  },
+  "substitutions": [
+    {
+      "route": "public-signal binding in Groth16 (lab)",
+      "cost": "+1 constraint (11,522 → 11,523)",
+      "measured": true,
+      "source": "CIRCUITS.md"
+    },
+    {
+      "route": "tag-based SE-NIZK: tag = transcript (paper Def. 5)",
+      "cost": "no circuit cost; property of the proof system",
+      "measured": false,
+      "source": "ePrint 2026/333 §3.5"
+    },
+    {
+      "route": "Flock-class prover binding a SHA-256 digestMultibase transcript digest natively (no Poseidon detour for the canonical transcript)",
+      "cost": "unmeasured — one SHA-256 compression per 64-byte block of the canonical transcript",
+      "measured": false,
+      "source": "board/stacks/flock.json"
+    }
+  ],
+  "issuance": [],
+  "provenance": {
+    "spec": [
+      "liveness reqs v0.4 PR-FRE",
+      "decision §15 canonical transcript",
+      "cred-spec #17 item 1 (JCS)"
+    ],
+    "registry": "0002–0006",
+    "commit": "github.com/mitchuski/dtgwg-zkp-mage"
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board",
+      "task": "board/request"
+    },
+    {
+      "to": "carded",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "X2 context legibility + canonical runtime 11/11",
+      "task": "board/card"
+    },
+    {
+      "to": "constructed",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "+1 constraint measured, CIRCUITS.md",
+      "task": "board/construct"
+    }
+  ]
+}

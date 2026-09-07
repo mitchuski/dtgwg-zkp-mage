@@ -1,0 +1,115 @@
+{
+  "id": "002",
+  "name": "Scoped nullifier (reuse detection)",
+  "kind": "primitive",
+  "state": "constructed",
+  "priority": "P1",
+  "owner": "mitchuski",
+  "request": {
+    "issue": "zkp-tf #18",
+    "by": "ScottJeezey",
+    "need": "PR-UNQ: one presentation per (context, scope, purpose, epoch) — not 'one unique human'"
+  },
+  "dish": "A verifier learns a deterministic nullifier for this context so a second presentation in the same context is detectable, while presentations in other contexts stay unlinkable.",
+  "ingredients": [
+    "holder secret (the same one behind the membership leaf)"
+  ],
+  "pantry": [
+    "context descriptor (scope, purpose, epoch)",
+    "root / enrolment population id",
+    "nullifier — the output"
+  ],
+  "method": [
+    {
+      "clause": "nullifier = H(secret, root, scope, purpose, epoch) computed in-circuit from the same secret as the membership leaf",
+      "gadget": "nullifier",
+      "runtime": "runtimes/circom-gadget/circuits/nullifier_membership.circom"
+    }
+  ],
+  "yield": [
+    "nullifier",
+    "context"
+  ],
+  "doesNotEstablish": [
+    "one natural person globally",
+    "one enrolment per issuer or ecosystem (second point of the trade curve — governance, not cryptography)",
+    "cross-context uniqueness"
+  ],
+  "adversary": [
+    {
+      "claim": "unlinkable across contexts",
+      "against": [
+        "verifiers-colluding"
+      ]
+    },
+    {
+      "claim": "linkable within a context by design (declared, governed)",
+      "against": [
+        "verifier"
+      ]
+    }
+  ],
+  "horizon": [
+    "epoch rollover",
+    "enrolment-root cryptoperiod"
+  ],
+  "tasting": {
+    "families": [
+      "accepts",
+      "rejects-unsat",
+      "unlinkable"
+    ],
+    "vectors": "runtimes/fixtures/vectors",
+    "rejectionCodes": [
+      "nullifier-reused",
+      "context-descriptor-mismatch"
+    ]
+  },
+  "substitutions": [
+    {
+      "route": "Poseidon nullifier in the membership circuit (lab)",
+      "cost": "included in card 001's 11,523",
+      "measured": true,
+      "source": "CIRCUITS.md"
+    },
+    {
+      "route": "PRF-derived context key k_{U,ctx} = PRF_K(I‖ctx) (paper §7.2)",
+      "cost": "one PRF evaluation in the commit-and-prove SNARK",
+      "measured": false,
+      "source": "ePrint 2026/333 §7.2.2"
+    }
+  ],
+  "issuance": [],
+  "provenance": {
+    "spec": [
+      "liveness reqs v0.4 PR-UNQ",
+      "decision §13 scoped reuse detection",
+      "ePrint 2026/333 §5.3 (impossibility → contexts)"
+    ],
+    "registry": "0002–0006",
+    "commit": "github.com/mitchuski/dtgwg-zkp-mage"
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board",
+      "task": "board/request"
+    },
+    {
+      "to": "carded",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "decision §13 + O2 PHC-by-nullifier",
+      "task": "board/card"
+    },
+    {
+      "to": "constructed",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "same circuit as 001; scoped preimage tested 9/9 in runtime 01",
+      "task": "board/construct"
+    }
+  ]
+}

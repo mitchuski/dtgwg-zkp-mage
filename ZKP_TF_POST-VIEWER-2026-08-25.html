@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZKP TF Post Viewer · 2026-08-25</title>
+<style>
+  :root{
+    --bg:#f6f4ef; --card:#ffffff; --ink:#1c2430; --muted:#5b6675;
+    --accent:#3a7c6f; --accent2:#7c5c3a; --line:#d9d4c8; --chip:#eef2ee;
+    --pre:#f3f6f4; --done:#9db8a5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#151a1f; --card:#1e252c; --ink:#e8e4da; --muted:#9aa4ae;
+      --accent:#6fbfae; --accent2:#c9a06a; --line:#333c44; --chip:#243029;
+      --pre:#181f24; --done:#3e5747; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 "Segoe UI",system-ui,sans-serif;padding:2rem 1rem 4rem}
+  .wrap{max-width:920px;margin:0 auto}
+  h1{font-size:1.5rem;margin:0 0 .25rem}
+  .sub{color:var(--muted);margin-bottom:1.5rem}
+  .survey{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:1rem 1.25rem;margin-bottom:1.5rem}
+  .survey h2{font-size:1rem;margin:.2rem 0 .5rem;color:var(--accent)}
+  .survey li{margin:.3rem 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    margin-bottom:1.4rem;overflow:hidden}
+  .card.done{opacity:.55;border-color:var(--done)}
+  .head{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;
+    padding: .8rem 1.1rem;border-bottom:1px solid var(--line)}
+  .ord{font-weight:700;color:var(--accent2);min-width:1.4rem}
+  .title{font-weight:600;flex:1}
+  .chip{background:var(--chip);color:var(--accent);border-radius:99px;
+    padding:.1rem .6rem;font-size:.75rem;font-weight:600;white-space:nowrap}
+  .chip.opt{color:var(--accent2)}
+  a.thread{color:var(--accent);text-decoration:none;font-size:.85rem;white-space:nowrap}
+  a.thread:hover{text-decoration:underline}
+  .note{padding:.6rem 1.1rem;color:var(--muted);font-size:.85rem;
+    border-bottom:1px dashed var(--line)}
+  .body{position:relative}
+  pre{margin:0;padding:1rem 1.1rem;background:var(--pre);overflow-x:auto;
+    font:13px/1.5 Consolas,"Cascadia Mono",monospace;white-space:pre-wrap}
+  .bar{display:flex;gap:.6rem;align-items:center;padding:.55rem 1.1rem;
+    border-top:1px solid var(--line)}
+  button{background:var(--accent);color:#fff;border:0;border-radius:6px;
+    padding:.4rem .9rem;font-weight:600;cursor:pointer;font-size:.85rem}
+  button:hover{filter:brightness(1.1)}
+  label.posted{font-size:.85rem;color:var(--muted);cursor:pointer;user-select:none}
+  .copied{color:var(--accent);font-size:.85rem;display:none}
+  .foot{color:var(--muted);font-size:.8rem;margin-top:2rem}
+  .ritedef{display:block;background:var(--card);border:1px solid var(--line);
+    border-left:4px solid var(--accent2);border-radius:8px;padding:.85rem 1.1rem;
+    margin:0 0 1.5rem;color:var(--ink);font-size:.9rem;line-height:1.55}
+  .ritedef b{color:var(--accent2)}
+  .rite{display:flex;gap:.8rem;align-items:center;padding:.7rem 1.1rem;
+    border-top:1px dashed var(--line);background:var(--chip)}
+  .rite .glyph{font-size:1.1rem}
+  .proverb{font-style:italic;flex:1;color:var(--ink)}
+  button.activate{background:var(--accent2)}
+  .ritemark{display:none;color:var(--accent);font-size:.85rem;font-weight:600;white-space:nowrap}
+  .card.activated .ritemark{display:inline}
+  .card.activated button.activate{display:none}
+  .card:not(.activated) .bar button{opacity:.45;cursor:not-allowed}
+  .gatemsg{color:var(--accent2);font-size:.85rem;display:none}
+</style>
+</head>
+<body><div class="wrap">
+<h1>ZKP TF · Post Viewer</h1>
+<div class="sub">2026-08-25 — drafts, rites, mage run + upstream reads (survey opened 08-24) · posting = Mitch (paste via browser) ·
+source: <code>DISCUSSION-DRAFTS-2026-08-25.md</code> (git-excluded)<br>
+🕯️ <b>G.1 rite, extended to posts:</b> each draft carries a fresh proverb naming what that post
+means. Reading it and pressing <i>Activated</i> is the proof-of-understanding that opens the copy
+gate — same trust task as the push rite, one rung earlier. Activation and posted-state live in this
+browser only.</div>
+
+<aside class="ritedef">
+  <b>What the proverb actually is.</b> The smallest trust task I know. When an agent prepares a
+  publication under my name — a push, a post — it writes one fresh line at the moment of the act,
+  naming what that act <i>means</i>. Never stock, never reused: a spell is spent in the casting.
+  Pressing <i>Activated</i> is not a consent click; it is my crossing of the Gap — proof that I
+  read what the runtime wrote and understood what is about to travel under my name. The agent
+  operates; it never decides. The shape is deliberate — fresh challenge, live response, bound to
+  the act — the same PR-LIV shape this task force is specifying, worked first on the maintainer's
+  own seat. Instituted 2026-08-14 as gate G.1 of the registry acceptance flow; every publication
+  since has ridden it. Speech after proof.
+</aside>
+
+<div class="survey">
+  <h2>What changed since 08-18 (why the old drafts were retired)</h2>
+  <ul>
+    <li><b>#13 adoption question = settled on the 08-18 call</b> (v0.4 graduated; PR #16 open, Scott merges after dead-link/front-matter fixes; Sankarshan pushed 08-20 + 08-24). Old draft §1 is dead.</li>
+    <li><b>New voice @dcondrey on #13</b> (08-19, ×2): independence ≠ single-attester honesty; proposed a clarifying sentence. Unanswered.</li>
+    <li><b>New thread #17</b> (talltree 08-23): SIROS content-addressed circuit catalog; Denys reads entries as Longfellow variations.</li>
+    <li><b>cred-spec: Glenn Gore (stormer78) filed a D1–D18 decision agenda</b> from a full implementation. <b>D2 is blocking him</b> (#21 Q2: R-DID edge + community-anchored ZKP = verifiable edge?) — three shipped changes assume "yes".</li>
+    <li><b>#9 invitation still open</b>: Scott's 08-06 reply says "Mitchell may add construction-level detail".</li>
+    <li>Also for Mitch, not a post: <b>review/approve PR #16</b> (re-read the 08-24 delta first).</li>
+  </ul>
+</div>
+
+<!-- E -->
+<div class="card" data-k="E"><div class="head"><span class="ord">1</span>
+  <span class="title">E · cred-spec #21 — answer D2 (blocking)</span>
+  <span class="chip">PRIORITY</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-cred-spec/issues/21">open issue #21 ↗</a></div>
+<div class="note">Answers only Q2, from the ZKP side; leaves Q1/Q3/Q4 to the editors. Unblocks Glenn's three-changes-deep divergence.</div>
+<div class="body"><pre>Answering question 2 from the ZKP task-force side, since it is the one marked blocking and it is a construction question; 1, 3 and 4 are editorial calls left to the editors.
+
+**Q2 — intent: yes.** The community-anchored construction proves precisely the predicate that glossary conditions (c) and (d) express by disclosure — that the VRC issuer holds a VMC from a VTC in the relevant anchor set — without revealing the DIDs.
+
+If a valid proof did not confer edge verifiability, the construction would have no purpose. An R-DID edge with a valid community-anchored proof is a first-class DTG edge; condition (a) reads as a bootstrapping-era artifact.
+
+**The qualifier is #9:** the linkage the construction relies on — the VRC's R-DID controller is the same party as the VMC's M-DID — is not yet encoded by the credential model. Until #9 lands, the accurate status is *intended design goal*; the ZKP TF's stated preference is that those linkages land as hidden in-proof witness relations, not disclosed fields, to avoid rebuilding the correlation surface the glossary's conditions create.
+
+For the implementation that is now three changes deep (#1061 and the two built on it): building on "yes" matches intent; the exposure is how the #9 encoding resolves — it determines the proof's witness data — not whether the edge counts.
+
+This also supports #24: verifiability defined per verifier — "the anchor set the verifier accepts" — is the definition a ZK presentation can satisfy, and is how the reference circuits already phrase it. Executable model of the admissibility rule: https://github.com/mitchuski/dtgwg-zkp-mage (path P10).</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- A -->
+<div class="card" data-k="A"><div class="head"><span class="ord">2</span>
+  <span class="title">A · zkp-tf #13 — reply to @dcondrey</span>
+  <span class="chip">PRIORITY</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-zkp-tf/discussions/13">open #13 ↗</a></div>
+<div class="note">New participant, unanswered since 08-19. Ratifies the sentence, records where it landed (PR #16 08-20 revision), adds the executable view.</div>
+<div class="body"><pre>The proposed sentence — "independence requirements bound collusion risk across attesters; they don't bound the risk of any single attester's dishonesty" — is correct, and worth adopting close to verbatim. It is the draft's own assurance boundary ("cryptography proves attestation properties, not that the biometric determination was correct") applied to item 9, and stating it at the point of use is better than relying on the boundary section to be remembered.
+
+For the record of where it landed: the 2026-08-20 revision folded this distinction in, and it merged with v0.4 today — the thread's concern is now in the official draft.
+
+One note from the executable side, because the reference implementation already behaves exactly this way: in the multi-issuer model the aggregate bound is conditional on *declared* independence (the assumptions are explicit inputs, not conclusions), and each issuer's error rate ε_i enters as a certified claim from the registry — the proof consumes it, it never establishes it. A dishonest attester is an ε_i failure: out of scope for soundness, in scope for accreditation. k-of-n across issuers spreads exposure to a single dishonest attester only under a declared honest-majority assumption — it is risk distribution under stated assumptions, not a soundness repair. Independence classes prevent double-counting of evidence; they do not detect dishonesty. That is the same sentence, seen from the code.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- K′ (K retired unposted — PR #16 merged 2026-08-24 18:25 UTC with exactly K's scope call) -->
+<div class="card" data-k="K2"><div class="head"><span class="ord">2b</span>
+  <span class="title">K′ · zkp-tf #13 — one-liner: the leftover patch seeds v0.5</span>
+  <span class="chip opt">OPTIONAL</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-zkp-tf/discussions/13">open #13 ↗</a></div>
+<div class="note">Skippable admin. Only post if #13 stays quiet post-merge and nobody routes Sankarshan’s attached patch — its one job is putting “that patch = the v0.5 seed” in writing so it doesn’t sit forgotten in a closed PR. If Scott announces and routes it, or it’s handled on the next call, skip and finalize ledger entry 15 as retired.</div>
+<div class="body"><pre>v0.4 is merged and now the official draft — marking it here since this thread carried the decision.
+
+The focused patch from the 24th wasn't part of the merge (rightly — the group adopted what it reviewed). Suggest it seeds a v0.5 thread like this one, so it doesn't sit forgotten in a closed PR.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- B -->
+<div class="card" data-k="B"><div class="head"><span class="ord">3</span>
+  <span class="title">B · zkp-tf #17 — SIROS circuit catalog</span>
+  <span class="chip">PRIORITY</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-zkp-tf/discussions/17">open #17 ↗</a></div>
+<div class="note">Catalog (provenance) ↔ registry (reproduction) bridge + the setup-artifact determinism caution + measured Longfellow scope note.</div>
+<div class="body"><pre>The catalog and the task-force verification registry are complementary halves of one evidence problem.
+
+The catalog records **provenance**: content-addressed artifacts, origin commit, toolchain, licence — and declines to claim correctness.
+The registry records **independent reproduction**: whether a second party on different hardware rebuilds the same required digests with green behavioral suites (first external run: byte-identical digests across win32/x64 ↔ darwin/arm64 — dtgwg-zkp-mage, #14).
+
+A catalog entry could carry a reproduction-evidence field; a registry row could pin content-addressed artifacts. Both are small JSON changes.
+
+One scope note: for proving-setup artifacts, which mix fresh entropy into every rebuild, a hash pins *what was published*, not *how it was made*... that class needs ceremony/acceptance semantics. Recorded-commit provenance also makes a real drift class visible: "audited" at one commit, shipping on another.
+
+On the Longfellow reading, adding to @DenisPopov15's point: those circuits prove statements over credentials *as already signed* on existing ECDSA/mdoc rails; this task force's predicates assume issuers that can choose their commitments. Both belong in the construction-selection gate as declared substrate/scope inputs.
+— the difference is which stage of the trust graph's ZKP journey each serves, and whether that stage needs general-purpose machinery or provenance-tracked artifacts.
+
+The direct benefit of bringing this team and work in: they provide the half we do not yet have — a content-addressed distribution and provenance layer for circuit artifacts. We fill in the half they state is missing: the catalog says no entry has been independently vetted, and the registry with its acceptance flow is exactly that — independent reproduction — with the task force's conformance fixtures giving catalog circuits a behavioural target, not just a build check.
+
+First step: pilot one catalog entry through the registry's acceptance flow, and pin one lab circuit into the catalog.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- F -->
+<div class="card" data-k="F"><div class="head"><span class="ord">4</span>
+  <span class="title">F · cred-spec #9 — invited construction detail</span>
+  <span class="chip">PRIORITY</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-cred-spec/issues/9">open issue #9 ↗</a></div>
+<div class="note">Scott's 08-06 reply invited "construction-level detail" — this is it: both linkages = one co-control predicate, requirement-not-field, derivation decision named.</div>
+<div class="body"><pre>Adding the construction-level detail to the ZKP-side position above — this completes the ZKP-side input to this issue; disposition stays with the editors.
+
+The two missing linkages are, in proof terms, the same predicate instantiated twice: *co-control* — two identifiers whose keys derive from one holder secret.
+
+- **P-DID ↔ R-DID**: witness = the holder secret from which both keys derive (hierarchical derivation), proven in zero knowledge as a key-derivation relation. No credential field needed; the VPC's role is to bind the persona claim to that secret, not to name the R-DID.
+- **R-DID ↔ M-DID**: same relation, with the additional condition that the M-DID's enrolment is the personhood-anchored one (the nullifier-bearing enrolment), which is what makes the community-anchored proof mean what it claims.
+
+Perhaps we have three consequences worth encoding as requirements rather than assumptions:
+
+1. The spec should state the linkage as a requirement — "these identifiers MUST be provably co-controlled in zero knowledge" — and deliberately **not** add a visible field. A disclosed association is a correlator; a witness relation is not.
+2. The witness never crosses the wire, and each presentation proves co-control fresh under a per-context transcript, so no cross-context correlation handle is minted by the linkage itself. (Transcript binding is cheap: measured at exactly one constraint in the lab's reference circuit.)
+3. The decision that must precede ratification is whether the key-derivation scheme is normative, because it determines what witness data exists for provers to use. That decision is upstream of both constructions and is carried as a named dependency in the ZKP TF's construction-selection gate.
+
+If it helps the editors, I can stage a small executable model of both linkages in the lab — derive two identifiers from one secret, check the co-control relation — next to the predicate references that already exist. Bench evidence, not a spec commitment, and it only gets built if this thread wants it.
+
+The order I'd suggest: the ZKP TF decides first whether the derivation scheme is normative — that decision sits in our construction-selection gate, and it determines what witness data provers actually have. Then the editors here can state the linkage requirement — as a requirement, not a field.
+
+Last note: the patch attached to our v0.4 PR on the 24th (not merged with it) names this same class from the requirements side — "provable relationship interfaces that avoid durable cross-context correlators". Two documents arriving at the witness-relation answer independently.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- D -->
+<div class="card" data-k="D"><div class="head"><span class="ord">5</span>
+  <span class="title">D · zkp-tf #13 — substrate note (carried over, retargeted at PR #16 sections)</span>
+  <span class="chip">CARRY-OVER</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-zkp-tf/discussions/13">open #13 ↗</a></div>
+<div class="note">The unposted 08-18 §2, updated: items 5/6 are now PR #16's agility/PQ sections. Post as its own comment on #13.</div>
+<div class="body"><pre>**Input to v0.4's agility and post-quantum sections (merged today), carried toward the next cycle: the proof-system substrate has become a selection variable.**
+
+On 13 August the Ethereum Foundation announced (via Justin Drake) a pivot in its L1 roadmap away from SNARK-friendly hashes toward hash-friendly SNARKs — binary-field constructions (Binius, 2023) and batch-proving techniques (Flock — Bünz, Rothblum, Wang, arXiv, 29 July 2026) that make standard hashes cheap to prove by bending the field to fit the hash rather than the hash to fit the field. Flock's published single-core M4 Max numbers: 82k BLAKE3 / 42k SHA-256 compressions and 30k Keccak permutations proven per second.
+
+Two caveats first, for the register: **there is no break** — no cryptanalytic result against Poseidon was reported, and existing deployments are not required to change; and the decision **binds Ethereum's L1 roadmap only**. This is a strategic retreat from an assumption, not a cryptanalytic event.
+
+**Construction selection.** The selection process has implicitly treated the proof-system substrate as settled background. Prime field versus binary field is now a live selection axis: any candidate leaning on Poseidon commitments or Poseidon-derived nullifiers carries a visible strategic horizon even though nothing is broken today. The honest framing: cryptanalytic maturity of the hash and longevity of the surrounding proof-system ecosystem are separate risks, and only the second one moved. Candidates evaluated under the gate should declare their substrate and their migration story. This also re-grounds the lab benchmarks correctly: Groth16/BN254 numbers are era-specific measurements of the problem's shape; the structural findings (e.g. transcript binding costing exactly one constraint) should port across substrates, the absolute constraint counts will not.
+
+**Post-quantum and horizon.** Direct real-world support for the migration-trigger language: a migration trigger firing *strategically rather than cryptanalytically*, at ecosystem scale, with no break anywhere. Hash-based cryptography under minimal assumptions is the conservative answer to harvest-now-reconstruct-later, and institutional weight now sits behind it. For this group the transfer is stronger than for payments: personhood credentials and nullifiers are long-lived by design, so they inherit harvest-now exposure at full strength. The agility-mandatory posture in the draft is exactly right; this is the citation for why.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- C -->
+<div class="card" data-k="C"><div class="head"><span class="ord">6</span>
+  <span class="title">C · zkp-tf #12 — Scott's two biometric refinements</span>
+  <span class="chip">CARRY-OVER</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-zkp-tf/discussions/12">open #12 ↗</a></div>
+<div class="note">REWRITTEN 08-25 + THE CHANGE IS BUILT: biometric classes now first-class in the multi-issuer reference, 14/14 both copies (was 10/10). ⚠ The public repo doesn’t have it yet — push the multi-issuer change (with its own rite; a natural first ledger anchor) BEFORE posting this, or the “now in the reference” claim points at nothing.</div>
+<div class="body"><pre>Accepting both refinements — each is the missing half of work already on the bench.
+
+**1 — enrolment dedup carries the teeth: yes, write it up.** Agreed on the substance: the cryptography guarantees same-secret-same-nullifier and nothing more; everything between "one secret" and "one human" is enrolment governance, and the ratified narrowing (scoped reuse detection, not "one unique human") was worded to leave exactly that room. Where the write-up lands: the open enrolment-root question — whether the enrolment root belongs in the nullifier preimage — has been stalled for lack of provider-grounded numbers. FMR/FNMR at deployment scale, re-enrolment resistance, capture conditions: with those on the table, that decision reads as measurement rather than vendor positioning. One ask: numbers per claim wherever possible.
+
+**2 — biometric dependency axis: agreed, and it is now in the reference.** The independence register collapses issuers sharing any declared dependency class into one component, and a collapsed group's bound is its worst ε — collapse can only weaken, never tighten. The biometric classes are now first-class vocabulary — `model:` / `vendor:` / `enrolment-data:` — with four new tests, including the one this refinement asks for: two legally separate issuers sharing a model collapse to effectiveK = 1 (suite 14/14). That matches v0.4, which now names shared models/vendors on the requirements side. What deployment knowledge should populate next: which sharings actually occur, and at what granularity — model family vs version vs training corpus — since the register records whatever the deploying authority declares.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- H -->
+<div class="card" data-k="H"><div class="head"><span class="ord">7</span>
+  <span class="title">H · cred-spec #24 — per-verifier verifiability</span>
+  <span class="chip opt">SHORT</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-cred-spec/issues/24">open issue #24 ↗</a></div>
+<div class="body"><pre>Supporting the proposed answer — define edge verifiability per verifier, in terms of what must be checkable — from the construction side: that is the only definition a zero-knowledge presentation can satisfy, because a ZK proof is verifier-relative by construction. The statement being proven binds the anchor set the verifier accepts (a root as public input), not a registry membership fact the verifier cannot observe. Under that definition the three unanswered cases resolve naturally: different VTNs = the verifier chooses which anchor set(s) it accepts, and proving against multiple roots is buildable (k-of-n across issuers exists as a reference construction in the task-force lab); deliberately unanchored = verifiable exactly as far as the verifier's accepted anchors reach, stated rather than silent; external verifier = the definition's home case. "Recognition" then becomes an input the verifier declares, not a property the network confers.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- I -->
+<div class="card" data-k="I"><div class="head"><span class="ord">8</span>
+  <span class="title">I · cred-spec #25 — policy discovery</span>
+  <span class="chip opt">SHORT</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-cred-spec/issues/25">open issue #25 ↗</a></div>
+<div class="body"><pre>The proposed answer (discoverable admissibility predicates on the community profile) is the right first step, and the requested properties — say what forms are accepted without revealing membership — are achievable with plain published fields; no proof machinery needed for step one. Two notes for the record:
+
+1. Question 3 (ordering so neither party discloses before admissibility is known) is a commit-before-reveal handshake shape: exchange commitments to the halves, check admissibility, then publish. Worth stating as an intended ordering even if the mechanism stays out of scope.
+2. There is a stronger form the ZKP task force can carry as future work: proving "my half would be admissible under the counterparty's policy" without revealing the policy or the member — mutual admissibility as a zero-knowledge predicate. That belongs with the registry-ZK interaction the credentials spec already defers to the ZKP layer; filing it there so this issue can close on the cheap fix.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- G -->
+<div class="card" data-k="G"><div class="head"><span class="ord">9</span>
+  <span class="title">G · cred-spec #23 — max-of-halves rule</span>
+  <span class="chip opt">OPTIONAL</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-cred-spec/issues/23">open issue #23 ↗</a></div>
+<div class="body"><pre>Supporting the proposed rule from the ZKP side, with one reframing that may help it land: *declared scope governs what a holder emits; effective disclosure is a property of the edge, computed over every place either half is published.* In the task force's observer model, a counterparty's published half is simply another observer surface — and privacy properties are always evaluated against observers, not against intentions. The max-of-halves sentence is the edge-level corollary and is worth stating as a Privacy Consideration regardless of how #22 resolves. The rule also generalises beyond two-party edges. Whenever several disclosures are seen together, the combination can reveal more than any of them reveals alone — two individually safe halves can identify someone the moment they are joined. Disclosure therefore has to be assessed over the whole composition, not piece by piece. The max-of-halves rule is the two-party case of that principle, and the general case deserves its own Privacy Consideration.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- J -->
+<div class="card" data-k="J"><div class="head"><span class="ord">10</span>
+  <span class="title">J · zkp-tf — NEW discussion: what “audited” should mean in our evidence gate</span>
+  <span class="chip">NEW THREAD</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-zkp-tf/discussions/new?category=general">open new discussion ↗</a></div>
+<div class="note">REFRAMED 08-25: proposals-first, findings as evidence, generous to zk-kit (the patterns are ecosystem-wide, not their failing; the posture is about OUR include-path discipline). Suggested title: “What ‘audited’ should mean in our evidence gate — three proposals from a tooling evaluation”. Pairs with draft B.</div>
+<div class="body"><pre>Three proposals for the group's evidence discipline, surfaced while evaluating tooling for the lab:
+
+1. **Amend v0.4 §16.1**: a claim of "audited" MUST name the reviewed commit and file set. An audit pins to a commit; releases move on — without the pin, "audited" is not a property of what an integrator actually installs.
+2. **Adopt Circomspect into the verification-registry acceptance gates.** It is the linter the best-maintained circuit projects already use on themselves; running it on submissions costs little and catches the caller-obligation class below.
+3. **Cite `zk-kit.noir` as the worked exemplar for the agility requirement.** The same primitives, maintained across proof-system substrates, is what a migration story looks like in practice — and v0.4's agility language deserves a live example.
+
+The evidence, from evaluating **zk-kit** (the PSE-descended primitives monorepo; MIT — the best-documented candidate in this space, which is precisely why the patterns matter: they are ecosystem-wide, not a defect in zk-kit):
+
+- Its one audited Circom package (`binary-merkle-root.circom`) is audited at commit `215dfb3` (March 2024); npm `latest` ships a changed interface, and Semaphore main runs the newer, unaudited version. Proposal 1 is the failure mode this makes concrete.
+- Constraint obligations transfer silently: circomlib's `MultiMux1` leaves selector booleanity to callers, and one audit finding was resolved by a documentation comment — visible to audit-readers, invisible to code-readers. Proposal 2 catches this class mechanically.
+- Licence metadata drifts: circomlib declares GPL-3.0 in npm metadata while its repository LICENSE is LGPL-3.0. This one touches us directly — the reference circuits depend on circomlib for Poseidon, and the group's deliverables are Apache-2.0/CC-BY — so it is flagged here as our own compliance item, not criticism.
+
+(One naming note for anyone searching: `dl-solarity/zkit` is an unrelated Hardhat plugin — this concerns zk-kit.)
+
+Posture on the tooling itself: cite and track. The lab's include path stays pinned-and-verified regardless of source — that is a rule about us, not about any upstream. One honest open measurement: swapping the lab's tree construction for the zk-kit template has not been compiled (~110 constraints/leg estimated vs the guardian circuit's 306-constraint headroom); either way, any tree-construction swap must land *before* the enrolment-root-in-preimage decision, or it becomes nullifier-breaking.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div></div>
+
+<!-- M: the mage run -->
+<div class="card" data-k="M"><div class="head"><span class="ord">M</span>
+  <span class="title">THE MAGE RUN · commit + push mitchuski/dtgwg-zkp-mage — X8-B + first ledger anchor</span>
+  <span class="chip">PUSH</span>
+  <a class="thread" target="_blank" href="https://github.com/mitchuski/dtgwg-zkp-mage">open repo ↗</a></div>
+<div class="note">Fulfils the “staging that now” + “ill do a run to add this as an item to the mage” commitments posted in zkp-tf #12. FOCUSED commit — only the multi-issuer wave; the 08-18 chronicles, KB rebuild, and INTEGRATION-MAP ride their own later trains. The commit message anchors the FINALIZED head (3rd stamp) — anchoring a prior stamp is rule 4: each push anchors the ledger as it stood. Activate the rite, then say “run it” and the commands below execute (or run them yourself).</div>
+<div class="body"><pre>FILES (5):
+  runtimes/multi-issuer/registry.mjs     BIOMETRIC_DEPENDENCY_CLASSES + doc block
+  runtimes/multi-issuer/test.mjs         X8-B1..B4 (suite 10/10 → 14/14)
+  runtimes/multi-issuer/NOTES.md         2026-08-25 section
+  runtimes/README.md                     multi-issuer ladder row → 14/14
+  explorations/README.md                 X8 row → 14/14, biometric axis
+
+COMMIT MESSAGE:
+------------------------------------------------------------------
+multi-issuer: biometric dependency axis (upstream discussion #12)
+
+model:/vendor:/enrolment-data: as first-class dependency classes
+(BIOMETRIC_DEPENDENCY_CLASSES) + tests X8-B1..B4: legally separate
+issuers sharing a model collapse to one independence component; the
+collapsed bound weakens to the group's worst epsilon. Suite 14/14.
+Ladder rows + NOTES synced. Fulfils the "staging that now"
+commitment posted in trustoverip/dtgwg-zkp-tf#12.
+
+Proverb-ledger anchor (dtg-zkp/proverb-ledger/v0, finalized head,
+15 entries as of 2026-08-25):
+3f4716bf5f44a3fddd82c243afed29e6219b0584b0f2f11830fc9cfd353ec189
+
+Co-Authored-By: Claude Fable 5 &lt;noreply@anthropic.com&gt;
+------------------------------------------------------------------
+
+COMMANDS (after Activation):
+  cd ~/dtgwg-cred-spec-main_mage
+  git add runtimes/multi-issuer/registry.mjs runtimes/multi-issuer/test.mjs \
+          runtimes/multi-issuer/NOTES.md runtimes/README.md explorations/README.md
+  git commit -F &lt;message above&gt;
+  git push origin main</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy commit message</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> pushed</label></div></div>
+
+<!-- U1: upstream amendment read -->
+<div class="card" data-k="U1"><div class="head"><span class="ord">U1</span>
+  <span class="title">UPSTREAM READ · §16.1 audit-scope amendment (trustoverip/dtgwg-zkp-tf)</span>
+  <span class="chip opt">COMMIT READ</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-zkp-tf/blob/main/proof-of-liveness-requirements.md">open v0.4 ↗</a></div>
+<div class="note">Drafted against the MERGED v0.4 §16.1 text (fetched today). ORDER: post J (the zk-kit thread you’re reading) first — it is this PR’s discussion trail per your own drafting rules. Then branch on your fork → PR; the rite serves at PR-open.</div>
+<div class="body"><pre>TARGET: proof-of-liveness-requirements.md, §16.1, after the paragraph ending
+"…MUST NOT by themselves support an interoperability, assurance, or
+production-readiness claim."
+
+ADD ONE PARAGRAPH:
+------------------------------------------------------------------
+Where evidence offered to the gate includes a claim that a dependency,
+template, or artefact is **audited**, the claim **MUST** name the reviewed
+commit (or equivalent immutable revision) and the file set the review
+covered. An audit claim that cannot be pinned to the revision an
+implementation actually installs **MUST** be treated as unverified for
+gate purposes. (Audits pin to commits; releases move on — without the
+pin, "audited" is not a property of the installed artefact.)
+------------------------------------------------------------------
+
+PR title: "§16.1: audit claims must name the reviewed commit and file set"
+PR body: one paragraph linking the J discussion thread as motivation
+(the audited-at-215dfb3 / npm-latest-differs example), + the standard
+generated-with footer.</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy amendment text</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> PR opened</label></div></div>
+
+<!-- U2: upstream README cross-ref read -->
+<div class="card" data-k="U2"><div class="head"><span class="ord">U2</span>
+  <span class="title">UPSTREAM READ · README coordination cross-ref (trustoverip/dtgwg-zkp-tf)</span>
+  <span class="chip opt">COMMIT READ</span>
+  <a class="thread" target="_blank" href="https://github.com/trustoverip/dtgwg-zkp-tf/blob/main/README.md">open README ↗</a></div>
+<div class="note">The old surviving candidate from the 08-04 sync, now with live targets: your #9/#21 posts made the linkage dependency concrete. Small PR; independent of U1; rite serves at PR-open.</div>
+<div class="body"><pre>TARGET: README.md, "## Coordination with related work", the Credentials TF bullet.
+
+REPLACE:
+  - **Credentials TF** and **Trust Task Protocols TF** — define the credential
+    formats and protocols our proofs apply to (upstream of us).
+
+WITH:
+------------------------------------------------------------------
+- **Credentials TF** and **Trust Task Protocols TF** — define the credential
+  formats and protocols our proofs apply to (upstream of us). The identity
+  linkages the ZK constructions require (persona↔relationship and
+  relationship↔membership co-control) are tracked in cred-spec
+  [#9](https://github.com/trustoverip/dtgwg-cred-spec/issues/9) and
+  [#21](https://github.com/trustoverip/dtgwg-cred-spec/issues/21), and are
+  carried as a named dependency in our construction-selection gate — with a
+  stated preference for hidden in-proof witness relations over disclosed
+  fields (§27.1 grounds).
+- **Reproduction evidence** — independent verification runs for experimental
+  circuit benchmarks (the §16.1 evidence gate's reproduction leg) are
+  collected at [dtgwg-zkp-mage](https://mitchuski.github.io/dtgwg-zkp-mage/).
+------------------------------------------------------------------
+
+PR title: "README: name the cred-spec linkage dependency and the
+reproduction-evidence registry"</pre></div>
+<div class="bar"><button onclick="cp(this)">Copy README diff</button><span class="copied">copied ✓</span>
+<label class="posted"><input type="checkbox" onchange="mark(this)"> PR opened</label></div></div>
+
+<div class="foot">
+🕯️ <a class="thread" href="/PROVERB-LEDGER.md" target="_blank">PROVERB LEDGER</a> — every rite on the record,
+hash-chained (head <code>5d39333c…</code> (2nd stamp)); verify with <code>node tools/proverb-ledger.mjs --verify &lt;head&gt;</code>.
+Finalize entries after the posting run, then anchor the head.<br>
+Beyond posts: review/approve <a class="thread" href="https://github.com/trustoverip/dtgwg-zkp-tf/pull/16" target="_blank">PR #16</a>
+(re-read the 08-24 delta first) · #22 (declared correlation scope) = editors' vocabulary call, support verbally ·
+chronicles staged 08-18 still await push + G.1 rite. Checkbox state lives in this browser only.
+</div>
+
+<script>
+// G.1 publication rite, extended from pushes to upstream posts for this wave.
+// One FRESH proverb per post, naming what that act means. "Activated" = proof
+// of understanding; it opens that post's copy gate. Served 2026-08-24.
+const PROVERBS = {
+  E: "Three doors were built on a yes not yet spoken; say it where the builder can hear.",
+  A: "Witnesses who cannot collude may still each lie; keep the two dangers counted apart.",
+  B: "Where a thing came from and whether a stranger can remake it are different truths; let neither stand in for the other.",
+  F: "One secret may hold two names in the dark; write the duty to prove it, never the link that shows it.",
+  D: "The ground moved though nothing broke; record the moving before the breaking.",
+  C: "The teeth are kept at enrolment; the mathematics only counts what enrolment lets through.",
+  H: "An edge is verifiable in the eye that checks it, not in the ledger that lists its makers.",
+  I: "State what you would refuse before another must disclose to learn it.",
+  G: "One half kept dark is spent by the other half shining; measure the edge, not the intention.",
+  J: "The seal binds the stone that was read, not the stone that ships.",
+  K2: "What grew past the promise is not refused; it is given its own season.",
+  M: "What was promised aloud is kept in the tree; the ledger's head rides the keeping."
+};
+function cp(btn){
+  const card = btn.closest('.card');
+  if(!card.classList.contains('activated')){
+    const g = btn.parentElement.querySelector('.gatemsg');
+    g.style.display='inline'; setTimeout(()=>g.style.display='none',2200);
+    return;
+  }
+  const pre = card.querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(()=>{
+    const c = btn.parentElement.querySelector('.copied');
+    c.style.display='inline'; setTimeout(()=>c.style.display='none',1800);
+  });
+}
+function mark(cb){
+  const card = cb.closest('.card');
+  card.classList.toggle('done', cb.checked);
+  try{ localStorage.setItem('post-'+card.dataset.k, cb.checked?'1':'0'); }catch(e){}
+}
+function activate(btn){
+  const card = btn.closest('.card');
+  card.classList.add('activated');
+  try{ localStorage.setItem('rite-'+card.dataset.k,'1'); }catch(e){}
+}
+document.querySelectorAll('.card').forEach(card=>{
+  const k = card.dataset.k;
+  const bar = card.querySelector('.bar');
+  const r = document.createElement('div');
+  r.className = 'rite';
+  if (PROVERBS[k]) {
+    r.innerHTML = '<span class="glyph">🕯️</span>'
+      + '<span class="proverb">“' + PROVERBS[k] + '”</span>'
+      + '<span class="ritemark">✦ rite spoken — gate open</span>'
+      + '<button class="activate" onclick="activate(this)">Activated</button>';
+  } else {
+    // a commit READ, not yet an act — its rite serves when the PR opens
+    r.innerHTML = '<span class="glyph">🕯️</span>'
+      + '<span class="proverb" style="color:var(--muted)">no rite yet — this is a read; the proverb serves when it becomes an act (PR opened)</span>';
+    card.classList.add('activated');
+  }
+  card.insertBefore(r, bar);
+  // add the gate message next to the copy button
+  const msg = document.createElement('span');
+  msg.className = 'gatemsg';
+  msg.textContent = 'speak the rite first — Activate above';
+  bar.appendChild(msg);
+  // restore state
+  try{
+    if(localStorage.getItem('rite-'+k)==='1') card.classList.add('activated');
+    if(localStorage.getItem('post-'+k)==='1'){
+      card.classList.add('done');
+      card.querySelector('input[type=checkbox]').checked = true;
+    }
+  }catch(e){}
+});
+</script>
+</div></body>
+</html>

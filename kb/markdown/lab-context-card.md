@@ -3,7 +3,7 @@ title: "Lab — context-card"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/context-card/NOTES.md"
 built_from_commitish: "working-tree"
-order: 64
+order: 66
 ---
 # context-card — the §6.8 human-legibility instrument (X2)
 

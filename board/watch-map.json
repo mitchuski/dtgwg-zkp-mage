@@ -1,0 +1,23 @@
+{
+  "dtgwg-zkp-tf#18": { "cards": ["001", "002", "003", "005", "010", "011", "020"], "note": "the board thread — every card is a candidate row" },
+  "dtgwg-zkp-tf#12": { "cards": ["001"], "note": "biometric dependency classes → multi-issuer X8-B (done 08-25)" },
+  "dtgwg-zkp-tf#17": { "cards": ["001", "010"], "note": "catalog ↔ registry; SIROS legacy-rails route in 010's substitutions" },
+  "dtgwg-zkp-tf#13": { "cards": [], "note": "v0.4 merged; focused patch routed to v0.5 (K′ unposted)" },
+  "dtgwg-cred-spec#9": { "cards": ["007", "010", "011"], "note": "common-control linkage — #31 says it gains weight; draft F" },
+  "dtgwg-cred-spec#17": { "cards": ["007", "010"], "note": "eddsa-jcs-2022 vs ZK-friendliness (X3) — posted 08-29; D-A settles digestMultibase" },
+  "dtgwg-cred-spec#22": { "cards": ["007", "012"], "note": "three correlation scopes; talltree's intentional-correlation observation → 012" },
+  "dtgwg-cred-spec#31": { "cards": ["007", "020"], "note": "WD02 merge plan; row #9 = ZKP TF work; #19 pre-merge list → 020 issuance" },
+  "dtgwg-cred-spec#21": { "cards": ["010"], "note": "edge verifiability Q1/Q2 answered 08-24 → PR #26" },
+  "dtgwg-cred-spec#23": { "cards": ["010"], "note": "max-of-halves → PR #27; 010 does-not-establish line" },
+  "dtgwg-cred-spec#24": { "cards": ["010"], "note": "per-verifier; #31 D-D closes it at #26 citing the endorsement" },
+  "dtgwg-cred-spec#28": { "cards": [], "note": "taxonomy after eight types (D-B) — no proof-layer stake" },
+  "dtgwg-cred-spec#26": { "cards": ["010"], "note": "PR: edge verifiability normative; bmiller59's statement-3 carve-out = 010's pair-half line; draft I (optional)" },
+  "dtgwg-cred-spec#27": { "cards": ["010"], "note": "PR: effective disclosure = wider half — approved by bmiller59 09-02" },
+  "dtgwg-cred-spec#30": { "cards": ["007", "010", "011", "012"], "note": "PR: WD02 correlation scope — the vocabulary the cards were re-carded into" },
+  "dtgwg-cred-spec#38": { "cards": ["008"], "note": "geoffturk 09-05: unsalted digest binders are enumerable; blinding deferred from WD02, asks for ZKP TF Q2 coordination → card 008; draft N" },
+  "dtgwg-cred-spec#19": { "cards": ["020"], "note": "PR: VDC — rebase over #30, acceptance required, directed delegator identifier" },
+  "dtgwg-cred-spec#29": { "cards": ["020"], "note": "PR: VAC — shared-subject rule leans on common control (#31 row #9)" },
+  "dtgwg-cred-tf#39": { "cards": ["001", "006", "008", "020"], "note": "Scott's four ZKP TF work items on record (08-25); Berkeley 8 Sept" },
+  "dtgwg-cred-tf#40": { "cards": ["006", "020"], "note": "delegation core/profile split; set-root unification — Scott: 'ours to pressure-test'" },
+  "dtgwg-cred-tf#41": { "cards": ["007", "012"], "note": "three scope names settled; DTGWG objection window opened 09-01" }
+}

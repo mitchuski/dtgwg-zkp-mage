@@ -1,0 +1,76 @@
+{
+  "id": "lab-groth16-circom",
+  "name": "Lab Groth16 (circom 2 · snarkjs · BN254 · Poseidon)",
+  "kind": "hand-rolled",
+  "maintainer": "the evidence repository (mitchuski) — benchmarking vehicle, not the task force's selection",
+  "frontend": "circom 2.x → R1CS",
+  "proofSystem": "Groth16 over BN254 (snarkjs); Poseidon for all in-circuit hashing",
+  "field": "BN254 scalar field; Baby Jubjub for in-circuit keys (planned)",
+  "setup": "trusted setup per circuit — lab-only fixed-entropy setup, unusable for production, reproducible from a clean clone; production ceremony = an open item",
+  "postQuantum": "no — pairing-based; migration path is a different stack (LIV-ALG-07)",
+  "credentialModel": "issuer-chosen commitments: Poseidon leaf commitments; ZK-friendly signatures or an additional Poseidon/KZG commitment beside the credential signature (X3)",
+  "platforms": [
+    "node",
+    "browser-wasm (snarkjs)",
+    "x86_64",
+    "darwin-arm64"
+  ],
+  "verifier": [
+    "local",
+    "server",
+    "browser",
+    "on-chain (Solidity verifier)"
+  ],
+  "license": "Apache-2.0 (lab code); circomlib LGPL-3.0 in repo LICENSE vs GPL-3.0 declared in npm metadata — flagged",
+  "iprNote": "circomlib licence ambiguity is material for an Apache-2.0 deliverable; noted in NOTE-2026-08-19",
+  "audit": {
+    "claim": "none — reproduction and behaviour are not review",
+    "reviewedCommit": null,
+    "fileSet": null,
+    "source": "CIRCUITS.md"
+  },
+  "maturity": "most mature toolchain available; the lab's three circuits are source-complete with deterministic setup scripts",
+  "independentImplementations": 1,
+  "provenance": {
+    "repo": "github.com/mitchuski/dtgwg-zkp-mage — runtimes/circom-gadget",
+    "version": "artifacts.manifest.json (pinned required digests)",
+    "contentAddressed": true
+  },
+  "benchmarks": [
+    {
+      "statement": "nullifier_membership (depth-20 Merkle + domain-tagged nullifier + in-circuit transcript binding)",
+      "device": "lab machine",
+      "rate": "11,523 constraints · ~680 ms prove · ~8 ms verify · 721 B proof",
+      "source": "CIRCUITS.md; registry rows 0002–0006 (independent reproduction, win32/x64 ↔ darwin/arm64 byte-identical required digests)"
+    },
+    {
+      "statement": "dual_issuer k=2 (two distinct accredited issuers; duplicate unsatisfiable)",
+      "device": "lab machine",
+      "rate": "10,717 constraints (--O2) · ~740 ms · ~8 ms · 725 B",
+      "source": "CIRCUITS.md"
+    },
+    {
+      "statement": "guardian_threshold t=3",
+      "device": "lab machine",
+      "rate": "16,078 constraints · ~830 ms · ~10 ms · 723 B",
+      "source": "CIRCUITS.md"
+    }
+  ],
+  "covers": {
+    "set-membership": "measured (11,523 with nullifier + binding)",
+    "nullifier": "measured (inside the same circuit)",
+    "transcript-bind": "measured (+1 constraint)",
+    "key-binding": "planned (Baby Jubjub identity) — unmeasured",
+    "distinctness": "measured (dual_issuer, guardian_threshold)",
+    "signature-verify": "unmeasured — the X3 case; EdDSA-on-Baby-Jubjub feasible, Ed25519/ECDSA expensive",
+    "non-revocation": "unmeasured — indexed tree ≈ 2× set membership (conjecture)",
+    "range": "cheap — unmeasured",
+    "commitment-open": "Poseidon opening — measured as the leaf commitment inside 001",
+    "chain-resolve": "unmeasured"
+  },
+  "notes": [
+    "The only stack with registry rows today: the reproduction ladder places it at reproduced-cross-arch for constructions 001/002/003/005.",
+    "Chosen for toolchain maturity so the selection conversation happens against measured numbers; a PLONKish or folding counter-proposal through the same gate is invited (PATH-MAP P4)."
+  ],
+  "verified": "2026-09-05 — CIRCUITS.md, registry/data"
+}

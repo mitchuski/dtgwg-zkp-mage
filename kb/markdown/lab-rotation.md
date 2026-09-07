@@ -3,7 +3,7 @@ title: "Lab — rotation"
 section: "lab"
 source: "../dtgwg-zkp-tf-mage/runtimes/rotation/NOTES.md"
 built_from_commitish: "working-tree"
-order: 71
+order: 73
 ---
 # Rotation — recovery and rotation without correlators (X5 as a runnable reference)
 

@@ -3,7 +3,7 @@ title: "Chronicle 2026-07-16 — Trust-Graph Formation Dream Cycle"
 section: "chronicles"
 source: "../agentprivacy_master/docs/chronicles/2026-07-16_trust-graph-formation-dream-cycle.md"
 built_from_commitish: "working-tree"
-order: 74
+order: 76
 ---
 # 2026-07-16 · Trust-Graph Formation as a Dream-Agent Cycle
 
