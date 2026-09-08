@@ -3,8 +3,7 @@
 The board's cards (`../board/cards/*.json`) rendered as a specification draft with
 [Spec-Up-T](https://github.com/trustoverip/spec-up-t), the same tool the DTG Credentials Core
 Specification renders with. **This is a working draft in the evidence repository, not a task-force
-deliverable.** It is offered to trustoverip/dtgwg-zkp-tf as the shape of the deliverable's
-construction section (see `../board/drafts/H-*.md`).
+deliverable.** The specification and book’s upstream home is [dtgwg-zkp-spec](https://github.com/trustoverip/dtgwg-zkp-spec), with the [current proposed contribution in PR #8](https://github.com/trustoverip/dtgwg-zkp-spec/pull/8). The [catalogue discussion](https://github.com/trustoverip/dtgwg-zkp-spec/discussions/9) indexes all twelve records. This local rendering is supporting material: some editor-authored guide and integration chapters live only in the spec repository. Requirements and adoption decisions remain with the task force.
 
 ## The rule
 

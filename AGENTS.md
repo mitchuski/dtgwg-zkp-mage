@@ -11,9 +11,10 @@ runnable reference models, real circuits with measured benchmarks, byte-determin
 conformance fixtures, and design explorations. Every claim here is anchored to the
 task force's decision frame and, where possible, to a test you can execute yourself.
 
-It is **not the specification**. Spec text, requirements drafts, and ratification
-threads live upstream at
-[`trustoverip/dtgwg-zkp-tf`](https://github.com/trustoverip/dtgwg-zkp-tf).
+It is **not the specification**. The specification, implementation guide, book and construction records live in [dtgwg-zkp-spec](https://github.com/trustoverip/dtgwg-zkp-spec). The [proposed working draft, PR #8](https://github.com/trustoverip/dtgwg-zkp-spec/pull/8), is open as of 8 September 2026; consult its live status before describing it as merged or adopted. The [catalogue discussion](https://github.com/trustoverip/dtgwg-zkp-spec/discussions/9) indexes the records and review paths.
+
+Requirements, priorities and ratification discussions belong to [dtgwg-zkp-tf](https://github.com/trustoverip/dtgwg-zkp-tf); credential definitions belong to [dtgwg-cred-spec](https://github.com/trustoverip/dtgwg-cred-spec). Local book/export material must not overwrite editor-authored changes in the specification checkout.
+
 Nothing here binds the task force; everything here is input the task force may
 accept, refute, or refine. Treat lab benchmark numbers as *envelope data* — the
 circuit trusted setup is a lab fixture, not a production ceremony, and the code

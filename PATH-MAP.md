@@ -1,5 +1,7 @@
 # Path map — where the work lives, and where you could stand in it
 
+**Specification entry point:** [DTG ZKP specification](https://github.com/trustoverip/dtgwg-zkp-spec) · [proposed working draft](https://github.com/trustoverip/dtgwg-zkp-spec/pull/8) · [construction catalogue and cross-repository navigation](https://github.com/trustoverip/dtgwg-zkp-spec/discussions/9). This map covers the supporting evidence and research paths.
+
 This document is for task force members and their AI assistants. Point your
 assistant here (it should read [`AGENTS.md`](./AGENTS.md) first) and ask it to
 walk the paths that touch your expertise, then compile a **position record**
