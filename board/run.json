@@ -27,10 +27,10 @@
         {
           "n": 3,
           "act": "Run the checks one last time",
-          "where": "node board/test.mjs · node tools/zkbook-export.mjs --check · cd ~/dtgwg-zkp-spec && npm run render && node conformance/test.mjs",
+          "where": "node board/test.mjs · node --test board/review.test.mjs · node tools/zkbook-export.mjs --check · cd ~/dtgwg-zkp-spec && npm run render && node conformance/test.mjs",
           "gate": "all green, or stop",
           "state": "ready",
-          "why": "The export is byte-stable and the suite is 47/47 as of 2026-09-07. Re-running costs a minute and makes the pull request's first CI run boring, which is what a first CI run should be."
+          "why": "Run the current suites and regeneration checks. Passing results support the recorded scope of the tests; they do not certify cryptographic correctness or adoption."
         }
       ]
     },
@@ -65,12 +65,16 @@
         },
         {
           "n": 7,
-          "act": "Push the branch and open the pull request",
+          "act": "Push the branch and open the draft pull request",
           "where": "trustoverip/dtgwg-zkp-spec — compare main...zk-book",
           "draft": "P",
           "gate": "ledger 26 spoken",
           "state": "ready-after-A",
-          "why": "Body P says what is generated and what is written, how to review each commit, and what the draft does not do: it selects no construction and claims no soundness."
+          "why": "Body P says what is generated and what is written, how to review each commit, and what the draft does not do: it selects no construction and claims no soundness.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot.",
+            "Resolve phase A prerequisites, then open this as a draft PR."
+          ]
         }
       ]
     },
@@ -85,9 +89,13 @@
           "where": "trustoverip/dtgwg-zkp-tf — new discussion",
           "draft": "R",
           "gate": "ledger 32 spoken",
-          "state": "ready",
-          "why": "One post in place of the two long forms. It opens review round 1 with three questions, and it says plainly that the author co-chairs the task force and that nothing should be adopted because of the seat. Add the pull-request link from step 7 before posting.",
-          "supersedes": "H, M"
+          "state": "ready-for-review",
+          "why": "One opening post in place of the two long forms. It proposes the review process, states the informative status and asks three questions. Add the actual draft-PR link before publishing; the group has not yet agreed the review schedule.",
+          "supersedes": "H, M",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot.",
+            "Open draft PR P; insert its actual URL and update the PR status sentences."
+          ]
         },
         {
           "n": 9,
@@ -95,8 +103,12 @@
           "where": "trustoverip/dtgwg-cred-tf — discussion #39",
           "draft": "K",
           "gate": "ledger 28 spoken",
-          "state": "ready",
-          "why": "The chair takes the artifact gap to the paper's authors on Tuesday. His four items each having a record identifier changes what he can ask them. Before the call, not after."
+          "state": "ready-for-review",
+          "why": "The chair takes the artifact gap to the paper's authors on Tuesday. His four items each having a record identifier changes what he can ask them. Before the call, not after.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot.",
+            "Open draft PR P and publish consolidated anchor R; include their actual links."
+          ]
         },
         {
           "n": 10,
@@ -104,8 +116,12 @@
           "where": "trustoverip/dtgwg-cred-spec — issue #38",
           "draft": "N",
           "gate": "ledger 31 spoken",
-          "state": "ready",
-          "why": "Filed 5 September; its third tracked item is coordination with this task force's Q2. That is record 008. It is also an agenda row, and answering beforehand means the row reports rather than promises."
+          "state": "ready-for-review",
+          "why": "Filed 5 September; its third tracked item is coordination with this task force's Q2. That is record 008. It is also an agenda row, and answering beforehand means the row reports rather than promises.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot.",
+            "Open draft PR P and publish consolidated anchor R; include their actual links."
+          ]
         },
         {
           "n": 11,
@@ -113,8 +129,12 @@
           "where": "trustoverip/dtgwg-zkp-tf — discussion #18",
           "draft": "G",
           "gate": "ledger 23 spoken",
-          "state": "ready",
-          "why": "The board thread has not seen the twelve records or the four proving systems. Can follow the call rather than precede it — it is a working-list update, not a decision."
+          "state": "ready-for-review",
+          "why": "The board thread has not seen the twelve records or the four proving systems. Can follow the call rather than precede it — it is a working-list update, not a decision.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot.",
+            "Open draft PR P and publish consolidated anchor R; include their actual links."
+          ]
         }
       ]
     },
@@ -152,8 +172,12 @@
           "where": "trustoverip/dtgwg-zkp-tf — a comment on pull request #21, or a short reply under the anchor",
           "draft": "S",
           "gate": "ledger 33 spoken",
-          "state": "ready",
-          "why": "Record 020 and the agent-runtimes document describe an agent acting for a member within a scope, and neither has an implementation to fail against. This is an attempt at one, inverted: the agent is the member being admitted rather than an accessory to a human who is really the member. Post last, and after the pull request is open, so it reads as a footnote to the delegation lane rather than as a pitch."
+          "state": "ready-for-review",
+          "why": "Record 020 and the agent-runtimes document describe an agent acting for a member within a scope, and neither has an implementation to fail against. This is an attempt at one, inverted: the agent is the member being admitted rather than an accessory to a human who is really the member. Post last, and after the pull request is open, so it reads as a footnote to the delegation lane rather than as a pitch.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot.",
+            "Open draft PR P and publish consolidated anchor R; include their actual links."
+          ]
         },
         {
           "n": 15,
@@ -162,7 +186,11 @@
           "draft": "Q",
           "gate": "proverb unserved — serve one at posting time",
           "state": "held",
-          "why": "The same project read against the credential vocabulary, with five questions about issuance, lapsing roles and what counts as edge evidence. Do not post it in the same week as the side note above; one disclosure at a time."
+          "why": "The same project read against the credential vocabulary, with five questions about issuance, lapsing roles and what counts as edge evidence. Do not post it in the same week as the side note above; one disclosure at a time.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot.",
+            "Held: only prepare for publication if a relevant thread requests it."
+          ]
         }
       ]
     }

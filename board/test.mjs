@@ -64,7 +64,7 @@ t('S9 every transition carries a trust-task envelope', () => STATES.every(s => T
 // rendering
 t('P1 render is deterministic', () => renderCard(base) === renderCard(structuredClone(base)) || 'nondeterministic');
 t('P2 rendered card names every clause gadget and the does-not list', () => { const md = renderCard(base); return base.method.every(m => md.includes('`' + m.gadget + '`')) && md.includes('## Does not establish') || 'missing sections'; });
-t('P3 issue body is short and links the card', () => { const b = renderIssue(base); return b.length < 2500 && b.includes('board/cards/010.json') || 'bad issue body'; });
+t('P3 issue body is pasteable and links the card', () => { const b = renderIssue(base); return b.length < 4000 && b.includes('board/cards/010.json') || `bad issue body (${renderIssue(base).length} chars)`; });
 t('P4 index lists every card', () => { const i = renderIndex(cards); return cards.every(c => i.includes(`| ${c.id} |`)) || 'missing row'; });
 t('P5 site builds, embeds every card and the drafts, no absolute local paths', () => { const h = buildSite(cards); return cards.every(c => h.includes(`data-k="card-${c.id}"`)) && h.includes('id="drafts"') && !/C:\\Users|\/Users\/mitch/.test(h) || 'site incomplete or leaks a path'; });
 
@@ -83,7 +83,7 @@ t('W1 digest lists only threads with events after the watermark, newest first', 
     { number: 3, title: 'newer', url: 'u3', author: 'b', createdAt: '2026-09-04T00:00:00Z', updatedAt: '2026-09-04T00:00:00Z', body: 'x', comments: [] } ], pulls: [], issues: [] } } };
   const d = digestSurvey(sv); return d.length === 2 && d[0].number === 3 && d[1].number === 2 && d[1].relevant === true && d[1].events.length === 1 || JSON.stringify(d.map(x => [x.number, x.relevant]));
 });
-t('W2 site renders the watch, doors and cookbook sections and a ledger-posted draft is marked', () => { const h = buildSite(cards); return h.includes('id="watch"') && h.includes('id="doors"') && h.includes('id="cookbook"') && /data-posted="2026-08-29"/.test(h) || 'section or ledger state missing'; });
+t('W2 site keeps historical activation separate from publication of this revision', () => { const h = buildSite(cards); return h.includes('id="watch"') && h.includes('id="doors"') && h.includes('id="cookbook"') && h.includes('Historical activation — publication unverified') && !h.includes('data-posted=') || 'section or honest historical state missing'; });
 t('K1 construction records render once each with state note, negative space and adversary sections', () => { const md = renderRecipes(cards); return cards.every(c => (md.match(new RegExp(`^### Construction ${c.id} · `, 'mg')) || []).length === 1) && (md.match(/#### Does not establish/g) || []).length === cards.length && (md.match(/#### Adversary, per claim/g) || []).length === cards.length || 'construction sections incomplete'; });
 t('K1b specification register: generated text carries no kitchen vocabulary and no emoji in headings', () => { const md = renderRecipes(cards) + renderRecords(loadRecords(), cards) + renderStacks(loadStacks()); const kitchen = md.match(/\b(recipe|recipes|pantry|dish|ingredients|tasting|kitchen|cookbook)\b/gi) || []; const emojiHeads = md.split('\n').filter(l => /^#{2,4} /.test(l) && /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(l)); return kitchen.length === 0 && emojiHeads.length === 0 || `kitchen words: ${[...new Set(kitchen)].join(',')} · emoji headings: ${emojiHeads.length}`; });
 t('K2 every gadget a card binds has a generated term', () => { const g = new Set(cards.flatMap(c => c.method.map(m => m.gadget))); return [...g].every(x => GADGET_DEFS[x]) || 'undefined gadget: ' + [...g].filter(x => !GADGET_DEFS[x]).join(','); });
@@ -92,13 +92,20 @@ t('K3 recipes.md carries no retired acronyms and no absolute local paths', () =>
 // records (ADR-001 first) and the primer (spellbook Technical Bridges only)
 t('Q1 ADR-001 record validates and answers recipe 010 with every clause bound', () => { const recs = loadRecords(); const adr = recs.find(r => r.id === 'ADR-001'); if (!adr) return 'ADR-001 missing'; const v = validateRecord(adr, cards); return v.length === 0 && adr.recipe === '010' && adr.clauses.length >= 26 && adr.clauses.every(c => c.boundTo) || JSON.stringify(v); });
 t('Q2 requests render ADR-001 first with the crosswalk and the four acceptance tests', () => { const md = renderRecords(loadRecords(), cards); return md.indexOf('### Request ADR-001') > 0 && /\| S6 \|/.test(md) && /\| S7 \|/.test(md) && /Accepts/.test(md) && /Unlinkable/.test(md) && /Current/.test(md) || 'requests render incomplete'; });
-t('E1 exported body (spec-repo skeleton) has the template\'s required sections, each declared normative or informative', () => {
-  const p = join(ROOT, '..', '..', 'dtgwg-zkp-spec', 'spec', 'body.md'); if (!existsSync(p)) return 'export not run — node tools/zkbook-export.mjs';
-  const md = readFileSync(p, 'utf8');
+t('E1 exported specification has the template\'s required sections, each declared normative or informative', () => {
+  // the chapters are the ordered files in the clone's specs.json, not body.md alone: the background and the
+  // operational chapters are their own files there, and a check that reads only body.md would miss them
+  const clone = join(ROOT, '..', '..', 'dtgwg-zkp-spec');
+  const sj = join(clone, 'specs.json'); if (!existsSync(sj)) return 'export not run — node tools/zkbook-export.mjs';
+  const paths = JSON.parse(readFileSync(sj, 'utf8')).specs[0].markdown_paths || [];
+  const absent = paths.filter(f => !existsSync(join(clone, 'spec', f)));
+  if (absent.length) return `specs.json lists chapters that do not exist: ${absent.join(' ')}`;
+  const md = paths.map(f => readFileSync(join(clone, 'spec', f), 'utf8')).join('\n\n');
   const need = ['## Requests Answered', '## Cryptographic Background', '## Public Inputs', '## Construction Records', '## Proving Systems', '## Security Considerations', '## Privacy Considerations', '## Governance Considerations', '## Internationalization Considerations', '## Accessibility Considerations', '## Conformance', '### Conformance Targets', '### Conformance Tests', '## References', '### Normative References', '### Informative References'];
   const missing = need.filter(h => !md.includes('\n' + h) && !md.startsWith(h));
   const lines = md.split('\n'); const undeclared = [];
-  lines.forEach((l, i) => { if (/^## /.test(l)) { const next = lines.slice(i + 1, i + 6).join(' '); if (!/This section is (normative|informative)/.test(next)) undeclared.push(l); } });
+  // '## Appendices' is the template's own container heading; its subsections carry their own status
+  lines.forEach((l, i) => { if (/^## /.test(l) && !/^## Appendices/.test(l)) { const next = lines.slice(i + 1, i + 6).join(' '); if (!/This section is (normative|informative)/.test(next)) undeclared.push(l); } });
   const stamp = /<!-- generated-from: records-sha256=[0-9a-f]{64}/.test(md);
   return missing.length === 0 && undeclared.length === 0 && stamp || `missing: ${missing.join(' | ')} · undeclared: ${undeclared.join(' | ')} · stamp: ${stamp}`;
 });
@@ -113,10 +120,23 @@ t('E2 the exported conformance apparatus validates itself and finds body.md curr
   try { const out = execSync('node conformance/test.mjs', { cwd: clone, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); return /all conformance checks pass/.test(out) || out.slice(-300); }
   catch (e) { return (e.stdout || e.message || '').toString().slice(-400); }
 });
+t('E4 this repository and the clone hold the same specification (export --check reports nothing to change, nothing diverged)', () => {
+  // the guard that catches the two drifting apart: a clone-side edit not yet adopted, or a regeneration not yet exported.
+  // If this fails, read the named files — `--adopt` takes the clone's edits back, then regenerate and export.
+  const clone = join(ROOT, '..', '..', 'dtgwg-zkp-spec'); if (!existsSync(join(clone, 'specs.json'))) return 'no clone to compare against';
+  try {
+    const out = execSync('node tools/zkbook-export.mjs --check', { cwd: join(ROOT, '..'), encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+    const m = out.match(/added (\d+) · changed (\d+) · unchanged (\d+) · removed (\d+)/);
+    if (!m) return 'export --check produced no report';
+    const diverged = /authored file\(s\) diverged/.test(out);
+    const moved = Number(m[1]) + Number(m[2]) + Number(m[4]);
+    return (moved === 0 && !diverged) || `${moved} file(s) would move${diverged ? ' and the clone has diverged authored files' : ''} — ${out.split('\n').filter(l => /^\s+(added|changed|removed)/.test(l)).join(' | ').slice(0, 300)}`;
+  } catch (e) { return (e.stdout || e.message || '').toString().slice(-400); }
+});
 // stacks (facts a stranger can check; never a recommendation)
 const specMod = await import('./tools/spec.mjs');
 t('X1 every stack file validates (licence, setup, provenance, audit statement, known gadgets, sourced figures)', () => { const ss = specMod.loadStacks(); const bad = ss.map(s => [s.id, specMod.validateStack(s, GADGETS)]).filter(([, v]) => v.length); return ss.length >= 4 && bad.length === 0 || JSON.stringify(bad) || 'fewer than 4 stacks'; });
-t('X2 Flock is a stack: binary-field, transparent, standard hashes; the lab stack is the only one with registry evidence', () => { const ss = specMod.loadStacks(); const f = ss.find(s => s.id === 'flock'); const lab = ss.find(s => s.id === 'lab-groth16-circom'); return !!f && /binary/i.test(f.field) && /transparent/i.test(f.setup) && /BLAKE3|SHA-256/.test(f.credentialModel) && !!lab && /registry/i.test(JSON.stringify(lab.benchmarks)) || 'flock or lab stack facts missing'; });
+t('X2 Flock is a stack: binary-field, transparent, standard-hash benchmarks with sources; the lab stack is the only one with registry evidence', () => { const ss = specMod.loadStacks(); const f = ss.find(s => s.id === 'flock'); const lab = ss.find(s => s.id === 'lab-groth16-circom'); const hashRows = (f && f.benchmarks || []).filter(b => /BLAKE3|SHA-256|Keccak/.test(b.statement) && b.source); return !!f && /binary/i.test(f.field) && /transparent/i.test(f.setup) && hashRows.length >= 2 && !!lab && /registry/i.test(JSON.stringify(lab.benchmarks)) || 'flock or lab stack facts missing'; });
 t('X3 stacks.md renders every stack under its kind and carries no leaderboard or solver talk', () => { const md = specMod.renderStacks(specMod.loadStacks()); return specMod.loadStacks().every(s => md.includes(`\`${s.id}\``)) && /\| kind \|/.test(md) && !/leaderboard|autoresearch|Hilbert|solver rank|compressions\/s by/i.test(md) || 'stacks render incomplete or off-topic text present'; });
 t('Q3 primer.md exists, has nine sections, and carries no narrative (Story/Inscription/lattice/persona names)', () => {
   const p = join(ROOT, '..', 'zkbook', 'spec', 'primer.md'); if (!existsSync(p)) return 'primer.md missing — run tools/transfer-spellbook.mjs';

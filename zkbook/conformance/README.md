@@ -1,29 +1,17 @@
-# conformance/ — the machine-readable half of this specification
+# Conformance data and generated text
 
-This directory holds the data the specification's generated sections are rendered from, and the checks that keep
-the prose honest to that data. Apache-2.0.
+The records, requests and proving-system entries are the machine-readable source. `validate.mjs` checks their structure and declared evidence. It does not independently establish the truth of those declarations.
 
-| path | what it is |
-|---|---|
-| `records/*.json` | construction records — one per zero-knowledge construction; the source of the *Construction Records* section |
-| `requests/*.json` | requests in the requester's own form (ADR-001 first); the source of *Requests Answered* |
-| `stacks/*.json` | proving-system entries; the source of *Proving Systems* |
-| `schema/construction-record.schema.json` | JSON Schema for a construction record |
-| `validate.mjs` | the rules, as register strings: every privacy claim names its adversary and horizon; every record states what it does not establish; composed records declare their own disclosure set; measured claims name a source; states advance monotonically |
-| `test.mjs` | what CI runs: validation + "the generated text is current" (a digest of these files is stamped in `spec/body.md`) |
+`generate.mjs` and the pure `render-lib.mjs` ship with this repository. Edit the JSON source, then run:
 
-Refusals are values, not exceptions. A record that fails validation does not render into the specification.
+```
+node conformance/validate.mjs
+node conformance/generate.mjs
+node conformance/test.mjs
+```
 
-## Provenance
+Generation replaces the four marked sections of `spec/body.md`, updates its source digest and regenerates `g-*.md` terms. Editor-written sections and non-generated terms are preserved. Missing or duplicate section boundaries cause refusal before writing.
 
-The records are promoted from the DTG ZKP Task Force's evidence repository
-(github.com/mitchuski/dtgwg-zkp-mage — `board/cards/`, `board/records/`, `board/stacks/`), where the reference
-runtimes, conformance fixtures (`runtimes/fixtures/`, register v2) and the verification registry of independent
-reproductions live. The generator that renders these files into `spec/` runs there (`board/tools/board.mjs spec`);
-the rendered text is committed here by a person and its source digest is stamped so that this repository's CI can
-tell when prose and data disagree.
+CI compares the actual generated sections and terms with fresh generation, checks their exact term-file set, and checks the JSON source digest. Keeping the old stamp while editing generated prose does not pass. These checks establish correspondence with the generator and records; security review and task-force adoption remain separate.
 
-## Changing a construction
-
-Edit the record, run `node conformance/validate.mjs`, regenerate the specification text from the evidence
-repository, commit both. A pull request that edits generated text without its record fails `conformance/test.mjs`.
+The generator and data originate in the DTG ZKP evidence repository. Reproduction of generated text needs only this specification repository and Node; it does not import the evidence repository at runtime.

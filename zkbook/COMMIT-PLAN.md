@@ -9,20 +9,34 @@ committed by a tool.*
 
 ## Staging
 
-Clone: `~/dtgwg-zkp-spec`, branch `zk-book` from `main` (6c296d3). Populate and check with:
+Clone: `~/dtgwg-zkp-spec`, branch `zk-book` from `main` (6c296d3).
+
+**The clone is where review happens**, so the traffic runs both ways and the export refuses to overwrite work done
+there. Files a person may edit on either side — the spec skeleton (`header · intro · terms-and-definitions-intro ·
+appendix`), the README, the conformance records, requests, proving-system entries and code, and the editor-written
+chapters woven into `body.md` — are *authored*. If an authored file in the clone differs from what the export would
+write, the export stops with `REFUSED destination-authored-file-diverged` and names them.
 
 ```
-node board/tools/board.mjs spec && node tools/transfer-spellbook.mjs     # regenerate chapters from records
-node tools/zkbook-export.mjs --check                                     # what would change in the clone
-node tools/zkbook-export.mjs                                             # write it (nothing committed)
+node tools/zkbook-export.mjs --check     # what would change in the clone; names any divergence
+node tools/zkbook-export.mjs --adopt     # take the clone's edits back here (unpicks body.md into its chapters), then stop
+node board/tools/board.mjs spec && node tools/transfer-spellbook.mjs      # regenerate from the adopted records
+node tools/zkbook-export.mjs             # write (refuses if anything still diverges; --force overrides deliberately)
 cd ~/dtgwg-zkp-spec && npm ci && npm run render && node conformance/test.mjs
 ```
 
-The export writes the template's own skeleton — `spec/header.md · intro.md · terms-and-definitions-intro.md ·
-body.md · appendix.md · terms-definitions/g-*.md` — plus `specs.json` (their file, our title/description/external spec),
-`README.md`, `conformance/` and `.github/workflows/validate-conformance.yml`. It removes the template's two placeholder
-terms. Their workflows (`render-and-deploy`, `menu`, `set-gh-pages`), `package.json`, lockfile, `.npmrc`, `static/`,
-`assets/` and `.gitignore` are left as they are.
+A clean loop ends with `--check` reporting **0 changed**: the evidence repository and the clone then hold the same
+specification, and the records the text is generated from are the ones that were reviewed.
+
+The export writes the chapter files `specs.json` orders — `spec/header.md · intro.md · terms-and-definitions-intro.md ·
+body.md · cryptographic-background.md · appendix.md · terms-definitions/g-*.md` — plus `specs.json` itself (their file;
+title, description and external glossary are ours, and **the chapter list stays theirs**, so chapters added in the clone
+are never dropped), `README.md`, `conformance/` and `.github/workflows/validate-conformance.yml`. It removes the
+template's two placeholder terms and any stale generated term. Chapters that live only in the clone
+(`implementation-guide.md`, `trust-graph.md`, `integration.md`, `research-and-book.md`) are left alone: the export
+neither writes nor removes them, and they are not yet mirrored in the book edition. Their workflows
+(`render-and-deploy`, `menu`, `set-gh-pages`), `package.json`, lockfile, `.npmrc`, `static/`, `assets/` and
+`.gitignore` are left as they are.
 
 ## Preconditions
 

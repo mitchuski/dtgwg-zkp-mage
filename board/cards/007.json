@@ -10,7 +10,7 @@
     "by": "sankarshanmukhopadhyay / geoffturk / stormer78 (spec side) — carded by the ZKP TF co-chair",
     "need": "under WD02's three correlation scopes, two `pairwise` identifiers differ by construction, so any proof that reads one party out of two credentials must first prove one holder controls both identifiers — without a field that says so"
   },
-  "dish": "A verifier learns that two identifiers named in two credentials — declared pairwise, or otherwise distinct — are controlled by one holder secret, without learning that secret and without the proof minting a handle that recognises the holder in any other presentation.",
+  "dish": "A verifier checks common control through the selected shared-secret derivation relation, while the secret remains private under the construction assumptions. Any cross-presentation correlation depends on the enclosing disclosure set and context policy.",
   "ingredients": [
     "the holder secret s",
     "per-identifier derivation material: for each identifier, the salt or key-derivation path under which it was minted from s",
@@ -35,7 +35,8 @@
     "that the controller is one natural person — two agents or two people sharing a secret satisfy the clause (that is card 002's uniqueness, under its own declaration)",
     "that either credential is currently valid or unrevoked (card 006)",
     "that the holder intended the two identifiers to be correlated beyond this verifier — the proof is a disclosure to the party it is made to, not a widening of either identifier's declared scope",
-    "the counterparty's common control: a presenter can prove only what is derived from a secret in the presenter's hands; a counterparty's linkage needs the counterparty's witness or the counterparty's own attestation (see card 010)"
+    "the counterparty's common control: a presenter can prove only what is derived from a secret in the presenter's hands; a counterparty's linkage needs the counterparty's witness or the counterparty's own attestation (see card 010)",
+    "that arbitrary independently generated or hardware-protected keys derive from a shared available scalar; derivation and custody are profile requirements"
   ],
   "adversary": [
     {

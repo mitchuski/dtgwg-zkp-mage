@@ -33,7 +33,7 @@
   "doesNotEstablish": [
     "that revocation is instantaneous — only that the handle was not revoked as of `epoch` (C4's published bound)",
     "that the registry's revocation decision was correct",
-    "that the verifier performed no live lookup — the card makes the presentation self-carrying (root + witness); whether a deployment still phones home is a profile statement, not a proof property"
+    "that the verifier performed no live lookup — the card makes the presentation self-carrying (public root + ZK proof; witness remains private); whether a deployment still phones home is a profile statement, not a proof property"
   ],
   "adversary": [
     {
@@ -73,7 +73,7 @@
       "source": "ePrint 2026/333 §5.4"
     },
     {
-      "route": "set-root primitive (cred-tf #40 unification): a signed, published set root + a membership or non-membership proof carried in the presentation — accumulator non-membership witness as the ZK-friendly form; the same public-input object serves anchoring (card 001), revocation status (this card) and registry membership",
+      "route": "set-root primitive (cred-tf #40 unification): a signed, published set root + a membership or non-membership proof carried in the presentation — accumulator non-membership witness as a private proof input; the same public-input object serves anchoring (card 001), revocation status (this card) and registry membership",
       "cost": "unmeasured — ScottJeezey: \"ours to pressure-test\", priority",
       "measured": false,
       "source": "cred-tf #40 (stormer78 08-22; ScottJeezey 08-24) · cred-tf #39 (ScottJeezey 08-25)"

@@ -9,7 +9,7 @@
 | 005 | Distinct member / distinct issuer | primitive | P1 | `constructed` | mitchuski | — | yes |
 | 006 | Non-revocation against a status root | primitive | P1 | `carded` | mitchuski | — | no |
 | 007 | Common control across identifiers | primitive | P1 | `carded` | mitchuski | — | no |
-| 008 | Blinded binder (taskContext without a durable correlator) | primitive | P2 | `carded` | mitchuski (card) · ScottJeezey (named the work item) | — | no |
+| 008 | Blinded binder (taskContext hiding; presentation correlation unresolved) | primitive | P2 | `carded` | mitchuski (card) · ScottJeezey (named the work item) | — | no |
 | 010 | Community-Anchored Proof (ADR-001) | composed | P1 | `carded` | mitchuski + DenisPopov15 (construction) · stormer78 (record) | 001+002+003+004+005+006+007 | no |
 | 011 | Pairwise edge (VRC possession, directed personas shown, pairwise identifiers hidden) | composed | P2 | `carded` | mitchuski | 003+004+006+007 | no |
 | 012 | Intentional correlation — one controller across k credentials | composed | P2 | `carded` | mitchuski | 003+006+007 | no |

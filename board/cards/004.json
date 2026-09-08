@@ -32,7 +32,8 @@
   "doesNotEstablish": [
     "non-transfer of the secret",
     "absence of coercion or account sharing",
-    "agent authority or consent"
+    "agent authority or consent",
+    "compatibility with non-exportable keys or arbitrary credential key formats; the selected profile must bind the actual authenticated holder key to the available witness"
   ],
   "adversary": [
     {

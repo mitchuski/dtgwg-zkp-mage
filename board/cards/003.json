@@ -10,12 +10,12 @@
     "by": "ScottJeezey",
     "need": "PR-FRE: a proof bound to this challenge and this presentation, unreplayable elsewhere"
   },
-  "dish": "A verifier learns that this proof was made for exactly this presentation transcript (their challenge included), so replay under any other transcript fails cryptographically.",
+  "dish": "A verifier checks that the proof binds the supplied transcript scalar. Interpreting that scalar as this authenticated request also requires the profile’s canonical encoding, digest conversion, audience and freshness checks.",
   "ingredients": [
     "nothing extra — the transcript digest is bound as a public input inside the proof"
   ],
   "pantry": [
-    "transcriptDigest — JCS-canonicalised digest of the presentation transcript including the verifier's challenge"
+    "transcriptDigest — profile-defined circuit scalar; the lab hashes domain-separated, length-prefixed canonical transcript bytes and reduces the digest modulo the BN254 scalar prime"
   ],
   "method": [
     {
@@ -29,11 +29,15 @@
   ],
   "doesNotEstablish": [
     "freshness beyond what the challenge carries",
-    "that the verifier's challenge was itself honest"
+    "that the verifier's challenge was itself honest",
+    "correct JCS/SHA-256 evaluation inside the circuit merely because a supplied scalar is constrained",
+    "simulation extractability or equivalence to tag-based SE-NIZK",
+    "rejection of reuse of the same transcript without a verifier replay policy",
+    "strict transcript field types or expiry semantics from the lab field-presence validator; those require the selected payload schema and verifier policy"
   ],
   "adversary": [
     {
-      "claim": "replay to another verifier or time fails",
+      "claim": "changing the constrained transcript scalar invalidates the proof; audience/time replay protection additionally assumes the verifier checks the authenticated request and its validity window",
       "against": [
         "verifier",
         "verifiers-colluding"
@@ -63,7 +67,7 @@
     },
     {
       "route": "tag-based SE-NIZK: tag = transcript (paper Def. 5)",
-      "cost": "no circuit cost; property of the proof system",
+      "cost": "unmeasured; proof-system security requirement, not established by the lab public-input binding",
       "measured": false,
       "source": "ePrint 2026/333 §3.5"
     },

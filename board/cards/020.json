@@ -68,11 +68,13 @@
     "the principal's identity",
     "that the agent is not also acting for others",
     "that the principal has not declined renewal — in the core, revocation is non-renewal within one validUntil; the profile’s credentialStatus re-adds a live lookup and this card’s non-revocation leg is what lets the presentation carry it instead",
-    "what the delegate actually did in the principal’s name — the invocation record lives on the framework side (the artifact gap, cred-tf #40 Q8)"
+    "what the delegate actually did in the principal’s name — the invocation record lives on the framework side (the artifact gap, cred-tf #40 Q8)",
+    "chain-length hiding without a validated fixed-shape or padded profile",
+    "compatibility with a current merged credential revision until its grant, acceptance, status and chaining semantics are pinned and reconciled"
   ],
   "adversary": [
     {
-      "claim": "principal hidden; chain length hidden up to maxDepth",
+      "claim": "principal hidden under the selected proof assumptions and declared disclosure, against the verifier and colluding verifiers; hiding chain length additionally requires validated padding/fixed shape and metadata analysis, which are not established here",
       "against": [
         "verifier",
         "verifiers-colluding"
@@ -96,6 +98,12 @@
     ]
   },
   "substitutions": [
+    {
+      "route": "bounded monolithic proof of a fixed maximum chain depth; padding semantics and authenticated hop checks to be defined",
+      "cost": "unmeasured",
+      "measured": false,
+      "source": "editorial alternative for review, 2026-09-08"
+    },
     {
       "route": "recursive/folding proof per hop",
       "cost": "unmeasured",

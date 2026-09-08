@@ -5,6 +5,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import { loadLatestSurvey, loadWatchMap, digestSurvey, watchHtml, survey as runSurvey } from './watch.mjs';
 import { writeCookbook } from './spec.mjs';
 
@@ -228,7 +229,7 @@ States: ${STATES.join(' → ')}. A row may not claim more than its card; a card 
 }
 
 // ---- site --------------------------------------------------------------------------------
-function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 
 // ---- the run: the ordered posting sequence, from board/run.json -------------------------------
 function runHtml() {
@@ -236,7 +237,7 @@ function runHtml() {
   if (!existsSync(rp)) return '';
   const r = JSON.parse(readFileSync(rp, 'utf8'));
   const stateChip = (st) => {
-    const label = { ready: 'ready', blocked: 'blocked — author', 'ready-after-A': 'ready once A is done', optional: 'optional', held: 'held', done: 'done' }[st] || st;
+    const label = { ready: 'ready for review', 'ready-for-review': 'ready for review', blocked: 'blocked — author', 'ready-after-A': 'review after phase A', optional: 'optional', held: 'held', done: 'done' }[st] || st;
     return `<span class="chip st-${esc(st)}">${esc(label)}</span>`;
   };
   const step = (s) => `<li class="step st-${esc(s.state)}"><span class="stepn">${s.n}</span><div class="stepbody">
@@ -250,13 +251,19 @@ function runHtml() {
 <div class="phase after"><h3>Afterwards</h3><ul class="evl">${(r.afterwards || []).map(a => `<li>${esc(a)}</li>`).join('')}</ul></div></div>`;
 }
 
+export function draftRevision(draft) {
+  return createHash('sha256').update(JSON.stringify(draft)).digest('hex');
+}
+export function exactTarget(value) {
+  try { const u = new URL(value); return u.protocol === 'https:' && u.hostname === 'github.com' && !u.username && !u.password && !u.port && !/\s/.test(value) ? u.href : ''; } catch { return ''; }
+}
 export function buildSite(cards) {
   const draftsDir = join(ROOT, 'drafts');
   const drafts = existsSync(draftsDir) ? readdirSync(draftsDir).filter(f => f.endsWith('.md')).sort().map(f => {
     const txt = readFileSync(join(draftsDir, f), 'utf8').replace(/\r\n/g, '\n');
     const head = txt.split('\n')[0].replace(/^#\s*/, '');
     const meta = {};
-    for (const l of txt.split('\n').slice(1, 8)) { const m = l.match(/^(\w+):\s*(.+)$/); if (m) meta[m[1]] = m[2]; }
+    for (const l of txt.split('\n---\n')[0].split('\n').slice(1)) { const m = l.match(/^(\w+):\s*(.+)$/); if (m) meta[m[1]] = m[2]; }
     const body = txt.split('\n---\n').slice(1).join('\n---\n').trim();
     return { key: f.split('-')[0], file: f, head, meta, body };
   }) : [];
@@ -279,19 +286,47 @@ export function buildSite(cards) {
 <div class="body"><pre>${esc(renderCard(c))}</pre></div>
 <div class="bar"><button onclick="cp(this)">Copy card markdown</button><span class="copied">copied ✓</span>
 <button class="ghost" onclick="cpIssue(this)">Copy board-issue body</button><pre class="hidden">${esc(renderIssue(c))}</pre></div></div>`).join('\n');
-  const draftHtml = drafts.map((d, i) => {
+  const runPath = join(ROOT, 'run.json');
+  const run = existsSync(runPath) ? JSON.parse(readFileSync(runPath, 'utf8')) : { phases: [] };
+  const steps = run.phases.flatMap(p => p.steps);
+  const order = steps.filter(s => s.draft).map(s => s.draft);
+  drafts.sort((a, b) => (order.includes(a.key) ? order.indexOf(a.key) : 999) - (order.includes(b.key) ? order.indexOf(b.key) : 999) || a.key.localeCompare(b.key));
+  const readerData = [];
+  const active = [], archived = [];
+  for (const d of drafts) {
     const le = ledgerEntry(d.meta.ledger);
-    const posted = le && le.activated === true ? (le.activatedDate || 'yes') : '';
-    const retired = !!(le && le.activated === false);
-    return `
-<div class="card${retired ? ' retired' : ''}" id="draft-${esc(d.key)}" data-k="${d.key}"${posted ? ` data-posted="${esc(posted)}"` : ''}><div class="head"><span class="ord">${i + 1}</span>
-  <span class="title">${esc(d.head)}</span>${d.meta.chip ? `<span class="chip">${esc(d.meta.chip)}</span>` : ''}${posted ? `<span class="chip done">posted ${esc(posted)}</span>` : ''}${retired ? '<span class="chip retired">retired — entry stays</span>' : ''}${le ? `<span class="chip ledger" title="proverb-ledger.json seq ${le.seq}">ledger ${le.seq}</span>` : ''}
-  ${d.meta.thread ? `<a class="thread" target="_blank" href="${esc(d.meta.thread)}">open thread ↗</a>` : ''}</div>
-${d.meta.note ? `<div class="note">${esc(d.meta.note)}</div>` : ''}
+    const step = steps.find(s => s.draft === d.key);
+    const historic = le?.activated === true;
+    const target = exactTarget(d.meta.thread);
+    const targetParts = target ? new URL(target).pathname.split('/').filter(Boolean) : [];
+    const sourceRepo = sv?.repos?.[targetParts[1]];
+    const collection = { discussions: 'discussions', issues: 'issues', pull: 'pulls' }[targetParts[2]];
+    const sourceThread = collection && sourceRepo?.[collection]?.find(t => String(t.number) === targetParts[3]);
+    const sourceContext = { head: sourceRepo?.head?.oid || null, threadUpdatedAt: sourceThread?.updatedAt || null, error: sourceRepo?.error || null };
+    const sourceCheckedAt = sourceRepo?.lastSuccessfulAt || (sourceRepo?.error ? sourceRepo.since : sourceRepo ? sv.fetchedAt : null);
+    const blocked = /SUPERSEDED|FOLDED/i.test(d.meta.chip || '') ? 'Superseded — reference only' :
+      le?.activated === false ? 'Retired — reference only' : historic ? 'Historical activation — publication unverified' :
+      step?.state === 'held' || d.meta.status === 'held' || !step && /waits|WAIT/i.test(d.meta.chip || '') ? 'Held — reference only' :
+      !le || !d.meta.proverb ? 'A served proverb is required before review' : !exactTarget(d.meta.thread) ? 'Choose an exact GitHub destination' : '';
+    const binding = { id: d.key, title: d.head, body: d.body, target, sourceContext, proverb: d.meta.proverb || '', ledger: le?.seq || null,
+      action: d.meta.action || 'publication', blocked, guidance: d.meta.note || '', prerequisites: step?.requires || [] };
+    const revision = draftRevision(binding);
+    const data = { ...binding, body: undefined, revision, sourceCheckedAt };
+    readerData.push(data);
+    const html = `
+<article class="card${blocked ? ' retired' : ''}" id="draft-${esc(d.key)}" data-k="${esc(d.key)}" data-revision="${revision}"><div class="head">
+  <span class="ord">${esc(d.key)}</span><span class="title">${esc(d.head)}</span><span class="chip review-status">${esc(blocked || 'Needs your review')}</span>
+  ${d.meta.chip ? `<span class="chip">${esc(d.meta.chip)}</span>` : ''}
+  ${binding.target ? `<a class="thread" target="_blank" rel="noopener noreferrer" href="${esc(binding.target)}">Open destination ↗</a>` : ''}</div>
+<div class="note">${esc(d.meta.note || '')}<br><b>Destination:</b> ${esc(binding.target || 'Not selected')}<br><b>Purpose:</b> ${esc(le?.actMeaning || 'Review the draft and select its intended publication.')}<br><b>Revision:</b> <code>${revision.slice(0, 12)}</code> · <b>Last successful source check:</b> ${esc(sourceCheckedAt || 'No source snapshot')}${sourceRepo?.error ? ' — latest refresh failed; re-read the live target' : ''}<br><b>Before publishing:</b> ${esc(step?.requires?.length ? step.requires.join(' · ') : 'Re-read the live target and resolve relevant changes since the source snapshot.')}</div>
 <div class="body"><pre>${esc(d.body)}</pre></div>
-<div class="bar"><button onclick="cp(this)">Copy markdown</button><span class="copied">copied ✓</span>
-<label class="posted"><input type="checkbox" onchange="mark(this)"> posted</label></div>
-<div class="ritesrc hidden">${esc(d.meta.proverb || '')}</div></div>`; }).join('\n');
+<div class="rite"><div><b>Review this publication</b><p class="proverb">${esc(d.meta.proverb || 'No proverb served for this draft.')}</p><p>Read the proverb alongside the exact text and destination. Approval records your acknowledgment of this revision; it does not publish it.</p></div><button data-action="approve"${blocked ? ' disabled' : ''}>I have reviewed this version</button></div>
+<div class="bar"><button data-action="copy" disabled>Copy approved text</button><button class="ghost" data-action="export" disabled>Export review receipt</button><span class="publication-status">Publication not recorded</span></div>
+<div class="bar"><label for="receipt-${esc(d.key)}">After posting, paste the exact GitHub post or comment URL</label><input class="receipt-url" id="receipt-${esc(d.key)}" type="url" placeholder="https://github.com/…"><button class="ghost" data-action="report" disabled>Record reported publication</button></div>
+<p class="reader-message note" role="status" aria-live="polite"></p></article>`;
+    (blocked ? archived : active).push(html);
+  }
+  const draftHtml = active.join('\n') + (archived.length ? `<details class="archive"><summary>Held, superseded and historical drafts (${archived.length}) — reference only</summary>${archived.join('\n')}</details>` : '');
   const stateRows = STATES.map(s => { const t = TASKS[s]; return `<tr><td>→ <code>${s}</code></td><td><code>${t.task}</code></td><td>${t.issuer} → ${t.recipient}</td><td>${t.sideEffects}</td><td>${t.exposure}</td></tr>`; }).join('');
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -330,9 +365,12 @@ li.step:first-child{border-top:0}.stepn{font-weight:700;color:var(--accent2);min
 .stepwhy{font-size:.85rem;color:var(--ink);margin-top:.2rem}
 .chip.st-ready{background:var(--accent);color:#fff}.chip.st-blocked{background:var(--accent2);color:#fff}
 .chip.st-ready-after-A{background:var(--chip);color:var(--accent2);border:1px dashed var(--accent2)}
-.chip.st-optional,.chip.st-held{background:var(--line);color:var(--muted)}.chip.draftref{text-decoration:none}
+.chip.st-optional,.chip.st-held{background:var(--line);color:var(--muted)}
+.chip.st-ready-for-review{background:var(--chip);color:var(--accent);border:1px solid var(--accent)}.chip.draftref{text-decoration:none}
 li.step.st-blocked .stepn{color:var(--accent2)}li.step.st-held,li.step.st-optional{opacity:.75}
 tr.door-done td{opacity:.55}tr.door-drafted td .chip{background:var(--accent);color:#fff}tr.door-waiting td .chip{background:var(--line)}
+button:disabled{opacity:.45;cursor:not-allowed}.receipt-url{flex:1;min-width:180px;max-width:100%;padding:.5rem;background:var(--bg);color:var(--ink);border:1px solid var(--line)}.rite p{margin:.4rem 0}.publication-status{font-size:.85rem}.archive>summary{padding:1rem;cursor:pointer}.reader-message:empty{display:none}.card.activated button[data-action="approve"]{background:var(--line);color:var(--ink)}
+.wrap{overflow-wrap:anywhere}.panel{overflow-x:auto}.stepbody,.title,.rite>div{min-width:0}.chip{max-width:100%;white-space:normal}pre{overflow-wrap:anywhere}@media(max-width:600px){.panel{padding:.8rem}.bar{align-items:stretch}.receipt-url{width:100%}.bar button{max-width:100%}}
 </style></head><body><div class="wrap">
 <h1>ZKP Board · the book 📖</h1>
 <div class="sub">zkp-tf #18 lane — requested proofs as cards; drafts to post; the process as a trust task. Local, private, generated ${new Date().toISOString().slice(0, 10)} by <code>board.mjs site</code>.</div>
@@ -342,21 +380,21 @@ tr.door-done td{opacity:.55}tr.door-drafted td .chip{background:var(--accent);co
 ${runSection}
 
 <h2 class="sec" id="watch">Watch — upstream threads that moved</h2>
-<div class="ritedef">👁️ <b>Read-only.</b> <code>board.mjs survey</code> pulls trustoverip/dtgwg-zkp-tf, dtgwg-cred-spec, dtgwg-cred-tf and dtgwg-rahp-tf over GraphQL (token from the git credential store, held in memory only) and lists every thread with events after the watermark. <b>ZKP</b> = relevance filter hit; <b>→ card</b> = the hand-kept mapping in <code>watch-map.json</code>. Nothing here posts.</div>
+<div class="ritedef">👁️ <b>Read-only.</b> <code>board.mjs survey</code> pulls trustoverip/dtgwg-zkp-tf, dtgwg-cred-spec, dtgwg-cred-tf and dtgwg-rahp-tf over GraphQL (token from the git credential store, held in memory only) and lists retrieved changes after each repository’s last successful watermark, including edits and review activity. Failed repositories are marked for retry. <b>ZKP</b> = relevance filter hit; <b>→ card</b> = the hand-kept mapping in <code>watch-map.json</code>. Nothing here posts.</div>
 ${watchSection}
 
 <h2 class="sec" id="doors">Doors — where the co-chair can add value now</h2>
 ${doorsHtml}
 
-<h2 class="sec" id="drafts">Drafts to post — posting order</h2>
-<div class="ritedef">🕯️ <b>G.1 rite, on posts:</b> each draft carries a fresh proverb naming what that post means. Reading it and pressing <i>Activated</i> is the proof of understanding that opens the copy gate. The proverb is not in the copied text — gate, not cargo. Served entries are in <code>proverb-ledger.json</code>; they finalize when the post is made.</div>
+<h2 class="sec" id="drafts">Publication queue — run order, then follow-ups</h2>
+<div class="ritedef"><b>The proverb is your review pause.</b> Acknowledgment applies to the exact draft revision and destination. Copying does not publish. Publication URLs entered here are your reports, explicitly unverified. Records are stored in this browser; export receipts to preserve them. Earlier ledger activations do not confirm publication of a revised draft.</div>
 ${draftHtml}
 
 <h2 class="sec" id="process">Process — the board as a trust task</h2>
 <div class="panel">
 <p><b>Rule.</b> A row may not claim more than its card; a card no more than a runtime has measured; a runtime no more than an independent run has reproduced. States are monotone: <code>${STATES.join(' → ')}</code>.</p>
 <table><tr><th>transition</th><th>trust task</th><th>issuer → recipient</th><th>sideEffects</th><th>exposure</th></tr>${stateRows}</table>
-<p style="margin-top:.8rem">Refusals are register strings (<code>card-clause-unbound</code>, <code>card-composed-yield-is-union</code>, <code>run-same-hands</code>, <code>vet-self-vouch</code>, <code>publish-without-rite</code> …). The runner may not be the constructor, and the verifier may not be the runner — the S6 rule (voucher ≠ holder) applied to the process itself. Full text: <code>board/README.md</code>.</p>
+<p style="margin-top:.8rem">Refusals are register strings (<code>card-clause-unbound</code>, <code>card-composed-yield-is-union</code>, <code>run-same-hands</code>, <code>vet-self-vouch</code>, <code>publish-without-rite</code> …). The runner may not be the constructor. Evidence fields currently record declared references; these transitions are not themselves independent verification of those references. Full text: <code>board/README.md</code>.</p>
 <details><summary>README</summary><pre>${esc(readme)}</pre></details>
 </div>
 
@@ -364,22 +402,15 @@ ${draftHtml}
 ${cardHtml}
 
 <h2 class="sec" id="cookbook">ZK Book — the deck as a Spec-Up-T draft</h2>
-<div class="panel"><p><code>board.mjs spec</code> renders every card into <code>zkbook/spec/recipes.md</code> (one section per recipe; primitive and composed indexed separately) and generates a term for every gadget, role and recipe part. Hand-written chapters: header · intro · <b>pantry</b> (context descriptor, set roots, epoch, transcript digest, declared scope, public-signal order) · appendix. Render: <code>cd zkbook &amp;&amp; npm install &amp;&amp; npm run render</code> → <code>docs/index.html</code>. The state printed at the top of each recipe says how much weight the page can bear; nothing is normative before <code>vetted</code>.</p><p>Offered upstream as draft R (the consolidated anchor) with the pull request body in draft P; the run above is the order. The specification repository is <code>trustoverip/dtgwg-zkp-spec</code> and the apparatus rides in as <code>conformance/</code>.</p></div>
+<div class="panel"><p><code>board.mjs spec</code> renders every card into <code>zkbook/spec/recipes.md</code> (one section per recipe; primitive and composed indexed separately) and generates a term for every gadget, role and recipe part. Hand-written chapters: header · intro · <b>pantry</b> (context descriptor, set roots, epoch, transcript digest, declared scope, public-signal order) · appendix. Render: <code>cd zkbook &amp;&amp; npm install &amp;&amp; npm run render</code> → <code>docs/index.html</code>. The state printed at the top of each recipe says how much weight the page can bear; evidence maturity does not confer normative status; adoption remains a task-force decision.</p><p>Offered upstream as draft R (the consolidated anchor) with the pull request body in draft P; the run above is the order. The specification repository is <code>trustoverip/dtgwg-zkp-spec</code> and the apparatus rides in as <code>conformance/</code>.</p></div>
 
 <div class="foot">Generated from <code>board/cards/*.json</code> and <code>board/drafts/*.md</code>. Nothing here is posted or pushed by the tool; posting and publication are the maintainer's acts.</div>
 </div>
+<script type="application/json" id="reader-data">${JSON.stringify(readerData).replace(/</g, '\\u003c')}</script>
 <script>
-function cp(btn){const card=btn.closest('.card');if(card.dataset.k.startsWith('card-')===false&&!card.classList.contains('activated')){const g=btn.parentElement.querySelector('.gatemsg');if(g){g.style.display='inline';setTimeout(()=>g.style.display='none',2200);}return;}
-const pre=card.querySelector('.body pre');navigator.clipboard.writeText(pre.textContent).then(()=>{const c=btn.parentElement.querySelector('.copied');c.style.display='inline';setTimeout(()=>c.style.display='none',1800);});}
-function cpIssue(btn){const pre=btn.parentElement.querySelector('pre.hidden');navigator.clipboard.writeText(pre.textContent).then(()=>{const c=btn.parentElement.querySelector('.copied');c.style.display='inline';setTimeout(()=>c.style.display='none',1800);});}
-function mark(cb){const card=cb.closest('.card');card.classList.toggle('done',cb.checked);try{localStorage.setItem('board-post-'+card.dataset.k,cb.checked?'1':'0');}catch(e){}}
-function activate(btn){const card=btn.closest('.card');card.classList.add('activated');try{localStorage.setItem('board-rite-'+card.dataset.k,'1');}catch(e){}}
-document.querySelectorAll('.card').forEach(card=>{const k=card.dataset.k;if(k.startsWith('card-'))return;const bar=card.querySelector('.bar');const src=card.querySelector('.ritesrc');const p=src?src.textContent.trim():'';const r=document.createElement('div');r.className='rite';
-if(p){r.innerHTML='<span>🕯️</span><span class="proverb">“'+p+'”</span><span class="ritemark">✦ rite spoken — gate open</span><button class="activate" onclick="activate(this)">Activated</button>';}else{r.innerHTML='<span>🕯️</span><span class="proverb" style="color:var(--muted)">no rite — a read, not an act</span>';card.classList.add('activated');}
-card.insertBefore(r,bar);const msg=document.createElement('span');msg.className='gatemsg';msg.textContent='speak the rite first — Activate above';bar.appendChild(msg);
-if(card.dataset.posted){card.classList.add('done','activated');const cb=card.querySelector('input[type=checkbox]');if(cb){cb.checked=true;cb.disabled=true;cb.parentElement.append(' (ledger)');}}
-try{if(localStorage.getItem('board-rite-'+k)==='1')card.classList.add('activated');if(localStorage.getItem('board-post-'+k)==='1'){card.classList.add('done');const cb=card.querySelector('input[type=checkbox]');if(cb)cb.checked=true;}}catch(e){}});
-</script></div></body></html>`;
+${readFileSync(join(HERE, 'reader-state.mjs'), 'utf8').replace(/^export /gm, '')}
+${readFileSync(join(HERE, 'reader-ui.js'), 'utf8')}
+</script></div></body></html>`.replace(/^[ \t]+$/gm, '');
 }
 
 // ---- CLI ---------------------------------------------------------------------------------

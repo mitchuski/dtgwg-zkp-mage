@@ -19,13 +19,13 @@
     "by": "stormer78 — ADR-001 Proposed 2026-08-25, docs.fpp.storm.ws",
     "need": "the first ZK use case against DTG credentials: a relationship exists inside a shared community, without revealing who is in it"
   },
-  "dish": "A maintainer learns that a member of community C has a working relationship with the presenter, that the presenter is also a member of C, and that the two are different members — and learns nothing else: not who vouched, not the pairwise identifiers under the edge, and nothing that recognises the presenter next time in another context.",
+  "dish": "A maintainer checks authenticated evidence of a relationship between two distinct member credentials of community C, under the declared holder-linkage, validity and status assumptions. Hidden identifiers remain private against the verifier and colluding verifiers only under the stated construction assumptions, disclosure set and horizon; community roots, context, optional nullifier and other disclosed metadata remain visible.",
   "ingredients": [
-    "the VRC (Omar → Nia): the vouch, its statement, and the pairwise-scope identifier pair it was issued between",
-    "Nia's VMC from C — the community-issued grant (and her own acknowledgement half)",
-    "Omar's VMC grant from C as it sits in C's membership root (the leaf and its path — no copy of Omar's acknowledgement exists on Nia's side)",
-    "Nia's holder secret, and the derivation material linking her VRC-side identifier to her VMC-side identifier (card 007) — unless she declared one `directed` identifier for both",
-    "Omar's linkage: either one `directed` identifier used in both his VMC and the VRC (WD02's honest default for intra-community edges), or a co-control attestation Omar issued alongside the VRC (card 007 run by the voucher at issuance — the vouch-under-community-credential shape of ePrint 2026/333); Nia cannot derive this from her own secret",
+    "the VRC (the voucher → the presenter): the vouch, its statement, and the pairwise-scope identifier pair it was issued between",
+    "the presenter's VMC from C — the community-issued grant (and the presenter’s acknowledgement half)",
+    "the voucher's VMC grant from C as it sits in C's membership root (the leaf and its path — no copy of the voucher's acknowledgement exists on the presenter's side)",
+    "the presenter's holder secret, and the derivation material linking the presenter’s VRC-side identifier to the presenter’s VMC-side identifier (card 007) — unless the presenter declared one `directed` identifier for both",
+    "the voucher's linkage: either one `directed` identifier used in both the voucher’s VMC and the VRC (WD02's honest default for intra-community edges), or a co-control attestation the voucher issued alongside the VRC (card 007 run by the voucher at issuance — the vouch-under-community-credential shape of ePrint 2026/333); the presenter cannot derive this from the presenter’s own secret",
     "non-revocation witnesses for the VRC and both VMC handles"
   ],
   "pantry": [
@@ -37,31 +37,31 @@
   ],
   "method": [
     {
-      "clause": "ADR clause 1 — the VRC verifies as a vouch made by the holder of Omar's credential over Nia's key",
+      "clause": "ADR clause 1 — the VRC verifies as a vouch made by the holder of the voucher's credential over the presenter's key",
       "gadget": "signature-verify"
     },
     {
-      "clause": "ADR clause 2 — Nia's VMC grant is a leaf of root_C",
+      "clause": "ADR clause 2 — the presenter's VMC grant is a leaf of root_C",
       "gadget": "set-membership",
       "component": "001"
     },
     {
-      "clause": "ADR clause 3 — the VRC issuer's VMC grant is a leaf of root_C (offline: proven from the root, not from Omar)",
+      "clause": "ADR clause 3 — the VRC issuer's VMC grant is a leaf of root_C (offline: proven from the root, not from the voucher)",
       "gadget": "set-membership",
       "component": "001"
     },
     {
-      "clause": "S7 (WD02, PR #30) — the identifier Nia used in the VRC and the identifier her VMC grant names are controlled by one secret; likewise Omar's VRC-issuing identifier and his VMC-grant identifier (from his linkage artifact, or trivially if he used one `directed` identifier) — otherwise clauses 1–3 are about four unrelated identifiers",
+      "clause": "S7 (WD02, PR #30) — the identifier the presenter used in the VRC and the identifier the presenter’s VMC grant names are controlled by one secret; likewise the voucher's VRC-issuing identifier and the voucher’s VMC-grant identifier (from the voucher’s linkage artifact, or trivially if the voucher used one `directed` identifier) — otherwise clauses 1–3 are about four unrelated identifiers",
       "gadget": "key-binding",
       "component": "007"
     },
     {
-      "clause": "S6 (added) — clause-2 leaf ≠ clause-3 leaf: the voucher is not the holder (self-vouch is unsatisfiable)",
+      "clause": "S6 — the two authenticated member leaves are distinct; this rejects reuse of one leaf, but does not by itself reject one controller with multiple memberships",
       "gadget": "distinctness",
       "component": "005"
     },
     {
-      "clause": "S4 — Nia's presentation key derives from the secret her VMC/VRC bind to",
+      "clause": "S4 — the presenter's presentation key derives from the secret the presenter’s VMC/VRC bind to",
       "gadget": "key-binding",
       "component": "004"
     },
@@ -87,17 +87,20 @@
     "context descriptor",
     "transcriptDigest",
     "nullifier — only in contexts that declare reuse detection",
-    "anything Nia deliberately discloses (P3), e.g. an assurance class carried by C's governance (G2)"
+    "anything the presenter deliberately discloses (P3), e.g. an assurance class carried by C's governance (G2)"
   ],
   "doesNotEstablish": [
-    "that Omar endorses this request — a VRC is standing, not per-request; S5 binds the proof, not the relationship",
-    "that Nia is one natural person (that is PR-UNQ in a different context, card 002 under its own declaration)",
+    "that the voucher endorses this request — a VRC is standing, not per-request; S5 binds the proof, not the relationship",
+    "that the presenter is one natural person (that is PR-UNQ in a different context, card 002 under its own declaration)",
     "that C's admission decision for either member was correct (assurance boundary — accreditation carries assurance)",
-    "Omar's consent to this disclosure — the VRC's effective disclosure is the wider of its two halves (cred-spec PR #27)",
-    "that Omar's membership was consented in the PR #12 sense — clause 3 proves the community-issued grant only; the acknowledgement half is not in Nia's hands",
+    "the voucher's consent to this disclosure — the VRC's effective disclosure is the wider of its two halves (cred-spec PR #27)",
+    "that the voucher's membership was consented in the PR #12 sense — clause 3 proves the community-issued grant only; the acknowledgement half is not in the presenter's hands",
     "key non-transfer, absence of coercion, agent authority",
-    "that Omar is still a member in any sense stronger than 'not revoked as of epoch'",
-    "that Omar's two identifiers are co-controlled when he supplied no linkage and used pairwise identifiers for both — then clause 3 is unprovable by Nia, and the card says so rather than reading a link out of a field (cred-spec #9)"
+    "that the voucher is still a member in any sense stronger than 'not revoked as of epoch'",
+    "that the voucher's two identifiers are co-controlled when the voucher supplied no linkage and used pairwise identifiers for both — then clause 3 is unprovable by the presenter, and the card says so rather than reading a link out of a field (cred-spec #9)",
+    "distinct humans or controllers merely from unequal member leaves",
+    "a complete implementation from the existence of component runtimes",
+    "unconditional anonymity against network observers, hosted provers or unique disclosed context"
   ],
   "adversary": [
     {
@@ -108,13 +111,13 @@
       ]
     },
     {
-      "claim": "P4 — unlinkable across contexts; within a reuse-detecting context the nullifier is the only link and it is declared",
+      "claim": "P4 — proposed cross-context proof unlinkability against colluding verifiers, conditional on the selected proof system and absence of correlatable disclosures; context nullifiers intentionally link reuse and registry/context metadata can also correlate presentations",
       "against": [
         "verifiers-colluding"
       ]
     },
     {
-      "claim": "C3 — currency check does not identify Nia; holds only if rl_root/root_C are fetched without a per-holder query",
+      "claim": "C3 — currency check does not identify the presenter; holds only if rl_root/root_C are fetched without a per-holder query",
       "against": [
         "registry-operator",
         "issuer-verifier-colluding"
@@ -133,7 +136,7 @@
       "current"
     ],
     "rejectionCodes": [
-      "omar-not-member (unsat)",
+      "voucher-not-member (unsat)",
       "self-vouch (unsat)",
       "vrc-signature-invalid (verify)",
       "transcript-digest-mismatch (verify)",
@@ -143,20 +146,20 @@
   },
   "substitutions": [
     {
-      "route": "Groth16 / BN254 / Poseidon — compose cards 001+001+005+003 (+006, +004) in one circuit (lab, buildable now)",
-      "cost": "est. ≈ 2×11,523 + 10,717 + non-revocation ≈ 35–45k constraints · ~2 s prove · ~10 ms verify · one 721 B proof — to be measured",
+      "route": "Groth16 / BN254 / Poseidon — candidate composition, with credential authenticity, holder linkage and non-revocation still requiring implementation",
+      "cost": "unmeasured for the complete statement; component figures cannot be added into a validated end-to-end estimate",
       "measured": false,
       "source": "CIRCUITS.md numbers per component"
     },
     {
       "route": "blackbox: Gro15 SPS credentials + hiding KZG + Groth–Sahai for the algebraic part, commit-and-prove SNARK for f (paper §8–9)",
-      "cost": "0.03 s prove @1 vouch, CRS 13.4 KB, 0.10 s verify (paper Table 1/2; N=1 vouch + 2 memberships is the smallest instance)",
+      "cost": "paper-reported benchmark pointer only; exact revision, workload and applicability to ADR-001 require verification",
       "measured": false,
       "source": "ePrint 2026/333 §10"
     },
     {
       "route": "legacy rails: ECDSA/Ed25519 credentials proven as-signed (Longfellow / Crescent → vouchable, paper App. A)",
-      "cost": "seconds; large circuits; no issuer change",
+      "cost": "unmeasured for the selected credential format and complete ADR-001 statement",
       "measured": false,
       "source": "zkp-tf #17 (SIROS catalog), ePrint 2026/333 App. A"
     },

@@ -5,6 +5,7 @@ Fetched 2026-09-07 11:11 UTC · watermark 2026-09-05 09:28 UTC · repos: dtgwg-z
 
 | repo | thread | tag | new | last | ● | feeds |
 |---|---|---|---|---|---|---|
+| cred-spec | [pr #29](https://github.com/trustoverip/dtgwg-cred-spec/pull/29) feat: add the VAC (verifiable authority credential) | OPEN | 0 | 2026-09-07 10:51  |  | card 020 — PR: VAC — shared-subject rule leans on common control (#31 row #9) |
 | cred-spec | [issue #17](https://github.com/trustoverip/dtgwg-cred-spec/issues/17) W3C alignment: DataIntegrityProof, digestMultibase, and the CID 1.0 multibase headers | CLOSED | 1 | 2026-09-07 10:47 geoffturk | ● | card 007, card 010 — eddsa-jcs-2022 vs ZK-friendliness (X3) — posted 08-29; D-A settles digestMultibase |
 | cred-spec | [pr #19](https://github.com/trustoverip/dtgwg-cred-spec/pull/19) Add the VDC (verifiable delegation credential) as a DTG edge credential | MERGED · merged | 3 | 2026-09-06 20:51 — | ● | card 020 — PR: VDC — rebase over #30, acceptance required, directed delegator identifier |
 | cred-spec | [issue #38](https://github.com/trustoverip/dtgwg-cred-spec/issues/38) Digest-valued binders are unsalted and enumerable; blinding is deferred from WD02 | OPEN | 1 | 2026-09-05 21:23 geoffturk | ● | card 008 — geoffturk 09-05: unsalted digest binders are enumerable; blinding deferred from WD02, asks for ZKP TF Q2 coordination → card 008; draft N |

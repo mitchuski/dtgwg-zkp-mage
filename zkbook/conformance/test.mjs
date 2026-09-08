@@ -8,6 +8,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { validateAll } from './validate.mjs';
+import { checkGenerated } from './generate.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, '..');
@@ -32,12 +33,11 @@ const results = validateAll(HERE);
 for (const x of results) if (x.refusals.length) { fails++; console.log(`FAIL ${x.kind} ${x.file}: ${x.refusals.join(' ')}`); }
 console.log(`ok   ${results.length - results.filter(x => x.refusals.length).length}/${results.length} conformance files validate`);
 
-const body = existsSync(join(REPO, 'spec', 'body.md')) ? readFileSync(join(REPO, 'spec', 'body.md'), 'utf8') : '';
-const stamped = (body.match(/<!-- generated-from: records-sha256=([0-9a-f]{64})/) || [])[1];
-const now = recordsDigest(HERE);
-if (!stamped) { fails++; console.log('FAIL spec/body.md carries no generated-from stamp'); }
-else if (stamped !== now) { fails++; console.log(`FAIL spec/body.md is stale: stamped ${stamped.slice(0, 12)}… records now ${now.slice(0, 12)}… — regenerate from the records`); }
-else console.log(`ok   spec/body.md generated from the current records (${now.slice(0, 12)}…)`);
+try {
+  const errors = checkGenerated(HERE);
+  for (const error of errors) { fails++; console.log(`FAIL ${error}`); }
+  if (!errors.length) console.log('ok   generated sections and terms match regeneration from the current records');
+} catch (error) { fails++; console.log(`FAIL ${error.message}`); }
 
 console.log(fails ? `\n${fails} failure(s)` : '\nall conformance checks pass');
 process.exit(fails ? 1 : 0);

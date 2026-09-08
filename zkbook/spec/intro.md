@@ -2,14 +2,14 @@
 
 This section is informative.
 
-A Decentralized Trust Graph is only private if the proofs made over it are. The [DTG Credentials Core Specification](https://trustoverip.github.io/dtgwg-cred-spec/) defines the credentials that form the graph's nodes and edges — membership, relationship, invitation, persona, endorsement and witness credentials — and names two zero-knowledge constructions over them, the pairwise proof and the community-anchored proof, while deferring their definition to this specification. The task force's [Privacy-Preserving Proof of Liveness — Requirements](https://github.com/trustoverip/dtgwg-zkp-tf/blob/main/proof-of-liveness-requirements.md) states what any such construction must and must not establish, and asks in its section 4 which zero-knowledge proof type to use for each predicate.
+The zero-knowledge layer supplies selective evidence about relationships in a Decentralized Trust Graph. Its privacy depends on both the proof construction and the surrounding disclosure, transport, registry and storage behavior. The [DTG Credentials Core Specification](https://trustoverip.github.io/dtgwg-cred-spec/) defines the credentials that form the graph's nodes and edges — membership, relationship, invitation, persona, endorsement and witness credentials — and names two zero-knowledge constructions over them, the pairwise proof and the community-anchored proof, while deferring their definition to this specification. The task force's [Privacy-Preserving Proof of Liveness — Requirements](https://github.com/trustoverip/dtgwg-zkp-tf/blob/main/proof-of-liveness-requirements.md) is an important source for the personhood and liveness use-case family and for reusable assurance-boundary concepts. It does not define the whole scope of this specification. Each construction identifies which requirements apply to its own trust-graph outcome.
 
-This specification answers that question one construction at a time, in a form that can be checked. Its central object is the **construction record**: a structured statement of one zero-knowledge proof over DTG credentials, carrying twelve parts a reader can hold the construction to.
+This specification guides implementers from a required trust-graph outcome to a checkable zero-knowledge presentation. Start with the Implementation Guide: select the outcome, establish which credential and witness inputs exist, choose a compatible construction profile, and demonstrate both acceptance and rejection. The records that follow supply the technical detail and evidence boundaries. Its central object is the **construction record**: a structured statement of one zero-knowledge proof over DTG credentials, carrying twelve parts a reader can hold the construction to.
 
 | part | what it holds |
 |---|---|
 | statement | what a verifier learns, from whom, without what — one sentence |
-| witness | the credentials, secrets, paths and openings that never leave the holder |
+| witness | the credentials, secrets, paths and openings kept private from the verifier; any delegated prover access is declared |
 | [[ref: public inputs]] | what the verifier supplies and sees: context descriptor, [[ref: set root]]s, epoch, revocation root, [[ref: transcript digest]], declared scope |
 | method | numbered clauses, each bound to a named [[ref: gadget]] and, once built, to a runtime |
 | [[ref: disclosure set]] | exactly the public signals plus anything the holder deliberately shows |
@@ -22,6 +22,16 @@ This specification answers that question one construction at a time, in a form t
 | provenance | the requests, records, registry rows and sources the construction rests on |
 
 Construction records are of two kinds. A **primitive construction** binds exactly one gadget. A **composed construction** is a named conjunction of primitive constructions under one presentation transcript and one declared disclosure set; its disclosure set and negative space are written fresh rather than inherited, because proofs that are individually sound can leak jointly.
+
+### Scope: zero-knowledge proofs for decentralized trust graphs
+
+This specification addresses privacy-preserving statements about graph participants, credential attributes, relationships, authority and graph state. Participants may be people, organizations, devices or agents; a construction does not require personhood or liveness evidence unless its stated outcome and governance policy require it.
+
+The use-case families include membership and eligibility, private relationship verification, selective disclosure and attribute predicates, holder binding and common control, context-scoped reuse detection, status and revocation, and delegated authority. Personhood and liveness are one family within this broader scope. The current records cover only part of that space; inclusion in scope is not a claim that a construction is already specified or implemented.
+
+ADR-001 is an initial worked construction and implementation priority, not a boundary on future requests. Additional use cases can enter through credential, task, registry, implementation or working-group requirements, using the same statement, disclosure, adversary, horizon and evidence discipline.
+
+> **WG-10 — Proposed for ratification: general DTG scope.** Confirm that this specification covers ZKP constructions for decentralized trust graphs generally, with personhood and liveness as one use-case family and source of requirements. Personhood assumptions apply only where a construction explicitly requires them. Status: proposed; no group decision recorded.
 
 ### How this specification is produced and checked
 
@@ -38,13 +48,13 @@ A construction record carries a [[ref: record state]], and the state is printed 
 | `constructed` | a runtime and at least one measured construction option | informative; numbers are the constructor's |
 | `run` | fixtures green on independent hardware, digests re-derived, by a party other than the constructor | reproduced once |
 | `vetted` | a row in the verification registry | candidate normative clauses |
-| `published` | the registry row and publication by the task force | normative |
+| `published` | the registry row and evidence publication | normative adoption requires a separate task-force decision |
 
-Advancement is monotone and refuses to skip: a record cannot be vetted by the party that constructed it, and the tool records the refusal as a value rather than an exception. Recommendations for proving systems are derived from the same evidence, on a ladder from self-described through reproduced by several parties on several architectures; this specification uses RECOMMENDED only at the top of that ladder.
+The existing state history records advancement without skipped steps. A later defect can invalidate evidence or supersede a version without erasing that history. Editorial status, implemented scope, independent reproduction, security review and normative adoption are separate judgments. The state ladder alone does not establish all of them. Advancement refuses to skip: a record cannot be vetted by the party that constructed it, and the tool records the refusal as a value rather than an exception. Recommendations for proving systems are derived from the same evidence, on a ladder from self-described through reproduced by several parties on several architectures; this specification uses RECOMMENDED only at the top of that ladder.
 
 ### Relationship to other specifications
 
-The DTG Credentials Core Specification defines the credentials the constructions prove over; this specification follows its Working Draft 02 vocabulary, in which an identifier carries a holder-declared correlation scope — `pairwise`, `directed` or `public` — and the retired identifier-type acronyms do not appear. The requirements document defines the predicates, the assurance boundary and the construction-selection gate; each construction record's options table is that gate's evidence table for one predicate. The trust-registry and governance work of the working group supply the set roots, revocation state and community declarations the constructions take as public inputs.
+The DTG Credentials Core Specification defines the credentials the constructions prove over; this draft uses Working Draft 02 vocabulary as its editorial baseline; a concrete implementation profile pins and reconciles the exact credential revision. An identifier carries a holder-declared correlation scope — `pairwise`, `directed` or `public` — and the retired identifier-type acronyms do not appear. The liveness requirements document contributes predicates, assurance boundaries and a construction-selection method for its use cases. This specification also draws requirements from the credential specification, Trust Tasks, registry governance, implementation needs and other recorded DTG use cases. Each construction identifies its applicable sources; common methods are reused without importing personhood-specific assumptions into unrelated proofs. The trust-registry and governance work of the working group supply the set roots, revocation state and community declarations the constructions take as public inputs.
 
 ### How to propose a construction
 
@@ -52,4 +62,4 @@ Open a discussion or issue in the task-force repository with a one-sentence stat
 
 ## Requirements Language
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [IETF RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119). In this Working Draft they carry normative force only in sections that state "This section is normative." and, within construction records, only in records at state `vetted` or `published`. Elsewhere they are quotations from the threads a record cites.
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [IETF RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119). In this Working Draft they carry normative force only in sections that state "This section is normative." Construction records in this contribution are informative. Evidence maturity alone does not confer normative force; adopting normative construction clauses requires a separately recorded task-force decision. Elsewhere they are quotations from the threads a record cites.

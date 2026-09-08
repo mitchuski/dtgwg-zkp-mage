@@ -33,7 +33,8 @@
   "doesNotEstablish": [
     "that the community's admission decision was correct (assurance boundary)",
     "that the leaf is current (see card 006)",
-    "which member the holder is"
+    "which member the holder is",
+    "that the leaf authenticates an issuer-signed credential or binds its holder key; the enclosing profile must establish those facts and the registry leaf semantics"
   ],
   "adversary": [
     {

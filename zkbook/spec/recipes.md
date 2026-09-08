@@ -1,6 +1,6 @@
 ## Construction Records
 
-This section is informative in this Working Draft: every record below is at state `carded` or `constructed`. A record becomes a candidate for normative text at state `vetted` and normative at `published`; the state is printed at the head of each record.
+This section is informative in this Working Draft: every record below is at state `carded` or `constructed`. Evidence maturity is printed at the head of each record. Normative adoption is a separate task-force decision; reproduction or publication alone does not confer it.
 
 This section is generated from the machine-readable records in `conformance/records/`. Changes are made to a record, never to this text; a record that fails validation does not render. Each record states its adversary, its horizon and what it does not establish, and labels conjecture as conjecture, because the validator refuses records that do not.
 
@@ -17,7 +17,7 @@ This section is generated from the machine-readable records in `conformance/reco
 | [005](#construction-005-distinct-member-distinct-issuer) | Distinct member / distinct issuer | `constructed` | P1 | distinctness |
 | [006](#construction-006-non-revocation-against-a-status-root) | Non-revocation against a status root | `carded` | P1 | non-revocation |
 | [007](#construction-007-common-control-across-identifiers) | Common control across identifiers | `carded` | P1 | key-binding |
-| [008](#construction-008-blinded-binder-taskcontext-without-a-durable-correlator) | Blinded binder (taskContext without a durable correlator) | `carded` | P2 | commitment-open |
+| [008](#construction-008-blinded-binder-taskcontext-hiding-presentation-correlation-unresolved) | Blinded binder (taskContext hiding; presentation correlation unresolved) | `carded` | P2 | commitment-open |
 
 **Composed constructions** — a named conjunction under one transcript and one disclosure set.
 
@@ -75,6 +75,7 @@ A verifier learns that the holder's credential commitment is a leaf of a publish
 - that the community's admission decision was correct (assurance boundary)
 - that the leaf is current (see card 006)
 - which member the holder is
+- that the leaf authenticates an issuer-signed credential or binds its holder key; the enclosing profile must establish those facts and the registry leaf semantics
 
 #### Adversary, per claim
 
@@ -239,7 +240,7 @@ Rejection codes: `nullifier-reused`, `context-descriptor-mismatch`
 
 #### Statement
 
-A verifier learns that this proof was made for exactly this presentation transcript (their challenge included), so replay under any other transcript fails cryptographically.
+A verifier checks that the proof binds the supplied transcript scalar. Interpreting that scalar as this authenticated request also requires the profile’s canonical encoding, digest conversion, audience and freshness checks.
 
 **Need.** PR-FRE: a proof bound to this challenge and this presentation, unreplayable elsewhere
 
@@ -251,7 +252,7 @@ A verifier learns that this proof was made for exactly this presentation transcr
 
 #### Public inputs
 
-- transcriptDigest — JCS-canonicalised digest of the presentation transcript including the verifier's challenge
+- transcriptDigest — profile-defined circuit scalar; the lab hashes domain-separated, length-prefixed canonical transcript bytes and reduces the digest modulo the BN254 scalar prime
 
 #### Method
 
@@ -265,10 +266,14 @@ A verifier learns that this proof was made for exactly this presentation transcr
 
 - freshness beyond what the challenge carries
 - that the verifier's challenge was itself honest
+- correct JCS/SHA-256 evaluation inside the circuit merely because a supplied scalar is constrained
+- simulation extractability or equivalence to tag-based SE-NIZK
+- rejection of reuse of the same transcript without a verifier replay policy
+- strict transcript field types or expiry semantics from the lab field-presence validator; those require the selected payload schema and verifier policy
 
 #### Adversary, per claim
 
-- **verifier · verifiers-colluding** — replay to another verifier or time fails
+- **verifier · verifiers-colluding** — changing the constrained transcript scalar invalidates the proof; audience/time replay protection additionally assumes the verifier checks the authenticated request and its validity window
 
 #### Horizon
 
@@ -289,7 +294,7 @@ Rejection codes: `transcript-digest-mismatch`, `bare-nonce-insufficient`
 | route | cost | status | source |
 |---|---|---|---|
 | public-signal binding in Groth16 (lab) | +1 constraint (11,522 → 11,523) | **measured** | CIRCUITS.md |
-| tag-based SE-NIZK: tag = transcript (paper Def. 5) | no circuit cost; property of the proof system | unmeasured | ePrint 2026/333 §3.5 |
+| tag-based SE-NIZK: tag = transcript (paper Def. 5) | unmeasured; proof-system security requirement, not established by the lab public-input binding | unmeasured | ePrint 2026/333 §3.5 |
 | Flock-class prover binding a SHA-256 digestMultibase transcript digest natively (no Poseidon detour for the canonical transcript) | unmeasured — one SHA-256 compression per 64-byte block of the canonical transcript | unmeasured | board/stacks/flock.json |
 
 #### Issuance requirements
@@ -359,6 +364,7 @@ A verifier learns that the presenting key is derived from the same secret the cr
 - non-transfer of the secret
 - absence of coercion or account sharing
 - agent authority or consent
+- compatibility with non-exportable keys or arbitrary credential key formats; the selected profile must bind the actual authenticated holder key to the available witness
 
 #### Adversary, per claim
 
@@ -446,6 +452,7 @@ A verifier learns that two credentials in one proof come from two distinct membe
 
 - that the two parties are independent in the accreditation sense (declared, not proven — X8)
 - that either is honest
+- distinct natural persons or independent key controllers merely from distinct leaves, keys or issuer identifiers
 
 #### Adversary, per claim
 
@@ -539,7 +546,7 @@ A verifier learns that the credential's nullifier is not in the revocation set a
 
 - that revocation is instantaneous — only that the handle was not revoked as of `epoch` (C4's published bound)
 - that the registry's revocation decision was correct
-- that the verifier performed no live lookup — the card makes the presentation self-carrying (root + witness); whether a deployment still phones home is a profile statement, not a proof property
+- that the verifier performed no live lookup — the card makes the presentation self-carrying (public root + ZK proof; witness remains private); whether a deployment still phones home is a profile statement, not a proof property
 
 #### Adversary, per claim
 
@@ -564,7 +571,7 @@ Rejection codes: `rl-root-stale`, `handle-revoked`
 |---|---|---|---|
 | sorted-leaf non-membership Merkle (indexed tree) | ≈ 2× card 001 | unmeasured | explorations/O4-registry-zk-revocation.md |
 | RL membership check inside f with nullifier as PHC attribute (paper §5.4) — carries the paper's own linkability caveat | depends on RL representation | unmeasured | ePrint 2026/333 §5.4 |
-| set-root primitive (cred-tf #40 unification): a signed, published set root + a membership or non-membership proof carried in the presentation — accumulator non-membership witness as the ZK-friendly form; the same public-input object serves anchoring (card 001), revocation status (this card) and registry membership | unmeasured — ScottJeezey: "ours to pressure-test", priority | unmeasured | cred-tf #40 (stormer78 08-22; ScottJeezey 08-24) · cred-tf #39 (ScottJeezey 08-25) |
+| set-root primitive (cred-tf #40 unification): a signed, published set root + a membership or non-membership proof carried in the presentation — accumulator non-membership witness as a private proof input; the same public-input object serves anchoring (card 001), revocation status (this card) and registry membership | unmeasured — ScottJeezey: "ours to pressure-test", priority | unmeasured | cred-tf #40 (stormer78 08-22; ScottJeezey 08-24) · cred-tf #39 (ScottJeezey 08-25) |
 | Flock-class prover over an indexed (sorted-leaf) non-membership tree built with the registry’s existing standard hash — the set-root primitive without a hash migration | unmeasured — conjecture ≈ 2× the standard-hash membership path | unmeasured | board/stacks/flock.json · cred-tf #40 (set-root primitive) |
 
 #### Issuance requirements
@@ -604,7 +611,7 @@ Rejection codes: `rl-root-stale`, `handle-revoked`
 
 #### Statement
 
-A verifier learns that two identifiers named in two credentials — declared pairwise, or otherwise distinct — are controlled by one holder secret, without learning that secret and without the proof minting a handle that recognises the holder in any other presentation.
+A verifier checks common control through the selected shared-secret derivation relation, while the secret remains private under the construction assumptions. Any cross-presentation correlation depends on the enclosing disclosure set and context policy.
 
 **Need.** under WD02's three correlation scopes, two `pairwise` identifiers differ by construction, so any proof that reads one party out of two credentials must first prove one holder controls both identifiers — without a field that says so
 
@@ -637,6 +644,7 @@ A verifier learns that two identifiers named in two credentials — declared pai
 - that either credential is currently valid or unrevoked (card 006)
 - that the holder intended the two identifiers to be correlated beyond this verifier — the proof is a disclosure to the party it is made to, not a widening of either identifier's declared scope
 - the counterparty's common control: a presenter can prove only what is derived from a secret in the presenter's hands; a counterparty's linkage needs the counterparty's witness or the counterparty's own attestation (see card 010)
+- that arbitrary independently generated or hardware-protected keys derive from a shared available scalar; derivation and custody are profile requirements
 
 #### Adversary, per claim
 
@@ -684,7 +692,7 @@ Rejection codes: `co-control-unproven (unsat: distinct secrets)`, `identifier-no
 | 2026-09-05 | `carded` | mitchuski | carded from PR #30's §Community-Anchored text + #9 + the lab's key-binding gadget shape; cost line labelled conjecture per drafting rule 4 |
 
 
-### Construction 008 · Blinded binder (taskContext without a durable correlator)
+### Construction 008 · Blinded binder (taskContext hiding; presentation correlation unresolved)
 
 *This record is at state `carded`: it is written and validates; no runtime has measured it. Costs marked conjecture are conjecture (drafting rule 4). Informative.*
 
@@ -715,35 +723,37 @@ A verifier that holds a trust-task context learns that the presented credential 
 
 #### Public inputs
 
-- the binder commitment C as the credential carries it (digestMultibase-encoded per WD02 D-A)
+- Route 1 currently treats commitment C as visible (digestMultibase-encoded). Repeated C values can correlate presentations; hiding C in a proof or a verifiable rerandomization route remains an unresolved design requirement.
 - what the verifier already holds of the exchange: the taskContext digest it expects (route 1) or the context descriptor for the per-context pseudonym (route 2)
 - transcriptDigest
 
 #### Method
 
-1. C opens to (taskContext, u) for the taskContext the verifier supplies — route 1; or C opens to a PRF of (holder secret, context descriptor) that the verifier can recompute for this context and no other — route 2 — [[ref: commitment-open]]
+1. Route 1: prove that C opens to (taskContext, secret blinding value) for the expected exchange. Route 2 (proposed): the holder proves correct derivation of a context pseudonym from its secret key and context descriptor; the verifier checks that proof without learning or recomputing with the holder secret. Both routes still require binding to the issuer-authenticated credential. — [[ref: commitment-open]]
 
 #### Disclosure set
 
 - the outcome (bound to this exchange / not shown)
 - transcriptDigest
 - route 2 only: the per-context pseudonym, which is by construction the same value every time this holder presents in this context — a declared, context-scoped link and nothing wider
+- route 1 as currently specified: visible C, which is stable for this credential and can correlate presentations
 
 #### Does not establish
 
+- unlinkability of presentations carrying the same visible commitment C; hiding plaintext alone does not prevent equality-based correlation
 - that the trust task completed, or what was done in it — completion evidence is a framework artifact outside any credential (the artifact gap, cred-tf #39/#40)
 - that the binder's plaintext is not held elsewhere — the framework holds it in the Trust Task documents; this card blinds only the copy the credential carries
 - durable-versus-task-dependent status of the claim (Outcome Interpretability is the credential layer's statement, not this proof's)
 
 #### Adversary, per claim
 
-- **verifier** — route 1: a verifier not party to the exchange learns nothing from C; a verifier party to it learns only what it already held
-- **verifiers-colluding** — verifiers in different contexts cannot link presentations through the binder — route 1 emits nothing reusable, route 2 emits a value scoped to one context descriptor
+- **verifier** — route 1 intends to hide a low-entropy taskContext from a verifier without the opening, assuming an independent uniformly random 128-bit secret blinding value and the commitment hash assumptions; a public or disclosed opening does not provide this protection
+- **verifiers-colluding** — verifiers colluding across contexts can link any repeated visible C in route 1. Route 2 cross-context unlinkability is a design objective, not established by this card; it depends on PRF key secrecy, domain separation and the absence of other stable presentation identifiers
 - **issuer-verifier-colluding** — the issuer that placed C and a verifier together can link C to the exchange (the issuer knows u) — stated, not hidden: issuer–verifier collusion is outside this card's protection
 
 #### Horizon
 
-- route 1: the lifetime of the exchange's thread — once the thread is closed the verifier's copy of taskContext is the only thing that can open C
+- route 1 plaintext hiding lasts only while the opening remains secret from the named verifier and the hash assumptions hold. Closing a thread does not erase retained openings or prevent correlation through a retained visible C.
 - route 2: the context descriptor's epoch; the pseudonym rotates with it
 - the commitment's hash cryptoperiod
 
@@ -759,7 +769,7 @@ Rejection codes: `binder-mismatch (unsat: C does not open to the supplied taskCo
 
 | route | cost | status | source |
 |---|---|---|---|
-| route 1 — salted commitment, Poseidon in-circuit opening (available now; the lab's canonical §6.2 descriptor digest is the input shape) | unmeasured — one Poseidon opening, conjecture ≈ 250–300 constraints (~70%) | unmeasured | runtimes/canonical + runtimes/circom-gadget |
+| route 1 — proposed salted-commitment opening using available primitives; no record-specific measured implementation | unmeasured — one Poseidon opening, conjecture ≈ 250–300 constraints (~70%) | unmeasured | runtimes/canonical + runtimes/circom-gadget |
 | route 2 — PRF-derived per-context pseudonym (the card-002 nullifier construction with the context descriptor as domain) | the lab's domain-tagged nullifier: measured inside the 11,523-constraint gadget; standalone unmeasured | unmeasured | runtimes/circom-gadget (nullifier binds context; card 002) |
 
 #### Issuance requirements
@@ -767,6 +777,7 @@ Rejection codes: `binder-mismatch (unsat: C does not open to the supplied taskCo
 - issuers place the commitment C in `taskContext` (or beside it) instead of the plaintext pairing — a change to cred-spec §The `taskContext` Property, and the one member this card asks the credential layer for
 - C is digestMultibase-encoded (WD02 D-A) so both layers agree on the encoding
 - the framework (Trust Tasks) commits to the taskContext in a form the proof can open — 'we can only blind what the framework gives us a committed form of' (ScottJeezey, cred-tf #39)
+- Specify generation, distribution and retention of the secret blinding value; do not publish it beside a low-entropy plaintext-hiding commitment.
 
 #### Provenance
 
@@ -781,6 +792,12 @@ Rejection codes: `binder-mismatch (unsat: C does not open to the supplied taskCo
 |---|---|---|---|
 | 2026-08-25 | `requested` | ScottJeezey (ZKP TF co-chair, cred-tf #39) | cred-tf #39 comment 2026-08-25T14:41Z: 'we are treating these as work items: a blinded, non-correlating form of the binder (taskContext)…' |
 | 2026-09-05 | `carded` | mitchuski | carded from Scott's two routes + cred-spec §Trust Task Context Binding + the lab's descriptor-digest and nullifier shapes; costs labelled conjecture |
+
+Revisions within a state:
+
+| date | by | note |
+|---|---|---|
+| 2026-09-07 | reviewer (Codex; local editorial review) | Narrowed plaintext-hiding claims, made visible-C correlation explicit, corrected PRF verification and retention assumptions. Evidence state unchanged; design and implementation questions remain open. |
 
 
 ### Construction 010 · Community-Anchored Proof (ADR-001)
@@ -800,7 +817,7 @@ Rejection codes: `binder-mismatch (unsat: C does not open to the supplied taskCo
 
 #### Statement
 
-A maintainer learns that a member of community C has a working relationship with the presenter, that the presenter is also a member of C, and that the two are different members — and learns nothing else: not who vouched, not the pairwise identifiers under the edge, and nothing that recognises the presenter next time in another context.
+A maintainer checks authenticated evidence of a relationship between two distinct member credentials of community C, under the declared holder-linkage, validity and status assumptions. Hidden identifiers remain private against the verifier and colluding verifiers only under the stated construction assumptions, disclosure set and horizon; community roots, context, optional nullifier and other disclosed metadata remain visible.
 
 **Need.** the first ZK use case against DTG credentials: a relationship exists inside a shared community, without revealing who is in it
 
@@ -808,11 +825,11 @@ A maintainer learns that a member of community C has a working relationship with
 
 *Never leaves the holder.*
 
-- the VRC (Omar → Nia): the vouch, its statement, and the pairwise-scope identifier pair it was issued between
-- Nia's VMC from C — the community-issued grant (and her own acknowledgement half)
-- Omar's VMC grant from C as it sits in C's membership root (the leaf and its path — no copy of Omar's acknowledgement exists on Nia's side)
-- Nia's holder secret, and the derivation material linking her VRC-side identifier to her VMC-side identifier (card 007) — unless she declared one `directed` identifier for both
-- Omar's linkage: either one `directed` identifier used in both his VMC and the VRC (WD02's honest default for intra-community edges), or a co-control attestation Omar issued alongside the VRC (card 007 run by the voucher at issuance — the vouch-under-community-credential shape of ePrint 2026/333); Nia cannot derive this from her own secret
+- the VRC (the voucher → the presenter): the vouch, its statement, and the pairwise-scope identifier pair it was issued between
+- the presenter's VMC from C — the community-issued grant (and the presenter’s acknowledgement half)
+- the voucher's VMC grant from C as it sits in C's membership root (the leaf and its path — no copy of the voucher's acknowledgement exists on the presenter's side)
+- the presenter's holder secret, and the derivation material linking the presenter’s VRC-side identifier to the presenter’s VMC-side identifier (card 007) — unless the presenter declared one `directed` identifier for both
+- the voucher's linkage: either one `directed` identifier used in both the voucher’s VMC and the VRC (WD02's honest default for intra-community edges), or a co-control attestation the voucher issued alongside the VRC (card 007 run by the voucher at issuance — the vouch-under-community-credential shape of ePrint 2026/333); the presenter cannot derive this from the presenter’s own secret
 - non-revocation witnesses for the VRC and both VMC handles
 
 #### Public inputs
@@ -825,12 +842,12 @@ A maintainer learns that a member of community C has a working relationship with
 
 #### Method
 
-1. ADR clause 1 — the VRC verifies as a vouch made by the holder of Omar's credential over Nia's key — [[ref: signature-verify]]
-2. ADR clause 2 — Nia's VMC grant is a leaf of root_C — [[ref: set-membership]] ([[ref: construction record]] 001, [Set membership over an accredited root](#construction-001-set-membership-over-an-accredited-root))
-3. ADR clause 3 — the VRC issuer's VMC grant is a leaf of root_C (offline: proven from the root, not from Omar) — [[ref: set-membership]] ([[ref: construction record]] 001, [Set membership over an accredited root](#construction-001-set-membership-over-an-accredited-root))
-4. S7 (WD02, PR #30) — the identifier Nia used in the VRC and the identifier her VMC grant names are controlled by one secret; likewise Omar's VRC-issuing identifier and his VMC-grant identifier (from his linkage artifact, or trivially if he used one `directed` identifier) — otherwise clauses 1–3 are about four unrelated identifiers — [[ref: key-binding]] ([[ref: construction record]] 007, [Common control across identifiers](#construction-007-common-control-across-identifiers))
-5. S6 (added) — clause-2 leaf ≠ clause-3 leaf: the voucher is not the holder (self-vouch is unsatisfiable) — [[ref: distinctness]] ([[ref: construction record]] 005, [Distinct member / distinct issuer](#construction-005-distinct-member-distinct-issuer))
-6. S4 — Nia's presentation key derives from the secret her VMC/VRC bind to — [[ref: key-binding]] ([[ref: construction record]] 004, [Holder binding (key from secret)](#construction-004-holder-binding-key-from-secret))
+1. ADR clause 1 — the VRC verifies as a vouch made by the holder of the voucher's credential over the presenter's key — [[ref: signature-verify]]
+2. ADR clause 2 — the presenter's VMC grant is a leaf of root_C — [[ref: set-membership]] ([[ref: construction record]] 001, [Set membership over an accredited root](#construction-001-set-membership-over-an-accredited-root))
+3. ADR clause 3 — the VRC issuer's VMC grant is a leaf of root_C (offline: proven from the root, not from the voucher) — [[ref: set-membership]] ([[ref: construction record]] 001, [Set membership over an accredited root](#construction-001-set-membership-over-an-accredited-root))
+4. S7 (WD02, PR #30) — the identifier the presenter used in the VRC and the identifier the presenter’s VMC grant names are controlled by one secret; likewise the voucher's VRC-issuing identifier and the voucher’s VMC-grant identifier (from the voucher’s linkage artifact, or trivially if the voucher used one `directed` identifier) — otherwise clauses 1–3 are about four unrelated identifiers — [[ref: key-binding]] ([[ref: construction record]] 007, [Common control across identifiers](#construction-007-common-control-across-identifiers))
+5. S6 — the two authenticated member leaves are distinct; this rejects reuse of one leaf, but does not by itself reject one controller with multiple memberships — [[ref: distinctness]] ([[ref: construction record]] 005, [Distinct member / distinct issuer](#construction-005-distinct-member-distinct-issuer))
+6. S4 — the presenter's presentation key derives from the secret the presenter’s VMC/VRC bind to — [[ref: key-binding]] ([[ref: construction record]] 004, [Holder binding (key from secret)](#construction-004-holder-binding-key-from-secret))
 7. C1–C3 — neither VMC handle nor the VRC handle is in the set under rl_root at epoch — [[ref: non-revocation]] ([[ref: construction record]] 006, [Non-revocation against a status root](#construction-006-non-revocation-against-a-status-root))
 8. P4 (parameterised) — if the context declares reuse detection, emit the scoped nullifier; else emit none — [[ref: nullifier]] ([[ref: construction record]] 002, [Scoped nullifier (reuse detection)](#construction-002-scoped-nullifier-reuse-detection))
 9. S5 — the whole show is bound to transcriptDigest — [[ref: transcript-bind]] ([[ref: construction record]] 003, [Transcript binding](#construction-003-transcript-binding))
@@ -842,24 +859,27 @@ A maintainer learns that a member of community C has a working relationship with
 - context descriptor
 - transcriptDigest
 - nullifier — only in contexts that declare reuse detection
-- anything Nia deliberately discloses (P3), e.g. an assurance class carried by C's governance (G2)
+- anything the presenter deliberately discloses (P3), e.g. an assurance class carried by C's governance (G2)
 
 #### Does not establish
 
-- that Omar endorses this request — a VRC is standing, not per-request; S5 binds the proof, not the relationship
-- that Nia is one natural person (that is PR-UNQ in a different context, card 002 under its own declaration)
+- that the voucher endorses this request — a VRC is standing, not per-request; S5 binds the proof, not the relationship
+- that the presenter is one natural person (that is PR-UNQ in a different context, card 002 under its own declaration)
 - that C's admission decision for either member was correct (assurance boundary — accreditation carries assurance)
-- Omar's consent to this disclosure — the VRC's effective disclosure is the wider of its two halves (cred-spec PR #27)
-- that Omar's membership was consented in the PR #12 sense — clause 3 proves the community-issued grant only; the acknowledgement half is not in Nia's hands
+- the voucher's consent to this disclosure — the VRC's effective disclosure is the wider of its two halves (cred-spec PR #27)
+- that the voucher's membership was consented in the PR #12 sense — clause 3 proves the community-issued grant only; the acknowledgement half is not in the presenter's hands
 - key non-transfer, absence of coercion, agent authority
-- that Omar is still a member in any sense stronger than 'not revoked as of epoch'
-- that Omar's two identifiers are co-controlled when he supplied no linkage and used pairwise identifiers for both — then clause 3 is unprovable by Nia, and the card says so rather than reading a link out of a field (cred-spec #9)
+- that the voucher is still a member in any sense stronger than 'not revoked as of epoch'
+- that the voucher's two identifiers are co-controlled when the voucher supplied no linkage and used pairwise identifiers for both — then clause 3 is unprovable by the presenter, and the card says so rather than reading a link out of a field (cred-spec #9)
+- distinct humans or controllers merely from unequal member leaves
+- a complete implementation from the existence of component runtimes
+- unconditional anonymity against network observers, hosted provers or unique disclosed context
 
 #### Adversary, per claim
 
 - **verifier · verifiers-colluding** — P1/P2 — no pairwise-scope identifier of the edge, no counterparty identifier
-- **verifiers-colluding** — P4 — unlinkable across contexts; within a reuse-detecting context the nullifier is the only link and it is declared
-- **registry-operator · issuer-verifier-colluding** — C3 — currency check does not identify Nia; holds only if rl_root/root_C are fetched without a per-holder query
+- **verifiers-colluding** — P4 — proposed cross-context proof unlinkability against colluding verifiers, conditional on the selected proof system and absence of correlatable disclosures; context nullifiers intentionally link reuse and registry/context metadata can also correlate presentations
+- **registry-operator · issuer-verifier-colluding** — C3 — currency check does not identify the presenter; holds only if rl_root/root_C are fetched without a per-holder query
 
 #### Horizon
 
@@ -869,7 +889,7 @@ A maintainer learns that a member of community C has a working relationship with
 
 Families: `accepts` · `rejects-unsat` · `rejects-verify` · `unlinkable` · `current`
 
-Rejection codes: `omar-not-member (unsat)`, `self-vouch (unsat)`, `vrc-signature-invalid (verify)`, `transcript-digest-mismatch (verify)`, `handle-revoked (unsat at epoch)`, `rl-root-stale`
+Rejection codes: `voucher-not-member (unsat)`, `self-vouch (unsat)`, `vrc-signature-invalid (verify)`, `transcript-digest-mismatch (verify)`, `handle-revoked (unsat at epoch)`, `rl-root-stale`
 
 #### Construction options
 
@@ -877,9 +897,9 @@ Rejection codes: `omar-not-member (unsat)`, `self-vouch (unsat)`, `vrc-signature
 
 | route | cost | status | source |
 |---|---|---|---|
-| Groth16 / BN254 / Poseidon — compose cards 001+001+005+003 (+006, +004) in one circuit (lab, buildable now) | est. ≈ 2×11,523 + 10,717 + non-revocation ≈ 35–45k constraints · ~2 s prove · ~10 ms verify · one 721 B proof — to be measured | unmeasured | CIRCUITS.md numbers per component |
-| blackbox: Gro15 SPS credentials + hiding KZG + Groth–Sahai for the algebraic part, commit-and-prove SNARK for f (paper §8–9) | 0.03 s prove @1 vouch, CRS 13.4 KB, 0.10 s verify (paper Table 1/2; N=1 vouch + 2 memberships is the smallest instance) | unmeasured | ePrint 2026/333 §10 |
-| legacy rails: ECDSA/Ed25519 credentials proven as-signed (Longfellow / Crescent → vouchable, paper App. A) | seconds; large circuits; no issuer change | unmeasured | zkp-tf #17 (SIROS catalog), ePrint 2026/333 App. A |
+| Groth16 / BN254 / Poseidon — candidate composition, with credential authenticity, holder linkage and non-revocation still requiring implementation | unmeasured for the complete statement; component figures cannot be added into a validated end-to-end estimate | unmeasured | CIRCUITS.md numbers per component |
+| blackbox: Gro15 SPS credentials + hiding KZG + Groth–Sahai for the algebraic part, commit-and-prove SNARK for f (paper §8–9) | paper-reported benchmark pointer only; exact revision, workload and applicability to ADR-001 require verification | unmeasured | ePrint 2026/333 §10 |
+| legacy rails: ECDSA/Ed25519 credentials proven as-signed (Longfellow / Crescent → vouchable, paper App. A) | unmeasured for the selected credential format and complete ADR-001 statement | unmeasured | zkp-tf #17 (SIROS catalog), ePrint 2026/333 App. A |
 | post-quantum route: Flock-class binary-field prover for the hash side (membership, non-revocation, transcript) — signature clauses over curve-based credentials remain the open cost | unmeasured; proof size hundreds of kB vs ~1 kB Groth16 — a profile trade (ADR-001 D3) | unmeasured | board/stacks/flock.json |
 
 #### Issuance requirements
@@ -1172,10 +1192,12 @@ A verifier learns that the presenting agent holds a delegation chain rooted at a
 - that the agent is not also acting for others
 - that the principal has not declined renewal — in the core, revocation is non-renewal within one validUntil; the profile’s credentialStatus re-adds a live lookup and this card’s non-revocation leg is what lets the presentation carry it instead
 - what the delegate actually did in the principal’s name — the invocation record lives on the framework side (the artifact gap, cred-tf #40 Q8)
+- chain-length hiding without a validated fixed-shape or padded profile
+- compatibility with a current merged credential revision until its grant, acceptance, status and chaining semantics are pinned and reconciled
 
 #### Adversary, per claim
 
-- **verifier · verifiers-colluding** — principal hidden; chain length hidden up to maxDepth
+- **verifier · verifiers-colluding** — principal hidden under the selected proof assumptions and declared disclosure, against the verifier and colluding verifiers; hiding chain length additionally requires validated padding/fixed shape and metadata analysis, which are not established here
 
 #### Horizon
 
@@ -1194,6 +1216,7 @@ Rejection codes: `scope-escalation (unsat)`, `depth-exceeded`, `hop-revoked`
 
 | route | cost | status | source |
 |---|---|---|---|
+| bounded monolithic proof of a fixed maximum chain depth; padding semantics and authenticated hop checks to be defined | unmeasured | unmeasured | editorial alternative for review, 2026-09-08 |
 | recursive/folding proof per hop | unmeasured | unmeasured | PATH-MAP P4 (PLONKish/folding counter-proposal welcome) |
 
 #### Issuance requirements

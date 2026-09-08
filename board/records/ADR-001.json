@@ -168,7 +168,7 @@
       "text": "whatever the proof relies on from a registry is independently checkable by a party that did not create it",
       "boundTo": "006 set-root primitive route · public inputs set roots",
       "status": "refined",
-      "refinement": "the set-root primitive (cred-tf #40): signed published root + (non-)membership witness carried in the presentation; no live lookup"
+      "refinement": "the set-root primitive (cred-tf #40): signed published root + zero-knowledge membership/status proof in the presentation; paths and openings stay private; root/witness retrieval requires an explicit privacy policy"
     },
     {
       "id": "T3",

@@ -97,7 +97,7 @@ section is the same digest with snippets. Nothing here posts; posting is the mai
 `doors.json` is the curated list of places the co-chair can add value now — each with the thread,
 the status (`open` · `drafted` · `waiting` · `done`), the draft letter and the cards it touches. The
 viewer's **Doors** section renders it. Drafts carry a `ledger:` line naming their proverb-ledger entry;
-the viewer marks a draft *posted* from the ledger's activation, not from a checkbox.
+the viewer treats legacy ledger activation as history, never as confirmation of the current revision. Review acknowledgment is bound to the exact text, destination, proverb, metadata and prerequisite list. A manually entered publication URL is labelled reported and unverified.
 
 ## The ZK Book (added 2026-09-05)
 
@@ -107,7 +107,7 @@ for every gadget, role and recipe part (`terms-definitions/g-*.md`). Hand-writte
 intro, pantry, appendix) sit beside it. `cd zkbook && npm install && npm run render` builds
 `docs/index.html`. `node tools/zkbook-export.mjs` writes the specification into a clone of `trustoverip/dtgwg-zkp-spec`
 (template skeleton + `conformance/` + CI); `--check` shows the diff first. Rule: a record may not say more than a runtime
-has measured. See `zkbook/README.md`, `zkbook/COMMIT-PLAN.md` and draft H.
+has measured. See `zkbook/README.md`, `zkbook/COMMIT-PLAN.md` and draft R; P is the draft-PR body.
 
 ## Seed set
 
@@ -140,3 +140,13 @@ Research root lane (`WORKFLOW.md` placement rules: drafting is exploration). Pro
 when Scott's board exists, `issue 010` output becomes the first board issue; the rendered card
 is the linked detail page (this repo, public). The upstream repo never carries the lab;
 the board row links here. Pushes = maintainer, with the rite.
+
+## Reader review and publication records (7 September 2026)
+
+The active queue follows `run.json`; held, superseded and historically activated drafts are grouped as reference material. Read the source-check time, live destination and prerequisites before approving. The acknowledgment is local to this browser and revision; editing the text or destination invalidates it. Export a review receipt to retain the acknowledgment and any publication report outside browser storage. The reader does not call a publishing API or infer publication from copying.
+
+The watch paginates repository lists and nested comments/replies/reviews. Every repository retains its own last successful watermark; errors are visible and retried across the missed interval. Snippets are a navigation aid: read the full live target before posting.
+
+Generated-content tests now regenerate marked specification sections and generated terms using a portable renderer. Evidence maturity and normative adoption are separate. Material corrections should be recorded as revisions with renewed review, preserving earlier evidence history.
+
+Run both reader suites after a change: `node board/test.mjs` and `node --test board/review.test.mjs`. The second includes negative publication, pagination, historical-ledger and generated-content regression cases. If Git is not on the process PATH, set `DTG_GIT_EXECUTABLE` to its absolute executable path for the survey. Missing credentials refuse the refresh without replacing the last snapshot.
