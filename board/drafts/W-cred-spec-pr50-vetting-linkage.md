@@ -1,0 +1,8 @@
+# W · cred-spec PR #50 — vetting evidence is not the missing voucher linkage; carry the profile's PASS limits into any private presentation
+chip: NEW SINCE 09-12 · SUPERSEDES THE #49 WATCH · POST AFTER #47 SETTLES
+thread: https://github.com/trustoverip/dtgwg-cred-spec/pull/50
+note: stormer78 closed #49 on 09-13 in favour of #50 (vetting as a community statement predicate under the VSC, PR #47). The body below is Mitch's response candidate from the 13 September review, verbatim (source: ~/Documents/Codex/2026-09-07/rev/outputs/2026-09-13-vetting-linkage-review.md, sha256 c8e4051a…); the working record — the bounded question, the four unexecuted negative fixture requirements, the card-digest byte-input ambiguity — stays in that file and in record 010's revision of 09-13. #50 is based on #47, which still waits on bmiller59's direction-binding answer; post once #47's shape is settled, and re-read #50 for pushes after 0a0f09b.
+ledger: 37
+proverb: A witness to a procedure is not a witness to a hand; the commitment says what was claimed, never who holds the key.
+---
+The distinction between recording a vetting procedure and endorsing a person helps the ZKP mapping. I would carry the profile's PASS limits into any private presentation: an authenticated vetting statement does not establish admission, current membership or identity truth. For our community-anchored construction, `identityCommitment` also needs to remain distinct from the voucher-to-membership linkage; committing to identity claims does not supply that relation. Can the example make this distinction explicit, and resolve whether the card digest covers received bytes or the canonicalized form before implementers bind it into a proof?

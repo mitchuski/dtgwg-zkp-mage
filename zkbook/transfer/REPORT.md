@@ -1,4 +1,4 @@
-# Transfer report — 2026-09-05
+# Transfer report — 2026-09-08
 
 Source: C:/Users/mitch/.wiki/research.localhost/assets/grimoire-the-zero-knowledge-spellbook/zk_grimoire_v3_0.md
 

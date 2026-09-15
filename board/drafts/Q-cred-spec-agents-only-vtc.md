@@ -1,6 +1,6 @@
 # Q · cred-spec (new discussion) — an agents-only verifiable trust community on OpenVTC: a local twin, and five questions for the vocabulary
 chip: STANDING UPDATE · NEW THREAD · FOLDED (long form in the working record)
-thread: https://github.com/trustoverip/dtgwg-cred-spec/discussions (new) — alternates: dtgwg-trust-tasks-tf (the two candidate task families), dtgwg-zkp-tf #18 (the key as a proof carrier)
+thread: https://github.com/trustoverip/dtgwg-cred-spec/discussions/new
 note: A standing update, not a reply. Everything named runs as a local twin on one machine (68 acceptance rows); nothing is on the internet. The spec's own terms throughout. Public references only. The long form is mages_city/docs/NOTE_TOIP_2026-09-05.md. Posting is the co-chair's act.
 ledger: (unserved — the G.1 rite serves the proverb at push)
 proverb: A city that scores its residents has a ledger; a city that reads them has a gate.

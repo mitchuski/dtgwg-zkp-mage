@@ -68,7 +68,7 @@ that are individually sound can leak jointly. Fields (schema in `card.schema.jso
 
 Gadget vocabulary (closed list, extend by PR): `set-membership` · `nullifier` ·
 `transcript-bind` · `key-binding` · `distinctness` · `signature-verify` · `non-revocation` ·
-`range` · `commitment-open` · `chain-resolve`.
+`range` · `commitment-open` · `chain-resolve` · `hidden-equality` (added 2026-09-11: equality of two hidden fields across differently-signed credentials — the dual of `distinctness`; cred-spec #9).
 
 ## Commands
 
@@ -97,7 +97,7 @@ section is the same digest with snippets. Nothing here posts; posting is the mai
 `doors.json` is the curated list of places the co-chair can add value now — each with the thread,
 the status (`open` · `drafted` · `waiting` · `done`), the draft letter and the cards it touches. The
 viewer's **Doors** section renders it. Drafts carry a `ledger:` line naming their proverb-ledger entry;
-the viewer marks a draft *posted* from the ledger's activation, not from a checkbox.
+the viewer treats legacy ledger activation as history, never as confirmation of the current revision. Review acknowledgment is bound to the exact text, destination, proverb, metadata and prerequisite list. A manually entered publication URL is labelled reported and unverified.
 
 ## The ZK Book (added 2026-09-05)
 
@@ -107,7 +107,7 @@ for every gadget, role and recipe part (`terms-definitions/g-*.md`). Hand-writte
 intro, pantry, appendix) sit beside it. `cd zkbook && npm install && npm run render` builds
 `docs/index.html`. `node tools/zkbook-export.mjs` writes the specification into a clone of `trustoverip/dtgwg-zkp-spec`
 (template skeleton + `conformance/` + CI); `--check` shows the diff first. Rule: a record may not say more than a runtime
-has measured. See `zkbook/README.md`, `zkbook/COMMIT-PLAN.md` and draft H.
+has measured. See `zkbook/README.md`, `zkbook/COMMIT-PLAN.md` and draft R; P is the draft-PR body.
 
 ## Seed set
 
@@ -119,12 +119,14 @@ has measured. See `zkbook/README.md`, `zkbook/COMMIT-PLAN.md` and draft H.
 | 004 holder binding | primitive | carded (runtime 04 = stub) |
 | 005 distinct member / distinct issuer | primitive | constructed (`dual_issuer`, duplicate unsatisfiable) |
 | 006 non-revocation against a status root | primitive | carded (O4 exploration; set-root primitive route added 09-05 — cred-tf #40) |
-| 007 common control across identifiers | primitive | carded 09-05 (cred-spec #9 / #31 / PR #30 — the linkage four things lean on) |
+| 007 common control across identifiers | primitive | carded 09-05; revised 09-11 (cred-spec #9 09-10: subject-or-issuer; two of the four #42 predicates rest here, the chain predicates are 009) |
 | 008 blinded binder (taskContext) | primitive | carded 09-05 (Scott's work item, cred-tf #39) |
+| 009 hidden-value equality across credentials | primitive | carded 09-11 DRAFT (cred-spec #9 09-10 + PR #42: the chain predicates' primitive; new `hidden-equality` gadget) |
 | **010 Community-Anchored Proof (ADR-001)** | composed | carded — first board item; method fully bound; re-carded 09-05 in WD02 vocabulary + S7 common control |
 | 011 pairwise edge (directed personas shown, pairwise identifiers hidden) | composed | carded; re-carded 09-05 (WD02 vocabulary, co-control via 007) |
 | 012 intentional correlation — one controller across k credentials | composed | carded 09-05 (talltree, cred-spec #22) |
-| 020 delegation chain (VDC, chained profile) | composed | carded 09-05 (Scott accepted on cred-tf #40; core/profile split; acceptance clause) |
+| 020 delegation chain (VDC, chained profile) | composed | carded 09-05; re-read 09-11 against the merged VDC (door D17: per-ancestor depth, issuer = parent subject via 009, status conditional on every VDC) |
+| 021 authority chain (VAC attenuation) | composed | carded 09-11 DRAFT (cred-spec §VAC merged 09-10 + PR #42; 020's sibling — as itself, attenuation by default, cascade) |
 
 Vocabulary: cards are written to the credentials specification's Working Draft 02 — three
 correlation scopes (`pairwise | directed | public`); the R/M/C/P-DID acronyms are retired and the
@@ -140,3 +142,13 @@ Research root lane (`WORKFLOW.md` placement rules: drafting is exploration). Pro
 when Scott's board exists, `issue 010` output becomes the first board issue; the rendered card
 is the linked detail page (this repo, public). The upstream repo never carries the lab;
 the board row links here. Pushes = maintainer, with the rite.
+
+## Reader review and publication records (7 September 2026)
+
+The active queue follows `run.json`; held, superseded and historically activated drafts are grouped as reference material. Read the source-check time, live destination and prerequisites before approving. The acknowledgment is local to this browser and revision; editing the text or destination invalidates it. Export a review receipt to retain the acknowledgment and any publication report outside browser storage. The reader does not call a publishing API or infer publication from copying.
+
+The watch paginates repository lists and nested comments/replies/reviews. Every repository retains its own last successful watermark; errors are visible and retried across the missed interval. Snippets are a navigation aid: read the full live target before posting.
+
+Generated-content tests now regenerate marked specification sections and generated terms using a portable renderer. Evidence maturity and normative adoption are separate. Material corrections should be recorded as revisions with renewed review, preserving earlier evidence history.
+
+Run both reader suites after a change: `node board/test.mjs` and `node --test board/review.test.mjs`. The second includes negative publication, pagination, historical-ledger and generated-content regression cases. If Git is not on the process PATH, set `DTG_GIT_EXECUTABLE` to its absolute executable path for the survey. Missing credentials refuse the refresh without replacing the last snapshot.

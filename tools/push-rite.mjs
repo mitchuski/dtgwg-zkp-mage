@@ -1,78 +1,67 @@
 #!/usr/bin/env node
-// push-rite.mjs — the proverb as the key to a push. Zero-dep. Companion to proverb-ledger.mjs.
-//
-//   node tools/push-rite.mjs serve  --ref "<what will be pushed>" --meaning "<what the act means>" --proverb "<fresh line>" [--type push|post]
-//        → appends a SERVED entry (activated: null) and prints its seq + the as-served head. The runtime's act.
-//   node tools/push-rite.mjs speak  <seq>            → marks the entry ACTIVATED today. The maintainer's act — run it yourself,
-//                                                     after reading the proverb aloud. Prints the finalized head.
-//   node tools/push-rite.mjs footer <seq>            → prints the commit-message footer lines for that act. REFUSES
-//                                                     (`rite-not-spoken:<seq>`) until the entry is activated: the footer is the
-//                                                     lock, the spoken proverb is the key. The proverb itself is never in the footer.
-//   node tools/push-rite.mjs verify <head>           → re-derives the chain and compares (same as proverb-ledger.mjs --verify).
-//
-// Footer format (goes below the body, above Signed-off-by; no AI trailer on upstream commits — maintainer's ruling):
-//   Ledger-Head: <sha256 head at activation>
-//   Ledger-Seq: <seq>
-//   Ledger-Domain: dtg-zkp/proverb-ledger/v0
-// A reader who later sees the ledger can re-derive the head and match it to the commit. Until then the footer commits to
-// the ledger without revealing it. Refusals are values (printed, exit 1), never exceptions.
-import { createHash } from 'node:crypto';
-import { readFileSync, writeFileSync } from 'node:fs';
+// speak records approval, not completed publication. New approvals freeze a snapshot.
+import { readFileSync, writeFileSync, existsSync, openSync, closeSync, unlinkSync, renameSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
-
+import { head, saveSnapshot, loadSnapshot, footerFor } from './ledger-history.mjs';
+export { head, footerFor } from './ledger-history.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const LEDGER = join(root, 'proverb-ledger.json');
-const sha256hex = (s) => createHash('sha256').update(s, 'utf8').digest('hex');
-function canonical(v) {
-  if (v === null) return 'null';
-  if (Array.isArray(v)) return '[' + v.map(canonical).join(',') + ']';
-  if (typeof v === 'object') return '{' + Object.keys(v).sort().map((k) => JSON.stringify(k) + ':' + canonical(v[k])).join(',') + '}';
-  return JSON.stringify(v);
-}
-export function head(ledger) {
-  let chain = sha256hex(ledger.domain);
-  for (const e of ledger.entries) chain = sha256hex(chain + sha256hex(canonical(e)));
-  return chain;
-}
+const LEDGER = join(root, 'proverb-ledger.json'), HISTORY = join(root, '.ledger-history');
 const load = () => JSON.parse(readFileSync(LEDGER, 'utf8'));
-const save = (L) => writeFileSync(LEDGER, JSON.stringify(L, null, 1) + '\n');
-const arg = (n) => { const i = process.argv.indexOf(n); return i > 0 ? process.argv[i + 1] : undefined; };
-const today = () => new Date().toISOString().slice(0, 10);
-const refuse = (code) => { console.log(`REFUSED ${code}`); process.exit(1); };
-
-export function footerFor(L, seq) {
-  const e = L.entries.find((x) => x.seq === seq);
-  if (!e) return { ok: false, refusal: `rite-no-entry:${seq}` };
-  if (e.activated !== true) return { ok: false, refusal: `rite-not-spoken:${seq}` };
-  return { ok: true, lines: [`Ledger-Head: ${head(L)}`, `Ledger-Seq: ${seq}`, `Ledger-Domain: ${L.domain}`] };
+const arg = name => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : undefined; };
+const refuse = code => { throw new Error(code); };
+function save(ledger) {
+  saveSnapshot(HISTORY, ledger);
+  const temporary = LEDGER + '.tmp'; writeFileSync(temporary, JSON.stringify(ledger, null, 1) + '\n'); renameSync(temporary, LEDGER);
 }
-
-const [cmd, a1] = process.argv.slice(2);
-if (cmd === 'serve') {
-  const ref = arg('--ref'), meaning = arg('--meaning'), proverb = arg('--proverb'), type = arg('--type') || 'push';
-  if (!ref || !meaning || !proverb) refuse('serve-missing-field (need --ref --meaning --proverb)');
-  const L = load();
-  if (L.entries.some((e) => e.proverb.trim() === proverb.trim())) refuse('serve-proverb-reused (a spell is spent in the casting)');
-  const seq = Math.max(...L.entries.map((e) => e.seq)) + 1;
-  L.entries.push({ seq, date: today(), actType: type, actRef: ref, actMeaning: meaning, proverb, servedBy: arg('--by') || 'agent runtime (push-rite.mjs)', activated: null, activatedDate: null });
-  save(L);
-  console.log(`served seq ${seq}\nas-served head ${head(L)}\nproverb: “${proverb}”\nnext: read it aloud, then  node tools/push-rite.mjs speak ${seq}`);
-} else if (cmd === 'speak') {
-  const seq = Number(a1); const L = load(); const e = L.entries.find((x) => x.seq === seq);
-  if (!e) refuse(`rite-no-entry:${seq}`);
-  if (e.activated === true) refuse(`rite-already-spoken:${seq}`);
-  if (e.activated === false) refuse(`rite-retired:${seq}`);
-  e.activated = true; e.activatedDate = today(); save(L);
-  const f = footerFor(L, seq);
-  console.log(`activated seq ${seq} on ${e.activatedDate}\nfinalized head ${head(L)}\n\n${f.lines.join('\n')}`);
-} else if (cmd === 'footer') {
-  const seq = Number(a1); const L = load(); const f = footerFor(L, seq);
-  if (!f.ok) refuse(f.refusal);
-  console.log(f.lines.join('\n'));
-} else if (cmd === 'verify') {
-  const L = load(); const h = head(L); const ok = (a1 || '').toLowerCase() === h;
-  console.log(ok ? `VERIFIED head ${h}` : `MISMATCH expected ${a1 || '(none)'} got ${h}`); process.exit(ok ? 0 : 1);
-} else if (cmd) {
+function mutate(fn) {
+  const lock = LEDGER + '.lock'; let fd;
+  try { fd = openSync(lock, 'wx'); } catch { refuse('ledger-busy'); }
+  try { const ledger = load(); saveSnapshot(HISTORY, ledger); return fn(ledger); }
+  finally { closeSync(fd); unlinkSync(lock); }
+}
+function frozenApproval(seq) {
+  const file = join(HISTORY, `approval-${seq}.json`);
+  if (!existsSync(file)) return null;
+  const record = JSON.parse(readFileSync(file, 'utf8'));
+  if (record.seq !== seq) refuse('rite-approval-reference-invalid');
+  return loadSnapshot(HISTORY, record.head);
+}
+function main() {
+  const [cmd, value] = process.argv.slice(2), seq = Number(value);
+  if (cmd === 'serve') return mutate(ledger => {
+    const ref = arg('--ref'), meaning = arg('--meaning'), proverb = arg('--proverb'), type = arg('--type') || 'push';
+    if (!ref || !meaning || !proverb) refuse('serve-missing-field');
+    if (!['push', 'post'].includes(type)) refuse('serve-bad-type');
+    if (ledger.entries.some(e => e.proverb.trim() === proverb.trim())) refuse('serve-proverb-reused');
+    const seq = Math.max(0, ...ledger.entries.map(e => e.seq)) + 1;
+    ledger.entries.push({ seq, date: new Date().toISOString().slice(0, 10), actType: type, actRef: ref, actMeaning: meaning, proverb, servedBy: arg('--by') || 'agent runtime (push-rite.mjs)', activated: null, activatedDate: null });
+    save(ledger); console.log(`served seq ${seq}\nas-served head ${head(ledger)}\nproverb: “${proverb}”\nThe maintainer reviews the act before running speak ${seq}. Nothing is published.`);
+  });
+  if (cmd === 'speak') return mutate(ledger => {
+    const entry = ledger.entries.find(e => e.seq === seq);
+    if (!entry) refuse(`rite-no-entry:${seq}`);
+    if (entry.activated === true) refuse(`rite-already-spoken:${seq}`);
+    if (entry.activated === false) refuse(`rite-retired:${seq}`);
+    entry.activated = true; entry.activatedDate = new Date().toISOString().slice(0, 10);
+    const digest = saveSnapshot(HISTORY, ledger);
+    const file = join(HISTORY, `approval-${seq}.json`), record = { seq, head: digest };
+    if (existsSync(file)) { if (JSON.stringify(JSON.parse(readFileSync(file, 'utf8'))) !== JSON.stringify(record)) refuse('rite-approval-snapshot-conflict'); }
+    else writeFileSync(file, JSON.stringify(record) + '\n', { flag: 'wx' });
+    save(ledger); console.log(`approved seq ${seq}; publication not confirmed\n${footerFor(ledger, seq, ledger).lines.join('\n')}`);
+  });
+  if (cmd === 'footer') {
+    const result = footerFor(load(), seq, frozenApproval(seq));
+    if (!result.ok) refuse(result.refusal);
+    console.log(result.lines.join('\n')); return;
+  }
+  if (cmd === 'verify') {
+    const expected = (value || '').toLowerCase(), current = load();
+    const snapshot = head(current) === expected ? current : loadSnapshot(HISTORY, expected);
+    console.log(`VERIFIED head ${head(snapshot)}${snapshot === current ? ' (current)' : ' (historical snapshot)'}`); return;
+  }
   console.log('usage: push-rite.mjs serve --ref R --meaning M --proverb P [--type push|post] | speak <seq> | footer <seq> | verify <head>');
+}
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try { main(); } catch (error) { console.error(`REFUSED ${error.message}`); process.exitCode = 1; }
 }

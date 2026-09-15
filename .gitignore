@@ -15,3 +15,8 @@ board/survey/*.json
 # Call working directory: pulled ToIP wiki pages (others' content, readable upstream) + private call prep.
 # Reviewed and edited here; shared by posting upstream, not by republishing in this repo.
 calls/
+
+# Private historical ledger commitments and atomic-write files
+.ledger-history/
+proverb-ledger.json.lock
+proverb-ledger.json.tmp

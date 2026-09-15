@@ -30,7 +30,8 @@
   ],
   "doesNotEstablish": [
     "that the two parties are independent in the accreditation sense (declared, not proven — X8)",
-    "that either is honest"
+    "that either is honest",
+    "distinct natural persons or independent key controllers merely from distinct leaves, keys or issuer identifiers"
   ],
   "adversary": [
     {

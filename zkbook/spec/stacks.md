@@ -2,7 +2,7 @@
 
 This section is informative.
 
-A proving-system entry records facts a reader can check — proof system, field, setup, licence, audit statement, published figures with their source and a verification date — and never a recommendation. Recommendations are derived separately, from the reproduction ladder over verification-registry rows; a figure in this section is the proving system's own or the evidence repository's, and says so. Entries of different kinds are not comparable rows: a catalog of circuits over credentials as already signed and a general-purpose prover answer different questions, and the kind is stated first. This section is generated from `conformance/stacks/`.
+A proving-system entry records facts a reader can check — proof system, field, setup, licence, audit statement, published figures with their source and a verification date — and never a recommendation. Recommendations require separate task-force review informed by the reproduction ladder over verification-registry rows; a figure in this section is the proving system's own or the evidence repository's, and says so. Entries of different kinds are not comparable rows: a catalog of circuits over credentials as already signed and a general-purpose prover answer different questions, and the kind is stated first. This section is generated from `conformance/stacks/`.
 
 | kind | entries | what the kind means |
 |---|---|---|
@@ -50,6 +50,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | [[ref: range]] | attribute predicates (age) — yes |
 | [[ref: commitment-open]] | no |
 | [[ref: chain-resolve]] | no |
+| [[ref: hidden-equality]] | no (not a DTG statement; equality of two signed fields would be a new circuit) |
 
 #### Notes
 
@@ -68,7 +69,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | field | binary fields (GF(2^k) towers) — no prime-field arithmetic, no elliptic curve in the prover |
 | setup | transparent — no trusted setup, no toxic waste |
 | post-quantum | plausibly post-quantum: security rests on hash functions; designed for the hash-based signature schemes (Lamport, Winternitz, XMSS) Ethereum's post-quantum transition targets |
-| credential model | hash-native: proves standard hashes at under 250× the cost of computing them, so a Merkle root, a revocation tree or a transcript digest built with SHA-256 or BLAKE3 is provable without moving issuers and registries to SNARK-friendly hashes — a direct relief of the X3 pressure the Poseidon-based routes create |
+| credential model | Candidate backend for batched standard-hash computation. Author-reported hash benchmarks are not end-to-end measurements of DTG membership, revocation, transcript or signature verification; compatibility depends on the selected registry and credential profile. |
 | platforms | rust · x86_64 · apple-silicon |
 | verifier | local · server |
 | licence | Apache-2.0 / MIT (benchmark repository, dual-licensed); check LICENSE in succinctlabs/flock before citing the core as such — compatible with an Apache-2.0 code / CC BY 4.0 docs deliverable |
@@ -103,12 +104,13 @@ A proving-system entry records facts a reader can check — proof system, field,
 | [[ref: range]] | yes — Boolean comparison |
 | [[ref: commitment-open]] | yes — hash commitments |
 | [[ref: chain-resolve]] | unmeasured — no recursion story published for the credential case |
+| [[ref: hidden-equality]] | yes — Boolean equality is cheap in binary fields; the openings over standard hashes are the native shape |
 
 #### Notes
 
-- Why it is in this specification: it is the proof system built for Ethereum's post-quantum transition — proving the hashing behind hash-based signature aggregation fast enough to keep the chain's throughput — and the same property (standard hashes at near-native cost) is what a trust graph needs if its roots, digests and commitments are to stay on the hashes registries already publish.
+- Included to investigate whether standard-hash proving can support existing registry commitments. Applicability, proof size and total credential costs require a matched workload; no recommendation follows from isolated hash throughput.
 - Where it is useful for the constructions: any clause that is 'a hash chain over standard hashes' — set membership (001), non-revocation (006), transcript binding (003) — and therefore the composed community-anchored proof (010) on its hash side; signature clauses over curve-based credentials are the open cost.
-- The trade the §25 gate must weigh: hundreds of kilobytes of proof against Groth16's ~1 kB, in exchange for no trusted setup, no pairing assumption, and no issuer-side hash migration.
+- Compare setup assumptions, security, proof size, issuance compatibility and full workload costs under the same profile. Existing benchmark sizes do not establish the corresponding DTG proof size.
 - The measurement discipline of its benchmark harness — a pinned verifier that decides correctness and timing, many fresh runs, a median — is the same shape as this specification's reproduction ladder and is cited in PLAN §2.4 as prior art for how a cost row earns 'measured'.
 
 ### Proving system · ProveKit (World) — Noir → WHIR client-side proving
@@ -156,6 +158,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | [[ref: range]] | yes |
 | [[ref: commitment-open]] | yes |
 | [[ref: chain-resolve]] | recursion via the Groth16 wrapper — unmeasured |
+| [[ref: hidden-equality]] | yes — unmeasured |
 
 #### Notes
 
@@ -206,6 +209,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | [[ref: range]] | cheap — unmeasured |
 | [[ref: commitment-open]] | Poseidon opening — measured as the leaf commitment inside 001 |
 | [[ref: chain-resolve]] | unmeasured |
+| [[ref: hidden-equality]] | unmeasured — one zero-difference constraint over two Poseidon openings; the openings are the cost |
 
 #### Notes
 

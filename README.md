@@ -9,6 +9,12 @@ cross-language interop proofs, and design explorations — each anchored to the 
 [DTG Credentials Core Specification](https://trustoverip.github.io/dtgwg-cred-spec/). Spec text goes
 through the upstream repositories and the TF process; this repo is the bench the proposals were tested on.
 
+## Read the ZKP specification
+
+The [DTG ZKP specification](https://github.com/trustoverip/dtgwg-zkp-spec) is the home for the specification, implementation guide, book and construction records. Start with the [current proposed working draft (PR #8)](https://github.com/trustoverip/dtgwg-zkp-spec/pull/8) and the [construction catalogue and navigation index](https://github.com/trustoverip/dtgwg-zkp-spec/discussions/9). The PR is open as of 8 September 2026; its changes are not yet merged or adopted. The [published document](https://trustoverip.github.io/dtgwg-zkp-spec/) follows the specification repository’s deployment and may not yet contain that proposal.
+
+Use this Mage repository for runnable evidence, experiments and reproduction. Use the [ZKP task force](https://github.com/trustoverip/dtgwg-zkp-tf) for requirements, priorities and working-group decisions, and the [credential specification](https://github.com/trustoverip/dtgwg-cred-spec) for credential definitions.
+
 ## Three repositories, one rule — and the ZK Book edition
 
 | repository | holds | what leaves it |
@@ -16,14 +22,9 @@ through the upstream repositories and the TF process; this repo is the bench the
 | [`trustoverip/dtgwg-zkp-tf`](https://github.com/trustoverip/dtgwg-zkp-tf) | requirements (v0.4), drafting rules, discussions, the board thread (#18), `AGENT-RUNTIMES.md` | decisions and requests |
 | [`trustoverip/dtgwg-zkp-spec`](https://github.com/trustoverip/dtgwg-zkp-spec) | the specification as **construction records**, the requests they answer, public-input conventions, proving-system entries, considerations, conformance — and `conformance/`, the validator + CI that check the generated text against the records | the rendered specification; record ids others may `[[xref]]` |
 | this repository | the evidence: runtimes with measured costs, fixtures, the verification registry, the **board** where records are written and advanced, the generator (`board/tools/board.mjs spec`) that renders records into specification text, and the **ZK Book** edition (`zkbook/`) | data — records, fixtures, registry row ids — never a dependency |
+| `task-force-readers/` (this repository) | the 8 September meeting reader (26 questions, the nine shared Berkeley questions) and the contributor publication reader with its receipts — moved here from task-force PRs #22/#25/#26 on 15 September 2026 | contributor preparation material, not task-force policy |
 
-The rule: nothing in the specification says more than a record shows; no record says more than a runtime
-measured; no runtime says more than a stranger reproduced. The **ZK Book** (`zkbook/`) is this repository's
-edition of the same records in the same chapters, kept beside what a specification cannot carry — the board
-with each record's state and history, the drafts and the rite that gates them, the watch over upstream
-threads, the run notes and the chronicles. Reading the specification is reading the book with the working
-removed. `node tools/zkbook-export.mjs` writes the specification into a clone of the spec repository in its
-own skeleton; see `zkbook/README.md` and `zkbook/COMMIT-PLAN.md`.
+`C`l`a`i`m`s` `i`n` `t`h`e` `s`p`e`c`i`f`i`c`a`t`i`o`n` `m`u`s`t` `b`e` `s`u`p`p`o`r`t`e`d` `b`y` `t`h`e`i`r` `r`e`c`o`r`d`s`,` `a`n`d` `m`e`a`s`u`r`e`d` `c`l`a`i`m`s` `m`u`s`t` `c`i`t`e` `r`e`p`r`o`d`u`c`i`b`l`e` `e`v`i`d`e`n`c`e`.` `T`h`e` `*`*`Z`K` `B`o`o`k`*`*` `i`n` `z`k`b`o`o`k`/` `i`s` `t`h`e` `l`o`c`a`l` `e`v`i`d`e`n`c`e`-`s`i`d`e` `r`e`n`d`e`r`i`n`g` `a`n`d` `w`o`r`k`i`n`g` `m`a`t`e`r`i`a`l`;` `i`t` `i`s` `n`o`t` `t`h`e` `a`u`t`h`o`r`i`t`a`t`i`v`e` `c`o`p`y` `o`f` `e`v`e`r`y` `s`p`e`c` `c`h`a`p`t`e`r`.` `T`h`e` `s`p`e`c`i`f`i`c`a`t`i`o`n` `r`e`p`o`s`i`t`o`r`y` `c`a`r`r`i`e`s` `e`d`i`t`o`r`-`a`u`t`h`o`r`e`d` `c`h`a`p`t`e`r`s` `t`h`a`t` `a`r`e` `n`o`t` `a`l`l` `m`i`r`r`o`r`e`d` `h`e`r`e`.` `R`e`v`i`e`w`e`d` `r`e`c`o`r`d`s` `a`n`d` `g`e`n`e`r`a`t`e`d` `s`e`c`t`i`o`n`s` `c`a`n` `b`e` `s`y`n`c`h`r`o`n`i`z`e`d` `w`i`t`h` `n`o`d`e` `t`o`o`l`s`/`z`k`b`o`o`k`-`e`x`p`o`r`t`.`m`j`s`;` `d`e`s`t`i`n`a`t`i`o`n` `e`d`i`t`s` `m`u`s`t` `b`e` `r`e`c`o`n`c`i`l`e`d` `r`a`t`h`e`r` `t`h`a`n` `o`v`e`r`w`r`i`t`t`e`n`.` `S`e`e` `[`t`h`e` `b`o`o`k` `R`E`A`D`M`E`]`(`.`/`z`k`b`o`o`k`/`R`E`A`D`M`E`.`m`d`)` `a`n`d` `[`t`r`a`n`s`f`e`r` `p`l`a`n`]`(`.`/`z`k`b`o`o`k`/`C`O`M`M`I`T`-`P`L`A`N`.`m`d`)`.`
 
 **Task force members, start here:** [`THE-WORK-SO-FAR.md`](./THE-WORK-SO-FAR.md) is the
 4-minute human summary. Point your AI assistant at [`AGENTS.md`](./AGENTS.md) (its

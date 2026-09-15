@@ -8,7 +8,7 @@
   "field": "binary fields (GF(2^k) towers) — no prime-field arithmetic, no elliptic curve in the prover",
   "setup": "transparent — no trusted setup, no toxic waste",
   "postQuantum": "plausibly post-quantum: security rests on hash functions; designed for the hash-based signature schemes (Lamport, Winternitz, XMSS) Ethereum's post-quantum transition targets",
-  "credentialModel": "hash-native: proves standard hashes at under 250× the cost of computing them, so a Merkle root, a revocation tree or a transcript digest built with SHA-256 or BLAKE3 is provable without moving issuers and registries to SNARK-friendly hashes — a direct relief of the X3 pressure the Poseidon-based routes create",
+  "credentialModel": "Candidate backend for batched standard-hash computation. Author-reported hash benchmarks are not end-to-end measurements of DTG membership, revocation, transcript or signature verification; compatibility depends on the selected registry and credential profile.",
   "platforms": [
     "rust",
     "x86_64",
@@ -83,12 +83,13 @@
     "non-revocation": "yes — indexed (sorted-leaf) tree over a standard hash",
     "range": "yes — Boolean comparison",
     "commitment-open": "yes — hash commitments",
-    "chain-resolve": "unmeasured — no recursion story published for the credential case"
+    "chain-resolve": "unmeasured — no recursion story published for the credential case",
+    "hidden-equality": "yes — Boolean equality is cheap in binary fields; the openings over standard hashes are the native shape"
   },
   "notes": [
-    "Why it is in this specification: it is the proof system built for Ethereum's post-quantum transition — proving the hashing behind hash-based signature aggregation fast enough to keep the chain's throughput — and the same property (standard hashes at near-native cost) is what a trust graph needs if its roots, digests and commitments are to stay on the hashes registries already publish.",
+    "Included to investigate whether standard-hash proving can support existing registry commitments. Applicability, proof size and total credential costs require a matched workload; no recommendation follows from isolated hash throughput.",
     "Where it is useful for the constructions: any clause that is 'a hash chain over standard hashes' — set membership (001), non-revocation (006), transcript binding (003) — and therefore the composed community-anchored proof (010) on its hash side; signature clauses over curve-based credentials are the open cost.",
-    "The trade the §25 gate must weigh: hundreds of kilobytes of proof against Groth16's ~1 kB, in exchange for no trusted setup, no pairing assumption, and no issuer-side hash migration.",
+    "Compare setup assumptions, security, proof size, issuance compatibility and full workload costs under the same profile. Existing benchmark sizes do not establish the corresponding DTG proof size.",
     "The measurement discipline of its benchmark harness — a pinned verifier that decides correctness and timing, many fresh runs, a median — is the same shape as this specification's reproduction ladder and is cited in PLAN §2.4 as prior art for how a cost row earns 'measured'."
   ],
   "verified": "2026-09-05 — blog.succinct.xyz/introducing-flock, Layr-Labs/flock-challenge README (local clone), yukon.org/flock"
