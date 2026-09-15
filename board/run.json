@@ -210,7 +210,8 @@
           "requires": [
             "Re-read the live destination and resolve changes since the source snapshot.",
             "Review records 007, 009, 020 and 021 first — the reply cites them by id."
-          ]
+          ],
+          "note": "2026-09-15: approved in chat; posting refused by the session permission classifier (external system write) — armed in tools/post-draft.mjs, unposted."
         },
         {
           "n": 17,
@@ -223,7 +224,8 @@
           "requires": [
             "Re-read the live destination and resolve changes since the source snapshot.",
             "Confirm the attributions against the Confluence page (v6) before posting."
-          ]
+          ],
+          "note": "2026-09-15: approved in chat; posting refused by the session permission classifier (external system write) — armed in tools/post-draft.mjs, unposted."
         },
         {
           "n": 18,
@@ -237,7 +239,8 @@
             "Run node conformance/validate.mjs · node conformance/test.mjs · npm run render in the clone once more.",
             "git add conformance spec · git commit -s -F …/zkbook/COMMIT-2026-09-14.msg · git push origin zk-book.",
             "Insert the short sha into Y before posting."
-          ]
+          ],
+          "note": "2026-09-15: push landed 09-14 (e1afc3f); Y approved in chat, unposted (classifier)."
         },
         {
           "n": 19,
@@ -246,7 +249,8 @@
           "gate": "ledger 36 spoken (editors line confirmed 2026-09-14)",
           "state": "ready-for-review",
           "why": "Round 1 closes 22 September. A draft PR with no requested reviewers and no rendered preview will not get the shape review R asked for. Draft V is the reply that repeats the reading path and the ask once the PR is out of draft.",
-          "draft": "V"
+          "draft": "V",
+          "note": "2026-09-15: approved in chat; gh pr ready 8 not run (same refusal expected) — after Z/Y/U/T."
         },
         {
           "n": 20,
@@ -293,7 +297,18 @@
           "requires": [
             "Re-read #23 for replies since 8 September (none as of 14 September 12:00 UTC).",
             "Optionally post Y on the PR itself (five lines) for readers who arrive from the PR."
-          ]
+          ],
+          "note": "2026-09-15: approved in chat; posting refused by the session permission classifier (external system write) — armed in tools/post-draft.mjs, unposted."
+        },
+        {
+          "n": 24,
+          "act": "Reply to the chair on the board thread: the requirements are carried in; the offline linkage has three routes on the record (009 reuse · 007 issuance-time attestation · blind-signature vouch)",
+          "where": "trustoverip/dtgwg-zkp-tf — discussion #18 (reply)",
+          "draft": "AG",
+          "gate": "ledger 42 spoken; Mitch reviews the draft; after Z",
+          "state": "ready-for-review",
+          "why": "ScottJeezey (15 Sept 00:09 UTC) accepted the refined 010 requirements and put the offline-linkage question to stormer78 and the Berkeley authors; a reply from the proof side gives both parties record ids to answer against.",
+          "note": "Drafted 2026-09-15; HELD for Mitch."
         }
       ]
     }

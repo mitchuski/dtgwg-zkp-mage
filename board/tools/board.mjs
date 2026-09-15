@@ -244,7 +244,7 @@ function runHtml() {
     <div class="act">${esc(s.act)}${s.draft ? ` <a class="chip draftref" href="#draft-${esc(s.draft)}">draft ${esc(s.draft)}</a>` : ''}${stateChip(s.state)}${s.supersedes ? `<span class="chip retired">supersedes ${esc(s.supersedes)}</span>` : ''}</div>
     <div class="where"><code>${esc(s.where)}</code></div>
     <div class="gate">gate: ${esc(s.gate)}</div>
-    <div class="stepwhy">${esc(s.why)}</div></div></li>`;
+    <div class="stepwhy">${esc(s.why)}</div>${s.note ? `<div class="stepwhy"><b>note:</b> ${esc(s.note)}</div>` : ''}</div></li>`;
   const phase = (p) => `<div class="phase"><h3>${esc(p.id)} · ${esc(p.title)}</h3><p class="phasewhy">${esc(p.why)}</p><ol class="steps">${p.steps.map(step).join('')}</ol></div>`;
   return `<div class="ritedef">🧭 <b>${esc(r.title)}</b> — ${esc(r.dates)}.<br>${esc(r.lead)}</div>
 <div class="panel run">${r.phases.map(phase).join('')}
@@ -283,7 +283,7 @@ export function buildSite(cards) {
   const cLink = (r) => r.url ? '<a href="' + esc(r.url) + '">' + esc(r.where) + '</a>' : esc(r.where);
   const contributeHtml = contribute ? '<div class="panel" id="contribute"><h3>' + esc(contribute.title) + '</h3><p class="muted">Checked ' + esc(contribute.checkedAt) + '</p><p>' + esc(contribute.lead) + '</p>'
     + '<h4>Span</h4><ul>' + ['watched', 'added', 'seen_not_added'].map(k => '<li><b>' + k.replace(/_/g, ' ') + ':</b> ' + (contribute.span[k] || []).map(esc).join(' · ') + '</li>').join('') + '<li><b>mentions:</b> ' + esc(contribute.span.mentions || '') + '</li></ul>'
-    + '<h4>Ready — approve and they post, in this order</h4><table class="ct"><tr><th>#</th><th>draft</th><th>ledger</th><th>where</th><th>why</th><th>records</th></tr>' + contribute.ready.map(r => '<tr><td>' + r.order + '</td><td><b>' + esc(r.draft) + '</b></td><td>' + (r.ledger == null ? '—' : r.ledger) + '</td><td>' + cLink(r) + '</td><td>' + esc(r.why) + '</td><td class="muted">' + esc(r.records) + '</td></tr>').join('') + '</table>'
+    + '<h4>Ready — approve and they post, in this order</h4><table class="ct"><tr><th>#</th><th>draft</th><th>ledger</th><th>where</th><th>why</th><th>records</th><th>status</th></tr>' + contribute.ready.map(r => '<tr><td>' + r.order + '</td><td><b>' + esc(r.draft) + '</b></td><td>' + (r.ledger == null ? '—' : r.ledger) + '</td><td>' + cLink(r) + '</td><td>' + esc(r.why) + '</td><td class="muted">' + esc(r.records) + '</td><td>' + (r.status ? '<code>' + esc(r.status) + '</code>' : '<span class="muted">awaiting approval</span>') + '</td></tr>').join('') + '</table>'
     + '<h4>Held — with the reason</h4><ul>' + contribute.held.map(r => '<li><b>' + esc(r.draft) + '</b>' + (r.ledger == null ? '' : ' (ledger ' + r.ledger + ')') + ' · ' + cLink(r) + ' — ' + esc(r.reason) + '</li>').join('') + '</ul>'
     + '<h4>Candidates — threads worth a contribution, no draft yet (say which to draft)</h4><ul>' + contribute.candidates.map(r => '<li>' + cLink(r) + ' — ' + esc(r.why) + ' <span class="muted">[records ' + esc(r.records) + ' · ' + esc(r.suggest) + ']</span></li>').join('') + '</ul>'
     + '<h4>Nothing to do</h4><ul>' + (contribute.nothing_to_do || []).map(x => '<li class="muted">' + esc(x) + '</li>').join('') + '</ul></div>' : '';
