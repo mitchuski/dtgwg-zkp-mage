@@ -8,6 +8,8 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { loadLatestSurvey, loadWatchMap, digestSurvey, watchHtml, survey as runSurvey } from './watch.mjs';
 import { yourTurn, yourTurnHtml } from './yourturn.mjs';
+import { detectPosted } from './posted.mjs';
+import { loadReceipts } from './yourturn.mjs';
 import { writeCookbook } from './spec.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -233,7 +235,7 @@ States: ${STATES.join(' → ')}. A row may not claim more than its card; a card 
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 
 // ---- the run: the ordered posting sequence, from board/run.json -------------------------------
-function runHtml() {
+function runHtml(posted = {}) {
   const rp = join(ROOT, 'run.json');
   if (!existsSync(rp)) return '';
   const r = JSON.parse(readFileSync(rp, 'utf8'));
@@ -242,7 +244,7 @@ function runHtml() {
     return `<span class="chip st-${esc(st)}">${esc(label)}</span>`;
   };
   const step = (s) => `<li class="step st-${esc(s.state)}"><span class="stepn">${s.n}</span><div class="stepbody">
-    <div class="act">${esc(s.act)}${s.draft ? ` <a class="chip draftref" href="#draft-${esc(s.draft)}">draft ${esc(s.draft)}</a>` : ''}${stateChip(s.state)}${s.supersedes ? `<span class="chip retired">supersedes ${esc(s.supersedes)}</span>` : ''}</div>
+    <div class="act">${esc(s.act)}${s.draft ? ` <a class="chip draftref" href="#draft-${esc(s.draft)}">draft ${esc(s.draft)}</a>` : ''}${s.draft && posted[s.draft] ? ` <a class="chip posted" href="${esc(posted[s.draft].url)}">posted ✓ ${esc((posted[s.draft].at || '').slice(0, 10))}</a>` : ''}${stateChip(s.state)}${s.supersedes ? `<span class="chip retired">supersedes ${esc(s.supersedes)}</span>` : ''}</div>
     <div class="where"><code>${esc(s.where)}</code></div>
     <div class="gate">gate: ${esc(s.gate)}</div>
     <div class="stepwhy">${esc(s.why)}</div>${s.note ? `<div class="stepwhy"><b>note:</b> ${esc(s.note)}</div>` : ''}</div></li>`;
@@ -276,9 +278,11 @@ export function buildSite(cards) {
   const doors = existsSync(doorsPath) ? JSON.parse(readFileSync(doorsPath, 'utf8')) : [];
   const sv = loadLatestSurvey();
   const watchMap = loadWatchMap();
+  const receiptsAll = [...loadReceipts(join(ROOT, 'survey')), ...(existsSync(join(REPO, 'task-force-readers', 'outputs', 'publication-results.json')) ? JSON.parse(readFileSync(join(REPO, 'task-force-readers', 'outputs', 'publication-results.json'), 'utf8')) : [])];
+  const posted = detectPosted({ sv, drafts: drafts.map(d => ({ letter: d.key, thread: d.meta.thread, body: d.body })), receipts: receiptsAll });
   const moved = sv ? digestSurvey(sv) : [];
   const watchSection = watchHtml(moved, sv, watchMap);
-  const runSection = runHtml();
+  const runSection = runHtml(posted);
   const contributePath = join(ROOT, 'survey', 'contribute.json');
   const contribute = existsSync(contributePath) ? JSON.parse(readFileSync(contributePath, 'utf8')) : null;
   const cLink = (r) => r.url ? '<a href="' + esc(r.url) + '">' + esc(r.where) + '</a>' : esc(r.where);
@@ -288,7 +292,7 @@ export function buildSite(cards) {
     + '<h4>Held — with the reason</h4><ul>' + contribute.held.map(r => '<li><b>' + esc(r.draft) + '</b>' + (r.ledger == null ? '' : ' (ledger ' + r.ledger + ')') + ' · ' + cLink(r) + ' — ' + esc(r.reason) + '</li>').join('') + '</ul>'
     + '<h4>Candidates — threads worth a contribution, no draft yet (say which to draft)</h4><ul>' + contribute.candidates.map(r => '<li>' + cLink(r) + ' — ' + esc(r.why) + ' <span class="muted">[records ' + esc(r.records) + ' · ' + esc(r.suggest) + ']</span></li>').join('') + '</ul>'
     + '<h4>Nothing to do</h4><ul>' + (contribute.nothing_to_do || []).map(x => '<li class="muted">' + esc(x) + '</li>').join('') + '</ul></div>' : '';
-  const yourTurnData = yourTurn({ sv, contribute, watchMap, draftsDir: join(ROOT, 'drafts'), receiptsDir: join(ROOT, 'survey'), legacyReceipts: [join(REPO, 'task-force-readers', 'outputs', 'publication-results.json')] });
+  const yourTurnData = yourTurn({ sv, contribute, watchMap, draftsDir: join(ROOT, 'drafts'), receiptsDir: join(ROOT, 'survey'), legacyReceipts: [join(REPO, 'task-force-readers', 'outputs', 'publication-results.json')], posted });
   const yourTurnPanel = yourTurnHtml(yourTurnData);
   const integrationReviewPath = join(ROOT, 'survey', 'integration-review.json');
   const integrationReview = existsSync(integrationReviewPath) ? JSON.parse(readFileSync(integrationReviewPath, 'utf8')) : null;
@@ -320,7 +324,8 @@ export function buildSite(cards) {
     const sourceThread = collection && sourceRepo?.[collection]?.find(t => String(t.number) === targetParts[3]);
     const sourceContext = { head: sourceRepo?.head?.oid || null, threadUpdatedAt: sourceThread?.updatedAt || null, error: sourceRepo?.error || null };
     const sourceCheckedAt = sourceRepo?.lastSuccessfulAt || (sourceRepo?.error ? sourceRepo.since : sourceRepo ? sv.fetchedAt : null);
-    const blocked = /SUPERSEDED|FOLDED/i.test(d.meta.chip || '') ? 'Superseded — reference only' :
+    const blocked = posted[d.key] ? 'Posted — do not post again' :
+      /SUPERSEDED|FOLDED/i.test(d.meta.chip || '') ? 'Superseded — reference only' :
       le?.activated === false ? 'Retired — reference only' : historic ? 'Historical activation — publication unverified' :
       step?.state === 'held' || d.meta.status === 'held' || !step && /waits|WAIT/i.test(d.meta.chip || '') ? 'Held — reference only' :
       !le || !d.meta.proverb ? 'A served proverb is required before review' : !exactTarget(d.meta.thread) ? 'Choose an exact GitHub destination' : '';
@@ -331,13 +336,13 @@ export function buildSite(cards) {
     readerData.push(data);
     const html = `
 <article class="card${blocked ? ' retired' : ''}" id="draft-${esc(d.key)}" data-k="${esc(d.key)}" data-revision="${revision}"><div class="head">
-  <span class="ord">${esc(d.key)}</span><span class="title">${esc(d.head)}</span><span class="chip review-status">${esc(blocked || 'Needs your review')}</span>
+  <span class="ord">${esc(d.key)}</span>${posted[d.key] ? `<a class="chip posted" target="_blank" rel="noopener noreferrer" href="${esc(posted[d.key].url)}">✓ POSTED ${esc((posted[d.key].at || '').slice(0, 10))} · ${esc(posted[d.key].how)} ↗</a>` : ''}<span class="title">${esc(d.head)}</span><span class="chip review-status">${esc(blocked || 'Needs your review')}</span>
   ${d.meta.chip ? `<span class="chip">${esc(d.meta.chip)}</span>` : ''}
   ${binding.target ? `<a class="thread" target="_blank" rel="noopener noreferrer" href="${esc(binding.target)}">Open destination ↗</a>` : ''}</div>
 <div class="note">${esc(d.meta.note || '')}<br><b>Destination:</b> ${esc(binding.target || 'Not selected')}<br><b>Purpose:</b> ${esc(le?.actMeaning || 'Review the draft and select its intended publication.')}<br><b>Revision:</b> <code>${revision.slice(0, 12)}</code> · <b>Last successful source check:</b> ${esc(sourceCheckedAt || 'No source snapshot')}${sourceRepo?.error ? ' — latest refresh failed; re-read the live target' : ''}<br><b>Before publishing:</b> ${esc(step?.requires?.length ? step.requires.join(' · ') : 'Re-read the live target and resolve relevant changes since the source snapshot.')}</div>
 <div class="body"><pre>${esc(d.body)}</pre></div>
 <div class="rite"><div><b>Review this publication</b><p class="proverb">${esc(d.meta.proverb || 'No proverb served for this draft.')}</p><p>Read the proverb alongside the exact text and destination. Approval records your acknowledgment of this revision; it does not publish it.</p></div><button data-action="approve"${blocked ? ' disabled' : ''}>I have reviewed this version</button></div>
-<div class="bar"><button data-action="copy" disabled>Copy approved text</button><button class="ghost" data-action="export" disabled>Export review receipt</button><span class="publication-status">Publication not recorded</span></div>
+<div class="bar"><button data-action="copy" disabled>Copy approved text</button><button class="ghost" data-action="export" disabled>Export review receipt</button><span class="publication-status">${posted[d.key] ? `Posted → <a target="_blank" rel="noopener noreferrer" href="${esc(posted[d.key].url)}">${esc(posted[d.key].url.replace('https://github.com/trustoverip/', ''))}</a>` : 'Publication not recorded'}</span></div>
 <div class="bar"><label for="receipt-${esc(d.key)}">After posting, paste the exact GitHub post or comment URL</label><input class="receipt-url" id="receipt-${esc(d.key)}" type="url" placeholder="https://github.com/…"><button class="ghost" data-action="report" disabled>Record reported publication</button></div>
 <p class="reader-message note" role="status" aria-live="polite"></p></article>`;
     (blocked ? archived : active).push(html);
@@ -357,7 +362,7 @@ export function buildSite(cards) {
 .panel table{border-collapse:collapse;width:100%;font-size:.85rem}.panel td,.panel th{border-bottom:1px solid var(--line);padding:.3rem .5rem;text-align:left;vertical-align:top}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:1.2rem;overflow:hidden}.card.done{opacity:.55;border-color:var(--done)}
 .head{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;padding:.8rem 1.1rem;border-bottom:1px solid var(--line)}.ord{font-weight:700;color:var(--accent2);min-width:1.6rem}.title{font-weight:600;flex:1}
-.chip{background:var(--chip);color:var(--accent);border-radius:99px;padding:.1rem .6rem;font-size:.75rem;font-weight:600;white-space:nowrap}.chip.state{color:var(--accent2)}
+.chip{background:var(--chip);color:var(--accent);border-radius:99px;padding:.1rem .6rem;font-size:.75rem;font-weight:600;white-space:nowrap}.chip.state{color:var(--accent2)}.chip.posted{background:#1f7a3a;color:#fff;text-decoration:none}.chip.cat{color:#fff}.chip.cat-reply{background:#b5541a}.chip.cat-maintain{background:#4b5563}.chip.cat-contribute{background:#1d5fa8}.chip.cat-discuss{background:#6b3fa0}.chip.cat-post{background:#1f7a3a}#yourturn li{margin:.35rem 0}#yourturn .act{font-weight:600}
 a.thread{color:var(--accent);text-decoration:none;font-size:.85rem}.note{padding:.6rem 1.1rem;color:var(--muted);font-size:.85rem;border-bottom:1px dashed var(--line)}
 pre{margin:0;padding:1rem 1.1rem;background:var(--pre);overflow-x:auto;font:13px/1.5 Consolas,"Cascadia Mono",monospace;white-space:pre-wrap;max-height:28rem;overflow-y:auto}
 .hidden{display:none}.bar{display:flex;gap:.6rem;align-items:center;padding:.55rem 1.1rem;border-top:1px solid var(--line);flex-wrap:wrap}

@@ -83,7 +83,7 @@ t('W1 digest lists only threads with events after the watermark, newest first', 
     { number: 3, title: 'newer', url: 'u3', author: 'b', createdAt: '2026-09-04T00:00:00Z', updatedAt: '2026-09-04T00:00:00Z', body: 'x', comments: [] } ], pulls: [], issues: [] } } };
   const d = digestSurvey(sv); return d.length === 2 && d[0].number === 3 && d[1].number === 2 && d[1].relevant === true && d[1].events.length === 1 || JSON.stringify(d.map(x => [x.number, x.relevant]));
 });
-t('W2 site keeps historical activation separate from publication of this revision', () => { const h = buildSite(cards); return h.includes('id="watch"') && h.includes('id="doors"') && h.includes('id="cookbook"') && h.includes('Historical activation — publication unverified') && !h.includes('data-posted=') || 'section or honest historical state missing'; });
+t('W2 site keeps historical activation separate from publication of this revision (unverified, or verified by an upstream match that says so)', () => { const h = buildSite(cards); return h.includes('id="watch"') && h.includes('id="doors"') && h.includes('id="cookbook"') && (h.includes('Historical activation — publication unverified') || /✓ POSTED \d{4}-\d{2}-\d{2} · match/.test(h)) && !h.includes('data-posted=') || 'section or honest historical state missing'; });
 t('K1 construction records render once each with state note, negative space and adversary sections', () => { const md = renderRecipes(cards); return cards.every(c => (md.match(new RegExp(`^### Construction ${c.id} · `, 'mg')) || []).length === 1) && (md.match(/#### Does not establish/g) || []).length === cards.length && (md.match(/#### Adversary, per claim/g) || []).length === cards.length || 'construction sections incomplete'; });
 t('K1b specification register: generated text carries no kitchen vocabulary and no emoji in headings', () => { const md = renderRecipes(cards) + renderRecords(loadRecords(), cards) + renderStacks(loadStacks()); const kitchen = md.match(/\b(recipe|recipes|pantry|dish|ingredients|tasting|kitchen|cookbook)\b/gi) || []; const emojiHeads = md.split('\n').filter(l => /^#{2,4} /.test(l) && /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(l)); return kitchen.length === 0 && emojiHeads.length === 0 || `kitchen words: ${[...new Set(kitchen)].join(',')} · emoji headings: ${emojiHeads.length}`; });
 t('K2 every gadget a card binds has a generated term', () => { const g = new Set(cards.flatMap(c => c.method.map(m => m.gadget))); return [...g].every(x => GADGET_DEFS[x]) || 'undefined gadget: ' + [...g].filter(x => !GADGET_DEFS[x]).join(','); });
@@ -205,6 +205,19 @@ t('Y4 the your-turn panel leads the site: approved letters without a receipt are
   const notListed = receipts.every(l => !panel.includes(`node tools/post-draft.mjs ${l}<`));
   return (h.indexOf('id="yourturn"') < h.indexOf('id="contribute"') && listed && notListed && !/C:\\Users|\/Users\/mitch/.test(panel))
     || `approved=${approved.join(',')} listed=${listed} receipts=${receipts.join(',')} notListed=${notListed}`;
+});
+
+t('Y5 posted detection: every draft with a receipt or an upstream match is marked "Posted — do not post again" on its card and never listed to post', () => {
+  const h = buildSite(cards);
+  const receiptFiles = [...readdirSync(join(ROOT, 'survey')).filter(f => /^publication-\d{4}-\d{2}-\d{2}\.json$/.test(f)).map(f => join(ROOT, 'survey', f)), join(ROOT, '..', 'task-force-readers', 'outputs', 'publication-results.json')].filter(existsSync);
+  const receipted = [...new Set(receiptFiles.flatMap(f => JSON.parse(readFileSync(f, 'utf8')).map(r => r.id)).filter(id => /^[A-Z]{1,2}$/.test(id)))];
+  const cardsById = Object.fromEntries(h.split('<article class="card').slice(1).map(c => [(c.match(/id="draft-([A-Z]+)"/) || [])[1], c]));
+  const present = receipted.filter(id => cardsById[id]);
+  const marked = present.filter(id => /✓ POSTED \d{4}-\d{2}-\d{2}/.test(cardsById[id]) && /Posted — do not post again/.test(cardsById[id]));
+  const panel = h.slice(h.indexOf('id="yourturn"'), h.indexOf('id="contribute"'));
+  const postSection = panel.slice(panel.indexOf('Post — approved'), panel.indexOf('Reply — someone'));
+  const leaked = present.filter(id => postSection.includes(`node tools/post-draft.mjs ${id}<`));
+  return (present.length > 0 && marked.length === present.length && leaked.length === 0) || `present=${present.join(',')} marked=${marked.join(',')} leaked=${leaked.join(',')}`;
 });
 
 console.log(`\n${n - fails}/${n} passed`);
