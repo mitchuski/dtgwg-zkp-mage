@@ -7,6 +7,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { loadLatestSurvey, loadWatchMap, digestSurvey, watchHtml, survey as runSurvey } from './watch.mjs';
+import { yourTurn, yourTurnHtml } from './yourturn.mjs';
 import { writeCookbook } from './spec.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -287,6 +288,8 @@ export function buildSite(cards) {
     + '<h4>Held — with the reason</h4><ul>' + contribute.held.map(r => '<li><b>' + esc(r.draft) + '</b>' + (r.ledger == null ? '' : ' (ledger ' + r.ledger + ')') + ' · ' + cLink(r) + ' — ' + esc(r.reason) + '</li>').join('') + '</ul>'
     + '<h4>Candidates — threads worth a contribution, no draft yet (say which to draft)</h4><ul>' + contribute.candidates.map(r => '<li>' + cLink(r) + ' — ' + esc(r.why) + ' <span class="muted">[records ' + esc(r.records) + ' · ' + esc(r.suggest) + ']</span></li>').join('') + '</ul>'
     + '<h4>Nothing to do</h4><ul>' + (contribute.nothing_to_do || []).map(x => '<li class="muted">' + esc(x) + '</li>').join('') + '</ul></div>' : '';
+  const yourTurnData = yourTurn({ sv, contribute, watchMap, draftsDir: join(ROOT, 'drafts'), receiptsDir: join(ROOT, 'survey'), legacyReceipts: [join(REPO, 'task-force-readers', 'outputs', 'publication-results.json')] });
+  const yourTurnPanel = yourTurnHtml(yourTurnData);
   const integrationReviewPath = join(ROOT, 'survey', 'integration-review.json');
   const integrationReview = existsSync(integrationReviewPath) ? JSON.parse(readFileSync(integrationReviewPath, 'utf8')) : null;
   const syncPanel = (r, cls) => '<div class="' + cls + '"><h3>' + esc(r.title) + '</h3><p class="muted">Checked ' + esc(r.checkedAt) + (r.note ? ' · ' + esc(r.note) : '') + '</p><ul>' + r.items.map(item => '<li>' + esc(item) + '</li>').join('') + '</ul></div>';
@@ -388,9 +391,10 @@ button:disabled{opacity:.45;cursor:not-allowed}.receipt-url{flex:1;min-width:180
 </style></head><body><div class="wrap">
 <h1>ZKP Board · the book 📖</h1>
 <div class="sub">zkp-tf #18 lane — requested proofs as cards; drafts to post; the process as a trust task. Local, private, generated ${new Date().toISOString().slice(0, 10)} by <code>board.mjs site</code>.</div>
-<nav><a href="#run">Run</a><a href="#watch">Watch (${moved.length})</a><a href="#doors">Doors (${doors.length})</a><a href="#drafts">Drafts</a><a href="#process">Process</a><a href="#cards">Cards (${cards.length})</a><a href="#cookbook">ZK Book</a></nav>
+<nav><a href="#yourturn">Your turn (${yourTurnData.post.length + yourTurnData.reply.length})</a><a href="#run">Run</a><a href="#watch">Watch (${moved.length})</a><a href="#doors">Doors (${doors.length})</a><a href="#drafts">Drafts</a><a href="#process">Process</a><a href="#cards">Cards (${cards.length})</a><a href="#cookbook">ZK Book</a></nav>
 
 <h2 class="sec" id="run">Run — step by step, in the order it leaves the machine</h2>
+${yourTurnPanel}
 ${contributeHtml}
 ${integrationReviewHtml}
 ${runSection}

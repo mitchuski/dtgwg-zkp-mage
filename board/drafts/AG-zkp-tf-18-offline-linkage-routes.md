@@ -1,7 +1,7 @@
 # AG · zkp-tf #18 (reply) — the requirements are carried in; the offline linkage has three routes on the record, and what each needs before it counts
 chip: REPLY TO THE CHAIR (15 SEPT) · AFTER Z · CITES 010 007 009 012
 thread: https://github.com/trustoverip/dtgwg-zkp-tf/discussions/18
-note: ScottJeezey replied 2026-09-15 00:09 UTC to the 8 September construction note: the refined 010 requirements are "exactly the shape we wanted — please carry those requirements in", and the offline-linkage question is put to @stormer78 (issuance flow) and to the Berkeley authors (the vouchable-credential model of 2026/333). This confirms the carry-in (on the branch since e1afc3f) and lays out the three routes record 010 already names, so the two parties asked have record ids to answer against. Post after Z (the declaration on #23) so the branch citation resolves. Drafted 15 September; HELD for Mitch's review — the chair addressed the note directly.
+note: ScottJeezey replied 2026-09-15 00:09 UTC to the 8 September construction note: the refined 010 requirements are "exactly the shape we wanted — please carry those requirements in", and the offline-linkage question is put to @stormer78 (issuance flow) and to the Berkeley authors (the vouchable-credential model of 2026/333). This confirms the carry-in (on the branch since e1afc3f) and lays out the three routes record 010 already names, so the two parties asked have record ids to answer against. Post after Z (the declaration on #23) so the branch citation resolves. Drafted 15 September; HELD for Mitch's review.
 ledger: 42
 proverb: Three roads reach the same gate; the record says what each traveller must carry, not which road to take.
 ---

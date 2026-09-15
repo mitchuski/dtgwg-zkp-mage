@@ -193,5 +193,19 @@ t('Y3 the run renders into the site with every phase, every step and no local pa
     || `phases=${phases}/${run.phases.length} steps=${steps}/${runSteps.length} or a draft anchor is missing`;
 });
 
+t('Y4 the your-turn panel leads the site: approved letters without a receipt are listed to post, letters with a receipt are not, and no local path', () => {
+  const h = buildSite(cards);
+  const contribPath = join(ROOT, 'survey', 'contribute.json');
+  if (!existsSync(contribPath)) return h.includes('id="yourturn"') || 'panel missing';
+  const contrib = JSON.parse(readFileSync(contribPath, 'utf8'));
+  const receipts = readdirSync(join(ROOT, 'survey')).filter(f => /^publication-\d{4}-\d{2}-\d{2}\.json$/.test(f)).flatMap(f => JSON.parse(readFileSync(join(ROOT, 'survey', f), 'utf8')).map(r => r.id));
+  const panel = h.slice(h.indexOf('id="yourturn"'), h.indexOf('id="contribute"'));
+  const approved = contrib.ready.filter(r => r.draft !== '—' && !/^(DONE|POSTED|HELD)/i.test(r.status || '') && !receipts.includes(r.draft)).map(r => r.draft);
+  const listed = approved.every(l => panel.includes(`node tools/post-draft.mjs ${l}<`));
+  const notListed = receipts.every(l => !panel.includes(`node tools/post-draft.mjs ${l}<`));
+  return (h.indexOf('id="yourturn"') < h.indexOf('id="contribute"') && listed && notListed && !/C:\\Users|\/Users\/mitch/.test(panel))
+    || `approved=${approved.join(',')} listed=${listed} receipts=${receipts.join(',')} notListed=${notListed}`;
+});
+
 console.log(`\n${n - fails}/${n} passed`);
 process.exit(fails ? 1 : 0);
