@@ -11,6 +11,7 @@ export const GADGET_DEFS = {
   'range': 'A gadget proving that a hidden attested attribute lies within a stated interval without disclosing it.',
   'commitment-open': 'A gadget proving that a public commitment opens to stated hidden values under a hidden blinding, so a value can be bound at issuance and checked at presentation without ever travelling in the clear.',
   'chain-resolve': 'A gadget proving that a chain of hidden grants nests — each hop’s scope within its parent’s, validity monotone, depth bounded — and terminates at a stated root.',
+  'hidden-equality': 'A gadget proving that a hidden field of one authenticated credential equals a hidden field of another, the two signed by different parties, with no holder secret in the relation — the dual of distinctness: a differing pair is unsatisfiable and neither value is disclosed.',
 };
 export const ROLE_DEFS = {
   'requester': 'The party who asks for a proof on the board: what it must prove, for which specification or market need, at what priority. A requester never writes a card’s claims.',

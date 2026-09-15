@@ -20,9 +20,34 @@ The constructions in this specification rest on discussions in the DTG ZKP Task 
 
 ### Appendix D: Changelog
 
+- **Local review revision (2026-09-11)** — records 007 and 020 revised against the credential specification's merged VDC and VAC text and the common-control thread of 2026-09-10 (subject-or-issuer; chain predicates named as hidden-value equality); new primitive record 009 (hidden-value equality) and composed record 021 (VAC attenuation chain); the `hidden-equality` gadget; record 010 gains the blind-signature vouch option from the 8 September call; Security Considerations 5 widened; Internationalization hedged to WG-06a; conformance vector count corrected to the manifest; references pinned and completed; Appendix E review-notes index. Evidence states unchanged; nothing adopted.
+
+- **Research additions (2026-09-10)** — Lattice Jolt / Akita recorded as a research option and Longfellow's stewardship under the Post-Quantum Cryptography Alliance recorded, both under the V07 worklist; no adoption or state promotion.
+
+- **Draft pull request opened (2026-09-08)** — trustoverip/dtgwg-zkp-spec PR #8 (branch `zk-book`, one commit); review requested in rounds on dtgwg-zkp-tf discussion #23.
+
 - **Local review revision (2026-09-08)** — operational trust-graph reading path; presentation/integration design boundaries; continuous research and book process; narrowed transcript, membership, privacy, delegation and benchmark claims. Background moved after operational content. Existing evidence states retained; no new proof implementation, paper equivalence or normative adoption asserted.
 
 - **0.1 (2026-09-05)** — first Working Draft scaffold: twelve construction records (eight primitive, four composed) at states `carded` and `constructed`; one request (ADR-001) with crosswalk; cryptographic background; public-input conventions; four proving-system entries; considerations; conformance targets and tests; the `conformance/` validation apparatus with continuous integration.
+
+### Appendix E: Review-notes index
+
+The numbered working-group notes are the decision points this draft asks reviewers to take up in Round 1 (shape) and Round 2 (record by record). The kinds are those of the Implementation Guide: *proposed for ratification*, *discuss*, *evidence request*. None records a decision; when one is resolved, the row gains the decision date, authority and source, and the note in the text is amended.
+
+| note | kind | chapter | question | status |
+|---|---|---|---|---|
+| WG-01 | proposed for ratification | Implementation Guide | credential-bound private membership eligibility as the first milestone; 010 as the flagship | proposed; no decision recorded |
+| WG-02 | discuss | Implementation Guide | the first profile's issuance and witness contract (credential format, issuer route, holder key, offline linkage artifact) | unresolved |
+| WG-03 | evidence request | Implementation Guide | a common workload and target device for comparing compatible routes | no backend recommendation adopted |
+| WG-04 | proposed for ratification | Implementation Guide | proof verification, policy acceptance and action completion kept distinct | proposed wording |
+| WG-05 | discuss | Public Inputs (set roots) | the registry contract: authority, leaf format, root construction, witness updates, staleness | unresolved |
+| WG-06 | evidence request | Public Inputs (public-signal order) | a versioned, fixed-arity wire manifest checked against the compiled circuit | the sketch is not a wire format |
+| WG-06a | proposed encoding decision | Public Inputs (transcript digest) | the lab's domain-separated hash as a named baseline; external digest representation; strict payload schema | draft proposal |
+| WG-07 | discuss | Integration | task and implementation binding: pin Trust Tasks and OpenVTC revisions, select schemas | integration target |
+| WG-08 | evidence and reviewer request | Research and Book | the paper-to-DTG mapping, an explanatory chapter, a reproducible worked construction | review requested |
+| WG-09 | proposed for discussion | Appendices (maintenance note) | the survey-and-research maintenance method | optional editorial proposal |
+| WG-10 | proposed for ratification | Introduction | general DTG scope, personhood and liveness as one use-case family | proposed; no decision recorded |
+| WG-11 | proposed for discussion | Appendices (verification worklist) | the verification priorities V01–V12 | proposed queue |
 
 ### Maintenance Note: Research Across the DTG Workspace
 

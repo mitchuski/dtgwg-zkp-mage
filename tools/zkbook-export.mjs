@@ -30,7 +30,8 @@ const plan = (rel, content) => planned.set(rel.replace(/\\/g, '/'), content);
 const read = (p) => readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
 
 // ---- 1. the template skeleton: header · intro · terms intro · body · appendix ---------------------------------------
-for (const f of ['header.md', 'intro.md', 'terms-and-definitions-intro.md', 'appendix.md']) {
+// the four editor-written chapters that began life in the clone are authored on both sides too (mirrored 2026-09-11)
+for (const f of ['header.md', 'intro.md', 'terms-and-definitions-intro.md', 'appendix.md', 'implementation-guide.md', 'trust-graph.md', 'integration.md', 'research-and-book.md']) {
   plan(`spec/${f}`, read(join(SPEC, f)));
   authored.set(`spec/${f}`, join(SPEC, f));   // hand-written: a clone-side edit is review work, not drift
 }
@@ -193,11 +194,21 @@ function adoptBodyChapters() {
 // ---- 5. the diverged-authored gate ---------------------------------------------------------------------------------
 // An authored file whose clone copy differs from what this repository would write is a clone-side edit. Overwriting it
 // silently is how review work disappears, so the export refuses and names them. --adopt takes them back; --force wins.
+// The manifest records the hash of every file the last export wrote, so the gate can tell direction: a clone file
+// that still equals what was last exported has not been edited there, however much this repository has moved on
+// (2026-09-13). Without a manifest entry the old rule holds — any difference refuses.
+const MANIFEST = join(ZKBOOK, '.export-manifest.json');
+const lastExported = existsSync(MANIFEST) ? JSON.parse(read(MANIFEST)) : {};
 const diverged = [];
 for (const [rel, src] of authored) {
   const dst = join(TO, rel);
   if (!existsSync(dst)) continue;
-  if (sha(readFileSync(dst)) !== sha(Buffer.from(planned.get(rel)))) diverged.push({ rel, src, dst });
+  // compare line-ending-insensitively: a CRLF file written by a Windows editor is not an edit (2026-09-11)
+  const dstText = typeof planned.get(rel) === 'string' ? readFileSync(dst, 'utf8').replace(/\r\n/g, '\n') : readFileSync(dst);
+  const dstSha = sha(dstText);
+  if (dstSha === sha(Buffer.from(planned.get(rel)))) continue;                 // identical: nothing to decide
+  if (lastExported[rel] && lastExported[rel] === dstSha) continue;              // clone untouched since last export: repo side is newer
+  diverged.push({ rel, src, dst });                                             // the clone moved: a review edit, refuse
 }
 
 if (ADOPT) {
@@ -233,6 +244,7 @@ console.log(`  added ${report.added.length} · changed ${report.changed.length} 
 for (const k of ['added', 'changed', 'removed']) for (const f of report[k]) console.log(`  ${k.padEnd(8)} ${f}`);
 console.log(`  records digest ${recordsDigest.slice(0, 16)}… stamped in spec/body.md`);
 if (diverged.length) console.log(`  ${diverged.length} authored file(s) diverged in the clone${CHECK ? ' - the clone is the newer side; --adopt takes them back' : ' - OVERWRITTEN by --force'}: ${diverged.map(d => d.rel).join(' ')}`);
+if (!CHECK) { const m = {}; for (const [rel, content] of planned) if (authored.has(rel)) m[rel] = sha(Buffer.from(content)); writeFileSync(MANIFEST, JSON.stringify(m, null, 2) + '\n'); }
 if (pathsMissing.length) console.log(`  note: specs.json markdown_paths does not list ${pathsMissing.join(' ')} - the render will skip that chapter`);
 if (pathsAbsent.length) console.log(`  note: specs.json markdown_paths lists ${pathsAbsent.join(' ')}, absent under spec/`);
 console.log(CHECK ? '  (nothing written)' : '  nothing committed — commits ride the rite (tools/push-rite.mjs); see zkbook/COMMIT-PLAN.md');

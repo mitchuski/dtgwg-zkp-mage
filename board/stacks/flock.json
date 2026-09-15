@@ -83,7 +83,8 @@
     "non-revocation": "yes — indexed (sorted-leaf) tree over a standard hash",
     "range": "yes — Boolean comparison",
     "commitment-open": "yes — hash commitments",
-    "chain-resolve": "unmeasured — no recursion story published for the credential case"
+    "chain-resolve": "unmeasured — no recursion story published for the credential case",
+    "hidden-equality": "yes — Boolean equality is cheap in binary fields; the openings over standard hashes are the native shape"
   },
   "notes": [
     "Included to investigate whether standard-hash proving can support existing registry commitments. Applicability, proof size and total credential costs require a matched workload; no recommendation follows from isolated hash throughput.",

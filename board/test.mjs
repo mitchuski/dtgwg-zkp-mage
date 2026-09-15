@@ -133,6 +133,18 @@ t('E4 this repository and the clone hold the same specification (export --check 
     return (moved === 0 && !diverged) || `${moved} file(s) would move${diverged ? ' and the clone has diverged authored files' : ''} — ${out.split('\n').filter(l => /^\s+(added|changed|removed)/.test(l)).join(' | ').slice(0, 300)}`;
   } catch (e) { return (e.stdout || e.message || '').toString().slice(-400); }
 });
+t('E5 the review-notes index (Appendix E) lists every WG note the chapters carry, and nothing else', () => {
+  // Round 1 asks reviewers to take up the numbered notes; an index that drifts from the text is worse than none.
+  const clone = join(ROOT, '..', '..', 'dtgwg-zkp-spec'); const dir = join(clone, 'spec'); if (!existsSync(dir)) return 'export not run';
+  const ids = (t) => new Set([...t.matchAll(/\*\*(WG-\d+[a-z]?) —/g)].map(m => m[1]));
+  const inText = new Set();
+  for (const f of readdirSync(dir).filter(f => f.endsWith('.md'))) for (const id of ids(readFileSync(join(dir, f), 'utf8'))) inText.add(id);
+  const appendix = readFileSync(join(dir, 'appendix.md'), 'utf8');
+  const table = appendix.slice(appendix.indexOf('### Appendix E'), appendix.indexOf('### Maintenance Note'));
+  const inIndex = new Set([...table.matchAll(/^\| (WG-\d+[a-z]?) \|/gm)].map(m => m[1]));
+  const missing = [...inText].filter(x => !inIndex.has(x)), stale = [...inIndex].filter(x => !inText.has(x));
+  return (inText.size > 0 && missing.length === 0 && stale.length === 0) || `index missing [${missing}] stale [${stale}] (text has ${inText.size})`;
+});
 // stacks (facts a stranger can check; never a recommendation)
 const specMod = await import('./tools/spec.mjs');
 t('X1 every stack file validates (licence, setup, provenance, audit statement, known gadgets, sourced figures)', () => { const ss = specMod.loadStacks(); const bad = ss.map(s => [s.id, specMod.validateStack(s, GADGETS)]).filter(([, v]) => v.length); return ss.length >= 4 && bad.length === 0 || JSON.stringify(bad) || 'fewer than 4 stacks'; });

@@ -4,7 +4,7 @@ This section is informative.
 
 ### Normative References
 
-- **[DTG-CRED]** DTG Credentials Core Specification. This draft uses WD02 vocabulary; the selected revision and its implementation compatibility remain to be pinned. Trust over IP Foundation. <https://trustoverip.github.io/dtgwg-cred-spec/>
+- **[DTG-CRED]** DTG Credentials Core Specification, Working Draft 02 (Document Status bumped 2026-09-07). This draft is written to WD02 vocabulary and cites its sections by title; the exact revision an implementation profile pins, and its implementation compatibility, remain profile decisions. Trust over IP Foundation. <https://trustoverip.github.io/dtgwg-cred-spec/> · WD02 text: <https://github.com/trustoverip/dtgwg-cred-spec/blob/WD02/spec/body.md>
 - **[DTG-ZKP-RULES]** Drafting rules of the DTG ZKP Task Force. <https://github.com/trustoverip/dtgwg-zkp-tf/blob/main/DRAFTING-RULES.md>
 - **[RFC2119]** S. Bradner, "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997. <https://datatracker.ietf.org/doc/html/rfc2119>
 - **[RFC8785]** A. Rundgren, B. Jordan, S. Erdtman, "JSON Canonicalization Scheme (JCS)", RFC 8785, June 2020. <https://datatracker.ietf.org/doc/html/rfc8785>
@@ -28,4 +28,12 @@ This section is informative.
 - **[DTG-ZKP-EVIDENCE]** DTG ZKP evidence repository — reference runtimes, conformance fixtures, verification registry, construction records. <https://github.com/mitchuski/dtgwg-zkp-mage>
 - **[DTG-CRED-TF-39]** "Privacy: Appropriately supporting unlinkability, ZKP and selective disclosure", dtgwg-cred-tf discussion #39. <https://github.com/trustoverip/dtgwg-cred-tf/discussions/39>
 - **[DTG-CRED-TF-40]** "Delegation as a case study in the design-time window", dtgwg-cred-tf discussion #40. <https://github.com/trustoverip/dtgwg-cred-tf/discussions/40>
-- **[DTG-CRED-31]** "WD02 merge plan: sequencing the five outstanding PRs into a consistent whole", dtgwg-cred-spec issue #31. <https://github.com/trustoverip/dtgwg-cred-spec/issues/31>
+- **[DTG-CRED-31]** "WD02 merge plan: sequencing the five outstanding PRs into a consistent whole", dtgwg-cred-spec issue #31 (closed 2026-09-10). <https://github.com/trustoverip/dtgwg-cred-spec/issues/31>
+- **[DTG-CRED-9]** "Define the identity linkages required by the ZKP constructions", dtgwg-cred-spec issue #9 — the common-control requirement, the subject-or-issuer widening and the chain-predicate distinction (2026-09-10). <https://github.com/trustoverip/dtgwg-cred-spec/issues/9>
+- **[DTG-CRED-38]** "Digest-valued binders are unsalted and enumerable; blinding is deferred from WD02", dtgwg-cred-spec issue #38. <https://github.com/trustoverip/dtgwg-cred-spec/issues/38>
+- **[DTG-CRED-42]** "docs: say plainly what the ZK predicates are waiting on", dtgwg-cred-spec PR #42 (merged 2026-09-10) — the editor's note in §Zero-Knowledge and Selective Disclosure. <https://github.com/trustoverip/dtgwg-cred-spec/pull/42>
+- **[DTG-TT]** DTG Core Trust Task Protocols — the Trust Tasks framework specification (draft; the revision a profile pins is a profile decision). <https://github.com/trustoverip/dtgwg-trust-tasks-tf/blob/main/SPEC.md>
+- **[OPENVTC]** OpenVTC verifiable trust infrastructure — a candidate integration target, revision to be pinned. <https://github.com/OpenVTC/verifiable-trust-infrastructure>
+- **[AKITA]** Lattice Jolt / Akita — a Module-SIS-based polynomial commitment scheme announced 2026-09-09 as a post-quantum proving route; research software, zero knowledge in a forthcoming companion paper. <https://a16zcrypto.com/posts/article/lattice-snarks-jolt-post-quantum-faster> · <https://github.com/LayerZero-Labs/akita>
+- **[LONGFELLOW-PQCA]** Google, "Donating the Longfellow ZKP library to the Post-Quantum Cryptography Alliance" (Linux Foundation Europe), 2026-09-02 — library stewardship and provenance, distinct from the SIROS catalogue's artefact provenance. <https://blog.google/products-and-platforms/platforms/google-pay/zero-knowledge-proof-library-linux-foundation/>
+- **[DTG-ZKP-TF-CALL-2026-09-08]** DTG ZKP Task Force meeting notes, 2026-09-08 (ToIP Confluence) — ADR-001 confirmed as the first proof; the blind-signature vouch alternative; the same-context pseudonym caveat; the credential signature scheme as the non-swappable choice. <https://lf-toip.atlassian.net/wiki/spaces/HOME/pages/1132953601>

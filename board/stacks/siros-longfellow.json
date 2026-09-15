@@ -43,7 +43,8 @@
     "non-revocation": "per system",
     "range": "attribute predicates (age) — yes",
     "commitment-open": "no",
-    "chain-resolve": "no"
+    "chain-resolve": "no",
+    "hidden-equality": "no (not a DTG statement; equality of two signed fields would be a new circuit)"
   },
   "notes": [
     "Legacy rails: prove over what was already signed. The DTG constructions assume issuers who can choose commitments; the two classes must stay visibly apart in any comparison.",

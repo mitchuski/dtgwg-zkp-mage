@@ -9,7 +9,8 @@
     "001",
     "003",
     "004",
-    "006"
+    "006",
+    "009"
   ],
   "request": {
     "issue": "cred-spec PR #19 open question 6; ADR-001 §05 'deserves its own record once this one is proven' · cred-tf #40 (stormer78 08-22 design note; ScottJeezey 08-24: \"on our list alongside Q2\") · cred-spec #31 pre-merge list for #19",
@@ -30,8 +31,13 @@
   ],
   "method": [
     {
-      "clause": "act ∈ scope_n ⊆ … ⊆ scope_root, depth ≤ maxDepth, validUntil monotone along the chain, root hop signed by the principal (Scott’s predicate shape, cred-tf #40)",
+      "clause": "act ∈ scope_n ⊆ … ⊆ scope_root (set inclusion over exact matches), validUntil monotone along the chain, and depth bounded by every ancestor: a hop below a parent bearing `maxDepth` n bears at most n − 1, no hop lies more than n steps below an ancestor bearing n, and no hop exists below a parent that omits `maxDepth` or sets it to 0; the chain terminates in a root delegation issued by the principal (cred-spec §Delegation Chains, WD02, checks 2–5)",
       "gadget": "chain-resolve"
+    },
+    {
+      "clause": "each hop's `issuer` equals its parent's `credentialSubject.id` — hidden-value equality across credentials signed by different parties, with no holder secret in the relation (cred-spec §Delegation Edges; #9 2026-09-10)",
+      "gadget": "hidden-equality",
+      "component": "009"
     },
     {
       "clause": "each hop’s delegate countersigned the grant: `accepts` matches the grant digest (digestMultibase, WD02 D-A) and verifies under the delegate’s key",
@@ -70,7 +76,9 @@
     "that the principal has not declined renewal — in the core, revocation is non-renewal within one validUntil; the profile’s credentialStatus re-adds a live lookup and this card’s non-revocation leg is what lets the presentation carry it instead",
     "what the delegate actually did in the principal’s name — the invocation record lives on the framework side (the artifact gap, cred-tf #40 Q8)",
     "chain-length hiding without a validated fixed-shape or padded profile",
-    "compatibility with a current merged credential revision until its grant, acceptance, status and chaining semantics are pinned and reconciled"
+    "that the principal is the party the verifier intends to deal with — §Delegation Chains check 5 is the verifier's own check, outside the proof; the proof shows the root's issuer is a leaf of root_C, not that it is the intended party",
+    "the delegate's demonstration of key control at the moment of the request (§Invocation Binding) beyond what clause 4 binds into this transcript — how the demonstration is requested and carried is the trust task's",
+    "chain length: without a validated fixed-shape or padded profile the number of hops is disclosed by the proof's shape (cred-spec Privacy Considerations item 13)"
   ],
   "adversary": [
     {
@@ -112,14 +120,17 @@
     }
   ],
   "issuance": [
-    "VDC as an edge credential type (cred-spec PR #19, rebased over WD02 vocabulary) with ZK-friendly signatures — X3 applies",
-    "the delegator’s identifier is `directed`, a context-scoped identifier per delegation, not `pairwise` (cred-spec #31 pre-merge note for #19)",
-    "grant and acceptance digests are digestMultibase (WD02 D-A); the acceptance is REQUIRED (cred-tf #40; review feedback folded per #31)",
-    "chaining (`parent`, `maxDepth`, `credentialStatus`) exists only in the opt-in profile, visible to the verifier, costs stated (cred-tf #40 §1)"
+    "VDC as an edge credential type (cred-spec §VDC, merged WD02 2026-09-06) with ZK-friendly signatures — X3 applies",
+    "the delegator issues from an identifier declared `directed` and scoped to the context in which the appointment is exercised (cred-spec Privacy Considerations item 10); the delegate accepts each principal's appointment under a distinct identifier",
+    "grant and acceptance digests are digestMultibase (§Digest Encoding); the acceptance is REQUIRED and carries no scope of its own — the verifier reads scope from the grant (§Delegation Edges)",
+    "`parent` and `maxDepth` exist only where re-delegation is explicitly authorised (absent or 0 = single hop, the default); `credentialStatus` is CONDITIONAL on every VDC, chained or not — REQUIRED where validity exceeds the governing freshness window, otherwise short validity and re-issuance (§VDC schema); this record's non-revocation leg is what lets a chained presentation carry status without a live lookup",
+    "the chain is presented whole — a verifier MUST reject a chain it cannot complete from the presentation alone — which is exactly the disclosure this record removes (§Delegation Chains; Privacy Considerations item 13)"
   ],
   "provenance": {
     "spec": [
-      "cred-spec PR #19 (VDC draft)",
+      "cred-spec §VDC (Verifiable Delegation Credential) — merged 2026-09-06 (PR #19 over WD02): §Delegation Edges, §Delegation Chains (five chain checks; 'chain validity is a candidate for zero-knowledge presentation'), §Invocation Binding",
+      "cred-spec PR #42 editor's note (2026-09-10): 'proving a VDC chain valid without disclosing it' named as a predicate waiting on the ZKP task force",
+      "cred-spec #9 (geoffturk 2026-09-10): the chain predicates are hidden-value equality, not common control — record 009",
       "liveness reqs v0.4 delegation evidence",
       "ADR-001 §05",
       "ePrint 2026/333 App. B.1",
@@ -140,6 +151,13 @@
       "date": "2026-09-05",
       "evidence": "ScottJeezey accepted delegation-chain validity as a ZKP TF target (cred-tf #40, 2026-08-24); predicate shape + acceptance clause + core/profile split from stormer78’s note; issuance lines from cred-spec #31",
       "task": "board/card"
+    }
+  ],
+  "revisions": [
+    {
+      "date": "2026-09-11",
+      "by": "mitchuski",
+      "note": "Door D17 — re-read against the merged VDC text (cred-spec main, 2026-09-06/10): depth restated as the per-ancestor bound; the issuer-equals-parent-subject clause added and bound to record 009 (hidden-value equality); `credentialStatus` corrected — conditional on every VDC, not only chained ones; issuance and provenance now cite the merged sections; three negative-space lines added (intended-party check, invocation demonstration, chain length). State unchanged."
     }
   ]
 }

@@ -68,7 +68,7 @@ that are individually sound can leak jointly. Fields (schema in `card.schema.jso
 
 Gadget vocabulary (closed list, extend by PR): `set-membership` · `nullifier` ·
 `transcript-bind` · `key-binding` · `distinctness` · `signature-verify` · `non-revocation` ·
-`range` · `commitment-open` · `chain-resolve`.
+`range` · `commitment-open` · `chain-resolve` · `hidden-equality` (added 2026-09-11: equality of two hidden fields across differently-signed credentials — the dual of `distinctness`; cred-spec #9).
 
 ## Commands
 
@@ -119,12 +119,14 @@ has measured. See `zkbook/README.md`, `zkbook/COMMIT-PLAN.md` and draft R; P is 
 | 004 holder binding | primitive | carded (runtime 04 = stub) |
 | 005 distinct member / distinct issuer | primitive | constructed (`dual_issuer`, duplicate unsatisfiable) |
 | 006 non-revocation against a status root | primitive | carded (O4 exploration; set-root primitive route added 09-05 — cred-tf #40) |
-| 007 common control across identifiers | primitive | carded 09-05 (cred-spec #9 / #31 / PR #30 — the linkage four things lean on) |
+| 007 common control across identifiers | primitive | carded 09-05; revised 09-11 (cred-spec #9 09-10: subject-or-issuer; two of the four #42 predicates rest here, the chain predicates are 009) |
 | 008 blinded binder (taskContext) | primitive | carded 09-05 (Scott's work item, cred-tf #39) |
+| 009 hidden-value equality across credentials | primitive | carded 09-11 DRAFT (cred-spec #9 09-10 + PR #42: the chain predicates' primitive; new `hidden-equality` gadget) |
 | **010 Community-Anchored Proof (ADR-001)** | composed | carded — first board item; method fully bound; re-carded 09-05 in WD02 vocabulary + S7 common control |
 | 011 pairwise edge (directed personas shown, pairwise identifiers hidden) | composed | carded; re-carded 09-05 (WD02 vocabulary, co-control via 007) |
 | 012 intentional correlation — one controller across k credentials | composed | carded 09-05 (talltree, cred-spec #22) |
-| 020 delegation chain (VDC, chained profile) | composed | carded 09-05 (Scott accepted on cred-tf #40; core/profile split; acceptance clause) |
+| 020 delegation chain (VDC, chained profile) | composed | carded 09-05; re-read 09-11 against the merged VDC (door D17: per-ancestor depth, issuer = parent subject via 009, status conditional on every VDC) |
+| 021 authority chain (VAC attenuation) | composed | carded 09-11 DRAFT (cred-spec §VAC merged 09-10 + PR #42; 020's sibling — as itself, attenuation by default, cascade) |
 
 Vocabulary: cards are written to the credentials specification's Working Draft 02 — three
 correlation scopes (`pairwise | directed | public`); the R/M/C/P-DID acronyms are retired and the

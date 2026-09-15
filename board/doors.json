@@ -56,8 +56,8 @@
     "id": "D5",
     "title": "zkp-tf PR #21 — unreviewed since 08-29",
     "where": "https://github.com/trustoverip/dtgwg-zkp-tf/pull/21",
-    "what": "DCO green, mergeable, no review. A co-chair nudge to Scott on the next call or by DM; stale branches agent-runtimes / agent-runtimes-doc still need an admin delete.",
-    "status": "open",
+    "what": "DCO green, mergeable, no review. A co-chair nudge to Scott on the next call or by DM; stale branches agent-runtimes / agent-runtimes-doc still need an admin delete. — MERGED 2026-09-08; stale branches agent-runtimes / agent-runtimes-doc still need an admin delete.",
+    "status": "done",
     "draft": "",
     "cards": [],
     "actor": "Mitch → Scott"
@@ -66,8 +66,8 @@
     "id": "D6",
     "title": "cred-tf #41 — DTGWG objection window on three scopes (talltree 09-01 mailing-list call)",
     "where": "https://github.com/trustoverip/dtgwg-cred-tf/discussions/41",
-    "what": "Silence = assent on the three-value resolution. The ZKP TF has a stake (cards 007/012 depend on it). A one-line 'no objection from the proof layer; two recipes already written to it' is on-record support — or stay silent deliberately.",
-    "status": "open",
+    "what": "Silence = assent on the three-value resolution. The ZKP TF has a stake (cards 007/012 depend on it). A one-line 'no objection from the proof layer; two recipes already written to it' is on-record support — or stay silent deliberately. — MOOT: WD02 merged with pairwise | directed | public on 2026-09-07 (cred-tf #41 closed the loop); no objection was needed.",
+    "status": "done",
     "draft": "",
     "cards": [
       "007",
@@ -200,11 +200,135 @@
     "id": "D17",
     "title": "cred-spec PR #19 merged (VDC) — card 020 issuance clause can cite a merged credential type",
     "where": "https://github.com/trustoverip/dtgwg-cred-spec/pull/19",
-    "what": "The verifiable delegation credential merged 2026-09-06 with acceptance required and a directed delegator identifier. Card 020 was carded against the PR; its issuance and provenance lines should be re-read against the merged text before the spec PR opens.",
-    "status": "open",
+    "what": "The verifiable delegation credential merged 2026-09-06 with acceptance required and a directed delegator identifier. Card 020 was carded against the PR; its issuance and provenance lines should be re-read against the merged text before the spec PR opens. — RE-READ 2026-09-11: depth restated per ancestor; issuer-equals-parent-subject clause added (record 009); credentialStatus corrected (conditional on every VDC); issuance/provenance cite the merged sections. Record revision row 2026-09-11.",
+    "status": "drafted",
     "cards": [
       "020"
     ],
-    "actor": "Mitch reads the merged text, then re-cards 020 if it moved"
+    "actor": "built 2026-09-11 — Mitch reviews the revision"
+  },
+  {
+    "id": "D18",
+    "title": "cred-spec #9 — reply to the 2026-09-10 requirement sentence and the chain-predicate caveat",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/issues/9",
+    "what": "talltree (09-08) translated the ask and proposed sharing a general requirement; geoffturk (09-10) added subject-or-issuer, the VRC MAY (theirs), the non-correlation constraint, and: the VDC/VAC chain predicates are hidden-value equality, not common control — name them separately. The only thread waiting on this task force. Draft U accepts the sentence and names where each predicate lands (007 · 009 · 020 · 021).",
+    "status": "drafted",
+    "draft": "U",
+    "cards": [
+      "007",
+      "009",
+      "020",
+      "021"
+    ],
+    "actor": "Mitch posts"
+  },
+  {
+    "id": "D19",
+    "title": "zkp-tf #23 — the after-call note (draft T) with the 8 September clarifications attributed",
+    "where": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23",
+    "what": "The readers package left T as placeholders. The Confluence notes (v6) fill them: ADR-001 confirmed; the blind-signature vouch alternative; the same-context pseudonym caveat; ambient verifiability; the signature scheme as the non-swappable choice; the Berkeley follow-up paper. Posted as a reply under the anchor so the Round 1 thread carries the call.",
+    "status": "drafted",
+    "draft": "T",
+    "cards": [
+      "008",
+      "010"
+    ],
+    "actor": "Mitch posts"
+  },
+  {
+    "id": "D20",
+    "title": "Records 009 (hidden-value equality) and 021 (VAC attenuation chain) — carded as drafts, pending review",
+    "where": "board/cards/009.json · board/cards/021.json",
+    "what": "cred-spec PR #42 lists the VAC chain and the shared-subject predicates as waiting on the ZKP TF with no stated primitive; #9 says the chain predicates are not common control. 009 is the primitive both chain records compose; 021 is 020's sibling for authority. Both at carded with a DRAFT note in their history; drop to requested if the task force prefers to bind equality to commitment-open.",
+    "status": "drafted",
+    "draft": "",
+    "cards": [
+      "009",
+      "021",
+      "020"
+    ],
+    "actor": "Mitch decides"
+  },
+  {
+    "id": "D21",
+    "title": "PR #8 — mark ready for review, request reviewers, attach a render; nudge on #23 with the AGENTS.md pointer",
+    "where": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/8",
+    "what": "Round 1 (shape) closes 22 September with no reviewers and no rendered preview; the PR is a draft with no review requested. The call's own ask — point your agents at it — has not been repeated on the thread. 14 September: the push comes first (zkbook/COMMIT-2026-09-14.md; ledger 39), then Y on the PR (ledger 40), then U → T → ready-for-review → V. 2026-09-14: PUSHED (e1afc3f); editors line confirmed (Mitch sole editor, Scott may join) — the block is lifted; Z declares the update, then U → T → ready-for-review → V.",
+    "status": "drafted",
+    "draft": "V",
+    "cards": [],
+    "actor": "Mitch → Scott, Geoff, Denys"
+  },
+  {
+    "id": "D22",
+    "title": "Ledger reconciliation — entries 22–33 posted under reader receipts, never spoken",
+    "where": "proverb-ledger.json · PROVERB-LEDGER.md",
+    "what": "Every draft posted on 09-08 has a reviewRevision receipt in publication-results.json and an unspoken ledger entry with no actRef. Either backfill actRefs from the receipts, or record that the reader's revision receipt superseded the spoken rite for posts. push-rite footer still refuses rite-not-spoken. Dry run: node tools/ledger-receipts.mjs (prints the receipt-backed unspoken entries and the patch a backfill would apply; writes nothing).",
+    "status": "open",
+    "draft": "",
+    "cards": [],
+    "actor": "Mitch rules"
+  },
+  {
+    "id": "D23",
+    "title": "cred-spec #25 — mutual edge admissibility as a requested record",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/issues/25",
+    "what": "geoffturk's 09-07 update restates the two admissibility predicates in WD02 vocabulary; the 08-25 comment on this thread promised 'mutual admissibility as a zero-knowledge predicate' as future work. One sentence and this thread is all a requested record needs.",
+    "status": "drafted",
+    "draft": "",
+    "cards": [
+      "013"
+    ],
+    "actor": "built 2026-09-11 as record 013 at requested — Mitch decides whether it stays"
+  },
+  {
+    "id": "D24",
+    "title": "Second pull request — the options layer, reproduction ladder and generated Recommendations chapter",
+    "where": "zkbook/PLAN-options-layer.md",
+    "what": "The Conformance chapter already describes the ladder (test 5) but the records still carry prose option rows; PLAN §2.2/§2.4/§7.0 are unbuilt. After Round 1 closes, or now while the draft is quiet.",
+    "status": "open",
+    "draft": "",
+    "cards": [],
+    "actor": "Mitch sequences"
+  },
+  {
+    "id": "D25",
+    "title": "cred-spec PR #50 — vetting as a statement predicate: say why its identity commitment is not the ADR-001 voucher linkage",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/pull/50",
+    "what": "#49 closed 09-13 in favour of #50 (stormer78, builds on #47). The profile's identityCommitment is a per-application salted digest of the applicant's identity CLAIMS, recomputable by every vetter so a community can see that several statements concern one claimed identity. That is a commitment to claims for an admission decision — it neither opens to a holder secret (007/004) nor sits in a membership root (001), so it cannot stand in for the voucher's VMC-side linkage that 010 clause 4 needs, and a proof over it establishes nothing about membership or key control. Where it does land: record 008 route 1 (a salted commitment opened against a context the verifier holds), with the profile's own retention caveat — a vetter who keeps a card can recognise the commitment later. Mitch's 13 September review (~/Documents/Codex/2026-09-07/rev/outputs/2026-09-13-vetting-linkage-review.md) is folded in: its candidate wording sits in the Implementation Guide (step 5) and the Research and Book chapter; its response candidate is draft W (ledger 37); record 010 carries the negative-space line and three fixture requirements as codes without vectors.",
+    "status": "drafted",
+    "draft": "W",
+    "cards": [
+      "008",
+      "010",
+      "007"
+    ],
+    "actor": "Mitch posts W after #47 settles"
+  },
+  {
+    "id": "D26",
+    "title": "cred-spec #52 — the predicate registry gives the ZKP request profile a dependency: identity rule and pinned definition revision before binding",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/issues/52",
+    "what": "The registry proposal (09-13) plus talltree's IRI-comparison and per-predicate-version suggestions. The reference encoder binds predicate strings but neither decides which identifiers are accepted nor normalizes them (probe 2026-09-14: NFC≠NFD, v1≠v2, unknown accepted structurally). Draft X asks the WG for the comparison rule and how a verifier pins the accept-list revision before binding; the guide (step 4), integration chapter and record 003 now say so locally.",
+    "status": "drafted",
+    "draft": "X",
+    "cards": [
+      "003",
+      "010"
+    ],
+    "actor": "Mitch posts once #52 has a first shape"
+  },
+  {
+    "id": "D27",
+    "title": "cred-spec #53 (nodeType) and #51 (semver Document Status) — conventions to track, no proof-layer change yet",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/issues/53",
+    "what": "#53 would make nodeType REQUIRED on every credential subject; declaring `person` establishes no personhood and WG-10's scope is unchanged, but profiles that key policy on nodeType would disclose it as a public input — watch for the WD03 text. #51 (semver for Document Status; talltree wants it in all three specs) — our header follows once confirmed.",
+    "status": "open",
+    "draft": "",
+    "cards": [
+      "002",
+      "010"
+    ],
+    "actor": "watch; Mitch decides whether the ZKP header adopts 0.x.y now"
   }
 ]

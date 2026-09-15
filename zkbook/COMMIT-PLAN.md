@@ -1,5 +1,11 @@
 # COMMIT PLAN — the specification into trustoverip/dtgwg-zkp-spec
 
+> **Executed 2026-09-08, as one commit.** PR #8 (branch `zk-book`, commit `91b0e8c`, 66 files) went up as a single commit
+> rather than the C1/C2/C3 triple below, carrying `Review-Receipt-SHA256` and `Review-Proverb` trailers from the reader's
+> revision receipt instead of the `Ledger-Head/Seq/Domain` footer of the push rite, with DCO sign-off and no AI trailer.
+> The plan is kept as the record of what was staged and why; the staging loop (`--check` / `--adopt` / regenerate / export)
+> still governs every later push to the branch. Door D22 holds the question of which gate is canonical for posts and pushes.
+
 *The split, ruled 2026-09-05: **specification content → `trustoverip/dtgwg-zkp-spec`** (the Spec-Up-T repository Geoff
 Turk and Ry Jones set up on 2026-09-02 and wired through 09-05); **task-force comments, requirements, drafting rules,
 the working board and the discussions → `trustoverip/dtgwg-zkp-tf`**; **runtimes, fixtures, the verification registry and

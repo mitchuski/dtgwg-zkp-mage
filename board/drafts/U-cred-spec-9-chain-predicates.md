@@ -1,0 +1,22 @@
+# U · cred-spec #9 — the requirement sentence accepted; where each of the four predicates lands (007 · 009 · 020 · 021)
+chip: WAITING ON THE ZKP TF · REPLY TO 09-10
+thread: https://github.com/trustoverip/dtgwg-cred-spec/issues/9
+note: talltree (09-08) translated the ask and proposed sharing a general requirement with the ZKP TF; geoffturk (09-10) added four points and a candidate sentence. This answers the four in order and names the records. Review 007, 009, 020 and 021 before posting — the reply cites them by id. Post after re-reading the thread for anything later than 09-10 13:37 UTC.
+ledger: 34
+proverb: One hand proves two names; two hands prove one name is the same — and the second is not the first.
+---
+Taking the four points of 10 September in order, from the proof side. The record updates below are on PR #8's branch as of 14 September (second commit `e1afc3f`), still informative and still a draft.
+
+**1. Subject or issuer — yes.** The construction that answers this issue (record 007 in the ZKP draft, `conformance/records/007.json` on [PR #8](https://github.com/trustoverip/dtgwg-zkp-spec/pull/8)) now states it that way: two identifiers appearing in DTG credentials, as subject or as issuer, whatever scope each declares, under one controller. The VRC-issuer case is statement 3 of the community-anchored record, which is where the widening was always needed.
+
+**2. The VRC MAY is the credential layer's — agreed.** The record carries it as an issuance line, not as a clause: a VRC MAY carry its issuer's linkage proof to its VMC-side identifier, produced by the counterparty at issuance by running 007 in its own hands. Record 010 consumes it. The permission to carry it belongs in the credential specification; its artifact format, authenticated statement and private composition still need to be specified and tested.
+
+**3. The non-correlation constraint is a design requirement in the record**, for the selected disclosure set and validity horizon, against the verifier and colluding verifiers: *no cross-presentation handle — the proof is transcript-bound and emits no identifier-derived value; two verifiers comparing proofs learn only what the enclosing records disclosed to each.* A disclosed linking field would violate that requirement. The named refusal `identifier-not-zk-openable` describes a required check; the card and its lint are not evidence of cryptographic unlinkability.
+
+**4. The chain predicates are a different primitive — agreed, and now named.** A child's `issuer` equalling its parent's `credentialSubject.id`, across credentials signed by different parties with no holder secret in the relation, is hidden-value equality. The draft gains a primitive record for it, **009**, bound to its own gadget (the dual of the distinctness gadget record 005 already uses: a zero difference instead of a non-zero inverse). The two chain predicates then compose it explicitly: **020** (the VDC chain, re-read against the merged §Delegation Chains — depth per ancestor, acceptance required, status conditional on every VDC) and a new **021** (the VAC attenuation chain, against §Attenuation, §Invocation and §Withdrawal). The shared-subject rule of §Authority and membership are separate credentials splits the same way: 009 where one identifier appears in both credentials, 007 where the holder used two.
+
+So of the four predicates the PR #42 note lists under this issue, two rest on common control (the community-anchored proof; the shared-subject rule with differing identifiers) and two on equality. Record 007's provenance says so rather than claiming all four.
+
+On the candidate sentence: no objection to the wording. One profile question remains: what authenticated witness relation makes this provable under the selected key-custody model? A ZK-openable commitment to a holder secret is one candidate route, not yet a universal requirement for every DID. OpenVTC can offer a non-exporting signing interface, but two valid signatures do not themselves prove common derivation. A proof-capable custody service or a composable issuance artifact needs its own statement, privacy analysis and tests; the presenter cannot manufacture the offline voucher's relation from its own key.
+
+On the xref path: once the draft renders, the record identifiers to cite from this specification are 007, 009, 020 and 021; the reverse entry for this specification is already in the ZKP repository's `specs.json`.

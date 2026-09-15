@@ -6,11 +6,11 @@
   "priority": "P1",
   "owner": "mitchuski",
   "request": {
-    "issue": "cred-spec #9 (Sankarshan: identity linkages the ZKP constructions require) · cred-spec #31 (geoffturk 09-02: '#9 stays open — and gains weight'; four things lean on the unencoded common-control linkage) · cred-spec PR #30 §Community-Anchored ZKP ('the proof must establish common control across them')",
+    "issue": "cred-spec #9 (Sankarshan: identity linkages the ZKP constructions require; talltree 09-08 translation; geoffturk 09-10: subject-or-issuer, non-correlation carried in the requirement, chain predicates named separately) · cred-spec #31 (geoffturk 09-02: '#9 stays open — and gains weight') · cred-spec PR #30 §Community-Anchored ZKP ('the proof must establish common control across them') · cred-spec PR #42 editor's note (merged 09-10): of the four predicates listed as resting on the #9 primitive, two rest on this record — the community-anchored proof and the VMC+VAC shared-subject rule where the two identifiers differ; the two chain predicates are hidden-value equality (record 009) inside records 020 and 021",
     "by": "sankarshanmukhopadhyay / geoffturk / stormer78 (spec side) — carded by the ZKP TF co-chair",
-    "need": "under WD02's three correlation scopes, two `pairwise` identifiers differ by construction, so any proof that reads one party out of two credentials must first prove one holder controls both identifiers — without a field that says so"
+    "need": "under WD02's three correlation scopes, two `pairwise` identifiers of one controller differ by construction, so any proof that reads one party out of two credentials must first prove one holder controls both identifiers — whether the identifiers appear as credential subject or as credential issuer (the VRC-issuer case is statement 3 of record 010) — without a field that says so"
   },
-  "dish": "A verifier checks common control through the selected shared-secret derivation relation, while the secret remains private under the construction assumptions. Any cross-presentation correlation depends on the enclosing disclosure set and context policy.",
+  "dish": "A verifier checks that two identifiers appearing in DTG credentials — as subject or as issuer, whatever correlation scope each declares — are under one controller, through the selected shared-secret derivation relation, while the secret remains private under the construction assumptions. The proof introduces no value that correlates across presentations; any cross-presentation correlation depends on the enclosing disclosure set and context policy.",
   "ingredients": [
     "the holder secret s",
     "per-identifier derivation material: for each identifier, the salt or key-derivation path under which it was minted from s",
@@ -36,7 +36,8 @@
     "that either credential is currently valid or unrevoked (card 006)",
     "that the holder intended the two identifiers to be correlated beyond this verifier — the proof is a disclosure to the party it is made to, not a widening of either identifier's declared scope",
     "the counterparty's common control: a presenter can prove only what is derived from a secret in the presenter's hands; a counterparty's linkage needs the counterparty's witness or the counterparty's own attestation (see card 010)",
-    "that arbitrary independently generated or hardware-protected keys derive from a shared available scalar; derivation and custody are profile requirements"
+    "that arbitrary independently generated or hardware-protected keys derive from a shared available scalar; derivation and custody are profile requirements",
+    "a chain predicate: that a child credential's `issuer` equals its parent's `credentialSubject.id` across credentials signed by different parties involves no holder secret and is hidden-value equality (record 009 inside records 020 and 021), not common control — the two must not be read as one primitive (cred-spec #9, geoffturk 2026-09-10)"
   ],
   "adversary": [
     {
@@ -91,14 +92,18 @@
   ],
   "issuance": [
     "each identifier that may need to be proven co-controlled must be, or carry, a ZK-openable commitment to the holder secret: a SNARK-native key (e.g. BabyJubJub did:key) or a published Poseidon/KZG commitment beside an Ed25519 key — the X3 requirement of card 010, now applied to identifiers rather than signatures (cred-spec #17)",
-    "the credential layer carries the requirement to be able to prove co-control, never a field that states the link (cred-spec #9, the 08-25 position)"
+    "the credential layer carries the requirement to be able to prove co-control, never a field that states the link (cred-spec #9, the 08-25 position)",
+    "the credential layer's candidate requirement (cred-spec #9, 2026-09-10): a party controlling more than one DID appearing in DTG credentials, as subject or issuer, regardless of each identifier's declared scope, MUST be able to prove in zero knowledge that those DIDs are under its control, without disclosing them and without the proof introducing a value that correlates across presentations — this record is the construction that requirement points at; the requirement text is the credential specification's to write",
+    "a VRC MAY carry its issuer's linkage proof to its VMC-side identifier (the one-line MAY proposed on #9, 2026-08-25 and taken up 2026-09-10) — the credential layer's member, produced by the counterparty at issuance by running this record; record 010 consumes it"
   ],
   "provenance": {
     "spec": [
       "cred-spec PR #30 §Correlation Scope / §Choosing a scope / §Community-Anchored Zero-Knowledge Proof (WD02 draft, 2026-09-02)",
       "cred-spec #9 (identity linkages required by the ZKP constructions)",
       "cred-spec #31 disposition table (#9 stays open and gains weight; cross-TF work with the ZKP TF)",
-      "ADR-001 S4 (holder binding) — generalised to two identifiers"
+      "ADR-001 S4 (holder binding) — generalised to two identifiers",
+      "cred-spec #9 comments of 2026-09-08 (talltree) and 2026-09-10 (geoffturk): the requirement sentence, the subject-or-issuer widening, the chain-predicate caveat, the xref path",
+      "cred-spec PR #42 (merged 2026-09-10) §Zero-Knowledge and Selective Disclosure editor's note — 'what is waiting on the ZKP task force'"
     ]
   },
   "history": [
@@ -115,6 +120,13 @@
       "date": "2026-09-05",
       "evidence": "carded from PR #30's §Community-Anchored text + #9 + the lab's key-binding gadget shape; cost line labelled conjecture per drafting rule 4",
       "task": "board/card"
+    }
+  ],
+  "revisions": [
+    {
+      "date": "2026-09-11",
+      "by": "mitchuski",
+      "note": "cred-spec #9 (2026-09-10): statement widened to identifiers held as subject or issuer; the '#31 four dependants' line narrowed — the VDC/VAC chain predicates are hidden-value equality (new record 009), not common control; candidate requirement sentence and the VRC-carried issuer linkage MAY recorded as issuance lines. State unchanged."
     }
   ]
 }

@@ -74,7 +74,8 @@
     "non-revocation": "yes (indexed tree) — unmeasured",
     "range": "yes",
     "commitment-open": "yes",
-    "chain-resolve": "recursion via the Groth16 wrapper — unmeasured"
+    "chain-resolve": "recursion via the Groth16 wrapper — unmeasured",
+    "hidden-equality": "yes — unmeasured"
   },
   "notes": [
     "Proof size ~700× Groth16; proving payload ~100× smaller — the trade the §25 gate weighs per profile (ADR-001 D1/D3).",

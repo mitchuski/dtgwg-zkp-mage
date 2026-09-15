@@ -15,7 +15,7 @@ const CARDS = join(ROOT, 'cards');
 const REPO = resolve(ROOT, '..');
 
 export const STATES = ['requested', 'carded', 'constructed', 'run', 'vetted', 'published'];
-export const GADGETS = ['set-membership', 'nullifier', 'transcript-bind', 'key-binding', 'distinctness', 'signature-verify', 'non-revocation', 'range', 'commitment-open', 'chain-resolve'];
+export const GADGETS = ['set-membership', 'nullifier', 'transcript-bind', 'key-binding', 'distinctness', 'signature-verify', 'non-revocation', 'range', 'commitment-open', 'chain-resolve', 'hidden-equality'];
 export const ADVERSARIES = ['verifier', 'verifiers-colluding', 'issuer-verifier-colluding', 'registry-operator'];
 export const FAMILIES = ['accepts', 'rejects-unsat', 'rejects-verify', 'unlinkable', 'current'];
 
@@ -278,6 +278,19 @@ export function buildSite(cards) {
   const moved = sv ? digestSurvey(sv) : [];
   const watchSection = watchHtml(moved, sv, watchMap);
   const runSection = runHtml();
+  const contributePath = join(ROOT, 'survey', 'contribute.json');
+  const contribute = existsSync(contributePath) ? JSON.parse(readFileSync(contributePath, 'utf8')) : null;
+  const cLink = (r) => r.url ? '<a href="' + esc(r.url) + '">' + esc(r.where) + '</a>' : esc(r.where);
+  const contributeHtml = contribute ? '<div class="panel" id="contribute"><h3>' + esc(contribute.title) + '</h3><p class="muted">Checked ' + esc(contribute.checkedAt) + '</p><p>' + esc(contribute.lead) + '</p>'
+    + '<h4>Span</h4><ul>' + ['watched', 'added', 'seen_not_added'].map(k => '<li><b>' + k.replace(/_/g, ' ') + ':</b> ' + (contribute.span[k] || []).map(esc).join(' · ') + '</li>').join('') + '<li><b>mentions:</b> ' + esc(contribute.span.mentions || '') + '</li></ul>'
+    + '<h4>Ready — approve and they post, in this order</h4><table class="ct"><tr><th>#</th><th>draft</th><th>ledger</th><th>where</th><th>why</th><th>records</th></tr>' + contribute.ready.map(r => '<tr><td>' + r.order + '</td><td><b>' + esc(r.draft) + '</b></td><td>' + (r.ledger == null ? '—' : r.ledger) + '</td><td>' + cLink(r) + '</td><td>' + esc(r.why) + '</td><td class="muted">' + esc(r.records) + '</td></tr>').join('') + '</table>'
+    + '<h4>Held — with the reason</h4><ul>' + contribute.held.map(r => '<li><b>' + esc(r.draft) + '</b>' + (r.ledger == null ? '' : ' (ledger ' + r.ledger + ')') + ' · ' + cLink(r) + ' — ' + esc(r.reason) + '</li>').join('') + '</ul>'
+    + '<h4>Candidates — threads worth a contribution, no draft yet (say which to draft)</h4><ul>' + contribute.candidates.map(r => '<li>' + cLink(r) + ' — ' + esc(r.why) + ' <span class="muted">[records ' + esc(r.records) + ' · ' + esc(r.suggest) + ']</span></li>').join('') + '</ul>'
+    + '<h4>Nothing to do</h4><ul>' + (contribute.nothing_to_do || []).map(x => '<li class="muted">' + esc(x) + '</li>').join('') + '</ul></div>' : '';
+  const integrationReviewPath = join(ROOT, 'survey', 'integration-review.json');
+  const integrationReview = existsSync(integrationReviewPath) ? JSON.parse(readFileSync(integrationReviewPath, 'utf8')) : null;
+  const syncPanel = (r, cls) => '<div class="' + cls + '"><h3>' + esc(r.title) + '</h3><p class="muted">Checked ' + esc(r.checkedAt) + (r.note ? ' · ' + esc(r.note) : '') + '</p><ul>' + r.items.map(item => '<li>' + esc(item) + '</li>').join('') + '</ul></div>';
+  const integrationReviewHtml = integrationReview ? '<div class="panel" id="sync-review">' + syncPanel(integrationReview, 'sync-current') + ((integrationReview.previous || []).length ? '<details class="sync-history"><summary>Earlier syncs (' + integrationReview.previous.length + ') — historical, superseded above</summary>' + integrationReview.previous.map(r => syncPanel(r, 'sync-previous')).join('') + '</details>' : '') + '</div>' : '';
   const doorsHtml = doors.length ? `<div class="panel"><table><tr><th>#</th><th>door</th><th>what</th><th>status</th><th>draft</th><th>cards</th><th>actor</th></tr>${doors.map(d => `<tr class="door-${esc(d.status)}"><td>${esc(d.id)}</td><td><a target="_blank" href="${esc(d.where)}">${esc(d.title)}</a></td><td>${esc(d.what)}</td><td><span class="chip">${esc(d.status)}</span></td><td>${d.draft ? `<a href="#draft-${esc(d.draft)}">${esc(d.draft)}</a>` : '—'}</td><td>${(d.cards || []).map(c => `<a href="#card-${c}">${c}</a>`).join(' ') || '—'}</td><td>${esc(d.actor || '')}</td></tr>`).join('')}</table></div>` : '<div class="panel">No doors file.</div>';
   const cardHtml = cards.map(c => `
 <div class="card" data-k="card-${c.id}"><div class="head"><span class="ord">${c.id}</span>
@@ -356,6 +369,7 @@ label.posted{font-size:.85rem;color:var(--muted);cursor:pointer}.copied,.gatemsg
 .watch h3.repo{font-size:.95rem;margin:1rem 0 .4rem;color:var(--accent2)}.thread{border-top:1px dashed var(--line);padding:.5rem 0}.thread.rel{border-left:3px solid var(--accent2);padding-left:.6rem}
 .thead{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}.ttl{font-weight:600;color:var(--ink);text-decoration:none}.ttl:hover{color:var(--accent)}.tmeta{font-size:.8rem;color:var(--muted);margin:.2rem 0}.tsnip{font-size:.85rem;margin:.2rem 0 .3rem}
 ul.evl{margin:.3rem 0 0;padding-left:1.2rem;font-size:.82rem}ul.evl li{margin:.2rem 0}details summary{cursor:pointer;font-size:.8rem;color:var(--accent)}
+table.ct{border-collapse:collapse;width:100%;font-size:.85rem}table.ct th,table.ct td{border-top:1px solid var(--line);padding:.35rem .4rem;vertical-align:top;text-align:left}#contribute h4{margin:1rem 0 .3rem;font-size:.95rem}
 .run .phase{border-top:1px solid var(--line);padding:.9rem 0 .2rem}.run .phase:first-child{border-top:0;padding-top:0}
 .run h3{font-size:.98rem;margin:0 0 .3rem;color:var(--accent2)}.run .phasewhy{color:var(--muted);font-size:.85rem;margin:0 0 .7rem}
 ol.steps{list-style:none;margin:0;padding:0}li.step{display:flex;gap:.7rem;padding:.55rem 0;border-top:1px dashed var(--line)}
@@ -377,10 +391,12 @@ button:disabled{opacity:.45;cursor:not-allowed}.receipt-url{flex:1;min-width:180
 <nav><a href="#run">Run</a><a href="#watch">Watch (${moved.length})</a><a href="#doors">Doors (${doors.length})</a><a href="#drafts">Drafts</a><a href="#process">Process</a><a href="#cards">Cards (${cards.length})</a><a href="#cookbook">ZK Book</a></nav>
 
 <h2 class="sec" id="run">Run — step by step, in the order it leaves the machine</h2>
+${contributeHtml}
+${integrationReviewHtml}
 ${runSection}
 
 <h2 class="sec" id="watch">Watch — upstream threads that moved</h2>
-<div class="ritedef">👁️ <b>Read-only.</b> <code>board.mjs survey</code> pulls trustoverip/dtgwg-zkp-tf, dtgwg-cred-spec, dtgwg-cred-tf and dtgwg-rahp-tf over GraphQL (token from the git credential store, held in memory only) and lists retrieved changes after each repository’s last successful watermark, including edits and review activity. Failed repositories are marked for retry. <b>ZKP</b> = relevance filter hit; <b>→ card</b> = the hand-kept mapping in <code>watch-map.json</code>. Nothing here posts.</div>
+<div class="ritedef">👁️ <b>Read-only.</b> <code>board.mjs survey</code> pulls the eleven trustoverip DTG repositories listed in watch.mjs (zkp-spec, zkp-tf, cred-spec, cred-tf, rahp-tf, trust-tasks-tf, trust-tasks-spec, vti-spec, vds-spec, general, htx-tf) over GraphQL (token from the git credential store, held in memory only) and lists retrieved changes after each repository’s last successful watermark, including edits and review activity. Failed repositories are marked for retry. <b>ZKP</b> = relevance filter hit; <b>→ card</b> = the hand-kept mapping in <code>watch-map.json</code>. Nothing here posts.</div>
 ${watchSection}
 
 <h2 class="sec" id="doors">Doors — where the co-chair can add value now</h2>

@@ -1,0 +1,23 @@
+# T · zkp-tf #23 (reply) — after the 8 September call: what was clarified, what is still open, what changed in the draft
+chip: AFTER-CALL NOTE · REPLY UNDER THE ANCHOR
+thread: https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23
+note: The readers package (PR #22) left T as placeholders. This fills them from the Confluence meeting notes (page 1132953601, version 6, edited 2026-09-08 22:00 UTC). Attributions re-checked against v6 on 2026-09-15 (page unchanged): Erkan removed from the signature-scheme parenthesis — his recorded remark was on a signature family, not the non-swappability point. Posted as a reply so the Round 1 thread carries the call.
+ledger: 35
+proverb: A call leaves the room as notes; the notes leave the notes as records, or they leave nothing.
+---
+Following the task-force call on 8 September (notes on the [ToIP wiki](https://lf-toip.atlassian.net/wiki/spaces/HOME/pages/1132953601)), the points that bear on the working draft, attributed as the notes record them. Corrections to any attribution or reading are welcome on this thread.
+
+**Confirmed.** ADR-001, the community-anchored proof, is the first proof to build. Arka Rai Choudhuri described it as the kind of use case the Berkeley team's follow-up work is aimed at — not what the first paper does, but what the Linux-kernel follow-up ties to; that follow-up models the community and was described as forthcoming. Record 010 stays the flagship; the credential-bound membership presentation stays the first milestone under it (WG-01).
+
+**Clarifications that changed a record.**
+
+- *The offline voucher.* Sanjam Garg described a blind-signature vouch as the practical route: the voucher blind-signs at vouch time, and the presenter later proves possession of the unblinded signature, so the voucher need not be online and no helper agent sees the relationship. Record 010 now carries it as a construction option, marked conjecture with the call as its source; how it composes with the common-control and non-revocation clauses is the open design question.
+- *Freshness and unlinkability.* Two parties who interact again in the same context reuse the same pseudonyms and can be linked; breaking that needs a new mechanism (Arka). This concerns pseudonym linkability within the same context; it does not remove challenge freshness or status checks. The local record 008 revision discusses that distinction.
+- *The signature scheme is the non-swappable choice.* A proof system can be replaced by a software update; the credential signature and format cannot without re-issuing every credential, and a post-quantum proof system does not mask a pre-quantum signature (Sanjam, Denys, Arka). The draft's Security Considerations already carry the post-quantum horizon per record; the construction-selection question is therefore issuer-side first — the X3 issuance line every record states.
+- *Ambient verifiability.* Nicholas Racz named the KERI term for what the offline case needs: caches that supply the proofs so no participant need be online. The set-root conventions now say who supplies roots and witnesses is part of the registry-operator adversary a profile states, not of the proof.
+
+**Still open, for the thread.** Which parts of the personhood framework generalise beyond personhood when the credential is a membership or authority credential; what exactly is authenticated inside the proof and what is checked outside it (WG-02, WG-06a); whether the trade-off between custom and general-purpose proving sits with the community's governance or below it (the notes record: below it, with a case for limiting the number of choices a community supports); and Drummond Reed's requirement that proofs over the standard DTG credentials interoperate broadly.
+
+**What changed in the draft since the call**, on PR #8's branch as of 14 September (second commit `e1afc3f`): records 007 and 020 revised against the credential specification's merged VDC and VAC text and the common-control thread ([cred-spec #9](https://github.com/trustoverip/dtgwg-cred-spec/issues/9), 10 September); new records 009 (hidden-value equality) and 021 (VAC attenuation chain); the review-notes index in Appendix E for Round 1. One correction to the anchor above: the ADR-001 crosswalk counts there (17 covered · 5 refined · 2 added · 3 partial · 4 open) were the pre-review record; the draft carries 15 · 4 · 2 · 3 · 4, and the machine-readable request is the source of truth. Evidence states are unchanged; nothing is adopted.
+
+**Asked of members**, as on the call: read the question reader and the draft, and say which questions or records need direct attention. A position record in the shape the evidence repository's `PATH-MAP.md` describes is the most useful form.

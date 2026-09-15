@@ -11,7 +11,9 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const SURVEY_DIR = join(ROOT, 'survey');
-export const REPOS = ['dtgwg-zkp-spec', 'dtgwg-zkp-tf', 'dtgwg-cred-spec', 'dtgwg-cred-tf', 'dtgwg-rahp-tf'];
+export const REPOS = ['dtgwg-zkp-spec', 'dtgwg-zkp-tf', 'dtgwg-cred-spec', 'dtgwg-cred-tf', 'dtgwg-rahp-tf',
+  // added 2026-09-14 after the span check: the task layer, the VTI/VDS specs, the working-group threads, the HTX persona work
+  'dtgwg-trust-tasks-tf', 'dtgwg-trust-tasks-spec', 'dtgwg-vti-spec', 'dtgwg-vds-spec', 'dtgwg-general', 'dtgwg-htx-tf'];
 export const OWNER = 'trustoverip';
 const RELEVANCE = /\bZK\b|ZKP|zero-knowledge|\bproofs?\b|nullifier|correlat|\bscope|digest|delegat|privacy|unlinkab|commitment|revocat|registry|liveness|biometric|pseudonym|anchor|common control|disclos/i;
 

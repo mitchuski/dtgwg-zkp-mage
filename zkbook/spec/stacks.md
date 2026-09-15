@@ -50,6 +50,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | [[ref: range]] | attribute predicates (age) — yes |
 | [[ref: commitment-open]] | no |
 | [[ref: chain-resolve]] | no |
+| [[ref: hidden-equality]] | no (not a DTG statement; equality of two signed fields would be a new circuit) |
 
 #### Notes
 
@@ -103,6 +104,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | [[ref: range]] | yes — Boolean comparison |
 | [[ref: commitment-open]] | yes — hash commitments |
 | [[ref: chain-resolve]] | unmeasured — no recursion story published for the credential case |
+| [[ref: hidden-equality]] | yes — Boolean equality is cheap in binary fields; the openings over standard hashes are the native shape |
 
 #### Notes
 
@@ -156,6 +158,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | [[ref: range]] | yes |
 | [[ref: commitment-open]] | yes |
 | [[ref: chain-resolve]] | recursion via the Groth16 wrapper — unmeasured |
+| [[ref: hidden-equality]] | yes — unmeasured |
 
 #### Notes
 
@@ -206,6 +209,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | [[ref: range]] | cheap — unmeasured |
 | [[ref: commitment-open]] | Poseidon opening — measured as the leaf commitment inside 001 |
 | [[ref: chain-resolve]] | unmeasured |
+| [[ref: hidden-equality]] | unmeasured — one zero-difference constraint over two Poseidon openings; the openings are the cost |
 
 #### Notes
 

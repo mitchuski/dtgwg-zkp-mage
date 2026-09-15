@@ -1,0 +1,8 @@
+# X · cred-spec #52 — the predicate registry is a dependency of the ZKP request profile: the identity rule and the pinned accept-list revision come before binding
+chip: NEW SINCE 09-13 · WG-06 / WG-07 DEPENDENCY · POST ONCE #52 HAS A FIRST SHAPE
+thread: https://github.com/trustoverip/dtgwg-cred-spec/issues/52
+note: geoffturk opened #52 on 09-13 (repo-driven registry, unversioned term-immutable namespace, generated accept-list); talltree asked for an RFC 3987 §3.1 canonical comparison form and a per-predicate version marker. The body below is Mitch's response candidate from the 14 September cycle, verbatim (source: ~/Documents/Codex/2026-09-07/rev/outputs/2026-09-14-vocabulary-binding-candidate.md); the probe and its results sit beside it. Post after the thread's first shape on identity and versioning is visible, so the question lands on something answerable; re-read for anything after 2026-09-14 10:43 UTC.
+ledger: 38
+proverb: A hash tells two strings apart; only a register says which one was meant.
+---
+The registry proposal gives the ZKP request profile a concrete dependency. Our current reference encoder binds predicate strings, but does not decide which identifiers are accepted or normalize them. Can we specify the identity comparison rule and how a verifier pins the definition/accept-list revision before binding the request? The proof-side requirement is that lookup and transcript construction use the same accepted statement, with no alias or version substitution after binding. The fixture now distinguishes composed/decomposed spellings and versioned identifiers; it is encoding evidence, not a demonstration of registry-aware proof verification.

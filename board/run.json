@@ -1,7 +1,7 @@
 {
   "title": "Posting run — the weekend's work, exposed in order",
-  "dates": "prepared 2026-09-07 · for the working group call Tuesday 2026-09-08, 11:00 ET / 15:00 UTC",
-  "lead": "Everything built between 5 and 7 September, in the order it should leave the machine. Each step names what it exposes, where it goes, which draft carries it, and what gates it. Steps are not independent: a later step reads wrong if an earlier one has not happened, and the order below is the only claim this page makes. Nothing here posts itself.",
+  "dates": "refreshed 2026-09-12 · after the 8 September working-group call",
+  "lead": "Review the current local drafts and construction updates against the refreshed upstream survey. PR #8 remains a draft; the new local record revisions are not yet on that public PR. Earlier completed steps are retained as history. No action here posts or pushes automatically.",
   "phases": [
     {
       "id": "A",
@@ -13,16 +13,16 @@
           "act": "Write the relicensing sentence into the specification's appendix",
           "where": "~/dtgwg-zkp-spec (branch zk-book) · spec/appendix.md",
           "gate": "author's own words — no tool writes this",
-          "state": "blocked",
-          "why": "The Cryptographic Background is adapted from the author's earlier expository work. The appendix must say so and state the licence under which it enters a ToIP deliverable. It is the sentence a Linux Foundation reviewer looks for first."
+          "state": "done",
+          "why": "The Cryptographic Background is adapted from the author's earlier expository work. The appendix must say so and state the licence under which it enters a ToIP deliverable. It is the sentence a Linux Foundation reviewer looks for first. DONE 2026-09-08: the CC BY 4.0 grant sentence is in Appendix A."
         },
         {
           "n": 2,
           "act": "Confirm the editors line with the chair",
           "where": "spec/header.md — currently editor: Mitchell Travers; Scott Jones under contributors",
           "gate": "a reply from the chair",
-          "state": "blocked",
-          "why": "It appears on the rendered title page of a working group deliverable. Cheaper to agree before the commit than to amend after it."
+          "state": "done",
+          "why": "It appears on the rendered title page of a working group deliverable. Cheaper to agree before the commit than to amend after it. RESOLVED 2026-09-14: Mitch is the editor; Scott is listed as contributor and can join as editor."
         },
         {
           "n": 3,
@@ -44,7 +44,7 @@
           "act": "Commit C1 — front matter and repository description",
           "where": "specs.json · README.md · spec/header.md · spec/intro.md · spec/terms-and-definitions-intro.md · spec/appendix.md · the two placeholder terms removed",
           "gate": "push-rite serve → speak → footer, then git commit -s; no AI co-author trailer on upstream commits",
-          "state": "ready-after-A",
+          "state": "done",
           "why": "Readable alone: what the specification is, how it is produced, that generated sections carry a source digest."
         },
         {
@@ -52,7 +52,7 @@
           "act": "Commit C2 — the conformance apparatus and its CI",
           "where": "conformance/records · requests · stacks · schema · validate.mjs · test.mjs · README.md · .github/workflows/validate-conformance.yml",
           "gate": "its own rite entry; DCO",
-          "state": "ready-after-A",
+          "state": "done",
           "why": "A reviewer who trusts nothing else can read this commit and run it. The validator's refusals are register strings; the test fails when generated text is stale."
         },
         {
@@ -60,7 +60,7 @@
           "act": "Commit C3 — the body and the generated terms",
           "where": "spec/body.md · spec/terms-definitions/g-*.md",
           "gate": "its own rite entry; DCO; the digest stamp must match C2's records",
-          "state": "ready-after-A",
+          "state": "done",
           "why": "Generated from C2. Reviewers who distrust generated prose read C3 against C2 and run the test rather than taking anyone's word."
         },
         {
@@ -69,8 +69,8 @@
           "where": "trustoverip/dtgwg-zkp-spec — compare main...zk-book",
           "draft": "P",
           "gate": "ledger 26 spoken",
-          "state": "ready-after-A",
-          "why": "Body P says what is generated and what is written, how to review each commit, and what the draft does not do: it selects no construction and claims no soundness.",
+          "state": "done",
+          "why": "Body P says what is generated and what is written, how to review each commit, and what the draft does not do: it selects no construction and claims no soundness. DONE: PR #8 opened 2026-09-08 (one commit, review-receipt trailers).",
           "requires": [
             "Re-read the live destination and resolve changes since the source snapshot.",
             "Resolve phase A prerequisites, then open this as a draft PR."
@@ -89,8 +89,8 @@
           "where": "trustoverip/dtgwg-zkp-tf — new discussion",
           "draft": "R",
           "gate": "ledger 32 spoken",
-          "state": "ready-for-review",
-          "why": "One opening post in place of the two long forms. It proposes the review process, states the informative status and asks three questions. Add the actual draft-PR link before publishing; the group has not yet agreed the review schedule.",
+          "state": "done",
+          "why": "One opening post in place of the two long forms. It proposes the review process, states the informative status and asks three questions. Add the actual draft-PR link before publishing; the group has not yet agreed the review schedule. DONE: discussion #23.",
           "supersedes": "H, M",
           "requires": [
             "Re-read the live destination and resolve changes since the source snapshot.",
@@ -103,7 +103,7 @@
           "where": "trustoverip/dtgwg-cred-tf — discussion #39",
           "draft": "K",
           "gate": "ledger 28 spoken",
-          "state": "ready-for-review",
+          "state": "done",
           "why": "The chair takes the artifact gap to the paper's authors on Tuesday. His four items each having a record identifier changes what he can ask them. Before the call, not after.",
           "requires": [
             "Re-read the live destination and resolve changes since the source snapshot.",
@@ -116,7 +116,7 @@
           "where": "trustoverip/dtgwg-cred-spec — issue #38",
           "draft": "N",
           "gate": "ledger 31 spoken",
-          "state": "ready-for-review",
+          "state": "done",
           "why": "Filed 5 September; its third tracked item is coordination with this task force's Q2. That is record 008. It is also an agenda row, and answering beforehand means the row reports rather than promises.",
           "requires": [
             "Re-read the live destination and resolve changes since the source snapshot.",
@@ -129,7 +129,7 @@
           "where": "trustoverip/dtgwg-zkp-tf — discussion #18",
           "draft": "G",
           "gate": "ledger 23 spoken",
-          "state": "ready-for-review",
+          "state": "done",
           "why": "The board thread has not seen the twelve records or the four proving systems. Can follow the call rather than precede it — it is a working-list update, not a decision.",
           "requires": [
             "Re-read the live destination and resolve changes since the source snapshot.",
@@ -148,7 +148,7 @@
           "act": "Send the agenda proposal to the chair",
           "where": "calls/2026-09-08/AGENDA-PROPOSED.md — his four bracketed questions answered, a nine-row table, a replacement reference list, five decisions and seven action items",
           "gate": "none — it is a proposal, and the agenda is his",
-          "state": "ready",
+          "state": "done",
           "why": "Two new rows (where the work lands · blinded binders) and a stated fallback that collapses them into one eight-minute item if the Berkeley conversation runs long."
         },
         {
@@ -172,7 +172,7 @@
           "where": "trustoverip/dtgwg-zkp-tf — a comment on pull request #21, or a short reply under the anchor",
           "draft": "S",
           "gate": "ledger 33 spoken",
-          "state": "ready-for-review",
+          "state": "done",
           "why": "Record 020 and the agent-runtimes document describe an agent acting for a member within a scope, and neither has an implementation to fail against. This is an attempt at one, inverted: the agent is the member being admitted rather than an accessory to a human who is really the member. Post last, and after the pull request is open, so it reads as a footnote to the delegation lane rather than as a pitch.",
           "requires": [
             "Re-read the live destination and resolve changes since the source snapshot.",
@@ -193,12 +193,119 @@
           ]
         }
       ]
+    },
+    {
+      "id": "F",
+      "title": "After the call — what the 8 September thread and the merged credential text ask for (built 2026-09-11)",
+      "why": "One upstream thread is waiting on this task force (cred-spec #9), the merged VDC and VAC text moved under two records, and the call left clarifications that belong on the anchor. Everything below is built locally and reviewed before it leaves the machine.",
+      "steps": [
+        {
+          "n": 16,
+          "act": "Reply on the common-control thread: accept the requirement sentence, name where each predicate lands",
+          "where": "trustoverip/dtgwg-cred-spec — issue #9",
+          "draft": "U",
+          "gate": "ledger 34 spoken",
+          "state": "ready-for-review",
+          "why": "The one place someone is waiting. geoffturk's four points are answered in order; the chain predicates get their own primitive (009) so they stop looking covered by 007.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot.",
+            "Review records 007, 009, 020 and 021 first — the reply cites them by id."
+          ]
+        },
+        {
+          "n": 17,
+          "act": "Post the after-call note under the anchor, clarifications attributed to the notes",
+          "where": "trustoverip/dtgwg-zkp-tf — discussion #23 (reply)",
+          "draft": "T",
+          "gate": "ledger 35 spoken",
+          "state": "ready-for-review",
+          "why": "The readers package left T as placeholders; the Confluence notes fill them. Under #23 so the Round 1 thread carries the call.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot.",
+            "Confirm the attributions against the Confluence page (v6) before posting."
+          ]
+        },
+        {
+          "n": 18,
+          "act": "FIRST: push the second commit to zk-book, then post Y on PR #8 — makes U/T/V/W/X citable",
+          "where": "~/dtgwg-zkp-spec (branch zk-book) — one commit, DCO, no AI trailer",
+          "gate": "ledger 39 (push) + 40 (Y) spoken; validator 20/20; conformance test green; export --check 0 changed; DCO; no AI trailer",
+          "state": "done",
+          "why": "PR #8 holds only the 8 September commit; every queued reply cites records that exist only locally. The commit message and commands are in zkbook/COMMIT-2026-09-14.md (.msg beside it); Y is the five-line comment that tells the thread the branch moved. DONE 2026-09-14: e1afc3f pushed (22 files, +930 −55); PR #8 = two commits.",
+          "draft": "Y",
+          "requires": [
+            "Run node conformance/validate.mjs · node conformance/test.mjs · npm run render in the clone once more.",
+            "git add conformance spec · git commit -s -F …/zkbook/COMMIT-2026-09-14.msg · git push origin zk-book.",
+            "Insert the short sha into Y before posting."
+          ]
+        },
+        {
+          "n": 19,
+          "act": "Mark PR #8 ready for review and ask for Round 1 reviewers; attach a render",
+          "where": "trustoverip/dtgwg-zkp-spec — PR #8",
+          "gate": "ledger 36 spoken (editors line confirmed 2026-09-14)",
+          "state": "ready-for-review",
+          "why": "Round 1 closes 22 September. A draft PR with no requested reviewers and no rendered preview will not get the shape review R asked for. Draft V is the reply that repeats the reading path and the ask once the PR is out of draft.",
+          "draft": "V"
+        },
+        {
+          "n": 20,
+          "act": "Rule on the ledger: backfill actRefs from the receipts, or record the reader's revision receipt as the gate for posts",
+          "where": "proverb-ledger.json · PROVERB-LEDGER.md",
+          "gate": "Mitch's ruling",
+          "state": "blocked",
+          "why": "Entries 22–33 were posted under receipts and never spoken; the rite and the practice have diverged and the footer tool still refuses."
+        },
+        {
+          "n": 21,
+          "act": "Reply on the vetting-predicate pull request: carry its PASS limits into any private presentation; the identity commitment is not the voucher linkage",
+          "where": "trustoverip/dtgwg-cred-spec — PR #50",
+          "draft": "W",
+          "gate": "ledger 37 spoken; #47 settled",
+          "state": "ready-for-review",
+          "why": "#49 is closed and superseded; #50 rides on #47, which still waits on a direction-binding answer. The reply is short and asks for two things the proof side needs: the distinction made explicit, and the card digest's byte input resolved before anyone binds it into a proof.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot (0a0f09b).",
+            "Post after #47's shape is settled so the reply lands on a stable example."
+          ]
+        },
+        {
+          "n": 22,
+          "act": "Ask the credential thread for the predicate identity rule and the pinned accept-list revision before binding",
+          "where": "trustoverip/dtgwg-cred-spec — issue #52",
+          "draft": "X",
+          "gate": "ledger 38 spoken; #52 has a first shape",
+          "state": "ready-for-review",
+          "why": "The registry is a concrete dependency of the ZKP request profile (WG-06/WG-07). The reply states the proof-side requirement — lookup and transcript construction use the same accepted statement, no alias or version substitution after binding — and offers the probe as encoding evidence, not as registry-aware verification.",
+          "requires": [
+            "Re-read the live destination and resolve changes since the source snapshot (2026-09-14 10:43 UTC).",
+            "Post after #52's first shape (identity rule, versioning) is visible, so the question lands on something answerable."
+          ]
+        },
+        {
+          "n": 23,
+          "act": "Declare the update under the anchor: what the second commit changed, what it did not, why pull it in now",
+          "where": "trustoverip/dtgwg-zkp-tf — discussion #23 (reply)",
+          "draft": "Z",
+          "gate": "ledger 41 spoken",
+          "state": "ready-for-review",
+          "why": "The branch moved on 14 September; the thread must say so before U, T and V cite it. Post Z first, then U (cred-spec #9), T, then take PR #8 out of draft, then V.",
+          "requires": [
+            "Re-read #23 for replies since 8 September (none as of 14 September 12:00 UTC).",
+            "Optionally post Y on the PR itself (five lines) for readers who arrive from the PR."
+          ]
+        }
+      ]
     }
   ],
   "afterwards": [
     "F (cred-spec #9, the common-control linkage) and J (cred-spec #31, the merge plan pointer) — both fine after the call.",
     "L (zkp-tf #17, the SIROS catalog as an as-signed proving-system entry) — pairs with whatever the call decides about construction selection.",
     "I (cred-spec PR #26 carve-out) is optional; D (the board-item detail thread) waits for a Projects board that does not exist yet.",
-    "Re-read card 020's issuance clauses against the merged delegation credential text (door D17), and measure what the records currently call conjecture: construction 001 over a BLAKE3 tree, construction 007's compile."
+    "Card 020 re-read against the merged VDC is done (2026-09-11, door D17); the two measurements — construction 001 over a BLAKE3 tree, construction 007's compile (now also 009's) — remain.",
+    "Records 009 and 021 are drafts at carded; the task force may prefer equality bound to commitment-open (door D20).",
+    "cred-spec #25 mutual admissibility as a requested record (door D23); the second pull request (door D24); the four clone-only chapters are now mirrored in the book edition (E4 covers them).",
+    "cred-spec PR #50: the review of 13 September is folded into the draft (Implementation Guide step 5, Research and Book, record 010); draft W is the reply (step 21).",
+    "cred-spec #52/#53/#51 (09-13/14): the predicate-identity candidate is folded (IG step 4, integration, book, record 003); draft X is the reply (step 22); nodeType and semver are watched (D27)."
   ]
 }

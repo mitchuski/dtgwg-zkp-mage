@@ -21,7 +21,7 @@
         "type": "object", "required": ["clause", "gadget"],
         "properties": {
           "clause": { "type": "string" },
-          "gadget": { "enum": ["set-membership", "nullifier", "transcript-bind", "key-binding", "distinctness", "signature-verify", "non-revocation", "range", "commitment-open", "chain-resolve"] },
+          "gadget": { "enum": ["set-membership", "nullifier", "transcript-bind", "key-binding", "distinctness", "signature-verify", "non-revocation", "range", "commitment-open", "chain-resolve", "hidden-equality"] },
           "runtime": { "type": "string" },
           "component": { "type": "string", "pattern": "^[0-9]{3}$" }
         }

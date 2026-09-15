@@ -100,7 +100,8 @@
     "that the voucher's two identifiers are co-controlled when the voucher supplied no linkage and used pairwise identifiers for both — then clause 3 is unprovable by the presenter, and the card says so rather than reading a link out of a field (cred-spec #9)",
     "distinct humans or controllers merely from unequal member leaves",
     "a complete implementation from the existence of component runtimes",
-    "unconditional anonymity against network observers, hosted provers or unique disclosed context"
+    "unconditional anonymity against network observers, hosted provers or unique disclosed context",
+    "the voucher linkage from vetting evidence: an identity-vetting statement's `identityCommitment` (a salted commitment to the applicant's identity claims) or `livenessConfirmed` flag (cred-spec PR #50) is not the voucher-to-membership relation clause 4 needs — committing to identity claims does not supply it, and a vetting statement's own pass establishes neither admission, current membership nor identity truth"
   ],
   "adversary": [
     {
@@ -141,7 +142,10 @@
       "vrc-signature-invalid (verify)",
       "transcript-digest-mismatch (verify)",
       "handle-revoked (unsat at epoch)",
-      "rl-root-stale"
+      "rl-root-stale",
+      "vetting-evidence-not-linkage (unsat: a valid vetting statement and identity-claim commitment are presented, but no voucher-to-membership relation — a test requirement from the 2026-09-13 review, no vector yet)",
+      "liveness-flag-not-membership (lint: `livenessConfirmed` with no current membership evidence must not create a membership edge)",
+      "linkage-artifact-swapped (verify-fail: a correctly signed linkage artifact from another VRC issuer or membership credential is rejected under the selected linkage profile)"
     ]
   },
   "substitutions": [
@@ -168,6 +172,12 @@
       "cost": "unmeasured; proof size hundreds of kB vs ~1 kB Groth16 — a profile trade (ADR-001 D3)",
       "measured": false,
       "source": "board/stacks/flock.json"
+    },
+    {
+      "route": "blind-signature vouch — the voucher blind-signs at vouch time and the presenter later proves possession of the unblinded signature under the community's key, so clause 3 is answered without the presenter holding the voucher's membership path or the voucher being online (the Berkeley team's current build, described on the 8 September call; not in ePrint 2026/333)",
+      "cost": "unmeasured — no construction published; whether the vouch verifies under the community's key or the voucher's, and how it composes with clauses 4 and 7, is the open design question",
+      "measured": false,
+      "source": "DTG ZKP TF meeting notes 2026-09-08 (Sanjam Garg, Arka Rai Choudhuri); a follow-up paper modelling the community was described as forthcoming"
     }
   ],
   "issuance": [
@@ -183,7 +193,10 @@
       "cred-spec #21 → PR #26 (edge verifiability w.r.t. a verifier)",
       "cred-spec #8 → PR #12 (VMC pair)",
       "ePrint 2026/333 §2.3–2.4, §5.3–5.4, §7.2, §8–10",
-      "cred-spec PR #30 §Community-Anchored Zero-Knowledge Proof (WD02 draft): \"the proof must additionally establish common control\" · cred-spec #31 row #9"
+      "cred-spec PR #30 §Community-Anchored Zero-Knowledge Proof (WD02 draft): \"the proof must additionally establish common control\" · cred-spec #31 row #9",
+      "cred-spec §Community-Anchored Zero-Knowledge Proof (merged WD02): a verifier 'SHOULD treat statement 3 as establishing that the community attested the VRC issuer's membership, and SHOULD NOT treat it as establishing that the issuer acknowledged that membership' — the record's does-not-establish line, now in the credential specification's own words",
+      "DTG ZKP TF meeting notes 2026-09-08: ADR-001 confirmed as the first proof; the blind-signature vouch alternative; same-context pseudonym reuse as the one case where freshness does not hold; the credential signature scheme as the non-swappable choice",
+      "cred-spec PR #50 (2026-09-12, supersedes #49): identity vetting as a community statement predicate — its identityCommitment and livenessConfirmed are not the voucher linkage; the card-digest byte-input ambiguity (received bytes vs canonical form) is carried, not adopted (review of 2026-09-13)"
     ],
     "commit": "github.com/mitchuski/dtgwg-zkp-mage"
   },
@@ -208,6 +221,16 @@
       "date": "2026-09-05",
       "by": "mitchuski",
       "note": "WD02 three-scope vocabulary (PR #30); S7 common-control clause via card 007; voucher-side linkage stated as ingredient + issuance option — re-carded, state unchanged"
+    },
+    {
+      "date": "2026-09-11",
+      "by": "mitchuski",
+      "note": "8 September call and merged WD02 text: blind-signature vouch added as a construction option (conjecture; source = the call); provenance cites the merged §Community-Anchored ZKP whose SHOULD/SHOULD NOT on statement 3 matches this record's negative space. State unchanged."
+    },
+    {
+      "date": "2026-09-13",
+      "by": "mitchuski",
+      "note": "cred-spec PR #50 (vetting as a statement predicate, superseding #49): negative-space line — vetting evidence is not the voucher linkage; three fixture requirements recorded as rejection codes without vectors; provenance. State unchanged."
     }
   ]
 }

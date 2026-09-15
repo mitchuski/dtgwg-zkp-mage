@@ -18,6 +18,7 @@ This section is generated from the machine-readable records in `conformance/reco
 | [006](#construction-006-non-revocation-against-a-status-root) | Non-revocation against a status root | `carded` | P1 | non-revocation |
 | [007](#construction-007-common-control-across-identifiers) | Common control across identifiers | `carded` | P1 | key-binding |
 | [008](#construction-008-blinded-binder-taskcontext-hiding-presentation-correlation-unresolved) | Blinded binder (taskContext hiding; presentation correlation unresolved) | `carded` | P2 | commitment-open |
+| [009](#construction-009-hidden-value-equality-across-credentials) | Hidden-value equality across credentials | `carded` | P1 | hidden-equality |
 
 **Composed constructions** — a named conjunction under one transcript and one disclosure set.
 
@@ -26,7 +27,9 @@ This section is generated from the machine-readable records in `conformance/reco
 | [010](#construction-010-community-anchored-proof-adr-001) | Community-Anchored Proof (ADR-001) | `carded` | P1 | 001 ∧ 002 ∧ 003 ∧ 004 ∧ 005 ∧ 006 ∧ 007 |
 | [011](#construction-011-pairwise-edge-vrc-possession-directed-personas-shown-pairwise-identifiers-hidden) | Pairwise edge (VRC possession, directed personas shown, pairwise identifiers hidden) | `carded` | P2 | 003 ∧ 004 ∧ 006 ∧ 007 |
 | [012](#construction-012-intentional-correlation-one-controller-across-k-credentials) | Intentional correlation — one controller across k credentials | `carded` | P2 | 003 ∧ 006 ∧ 007 |
-| [020](#construction-020-delegation-chain-vdc-agent-acts-for-a-member) | Delegation chain (VDC) — agent acts for a member | `carded` | P2 | 001 ∧ 003 ∧ 004 ∧ 006 |
+| [013](#construction-013-mutual-edge-admissibility-each-half-admissible-under-the-other-community-s-policy-neither-policy-nor-member-revealed) | Mutual edge admissibility — each half admissible under the other community's policy, neither policy nor member revealed | `requested` | P3 | 001 ∧ 003 |
+| [020](#construction-020-delegation-chain-vdc-agent-acts-for-a-member) | Delegation chain (VDC) — agent acts for a member | `carded` | P2 | 001 ∧ 003 ∧ 004 ∧ 006 ∧ 009 |
+| [021](#construction-021-authority-chain-vac-an-agent-or-device-acts-as-itself-under-attenuated-authority) | Authority chain (VAC) — an agent or device acts as itself under attenuated authority | `carded` | P2 | 001 ∧ 003 ∧ 004 ∧ 006 ∧ 009 |
 
 ### Construction 001 · Set membership over an accredited root
 
@@ -270,6 +273,7 @@ A verifier checks that the proof binds the supplied transcript scalar. Interpret
 - simulation extractability or equivalence to tag-based SE-NIZK
 - rejection of reuse of the same transcript without a verifier replay policy
 - strict transcript field types or expiry semantics from the lab field-presence validator; those require the selected payload schema and verifier policy
+- that a bound predicate identifier is meaningful or accepted: the digest distinguishes strings (equal strings bind equally; NFC and decomposed spellings, and `v1` and `v2` identifiers, bind differently) but the reference encoder accepts an unknown predicate string structurally — which identifiers a verifier accepts, and under which comparison rule and definition revision, is the profile's decision before binding (cred-spec #52; probe of 2026-09-14)
 
 #### Adversary, per claim
 
@@ -306,6 +310,7 @@ Rejection codes: `transcript-digest-mismatch`, `bare-nonce-insufficient`
 - liveness reqs v0.4 PR-FRE
 - decision §15 canonical transcript
 - cred-spec #17 item 1 (JCS)
+- 2026-09-14 predicate-binding probe over runtimes/canonical/canonical.mjs (sha256 d50fd9a3…): four assertions — equal/NFC-vs-NFD/v1-vs-v2/unknown-accepted; encoding evidence, not registry-aware verification (peer-lane research cycle 2026-09-14-vocabulary-binding)
 - registry: 0002–0006
 - commit: github.com/mitchuski/dtgwg-zkp-mage
 
@@ -316,6 +321,12 @@ Rejection codes: `transcript-digest-mismatch`, `bare-nonce-insufficient`
 | 2026-08-28 | `requested` | mitchuski | zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board |
 | 2026-08-28 | `carded` | mitchuski | X2 context legibility + canonical runtime 11/11 |
 | 2026-08-28 | `constructed` | mitchuski | +1 constraint measured, CIRCUITS.md |
+
+Revisions within a state:
+
+| date | by | note |
+|---|---|---|
+| 2026-09-14 | mitchuski | cred-spec #52 (predicate registry): negative-space line — binding an identifier does not make it accepted or meaningful; probe cited in provenance. State unchanged (constructed). |
 
 
 ### Construction 004 · Holder binding (key from secret)
@@ -605,15 +616,15 @@ Rejection codes: `rl-root-stale`, `handle-revoked`
 | priority | P1 |
 | constructor | mitchuski |
 | requested by | sankarshanmukhopadhyay / geoffturk / stormer78 (spec side) — carded by the ZKP TF co-chair |
-| request | cred-spec #9 (Sankarshan: identity linkages the ZKP constructions require) · cred-spec #31 (geoffturk 09-02: '#9 stays open — and gains weight'; four things lean on the unencoded common-control linkage) · cred-spec PR #30 §Community-Anchored ZKP ('the proof must establish common control across them') |
+| request | cred-spec #9 (Sankarshan: identity linkages the ZKP constructions require; talltree 09-08 translation; geoffturk 09-10: subject-or-issuer, non-correlation carried in the requirement, chain predicates named separately) · cred-spec #31 (geoffturk 09-02: '#9 stays open — and gains weight') · cred-spec PR #30 §Community-Anchored ZKP ('the proof must establish common control across them') · cred-spec PR #42 editor's note (merged 09-10): of the four predicates listed as resting on the #9 primitive, two rest on this record — the community-anchored proof and the VMC+VAC shared-subject rule where the two identifiers differ; the two chain predicates are hidden-value equality (record 009) inside records 020 and 021 |
 
 **Kind:** [[ref: primitive construction]] — binds the [[ref: key-binding]] gadget and nothing else.
 
 #### Statement
 
-A verifier checks common control through the selected shared-secret derivation relation, while the secret remains private under the construction assumptions. Any cross-presentation correlation depends on the enclosing disclosure set and context policy.
+A verifier checks that two identifiers appearing in DTG credentials — as subject or as issuer, whatever correlation scope each declares — are under one controller, through the selected shared-secret derivation relation, while the secret remains private under the construction assumptions. The proof introduces no value that correlates across presentations; any cross-presentation correlation depends on the enclosing disclosure set and context policy.
 
-**Need.** under WD02's three correlation scopes, two `pairwise` identifiers differ by construction, so any proof that reads one party out of two credentials must first prove one holder controls both identifiers — without a field that says so
+**Need.** under WD02's three correlation scopes, two `pairwise` identifiers of one controller differ by construction, so any proof that reads one party out of two credentials must first prove one holder controls both identifiers — whether the identifiers appear as credential subject or as credential issuer (the VRC-issuer case is statement 3 of record 010) — without a field that says so
 
 #### Witness
 
@@ -645,6 +656,7 @@ A verifier checks common control through the selected shared-secret derivation r
 - that the holder intended the two identifiers to be correlated beyond this verifier — the proof is a disclosure to the party it is made to, not a widening of either identifier's declared scope
 - the counterparty's common control: a presenter can prove only what is derived from a secret in the presenter's hands; a counterparty's linkage needs the counterparty's witness or the counterparty's own attestation (see card 010)
 - that arbitrary independently generated or hardware-protected keys derive from a shared available scalar; derivation and custody are profile requirements
+- a chain predicate: that a child credential's `issuer` equals its parent's `credentialSubject.id` across credentials signed by different parties involves no holder secret and is hidden-value equality (record 009 inside records 020 and 021), not common control — the two must not be read as one primitive (cred-spec #9, geoffturk 2026-09-10)
 
 #### Adversary, per claim
 
@@ -676,6 +688,8 @@ Rejection codes: `co-control-unproven (unsat: distinct secrets)`, `identifier-no
 
 - each identifier that may need to be proven co-controlled must be, or carry, a ZK-openable commitment to the holder secret: a SNARK-native key (e.g. BabyJubJub did:key) or a published Poseidon/KZG commitment beside an Ed25519 key — the X3 requirement of card 010, now applied to identifiers rather than signatures (cred-spec #17)
 - the credential layer carries the requirement to be able to prove co-control, never a field that states the link (cred-spec #9, the 08-25 position)
+- the credential layer's candidate requirement (cred-spec #9, 2026-09-10): a party controlling more than one DID appearing in DTG credentials, as subject or issuer, regardless of each identifier's declared scope, MUST be able to prove in zero knowledge that those DIDs are under its control, without disclosing them and without the proof introducing a value that correlates across presentations — this record is the construction that requirement points at; the requirement text is the credential specification's to write
+- a VRC MAY carry its issuer's linkage proof to its VMC-side identifier (the one-line MAY proposed on #9, 2026-08-25 and taken up 2026-09-10) — the credential layer's member, produced by the counterparty at issuance by running this record; record 010 consumes it
 
 #### Provenance
 
@@ -683,6 +697,8 @@ Rejection codes: `co-control-unproven (unsat: distinct secrets)`, `identifier-no
 - cred-spec #9 (identity linkages required by the ZKP constructions)
 - cred-spec #31 disposition table (#9 stays open and gains weight; cross-TF work with the ZKP TF)
 - ADR-001 S4 (holder binding) — generalised to two identifiers
+- cred-spec #9 comments of 2026-09-08 (talltree) and 2026-09-10 (geoffturk): the requirement sentence, the subject-or-issuer widening, the chain-predicate caveat, the xref path
+- cred-spec PR #42 (merged 2026-09-10) §Zero-Knowledge and Selective Disclosure editor's note — 'what is waiting on the ZKP task force'
 
 #### Record history
 
@@ -690,6 +706,12 @@ Rejection codes: `co-control-unproven (unsat: distinct secrets)`, `identifier-no
 |---|---|---|---|
 | 2026-09-02 | `requested` | geoffturk / stormer78 (cred-spec #31, PR #30) · sankarshanmukhopadhyay (cred-spec #9) | cred-spec #31 disposition row for #9: 'four things lean on the unencoded common-control linkage … the resolution is cross-TF work with the ZKP task force' |
 | 2026-09-05 | `carded` | mitchuski | carded from PR #30's §Community-Anchored text + #9 + the lab's key-binding gadget shape; cost line labelled conjecture per drafting rule 4 |
+
+Revisions within a state:
+
+| date | by | note |
+|---|---|---|
+| 2026-09-11 | mitchuski | cred-spec #9 (2026-09-10): statement widened to identifiers held as subject or issuer; the '#31 four dependants' line narrowed — the VDC/VAC chain predicates are hidden-value equality (new record 009), not common control; candidate requirement sentence and the VRC-carried issuer linkage MAY recorded as issuance lines. State unchanged. |
 
 
 ### Construction 008 · Blinded binder (taskContext hiding; presentation correlation unresolved)
@@ -785,6 +807,8 @@ Rejection codes: `binder-mismatch (unsat: C does not open to the supplied taskCo
 - cred-tf #40 (the artifact gap; delegation as a design-time case)
 - cred-spec §Trust Task Context Binding / §The `taskContext` Property (WD01)
 - cred-spec #31 D-A (digestMultibase settled) · trustoverip/dtgwg-trust-tasks-tf#236 (§4.9.3)
+- DTG ZKP TF meeting notes 2026-09-08 (Arka Rai Choudhuri): two parties who interact again in the same context reuse the same pseudonyms and can be linked; breaking that needs a new mechanism — the one case in which freshness does not hold; route 2's per-context pseudonym is that case by construction
+- cred-spec PR #50 (2026-09-12) §The identity commitment: a per-application 32-byte salt carried inside the card to vetters and never to the community; every vetter recomputes the same commitment; a fresh salt per application leaves separate applications unrelated — this record's route 1 shape with the profile's own retention caveat (a vetter who keeps a card can recognise the commitment later)
 
 #### Record history
 
@@ -798,6 +822,105 @@ Revisions within a state:
 | date | by | note |
 |---|---|---|
 | 2026-09-07 | reviewer (Codex; local editorial review) | Narrowed plaintext-hiding claims, made visible-C correlation explicit, corrected PRF verification and retention assumptions. Evidence state unchanged; design and implementation questions remain open. |
+| 2026-09-11 | mitchuski | Provenance: the 8 September call's same-context pseudonym caveat recorded against route 2. State unchanged. |
+| 2026-09-13 | mitchuski | Provenance: cred-spec PR #50's salted identity commitment recorded as an instance of route 1, with its retention caveat. State unchanged. |
+
+
+### Construction 009 · Hidden-value equality across credentials
+
+*This record is at state `carded`: it is written and validates; no runtime has measured it. Costs marked conjecture are conjecture (drafting rule 4). Informative.*
+
+| | |
+|---|---|
+| kind | primitive |
+| state | `carded` |
+| priority | P1 |
+| constructor | mitchuski |
+| requested by | geoffturk / stormer78 (cred-spec #9, PR #42) — carded by the ZKP TF co-chair |
+| request | cred-spec #9 (geoffturk 2026-09-10, point 4: 'a child's issuer MUST equal its parent's subject, so proving chain validity without disclosing the chain is hidden-value equality across credentials signed by different parties. No holder secret is involved … name the chain predicates separately so they do not appear covered while having no stated primitive') · cred-spec PR #42 editor's note (merged 2026-09-10): the VDC chain, the VAC chain and 'two credentials presented together share a subject' listed as predicates waiting on the ZKP task force |
+
+**Kind:** [[ref: primitive construction]] — binds the [[ref: hidden-equality]] gadget and nothing else.
+
+#### Statement
+
+A verifier learns that a hidden field of one authenticated credential equals a hidden field of another authenticated credential — the two signed by different parties — without learning the value, and without the proof introducing a value that correlates across presentations.
+
+**Need.** three credential-layer predicates need a proof that a hidden value in one signed credential equals a hidden value in another signed credential — a child hop's `issuer` and its parent's `credentialSubject.id`; the subject of a VMC and the subject of a VAC presented together — with no holder secret in the relation, so record 007 does not apply and nothing else names it
+
+#### Witness
+
+*Never leaves the holder.*
+
+- the two credentials (their bytes stay with the holder) and the openings of the two committed fields being compared
+- the issuer signatures or the leaf commitments that authenticate each credential's content — whichever the enclosing record binds (the equality clause on its own compares two witnesses; the enclosing record's signature-verify or set-membership clauses are what make them authenticated)
+
+#### Public inputs
+
+- whatever the enclosing record discloses of the two credentials — this record adds no public input of its own
+- transcriptDigest — the presentation transcript this proof is bound to
+
+#### Method
+
+1. field_a (opened from credential A's authenticated content) equals field_b (opened from credential B's authenticated content): field_a − field_b = 0 — a differing pair is unsatisfiable, and neither value is a public signal — [[ref: hidden-equality]]
+
+#### Disclosure set
+
+- the outcome (equal / not shown)
+- transcriptDigest
+- nothing about the value: no digest, commitment or pseudonym derived from it leaves the proof — the enclosing record decides what else is shown
+
+#### Does not establish
+
+- common control: equal identifiers in two credentials say that the same DID appears in both, not that the presenter controls it — key control is record 004, and two different identifiers under one hand is record 007
+- that either credential is authentic, valid or unrevoked on its own — the enclosing record's signature-verify (or set-membership) and non-revocation clauses establish that; this clause compares two witnesses those clauses have already bound
+- that the two credentials were meant to be presented together — intentional correlation is the holder's declaration (record 012), and a shared subject widens no identifier's declared scope
+- anything about the value's meaning: an equal `issuer` and `credentialSubject.id` across two hops establishes the link the chain rule requires (cred-spec §Delegation Edges, §Attenuation) and nothing about who that party is
+
+#### Adversary, per claim
+
+- **verifier · verifiers-colluding** — the compared value is not disclosed and no value derived from it is emitted; two verifiers comparing proofs learn only what the enclosing records disclosed to each
+- **issuer-verifier-colluding** — the issuer of either credential learns nothing about the other credential from the proof — the equality is proven over openings the holder supplies, never over a value the issuer can recognise in a public signal
+
+#### Horizon
+
+- the shorter of the two credentials' validity periods — the equality is a statement about two credentials as issued, and a re-issued credential must be re-compared
+- the hash/commitment cryptoperiod of the leaf or field commitments the openings are made against
+
+#### Conformance fixtures
+
+Families: `accepts` · `rejects-unsat` · `rejects-verify` · `unlinkable`
+
+Rejection codes: `hidden-values-differ (unsat: the two openings are not equal)`, `field-not-openable (verify-fail: a compared field carries no commitment the proof can open — an issuance failure, X3 applied to the compared fields)`
+
+#### Construction options
+
+*Routes through the construction-selection gate ([DTG-ZKP-REQ] §16.1), each with its cost as measured or as conjectured.*
+
+| route | cost | status | source |
+|---|---|---|---|
+| Groth16/Poseidon: two Poseidon openings of the compared fields (the circom-gadget leaf commitment, twice) plus one equality constraint — conjecture: the openings are the whole cost, the equality is one constraint | unmeasured (conjecture ≈ 2 × the lab's Poseidon leaf commitment + 1; one compile settles it) | unmeasured | runtimes/circom-gadget (Poseidon commitment already binds a leaf to hidden content) |
+| as-signed credentials (ECDSA/Ed25519 rails): equality of two signed fields inside a Longfellow-class or ProveKit circuit — the signature checks are the cost, the equality is free | unmeasured; dominated by two signature verifications | unmeasured | board/stacks/siros-longfellow.json · board/stacks/provekit.json |
+| no proof — the shared value is disclosed and compared in the clear (the credential specification's stated fallback: 'every requirement here can be checked by presenting the credentials themselves … the cost is privacy rather than correctness') | zero constraints; the cost is the disclosure of the whole chain or both subjects | unmeasured | cred-spec PR #42 editor's note, 'What holds until this work lands' |
+
+#### Issuance requirements
+
+- each field that may be compared must be, or carry, a ZK-openable commitment inside the authenticated credential content: for the chain predicates that is `issuer` and `credentialSubject.id` on every hop; for the shared-subject rule it is `credentialSubject.id` on the VMC and the VAC — the X3 requirement applied to the compared fields rather than to signatures (cred-spec #17)
+- a credential whose compared field is a `pairwise` identifier that differs from the identifier in the other credential cannot satisfy this record by construction; the holder either declared one `directed` identifier for both, or the enclosing record composes record 007 for that pair instead
+
+#### Provenance
+
+- cred-spec #9, geoffturk 2026-09-10 point 4 — the chain predicates as hidden-value equality, to be named separately
+- cred-spec PR #42 (merged 2026-09-10) §Zero-Knowledge and Selective Disclosure — the VDC chain, the VAC chain and the shared-subject predicates
+- cred-spec §Delegation Edges (acceptance `issuer` = grant `credentialSubject.id`), §Delegation Chains, §Attenuation (child `issuer` = parent `credentialSubject.id`), §Authority and membership are separate credentials (shared-subject proof when both are proven with the subject withheld)
+- record 005 (distinctness) — the dual: a non-zero-inverse constraint proves ≠, a zero-difference constraint proves =
+- commit: github.com/mitchuski/dtgwg-zkp-mage
+
+#### Record history
+
+| date | to | by | evidence |
+|---|---|---|---|
+| 2026-09-10 | `requested` | geoffturk / stormer78 (cred-spec #9, PR #42) | cred-spec #9 comment 2026-09-10T11:40Z: 'the VDC and VAC chain predicates are not this primitive … name the chain predicates separately'; PR #42 editor's note lists the three predicates |
+| 2026-09-11 | `carded` | mitchuski | carded from the merged VDC/VAC chain rules and the shared-subject rule; bound to the new `hidden-equality` gadget (the dual of record 005's distinctness); cost lines labelled conjecture per drafting rule 4 — DRAFT for review, drop to requested if the task force prefers to bind this to commitment-open |
 
 
 ### Construction 010 · Community-Anchored Proof (ADR-001)
@@ -874,6 +997,7 @@ A maintainer checks authenticated evidence of a relationship between two distinc
 - distinct humans or controllers merely from unequal member leaves
 - a complete implementation from the existence of component runtimes
 - unconditional anonymity against network observers, hosted provers or unique disclosed context
+- the voucher linkage from vetting evidence: an identity-vetting statement's `identityCommitment` (a salted commitment to the applicant's identity claims) or `livenessConfirmed` flag (cred-spec PR #50) is not the voucher-to-membership relation clause 4 needs — committing to identity claims does not supply it, and a vetting statement's own pass establishes neither admission, current membership nor identity truth
 
 #### Adversary, per claim
 
@@ -889,7 +1013,7 @@ A maintainer checks authenticated evidence of a relationship between two distinc
 
 Families: `accepts` · `rejects-unsat` · `rejects-verify` · `unlinkable` · `current`
 
-Rejection codes: `voucher-not-member (unsat)`, `self-vouch (unsat)`, `vrc-signature-invalid (verify)`, `transcript-digest-mismatch (verify)`, `handle-revoked (unsat at epoch)`, `rl-root-stale`
+Rejection codes: `voucher-not-member (unsat)`, `self-vouch (unsat)`, `vrc-signature-invalid (verify)`, `transcript-digest-mismatch (verify)`, `handle-revoked (unsat at epoch)`, `rl-root-stale`, `vetting-evidence-not-linkage (unsat: a valid vetting statement and identity-claim commitment are presented, but no voucher-to-membership relation — a test requirement from the 2026-09-13 review, no vector yet)`, `liveness-flag-not-membership (lint: `livenessConfirmed` with no current membership evidence must not create a membership edge)`, `linkage-artifact-swapped (verify-fail: a correctly signed linkage artifact from another VRC issuer or membership credential is rejected under the selected linkage profile)`
 
 #### Construction options
 
@@ -901,6 +1025,7 @@ Rejection codes: `voucher-not-member (unsat)`, `self-vouch (unsat)`, `vrc-signat
 | blackbox: Gro15 SPS credentials + hiding KZG + Groth–Sahai for the algebraic part, commit-and-prove SNARK for f (paper §8–9) | paper-reported benchmark pointer only; exact revision, workload and applicability to ADR-001 require verification | unmeasured | ePrint 2026/333 §10 |
 | legacy rails: ECDSA/Ed25519 credentials proven as-signed (Longfellow / Crescent → vouchable, paper App. A) | unmeasured for the selected credential format and complete ADR-001 statement | unmeasured | zkp-tf #17 (SIROS catalog), ePrint 2026/333 App. A |
 | post-quantum route: Flock-class binary-field prover for the hash side (membership, non-revocation, transcript) — signature clauses over curve-based credentials remain the open cost | unmeasured; proof size hundreds of kB vs ~1 kB Groth16 — a profile trade (ADR-001 D3) | unmeasured | board/stacks/flock.json |
+| blind-signature vouch — the voucher blind-signs at vouch time and the presenter later proves possession of the unblinded signature under the community's key, so clause 3 is answered without the presenter holding the voucher's membership path or the voucher being online (the Berkeley team's current build, described on the 8 September call; not in ePrint 2026/333) | unmeasured — no construction published; whether the vouch verifies under the community's key or the voucher's, and how it composes with clauses 4 and 7, is the open design question | unmeasured | DTG ZKP TF meeting notes 2026-09-08 (Sanjam Garg, Arka Rai Choudhuri); a follow-up paper modelling the community was described as forthcoming |
 
 #### Issuance requirements
 
@@ -917,6 +1042,9 @@ Rejection codes: `voucher-not-member (unsat)`, `self-vouch (unsat)`, `vrc-signat
 - cred-spec #8 → PR #12 (VMC pair)
 - ePrint 2026/333 §2.3–2.4, §5.3–5.4, §7.2, §8–10
 - cred-spec PR #30 §Community-Anchored Zero-Knowledge Proof (WD02 draft): "the proof must additionally establish common control" · cred-spec #31 row #9
+- cred-spec §Community-Anchored Zero-Knowledge Proof (merged WD02): a verifier 'SHOULD treat statement 3 as establishing that the community attested the VRC issuer's membership, and SHOULD NOT treat it as establishing that the issuer acknowledged that membership' — the record's does-not-establish line, now in the credential specification's own words
+- DTG ZKP TF meeting notes 2026-09-08: ADR-001 confirmed as the first proof; the blind-signature vouch alternative; same-context pseudonym reuse as the one case where freshness does not hold; the credential signature scheme as the non-swappable choice
+- cred-spec PR #50 (2026-09-12, supersedes #49): identity vetting as a community statement predicate — its identityCommitment and livenessConfirmed are not the voucher linkage; the card-digest byte-input ambiguity (received bytes vs canonical form) is carried, not adopted (review of 2026-09-13)
 - commit: github.com/mitchuski/dtgwg-zkp-mage
 
 #### Record history
@@ -931,6 +1059,8 @@ Revisions within a state:
 | date | by | note |
 |---|---|---|
 | 2026-09-05 | mitchuski | WD02 three-scope vocabulary (PR #30); S7 common-control clause via card 007; voucher-side linkage stated as ingredient + issuance option — re-carded, state unchanged |
+| 2026-09-11 | mitchuski | 8 September call and merged WD02 text: blind-signature vouch added as a construction option (conjecture; source = the call); provenance cites the merged §Community-Anchored ZKP whose SHOULD/SHOULD NOT on statement 3 matches this record's negative space. State unchanged. |
+| 2026-09-13 | mitchuski | cred-spec PR #50 (vetting as a statement predicate, superseding #49): negative-space line — vetting evidence is not the voucher linkage; three fixture requirements recorded as rejection codes without vectors; provenance. State unchanged. |
 
 
 ### Construction 011 · Pairwise edge (VRC possession, directed personas shown, pairwise identifiers hidden)
@@ -1134,6 +1264,92 @@ Rejection codes: `co-control-unproven`, `handle-revoked`, `show-not-declared (li
 | 2026-09-05 | `carded` | mitchuski | composed from 007 + 006 + 003 under one transcript; yield and negative space written fresh (composition rule) |
 
 
+### Construction 013 · Mutual edge admissibility — each half admissible under the other community's policy, neither policy nor member revealed
+
+*This record is at state `requested`: the construction has been asked for and not yet written. Every line below is a placeholder until a constructor writes the record.*
+
+| | |
+|---|---|
+| kind | composed |
+| state | `requested` |
+| priority | P3 |
+| constructor | mitchuski |
+| requested by | stormer78 (OpenVTC implementation, cred-spec #25) · geoffturk (WD02 restatement) — requested by the ZKP TF co-chair on the record |
+| request | cred-spec #25 (stormer78 2026-08-24: forming a cross-community edge needs both communities' policies to admit it, and neither side can learn the other's policy before publishing a half; first signal of inadmissibility is a rejection after one half is already out) · cred-spec #25 (mitchuski 2026-08-25: step one is plain published admissibility predicates, no proof machinery; the stronger form — 'my half would be admissible under the counterparty's policy' proven without revealing the policy or the member — is future work for the ZKP task force) · cred-spec #25 (geoffturk 2026-09-07: the two predicates in WD02 vocabulary — which correlation scopes a community accepts for the subject of a VRC its members publish, and whether it admits a non-member subject) |
+
+**Composes:** [001](#construction-001-set-membership-over-an-accredited-root) ∧ [003](#construction-003-transcript-binding) — a [[ref: composed construction]]: one transcript, one [[ref: disclosure set]], written fresh.
+
+#### Statement
+
+Placeholder at state `requested`: each party learns that the counterparty's half of a proposed cross-community edge would be admitted under this party's own community policy — subject scope and non-member admission — without learning the counterparty's identifier, membership or policy beyond the yes, and with neither half published until both answers are yes.
+
+**Need.** turn a failed cross-community publish into a pre-flight check that reveals nothing about either membership: each party proves its half would be admissible under the other community's published policy commitment before either half is published, and the two proofs are exchanged commit-before-reveal so that whoever goes first has not already disclosed
+
+#### Witness
+
+*Never leaves the holder.*
+
+- to be carded: this party's proposed half (identifier, declared scope, membership evidence) and the opening of its commitment; the counterparty's published policy commitment and this party's satisfying witness under it
+
+#### Public inputs
+
+- to be carded: each community's published admissibility-policy commitment (the two WD02 predicates as a committed set); the commitment to each half; transcriptDigest for the exchange
+
+#### Method
+
+1. to be carded — commit to this party's half before anything is published (commit-before-reveal ordering, cred-spec #25 question 3) — [[ref: commitment-open]]
+2. to be carded — this half's subject scope and membership status are members of the counterparty community's accepted-forms set, proven against its published policy commitment — [[ref: set-membership]] ([[ref: construction record]] 001, [Set membership over an accredited root](#construction-001-set-membership-over-an-accredited-root))
+3. to be carded — bound to one exchange transcript so an admissibility answer cannot be replayed against a different half — [[ref: transcript-bind]] ([[ref: construction record]] 003, [Transcript binding](#construction-003-transcript-binding))
+
+#### Disclosure set
+
+- to be carded: the two yes/no answers and the transcript digest; the halves themselves only after both answers are yes
+
+#### Does not establish
+
+- to be carded: that the edge will be accepted once published — admissibility under a policy commitment is not acceptance by a community's verifier; that either party is a member of anything beyond what the policy predicate asked; that the policy commitment is current
+
+#### Adversary, per claim
+
+- **verifier** — to be carded: the counterparty learns only the admissibility answer, not the half, the identifier or the membership behind it
+
+#### Horizon
+
+- to be carded: the validity of each community's published policy commitment; the exchange transcript's challenge
+
+#### Conformance fixtures
+
+Families: `accepts` · `rejects-unsat`
+
+Rejection codes: `half-inadmissible (unsat: the half's form is not in the counterparty's accepted set)`
+
+#### Construction options
+
+*Routes through the construction-selection gate ([DTG-ZKP-REQ] §16.1), each with its cost as measured or as conjectured.*
+
+| route | cost | status | source |
+|---|---|---|---|
+| step one, no proof — the two predicates published as discoverable fields on the community profile (the proposed answer on #25; reveals nothing about membership) | zero; a pre-flight read | unmeasured | cred-spec #25 proposed answer · geoffturk 2026-09-07 WD02 restatement |
+| to be carded — membership of the half's form in a committed policy set, exchanged commit-before-reveal | unmeasured | unmeasured | cred-spec #25 (mitchuski 2026-08-25): 'mutual admissibility as a zero-knowledge predicate' |
+
+#### Issuance requirements
+
+- to be carded: a community publishes its admissibility predicates as a commitment the proof can open against (the registry-ZK interaction the credential specification leaves to this task force)
+
+#### Provenance
+
+- cred-spec #25 — relationship policy discovery (stormer78 2026-08-24; mitchuski 2026-08-25; geoffturk 2026-09-07)
+- cred-spec §Scope the holder cannot declare alone (WD02) — the pattern of a community stating a policy the holder cannot see, applied to a different fact
+- docs.fpp.storm.ws DTG conformance review, item X4 'Across communities'
+- commit: github.com/mitchuski/dtgwg-zkp-mage
+
+#### Record history
+
+| date | to | by | evidence |
+|---|---|---|---|
+| 2026-09-11 | `requested` | mitchuski (on cred-spec #25, 2026-08-25) — requested by stormer78's issue and geoffturk's 2026-09-07 restatement | cred-spec #25: 'There is a stronger form the ZKP task force can carry as future work: proving my half would be admissible under the counterparty's policy without revealing the policy or the member' — placed on the board 2026-09-11 (door D23); every field above is a placeholder until carded |
+
+
 ### Construction 020 · Delegation chain (VDC) — agent acts for a member
 
 *This record is at state `carded`: it is written and validates; no runtime has measured it. Costs marked conjecture are conjecture (drafting rule 4). Informative.*
@@ -1147,7 +1363,7 @@ Rejection codes: `co-control-unproven`, `handle-revoked`, `show-not-declared (li
 | requested by | stormer78 / sankarshanmukhopadhyay |
 | request | cred-spec PR #19 open question 6; ADR-001 §05 'deserves its own record once this one is proven' · cred-tf #40 (stormer78 08-22 design note; ScottJeezey 08-24: "on our list alongside Q2") · cred-spec #31 pre-merge list for #19 |
 
-**Composes:** [001](#construction-001-set-membership-over-an-accredited-root) ∧ [003](#construction-003-transcript-binding) ∧ [004](#construction-004-holder-binding-key-from-secret) ∧ [006](#construction-006-non-revocation-against-a-status-root) — a [[ref: composed construction]]: one transcript, one [[ref: disclosure set]], written fresh.
+**Composes:** [001](#construction-001-set-membership-over-an-accredited-root) ∧ [003](#construction-003-transcript-binding) ∧ [004](#construction-004-holder-binding-key-from-secret) ∧ [006](#construction-006-non-revocation-against-a-status-root) ∧ [009](#construction-009-hidden-value-equality-across-credentials) — a [[ref: composed construction]]: one transcript, one [[ref: disclosure set]], written fresh.
 
 #### Statement
 
@@ -1172,12 +1388,13 @@ A verifier learns that the presenting agent holds a delegation chain rooted at a
 
 #### Method
 
-1. act ∈ scope_n ⊆ … ⊆ scope_root, depth ≤ maxDepth, validUntil monotone along the chain, root hop signed by the principal (Scott’s predicate shape, cred-tf #40) — [[ref: chain-resolve]]
-2. each hop’s delegate countersigned the grant: `accepts` matches the grant digest (digestMultibase, WD02 D-A) and verifies under the delegate’s key — [[ref: signature-verify]]
-3. principal is a leaf of root_C — [[ref: set-membership]] ([[ref: construction record]] 001, [Set membership over an accredited root](#construction-001-set-membership-over-an-accredited-root))
-4. the agent's presentation key derives from the leaf-hop delegate secret — [[ref: key-binding]] ([[ref: construction record]] 004, [Holder binding (key from secret)](#construction-004-holder-binding-key-from-secret))
-5. no hop revoked at epoch — [[ref: non-revocation]] ([[ref: construction record]] 006, [Non-revocation against a status root](#construction-006-non-revocation-against-a-status-root))
-6. bound to one transcript — [[ref: transcript-bind]] ([[ref: construction record]] 003, [Transcript binding](#construction-003-transcript-binding))
+1. act ∈ scope_n ⊆ … ⊆ scope_root (set inclusion over exact matches), validUntil monotone along the chain, and depth bounded by every ancestor: a hop below a parent bearing `maxDepth` n bears at most n − 1, no hop lies more than n steps below an ancestor bearing n, and no hop exists below a parent that omits `maxDepth` or sets it to 0; the chain terminates in a root delegation issued by the principal (cred-spec §Delegation Chains, WD02, checks 2–5) — [[ref: chain-resolve]]
+2. each hop's `issuer` equals its parent's `credentialSubject.id` — hidden-value equality across credentials signed by different parties, with no holder secret in the relation (cred-spec §Delegation Edges; #9 2026-09-10) — [[ref: hidden-equality]] ([[ref: construction record]] 009, [Hidden-value equality across credentials](#construction-009-hidden-value-equality-across-credentials))
+3. each hop’s delegate countersigned the grant: `accepts` matches the grant digest (digestMultibase, WD02 D-A) and verifies under the delegate’s key — [[ref: signature-verify]]
+4. principal is a leaf of root_C — [[ref: set-membership]] ([[ref: construction record]] 001, [Set membership over an accredited root](#construction-001-set-membership-over-an-accredited-root))
+5. the agent's presentation key derives from the leaf-hop delegate secret — [[ref: key-binding]] ([[ref: construction record]] 004, [Holder binding (key from secret)](#construction-004-holder-binding-key-from-secret))
+6. no hop revoked at epoch — [[ref: non-revocation]] ([[ref: construction record]] 006, [Non-revocation against a status root](#construction-006-non-revocation-against-a-status-root))
+7. bound to one transcript — [[ref: transcript-bind]] ([[ref: construction record]] 003, [Transcript binding](#construction-003-transcript-binding))
 
 #### Disclosure set
 
@@ -1193,7 +1410,9 @@ A verifier learns that the presenting agent holds a delegation chain rooted at a
 - that the principal has not declined renewal — in the core, revocation is non-renewal within one validUntil; the profile’s credentialStatus re-adds a live lookup and this card’s non-revocation leg is what lets the presentation carry it instead
 - what the delegate actually did in the principal’s name — the invocation record lives on the framework side (the artifact gap, cred-tf #40 Q8)
 - chain-length hiding without a validated fixed-shape or padded profile
-- compatibility with a current merged credential revision until its grant, acceptance, status and chaining semantics are pinned and reconciled
+- that the principal is the party the verifier intends to deal with — §Delegation Chains check 5 is the verifier's own check, outside the proof; the proof shows the root's issuer is a leaf of root_C, not that it is the intended party
+- the delegate's demonstration of key control at the moment of the request (§Invocation Binding) beyond what clause 4 binds into this transcript — how the demonstration is requested and carried is the trust task's
+- chain length: without a validated fixed-shape or padded profile the number of hops is disclosed by the proof's shape (cred-spec Privacy Considerations item 13)
 
 #### Adversary, per claim
 
@@ -1221,14 +1440,17 @@ Rejection codes: `scope-escalation (unsat)`, `depth-exceeded`, `hop-revoked`
 
 #### Issuance requirements
 
-- VDC as an edge credential type (cred-spec PR #19, rebased over WD02 vocabulary) with ZK-friendly signatures — X3 applies
-- the delegator’s identifier is `directed`, a context-scoped identifier per delegation, not `pairwise` (cred-spec #31 pre-merge note for #19)
-- grant and acceptance digests are digestMultibase (WD02 D-A); the acceptance is REQUIRED (cred-tf #40; review feedback folded per #31)
-- chaining (`parent`, `maxDepth`, `credentialStatus`) exists only in the opt-in profile, visible to the verifier, costs stated (cred-tf #40 §1)
+- VDC as an edge credential type (cred-spec §VDC, merged WD02 2026-09-06) with ZK-friendly signatures — X3 applies
+- the delegator issues from an identifier declared `directed` and scoped to the context in which the appointment is exercised (cred-spec Privacy Considerations item 10); the delegate accepts each principal's appointment under a distinct identifier
+- grant and acceptance digests are digestMultibase (§Digest Encoding); the acceptance is REQUIRED and carries no scope of its own — the verifier reads scope from the grant (§Delegation Edges)
+- `parent` and `maxDepth` exist only where re-delegation is explicitly authorised (absent or 0 = single hop, the default); `credentialStatus` is CONDITIONAL on every VDC, chained or not — REQUIRED where validity exceeds the governing freshness window, otherwise short validity and re-issuance (§VDC schema); this record's non-revocation leg is what lets a chained presentation carry status without a live lookup
+- the chain is presented whole — a verifier MUST reject a chain it cannot complete from the presentation alone — which is exactly the disclosure this record removes (§Delegation Chains; Privacy Considerations item 13)
 
 #### Provenance
 
-- cred-spec PR #19 (VDC draft)
+- cred-spec §VDC (Verifiable Delegation Credential) — merged 2026-09-06 (PR #19 over WD02): §Delegation Edges, §Delegation Chains (five chain checks; 'chain validity is a candidate for zero-knowledge presentation'), §Invocation Binding
+- cred-spec PR #42 editor's note (2026-09-10): 'proving a VDC chain valid without disclosing it' named as a predicate waiting on the ZKP task force
+- cred-spec #9 (geoffturk 2026-09-10): the chain predicates are hidden-value equality, not common control — record 009
 - liveness reqs v0.4 delegation evidence
 - ADR-001 §05
 - ePrint 2026/333 App. B.1
@@ -1240,4 +1462,129 @@ Rejection codes: `scope-escalation (unsat)`, `depth-exceeded`, `hop-revoked`
 |---|---|---|---|
 | 2026-08-28 | `requested` | mitchuski | zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board |
 | 2026-09-05 | `carded` | mitchuski | ScottJeezey accepted delegation-chain validity as a ZKP TF target (cred-tf #40, 2026-08-24); predicate shape + acceptance clause + core/profile split from stormer78’s note; issuance lines from cred-spec #31 |
+
+Revisions within a state:
+
+| date | by | note |
+|---|---|---|
+| 2026-09-11 | mitchuski | Door D17 — re-read against the merged VDC text (cred-spec main, 2026-09-06/10): depth restated as the per-ancestor bound; the issuer-equals-parent-subject clause added and bound to record 009 (hidden-value equality); `credentialStatus` corrected — conditional on every VDC, not only chained ones; issuance and provenance now cite the merged sections; three negative-space lines added (intended-party check, invocation demonstration, chain length). State unchanged. |
+
+
+### Construction 021 · Authority chain (VAC) — an agent or device acts as itself under attenuated authority
+
+*This record is at state `carded`: it is written and validates; no runtime has measured it. Costs marked conjecture are conjecture (drafting rule 4). Informative.*
+
+| | |
+|---|---|
+| kind | composed |
+| state | `carded` |
+| priority | P2 |
+| constructor | mitchuski |
+| requested by | stormer78 / geoffturk (spec side) — carded by the ZKP TF co-chair |
+| request | cred-spec PR #42 editor's note (merged 2026-09-10): 'Holder holds a VAC conferring action X at scope S, and its chain is valid and unrevoked: each link is issued by its parent's subject, narrows its parent, no link is revoked, depth is within every limit its links set, and the root is issued by the party governing S — without disclosing the chain' · cred-spec §VAC (PR #29, #39, #40, #41, #42 merged 2026-09-10): §Attenuation, §Invocation, §Withdrawal, §Authority and membership are separate credentials · cred-spec #9 (2026-09-10): the VAC chain predicate is hidden-value equality, not common control |
+
+**Composes:** [001](#construction-001-set-membership-over-an-accredited-root) ∧ [003](#construction-003-transcript-binding) ∧ [004](#construction-004-holder-binding-key-from-secret) ∧ [006](#construction-006-non-revocation-against-a-status-root) ∧ [009](#construction-009-hidden-value-equality-across-credentials) — a [[ref: composed construction]]: one transcript, one [[ref: disclosure set]], written fresh.
+
+#### Statement
+
+A verifier learns that the presenting party holds authority to perform action X at scope S, conferred through a chain of attenuations that starts with the party governing S, narrows at every link, respects every `maxAttenuation` and the depth ceiling, has no revoked link, and whose leaf subject is the presenter — without learning any link's identifiers or the chain's ancestry beyond what the presenter discloses.
+
+**Need.** a VAC chain is presented whole on every use, so every verifier sees the identifier of the party that equipped the agent (cred-spec Privacy Considerations item 13); the credential specification names the zero-knowledge form as waiting on this task force and states what holds until it lands
+
+#### Witness
+
+*Never leaves the holder.*
+
+- the VAC chain: every VAC from the presented leaf up to the one issued by the governing party (`authority.parent` digests, `scope`, `actions`, `validUntil`, `maxAttenuation` per link)
+- the governing party's accreditation leaf and path for scope S, where S's governing party is itself proven from a registry root rather than disclosed
+- the leaf subject's key secret (the presenter acts as itself and must demonstrate key control at invocation — §Invocation)
+- non-revocation witnesses for every link that carries `credentialStatus`
+- the presenter's VMC leaf and path, where the governing party requires the leaf subject to independently qualify (§Attenuation, 'Who may hold derived authority')
+
+#### Public inputs
+
+- root_G — the root under which the party governing S is accredited (or the governing party's identifier, where the profile discloses it)
+- the invoked action X and scope term S (disclosed — the act is attributed to the presenter)
+- rl_root and epoch — revocation state
+- transcriptDigest — one transcript for the whole show, including the verifier's challenge
+
+#### Method
+
+1. X ∈ actions_leaf ⊆ … ⊆ actions_root, scope never widened, validUntil monotone, depth ≤ 8 and within every `maxAttenuation` any link sets (a link below a parent bearing n bears at most n − 1; none exists below a parent bearing 0); the root is a VAC issued directly by the governing party (`authority.parent` absent) — cred-spec §Attenuation — [[ref: chain-resolve]]
+2. each link's `issuer` equals its parent's `credentialSubject.id`, and each link's `authority.parent` equals the digest of its parent — hidden-value equality across differently-signed credentials — [[ref: hidden-equality]] ([[ref: construction record]] 009, [Hidden-value equality across credentials](#construction-009-hidden-value-equality-across-credentials))
+3. every link verifies as signed by its issuer over the hidden content the chain clauses read — [[ref: signature-verify]]
+4. the governing party of S is a leaf of root_G — proven from the root, not disclosed — [[ref: set-membership]] ([[ref: construction record]] 001, [Set membership over an accredited root](#construction-001-set-membership-over-an-accredited-root))
+5. the presenter's key derives from the leaf subject's secret — the VAC is not a bearer credential (§Invocation) — [[ref: key-binding]] ([[ref: construction record]] 004, [Holder binding (key from secret)](#construction-004-holder-binding-key-from-secret))
+6. no link carrying `credentialStatus` is in the set under rl_root at epoch — revocation of an ancestor cascades, so the check runs on every link that carries status (§Withdrawal) — [[ref: non-revocation]] ([[ref: construction record]] 006, [Non-revocation against a status root](#construction-006-non-revocation-against-a-status-root))
+7. where the governing party requires it, the leaf subject is also a leaf of the scope's membership root — authority and membership stay separate credentials, and when both are proven with the subject withheld the presentation includes a shared-subject proof: record 009 where one identifier is used in both, record 007 where the two identifiers differ (§Authority and membership are separate credentials) — [[ref: set-membership]] ([[ref: construction record]] 001, [Set membership over an accredited root](#construction-001-set-membership-over-an-accredited-root))
+8. the whole show is bound to transcriptDigest — [[ref: transcript-bind]] ([[ref: construction record]] 003, [Transcript binding](#construction-003-transcript-binding))
+
+#### Disclosure set
+
+- the outcome (holds authority for X at S / does not)
+- X and S — the act is performed as the presenter and attributed to the presenter
+- root_G, rl_root, epoch
+- transcriptDigest
+- the presenter's own identifier, where the profile discloses it (the presenter acts as itself); nothing about any ancestor
+
+#### Does not establish
+
+- that the presenter is someone the scope will deal with — a valid chain establishes narrowing by parties entitled to narrow, not that the leaf subject independently qualifies; that is the governing party's policy call (§Attenuation) and clause 7 is present only where the policy asks for it
+- delegation: the presenter acts as itself, and nothing here appoints it to act in anyone's name (§Authority is not delegation — that is record 020)
+- that the governing party's own permission to govern S is current beyond 'accredited under root_G at the stated state'
+- chain length: the number of links is disclosed by the proof's shape unless a fixed-shape or padded profile is validated — hiding it is a profile property this record does not claim
+- that the action was performed, or performed within scope — the invocation and its receipt are trust-task artifacts (the artifact gap)
+- unconditional hiding from the governing party: where the root carries `credentialStatus`, the status fetch tells the root's status host that some verifier checked the chain, and when (cred-spec Privacy Considerations item 14) — a profile that fetches rl_root without a per-chain query is the mitigation, not this proof
+- distinct controllers along the chain: a party attenuating to itself under a second identifier satisfies every clause
+
+#### Adversary, per claim
+
+- **verifier · verifiers-colluding** — no ancestor identifier is disclosed — the verifier learns the leaf's authority, not who equipped the presenter or through whom; against colluding verifiers the chain contributes no cross-presentation handle beyond what the presenter discloses of itself
+- **registry-operator** — the status check on links that carry `credentialStatus` does not identify the presenter or the chain when rl_root is fetched without a per-chain query; the root-status timing leak of item 14 is stated, not hidden
+- **issuer-verifier-colluding** — an issuer of one link learns from the proof nothing about the links below it — attenuations it never saw stay unseen, as the credential specification intends ('a governing party withdraws derivations it never saw')
+
+#### Horizon
+
+- the shortest `validUntil` in the chain (attenuation never extends validity; REQUIRED on every VAC)
+- status freshness for links that carry `credentialStatus` (the governing party's freshness window)
+- root_G cryptoperiod
+
+#### Conformance fixtures
+
+Families: `accepts` · `rejects-unsat` · `rejects-verify`
+
+Rejection codes: `action-not-conferred (unsat: X absent from the leaf's actions)`, `attenuation-widens (unsat: a link confers an action, scope or validity its parent did not)`, `attenuation-limit-exceeded (unsat: a link lies below a `maxAttenuation` bound or below a link bearing 0)`, `depth-ceiling-exceeded (unsat: more than 8 links)`, `link-issuer-mismatch (unsat: a link's issuer is not its parent's subject — record 009)`, `link-revoked (unsat at epoch)`, `root-not-governing (unsat: the root's issuer is not a leaf of root_G)`, `leaf-key-mismatch (verify-fail: the presenter's key does not derive from the leaf subject's secret)`
+
+#### Construction options
+
+*Routes through the construction-selection gate ([DTG-ZKP-REQ] §16.1), each with its cost as measured or as conjectured.*
+
+| route | cost | status | source |
+|---|---|---|---|
+| bounded monolithic proof of a fixed maximum chain depth (≤ 8, the credential specification's ceiling), padded to a fixed shape so chain length is not disclosed; hop checks over Poseidon-committed VAC content | unmeasured — conjecture: 8 × (signature-verify + two openings) dominates; the chain arithmetic is cheap | unmeasured | record 020's editorial alternative (2026-09-08), applied with the VAC's fixed ceiling |
+| recursive/folding proof per link — one step per attenuation, the leaf proof carrying the accumulated statement | unmeasured | unmeasured | PATH-MAP P4 (PLONKish/folding counter-proposal welcome) |
+| no proof — the chain is presented whole and every check is performed on disclosed credentials (the credential specification's stated fallback, at the cost of Privacy Considerations item 13) | zero constraints; the cost is disclosing the ancestry | unmeasured | cred-spec PR #42 editor's note, 'What holds until this work lands' |
+
+#### Issuance requirements
+
+- VAC content that the chain clauses read — `issuer`, `credentialSubject.id`, `authority.scope`, `authority.actions`, `authority.parent`, `authority.maxAttenuation`, `validUntil` — must be ZK-openable inside the authenticated credential: X3 applied to the VAC (cred-spec #17)
+- `authority.parent` is a digestMultibase digest of the parent (§Digest Encoding); the unsalted-digest concern of cred-spec #38 applies to it — record 008's blinding question reaches the chain link as well
+- the governing party publishes rl_root per epoch, fetchable without a per-chain query; where the root carries `credentialStatus` the governing party states the timing correlation it accepts (cred-spec Privacy Considerations item 14)
+- a governing party that requires derived subjects to independently qualify says so in its governance framework, so a profile knows whether clause 7 is in the statement (§Attenuation)
+
+#### Provenance
+
+- cred-spec §VAC (Verifiable Authority Credential), merged 2026-09-10: §Attenuation (by default; `maxAttenuation`; depth ceiling 8; 'Who may hold derived authority'), §Invocation (not a bearer credential), §Withdrawal (cascade), §Authority is not delegation, §Relationship to the VDC, §Authority and membership are separate credentials
+- cred-spec PR #42 editor's note (2026-09-10): the VAC chain predicate waiting on the ZKP task force; 'implementations SHOULD NOT defer shipping a rule of this specification on the grounds that its zero-knowledge form is unspecified'
+- cred-spec #9 (geoffturk 2026-09-10): chain predicates are hidden-value equality — record 009
+- cred-spec Privacy Considerations items 13 (chain disclosure) and 14 (status on a root)
+- record 020 (delegation chain) — the sibling record; the two differ in default (attenuation by default vs re-delegation opt-in), in attribution (as itself vs in another's name) and in cascade
+- commit: github.com/mitchuski/dtgwg-zkp-mage
+
+#### Record history
+
+| date | to | by | evidence |
+|---|---|---|---|
+| 2026-09-10 | `requested` | stormer78 / geoffturk (cred-spec PR #29 → #42) | cred-spec PR #42 merged 2026-09-10: the VAC chain predicate listed as waiting on the ZKP task force; cred-spec #9 2026-09-10 names it separately from common control |
+| 2026-09-11 | `carded` | mitchuski | carded from the merged §VAC rules (attenuation, invocation, withdrawal, shared subject) as a sibling of record 020; composition and negative space written fresh; every cost line conjecture — DRAFT for review |
 

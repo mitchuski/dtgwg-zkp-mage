@@ -101,7 +101,9 @@
       "cred-tf #39 (ScottJeezey 2026-08-25 — ZKP TF work items on the record)",
       "cred-tf #40 (the artifact gap; delegation as a design-time case)",
       "cred-spec §Trust Task Context Binding / §The `taskContext` Property (WD01)",
-      "cred-spec #31 D-A (digestMultibase settled) · trustoverip/dtgwg-trust-tasks-tf#236 (§4.9.3)"
+      "cred-spec #31 D-A (digestMultibase settled) · trustoverip/dtgwg-trust-tasks-tf#236 (§4.9.3)",
+      "DTG ZKP TF meeting notes 2026-09-08 (Arka Rai Choudhuri): two parties who interact again in the same context reuse the same pseudonyms and can be linked; breaking that needs a new mechanism — the one case in which freshness does not hold; route 2's per-context pseudonym is that case by construction",
+      "cred-spec PR #50 (2026-09-12) §The identity commitment: a per-application 32-byte salt carried inside the card to vetters and never to the community; every vetter recomputes the same commitment; a fresh salt per application leaves separate applications unrelated — this record's route 1 shape with the profile's own retention caveat (a vetter who keeps a card can recognise the commitment later)"
     ]
   },
   "history": [
@@ -125,6 +127,16 @@
       "date": "2026-09-07",
       "by": "reviewer (Codex; local editorial review)",
       "note": "Narrowed plaintext-hiding claims, made visible-C correlation explicit, corrected PRF verification and retention assumptions. Evidence state unchanged; design and implementation questions remain open."
+    },
+    {
+      "date": "2026-09-11",
+      "by": "mitchuski",
+      "note": "Provenance: the 8 September call's same-context pseudonym caveat recorded against route 2. State unchanged."
+    },
+    {
+      "date": "2026-09-13",
+      "by": "mitchuski",
+      "note": "Provenance: cred-spec PR #50's salted identity commitment recorded as an instance of route 1, with its retention caveat. State unchanged."
     }
   ]
 }
