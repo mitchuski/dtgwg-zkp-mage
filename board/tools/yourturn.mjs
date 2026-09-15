@@ -106,7 +106,7 @@ export function yourTurn({ sv, contribute, watchMap = {}, draftsDir, receiptsDir
   for (const q of queueItems) { if (q.key && replyKeys.has(q.key) && !q.held) q.category = 'reply'; q.drafts = q.key ? draftsFor(q.key) : []; q.live = byKey[q.key]; }
   const bucket = (c) => queueItems.filter(q => q.category === c);
   const posted_ = receipts.slice().sort((a, b) => (b.postedAt || '').localeCompare(a.postedAt || ''));
-  return { me, checkedAt: sv?.fetchedAt || null, post, reply, stale, staleDays, maintain: bucket('maintain'), contribute: bucket('contribute'), discuss: bucket('discuss'), replyQueue: bucket('reply'), posted: posted_, postedMap: posted, threadCount: all.length };
+  return { me, weave: contribute?.weave || '', checkedAt: sv?.fetchedAt || null, post, reply, stale, staleDays, maintain: bucket('maintain'), contribute: bucket('contribute'), discuss: bucket('discuss'), replyQueue: bucket('reply'), posted: posted_, postedMap: posted, threadCount: all.length };
 }
 
 export function yourTurnHtml(d) {
@@ -125,7 +125,7 @@ export function yourTurnHtml(d) {
 <h4>Post — approved, not yet out (${d.post.length})</h4>${postRows}
 <h4>Reply — someone spoke after you (${d.reply.length + d.replyQueue.length})</h4>${replyRows}${d.replyQueue.length ? '<ul>' + d.replyQueue.map(qRow).join('') + '</ul>' : ''}
 ${section('Maintain — your own artifacts', d.maintain, 'Nothing of yours needs upkeep.')}
-${section('Contribute — threads you are not in where a record or draft fits', d.contribute, 'Nothing relevant to bring in.')}
+${section('Contribute — threads you are not in where a record or draft fits', d.contribute, 'Nothing relevant to bring in.')}${d.weave ? `<p class="muted"><b>Woven:</b> ${esc(d.weave)}</p>` : ''}
 ${section('Discuss — open questions to weigh in on', d.discuss, 'No open question is waiting.')}
 ${d.stale.length ? `<details><summary class="muted">Older — spoken after you, quiet for more than ${d.staleDays} days (${d.stale.length})</summary><ul>${d.stale.map(t => `<li class="muted">${link(t)} — ${esc(t.last.who)} ${esc(when(t.last.at))}</li>`).join('')}</ul></details>` : ''}
 ${d.posted.length ? `<h4>Posted from here</h4>${postedRows}` : ''}</div>`;
