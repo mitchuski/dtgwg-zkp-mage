@@ -2,46 +2,46 @@
   "id": "007",
   "name": "Common control across identifiers",
   "kind": "primitive",
-  "state": "carded",
+  "state": "specified",
   "priority": "P1",
   "owner": "mitchuski",
   "request": {
     "issue": "cred-spec #9 (Sankarshan: identity linkages the ZKP constructions require; talltree 09-08 translation; geoffturk 09-10: subject-or-issuer, non-correlation carried in the requirement, chain predicates named separately) · cred-spec #31 (geoffturk 09-02: '#9 stays open — and gains weight') · cred-spec PR #30 §Community-Anchored ZKP ('the proof must establish common control across them') · cred-spec PR #42 editor's note (merged 09-10): of the four predicates listed as resting on the #9 primitive, two rest on this record — the community-anchored proof and the VMC+VAC shared-subject rule where the two identifiers differ; the two chain predicates are hidden-value equality (record 009) inside records 020 and 021",
-    "by": "sankarshanmukhopadhyay / geoffturk / stormer78 (spec side) — carded by the ZKP TF co-chair",
+    "by": "sankarshanmukhopadhyay / geoffturk / stormer78 (spec side) — specified by the ZKP TF co-chair",
     "need": "under WD02's three correlation scopes, two `pairwise` identifiers of one controller differ by construction, so any proof that reads one party out of two credentials must first prove one holder controls both identifiers — whether the identifiers appear as credential subject or as credential issuer (the VRC-issuer case is statement 3 of record 010) — without a field that says so"
   },
-  "dish": "A verifier checks that two identifiers appearing in DTG credentials — as subject or as issuer, whatever correlation scope each declares — are under one controller, through the selected shared-secret derivation relation, while the secret remains private under the construction assumptions. The proof introduces no value that correlates across presentations; any cross-presentation correlation depends on the enclosing disclosure set and context policy.",
-  "ingredients": [
+  "statement": "A verifier checks that two identifiers appearing in DTG credentials — as subject or as issuer, whatever correlation scope each declares — are under one controller, through the selected shared-secret derivation relation, while the secret remains private under the construction assumptions. The proof introduces no value that correlates across presentations; any cross-presentation correlation depends on the enclosing disclosure set and context policy.",
+  "witness": [
     "the holder secret s",
     "per-identifier derivation material: for each identifier, the salt or key-derivation path under which it was minted from s",
-    "the two credentials that name the identifiers (their bytes stay with the holder; only what the enclosing card discloses is shown)"
+    "the two credentials that name the identifiers (their bytes stay with the holder; only what the enclosing record discloses is shown)"
   ],
-  "pantry": [
-    "the two identifiers exactly as the credentials carry them — or their ZK-openable commitments, when the identifiers themselves are hidden by the enclosing card",
+  "publicInputs": [
+    "the two identifiers exactly as the credentials carry them — or their ZK-openable commitments, when the identifiers themselves are hidden by the enclosing record",
     "transcriptDigest — the presentation transcript this proof is bound to"
   ],
-  "method": [
+  "relation": [
     {
       "clause": "identifier A's public key or commitment opens to (s, salt_A) and identifier B's opens to (s, salt_B) for one and the same s — a different secret behind either identifier is unsatisfiable",
       "gadget": "key-binding"
     }
   ],
-  "yield": [
+  "disclosureSet": [
     "the outcome (one controller / not shown)",
     "transcriptDigest",
-    "the identifiers only as far as the enclosing card already discloses them — this card adds no identifier to the disclosure set"
+    "the identifiers only as far as the enclosing record already discloses them — this record adds no identifier to the disclosure set"
   ],
   "doesNotEstablish": [
-    "that the controller is one natural person — two agents or two people sharing a secret satisfy the clause (that is card 002's uniqueness, under its own declaration)",
-    "that either credential is currently valid or unrevoked (card 006)",
+    "that the controller is one natural person — two agents or two people sharing a secret satisfy the clause (that is record 002's uniqueness, under its own declaration)",
+    "that either credential is currently valid or unrevoked (record 006)",
     "that the holder intended the two identifiers to be correlated beyond this verifier — the proof is a disclosure to the party it is made to, not a widening of either identifier's declared scope",
-    "the counterparty's common control: a presenter can prove only what is derived from a secret in the presenter's hands; a counterparty's linkage needs the counterparty's witness or the counterparty's own attestation (see card 010)",
+    "the counterparty's common control: a presenter can prove only what is derived from a secret in the presenter's hands; a counterparty's linkage needs the counterparty's witness or the counterparty's own attestation (see record 010)",
     "that arbitrary independently generated or hardware-protected keys derive from a shared available scalar; derivation and custody are profile requirements",
     "a chain predicate: that a child credential's `issuer` equals its parent's `credentialSubject.id` across credentials signed by different parties involves no holder secret and is hidden-value equality (record 009 inside records 020 and 021), not common control — the two must not be read as one primitive (cred-spec #9, geoffturk 2026-09-10)"
   ],
   "adversary": [
     {
-      "claim": "no cross-presentation handle: the proof is transcript-bound and emits no identifier-derived value; two verifiers comparing proofs learn only what the enclosing cards disclosed to each",
+      "claim": "no cross-presentation handle: the proof is transcript-bound and emits no identifier-derived value; two verifiers comparing proofs learn only what the enclosing records disclosed to each",
       "against": [
         "verifier",
         "verifiers-colluding"
@@ -58,7 +58,7 @@
     "the shorter of the two identifiers' key-validity periods — after a rotation the old key no longer opens to s under the recorded path and the clause must be re-proven against the rotated material",
     "the hash/commitment cryptoperiod of the derivation"
   ],
-  "tasting": {
+  "fixtures": {
     "families": [
       "accepts",
       "rejects-unsat",
@@ -70,28 +70,28 @@
       "identifier-not-zk-openable (verify-fail: identifier carries no openable commitment — an issuance failure, X3)"
     ]
   },
-  "substitutions": [
+  "options": [
     {
-      "route": "no proof — the holder declares one `directed` identifier and uses it in both credentials (WD02 §Choosing a scope: correlation evident on the face of the credentials)",
+      "construction": "no proof — the holder declares one `directed` identifier and uses it in both credentials (WD02 §Choosing a scope: correlation evident on the face of the credentials)",
       "cost": "zero constraints; the cost is the declaration itself",
       "measured": false,
       "source": "cred-spec PR #30 §Choosing a scope / §Community-Anchored ZKP"
     },
     {
-      "route": "Groth16/Poseidon: two Poseidon commitment openings sharing the secret input (the circom-gadget leaf commitment, twice) — conjecture ~500–600 constraints total (~65%), unmeasured; one compile settles it",
+      "construction": "Groth16/Poseidon: two Poseidon commitment openings sharing the secret input (the circom-gadget leaf commitment, twice) — conjecture ~500–600 constraints total (~65%), unmeasured; one compile settles it",
       "cost": "unmeasured (conjecture ≈ 2 × the lab's Poseidon leaf commitment)",
       "measured": false,
       "source": "runtimes/circom-gadget (Poseidon commitment + nullifier already bind a leaf to a secret)"
     },
     {
-      "route": "blackbox commit-and-prove: the same opening under the paper's hiding commitments (Construction II show, N=1)",
+      "construction": "blackbox commit-and-prove: the same opening under the paper's hiding commitments (Construction II show, N=1)",
       "cost": "paper Table 1 class",
       "measured": false,
       "source": "ePrint 2026/333 §7.2"
     }
   ],
   "issuance": [
-    "each identifier that may need to be proven co-controlled must be, or carry, a ZK-openable commitment to the holder secret: a SNARK-native key (e.g. BabyJubJub did:key) or a published Poseidon/KZG commitment beside an Ed25519 key — the X3 requirement of card 010, now applied to identifiers rather than signatures (cred-spec #17)",
+    "each identifier that may need to be proven co-controlled must be, or carry, a ZK-openable commitment to the holder secret: a SNARK-native key (e.g. BabyJubJub did:key) or a published Poseidon/KZG commitment beside an Ed25519 key — the X3 requirement of record 010, now applied to identifiers rather than signatures (cred-spec #17)",
     "the credential layer carries the requirement to be able to prove co-control, never a field that states the link (cred-spec #9, the 08-25 position)",
     "the credential layer's candidate requirement (cred-spec #9, 2026-09-10): a party controlling more than one DID appearing in DTG credentials, as subject or issuer, regardless of each identifier's declared scope, MUST be able to prove in zero knowledge that those DIDs are under its control, without disclosing them and without the proof introducing a value that correlates across presentations — this record is the construction that requirement points at; the requirement text is the credential specification's to write",
     "a VRC MAY carry its issuer's linkage proof to its VMC-side identifier (the one-line MAY proposed on #9, 2026-08-25 and taken up 2026-09-10) — the credential layer's member, produced by the counterparty at issuance by running this record; record 010 consumes it"
@@ -115,11 +115,11 @@
       "task": "board/request"
     },
     {
-      "to": "carded",
+      "to": "specified",
       "by": "mitchuski",
       "date": "2026-09-05",
-      "evidence": "carded from PR #30's §Community-Anchored text + #9 + the lab's key-binding gadget shape; cost line labelled conjecture per drafting rule 4",
-      "task": "board/card"
+      "evidence": "specified from PR #30's §Community-Anchored text + #9 + the lab's key-binding gadget shape; cost line labelled conjecture per drafting rule 4",
+      "task": "board/specify"
     }
   ],
   "revisions": [

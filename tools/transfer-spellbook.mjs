@@ -71,7 +71,9 @@ const primer = `## Cryptographic Background
 
 This section is informative.
 
-This section gives the cryptographic background the construction records rely on, in the order a reader needs it: what a proof is and what a transcript binds; fields and curves; constraints, witnesses and public inputs; commitments and the setup question; transparent and hash-based proving; recursion and folding; the commit–membership–nullifier shape every construction inherits; how circuits fail in practice; and agents that prove. It is drawn from the editor's expository work in the agentprivacy body of work ([AGENTPRIVACY], see References), with the expository material carried and nothing else; provenance and licence are in Appendix A. Each subsection states which construction records, public-input conventions or proving-system entries lean on the idea, so a reader who wants only what a given construction needs can stop there.
+${MAP.direction ? `> ${MAP.direction}
+
+` : ''}This section gives the cryptographic background the construction records rely on, in the order a reader needs it: what a proof is and what a transcript binds; fields and curves; constraints, witnesses and public inputs; commitments and the setup question; transparent and hash-based proving; recursion and folding; the commit–membership–nullifier shape every construction inherits; how circuits fail in practice; and agents that prove. It is drawn from the editor's expository work in the agentprivacy body of work ([AGENTPRIVACY], see References), with the expository material carried and nothing else; provenance and licence are in Appendix A. Each subsection states which construction records, public-input conventions or proving-system entries lean on the idea, so a reader who wants only what a given construction needs can stop there.
 
 ${MAP.sections.map(sec => `### ${sec.id} · ${sec.title}
 

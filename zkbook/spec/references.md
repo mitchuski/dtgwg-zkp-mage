@@ -4,7 +4,7 @@ This section is informative.
 
 ### Normative References
 
-- **[DTG-CRED]** DTG Credentials Core Specification, Working Draft 02 (Document Status bumped 2026-09-07). This draft is written to WD02 vocabulary and cites its sections by title; the exact revision an implementation profile pins, and its implementation compatibility, remain profile decisions. Trust over IP Foundation. <https://trustoverip.github.io/dtgwg-cred-spec/> · WD02 text: <https://github.com/trustoverip/dtgwg-cred-spec/blob/WD02/spec/body.md>
+- **[DTG-CRED]** DTG Credentials Core Specification, Working Draft 02 (Document Status bumped 2026-09-07). This draft is written to WD02 vocabulary, read at `main` commit `32aeabf607fd8bf30b983897a5b5bc33342877b0` (2026-09-15, the merged VDC, VAC and PR #42 text), and cites its sections by title; the exact revision an implementation profile pins, and its implementation compatibility, remain profile decisions. Trust over IP Foundation. <https://trustoverip.github.io/dtgwg-cred-spec/> · WD02 text: <https://github.com/trustoverip/dtgwg-cred-spec/blob/WD02/spec/body.md>
 - **[DTG-ZKP-RULES]** Drafting rules of the DTG ZKP Task Force. <https://github.com/trustoverip/dtgwg-zkp-tf/blob/main/DRAFTING-RULES.md>
 - **[RFC2119]** S. Bradner, "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997. <https://datatracker.ietf.org/doc/html/rfc2119>
 - **[RFC8785]** A. Rundgren, B. Jordan, S. Erdtman, "JSON Canonicalization Scheme (JCS)", RFC 8785, June 2020. <https://datatracker.ietf.org/doc/html/rfc8785>
@@ -25,7 +25,7 @@ This section is informative.
 - **[SIROS-CAT]** SIROS Foundation ZK Circuit Catalog. <https://circuits.siros.org/> · <https://github.com/sirosfoundation/go-zk-circuits>
 - **[Longfellow]** Google Longfellow ZK (libzk). <https://github.com/google/longfellow-zk>
 - **[Circomspect]** Trail of Bits, Circomspect — static analyzer for Circom. <https://github.com/trailofbits/circomspect>
-- **[DTG-ZKP-EVIDENCE]** DTG ZKP evidence repository — reference runtimes, conformance fixtures, verification registry, construction records. <https://github.com/mitchuski/dtgwg-zkp-mage>
+- **[DTG-ZKP-EVIDENCE]** DTG ZKP evidence repository — reference runtimes, conformance fixtures, verification registry, construction records. Apache-2.0 code, CC BY 4.0 documents. <https://github.com/mitchuski/dtgwg-zkp-mage> · the commit this revision was exported from is named in Appendix B.
 - **[DTG-CRED-TF-39]** "Privacy: Appropriately supporting unlinkability, ZKP and selective disclosure", dtgwg-cred-tf discussion #39. <https://github.com/trustoverip/dtgwg-cred-tf/discussions/39>
 - **[DTG-CRED-TF-40]** "Delegation as a case study in the design-time window", dtgwg-cred-tf discussion #40. <https://github.com/trustoverip/dtgwg-cred-tf/discussions/40>
 - **[DTG-CRED-31]** "WD02 merge plan: sequencing the five outstanding PRs into a consistent whole", dtgwg-cred-spec issue #31 (closed 2026-09-10). <https://github.com/trustoverip/dtgwg-cred-spec/issues/31>

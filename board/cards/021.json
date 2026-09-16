@@ -2,7 +2,7 @@
   "id": "021",
   "name": "Authority chain (VAC) — an agent or device acts as itself under attenuated authority",
   "kind": "composed",
-  "state": "carded",
+  "state": "specified",
   "priority": "P2",
   "owner": "mitchuski",
   "components": [
@@ -14,24 +14,24 @@
   ],
   "request": {
     "issue": "cred-spec PR #42 editor's note (merged 2026-09-10): 'Holder holds a VAC conferring action X at scope S, and its chain is valid and unrevoked: each link is issued by its parent's subject, narrows its parent, no link is revoked, depth is within every limit its links set, and the root is issued by the party governing S — without disclosing the chain' · cred-spec §VAC (PR #29, #39, #40, #41, #42 merged 2026-09-10): §Attenuation, §Invocation, §Withdrawal, §Authority and membership are separate credentials · cred-spec #9 (2026-09-10): the VAC chain predicate is hidden-value equality, not common control",
-    "by": "stormer78 / geoffturk (spec side) — carded by the ZKP TF co-chair",
+    "by": "stormer78 / geoffturk (spec side) — specified by the ZKP TF co-chair",
     "need": "a VAC chain is presented whole on every use, so every verifier sees the identifier of the party that equipped the agent (cred-spec Privacy Considerations item 13); the credential specification names the zero-knowledge form as waiting on this task force and states what holds until it lands"
   },
-  "dish": "A verifier learns that the presenting party holds authority to perform action X at scope S, conferred through a chain of attenuations that starts with the party governing S, narrows at every link, respects every `maxAttenuation` and the depth ceiling, has no revoked link, and whose leaf subject is the presenter — without learning any link's identifiers or the chain's ancestry beyond what the presenter discloses.",
-  "ingredients": [
+  "statement": "A verifier learns that the presenting party holds authority to perform action X at scope S, conferred through a chain of attenuations that starts with the party governing S, narrows at every link, respects every `maxAttenuation` and the depth ceiling, has no revoked link, and whose leaf subject is the presenter — without learning any link's identifiers or the chain's ancestry beyond what the presenter discloses.",
+  "witness": [
     "the VAC chain: every VAC from the presented leaf up to the one issued by the governing party (`authority.parent` digests, `scope`, `actions`, `validUntil`, `maxAttenuation` per link)",
     "the governing party's accreditation leaf and path for scope S, where S's governing party is itself proven from a registry root rather than disclosed",
     "the leaf subject's key secret (the presenter acts as itself and must demonstrate key control at invocation — §Invocation)",
     "non-revocation witnesses for every link that carries `credentialStatus`",
     "the presenter's VMC leaf and path, where the governing party requires the leaf subject to independently qualify (§Attenuation, 'Who may hold derived authority')"
   ],
-  "pantry": [
+  "publicInputs": [
     "root_G — the root under which the party governing S is accredited (or the governing party's identifier, where the profile discloses it)",
     "the invoked action X and scope term S (disclosed — the act is attributed to the presenter)",
     "rl_root and epoch — revocation state",
     "transcriptDigest — one transcript for the whole show, including the verifier's challenge"
   ],
-  "method": [
+  "relation": [
     {
       "clause": "X ∈ actions_leaf ⊆ … ⊆ actions_root, scope never widened, validUntil monotone, depth ≤ 8 and within every `maxAttenuation` any link sets (a link below a parent bearing n bears at most n − 1; none exists below a parent bearing 0); the root is a VAC issued directly by the governing party (`authority.parent` absent) — cred-spec §Attenuation",
       "gadget": "chain-resolve"
@@ -71,7 +71,7 @@
       "component": "003"
     }
   ],
-  "yield": [
+  "disclosureSet": [
     "the outcome (holds authority for X at S / does not)",
     "X and S — the act is performed as the presenter and attributed to the presenter",
     "root_G, rl_root, epoch",
@@ -113,7 +113,7 @@
     "status freshness for links that carry `credentialStatus` (the governing party's freshness window)",
     "root_G cryptoperiod"
   ],
-  "tasting": {
+  "fixtures": {
     "families": [
       "accepts",
       "rejects-unsat",
@@ -130,21 +130,21 @@
       "leaf-key-mismatch (verify-fail: the presenter's key does not derive from the leaf subject's secret)"
     ]
   },
-  "substitutions": [
+  "options": [
     {
-      "route": "bounded monolithic proof of a fixed maximum chain depth (≤ 8, the credential specification's ceiling), padded to a fixed shape so chain length is not disclosed; hop checks over Poseidon-committed VAC content",
+      "construction": "bounded monolithic proof of a fixed maximum chain depth (≤ 8, the credential specification's ceiling), padded to a fixed shape so chain length is not disclosed; hop checks over Poseidon-committed VAC content",
       "cost": "unmeasured — conjecture: 8 × (signature-verify + two openings) dominates; the chain arithmetic is cheap",
       "measured": false,
       "source": "record 020's editorial alternative (2026-09-08), applied with the VAC's fixed ceiling"
     },
     {
-      "route": "recursive/folding proof per link — one step per attenuation, the leaf proof carrying the accumulated statement",
+      "construction": "recursive/folding proof per link — one step per attenuation, the leaf proof carrying the accumulated statement",
       "cost": "unmeasured",
       "measured": false,
       "source": "PATH-MAP P4 (PLONKish/folding counter-proposal welcome)"
     },
     {
-      "route": "no proof — the chain is presented whole and every check is performed on disclosed credentials (the credential specification's stated fallback, at the cost of Privacy Considerations item 13)",
+      "construction": "no proof — the chain is presented whole and every check is performed on disclosed credentials (the credential specification's stated fallback, at the cost of Privacy Considerations item 13)",
       "cost": "zero constraints; the cost is disclosing the ancestry",
       "measured": false,
       "source": "cred-spec PR #42 editor's note, 'What holds until this work lands'"
@@ -175,11 +175,11 @@
       "task": "board/request"
     },
     {
-      "to": "carded",
+      "to": "specified",
       "by": "mitchuski",
       "date": "2026-09-11",
-      "evidence": "carded from the merged §VAC rules (attenuation, invocation, withdrawal, shared subject) as a sibling of record 020; composition and negative space written fresh; every cost line conjecture — DRAFT for review",
-      "task": "board/card"
+      "evidence": "specified from the merged §VAC rules (attenuation, invocation, withdrawal, shared subject) as a sibling of record 020; composition and negative space written fresh; every cost line conjecture — DRAFT for review",
+      "task": "board/specify"
     }
   ]
 }

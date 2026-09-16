@@ -2,7 +2,7 @@
   "id": "012",
   "name": "Intentional correlation — one controller across k credentials",
   "kind": "composed",
-  "state": "carded",
+  "state": "specified",
   "priority": "P2",
   "owner": "mitchuski",
   "components": [
@@ -15,18 +15,18 @@
     "by": "talltree / geoffturk / stormer78",
     "need": "under three correlation scopes, a holder who used `pairwise` identifiers (distinct by definition) or distinct wider-scoped ones, and now wishes to be recognised as the same party across several communities or relationships, needs one proof — and no other case needs any"
   },
-  "dish": "A verifier learns that the k credentials in front of it — memberships, relationships, personas — name identifiers all controlled by the presenter, and that none is revoked, while learning no identifier the presenter did not choose to show and receiving no handle that recognises the presenter elsewhere.",
-  "ingredients": [
+  "statement": "A verifier learns that the k credentials in front of it — memberships, relationships, personas — name identifiers all controlled by the presenter, and that none is revoked, while learning no identifier the presenter did not choose to show and receiving no handle that recognises the presenter elsewhere.",
+  "witness": [
     "the holder secret s and each identifier's derivation material",
     "the k credentials (VMCs, VRCs, VPCs) — the holder declares per presentation which of their identifiers are shown and which stay hidden behind commitments",
     "non-revocation witnesses for each credential handle"
   ],
-  "pantry": [
+  "publicInputs": [
     "the identifiers the holder chooses to disclose (possibly none — the proof can be over commitments alone)",
     "rl_root and epoch",
     "transcriptDigest — one transcript for the whole show"
   ],
-  "method": [
+  "relation": [
     {
       "clause": "for each pair (identifier_1, identifier_i), i = 2..k: both open to the same s — k−1 common-control clauses sharing one witness",
       "gadget": "key-binding",
@@ -43,14 +43,14 @@
       "component": "003"
     }
   ],
-  "yield": [
+  "disclosureSet": [
     "the outcome (one controller / not shown)",
-    "the holder-declared set of credentials shown to share a controller — a per-presentation choice, the disclosure this card exists to make",
+    "the holder-declared set of credentials shown to share a controller — a per-presentation choice, the disclosure this record exists to make",
     "the identifiers the holder chose to disclose, and no others",
     "rl_root, epoch, transcriptDigest"
   ],
   "doesNotEstablish": [
-    "that the presenter is one natural person (k credentials, one secret: an agent holding a person's secret satisfies every clause — card 002 under its own declaration establishes uniqueness)",
+    "that the presenter is one natural person (k credentials, one secret: an agent holding a person's secret satisfies every clause — record 002 under its own declaration establishes uniqueness)",
     "anything about credentials not in the show: intentional correlation is declared per presentation and does not widen any identifier's declared scope",
     "that the communities involved consented to be named together — the disclosure is the holder's",
     "what any of the credentials asserts beyond existence and non-revocation (a VPC's persona content, a VRC's statement) unless disclosed"
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "claim": "the issuer of any one credential in the show learns nothing about the others from the proof; the revocation-state fetch must not be a per-holder query (card 006 C3)",
+      "claim": "the issuer of any one credential in the show learns nothing about the others from the proof; the revocation-state fetch must not be a per-holder query (record 006 C3)",
       "against": [
         "issuer-verifier-colluding",
         "registry-operator"
@@ -72,9 +72,9 @@
     }
   ],
   "horizon": [
-    "earliest of: any shown credential's validity · epoch rollover · the shortest identifier key-validity among the k (card 007)"
+    "earliest of: any shown credential's validity · epoch rollover · the shortest identifier key-validity among the k (record 007)"
   ],
-  "tasting": {
+  "fixtures": {
     "families": [
       "accepts",
       "rejects-unsat",
@@ -88,22 +88,22 @@
       "show-not-declared (lint: a credential in the witness set has no disclosure declaration)"
     ]
   },
-  "substitutions": [
+  "options": [
     {
-      "route": "no proof — where the holder deliberately reused one `directed` or `public` identifier across the credentials, the correlation is on their face (WD02 §Choosing a scope)",
+      "construction": "no proof — where the holder deliberately reused one `directed` or `public` identifier across the credentials, the correlation is on their face (WD02 §Choosing a scope)",
       "cost": "zero",
       "measured": false,
       "source": "cred-spec PR #30"
     },
     {
-      "route": "Groth16 composition: (k−1) × card-007 openings + k non-revocation legs + 1 transcript constraint",
+      "construction": "Groth16 composition: (k−1) × record-007 openings + k non-revocation legs + 1 transcript constraint",
       "cost": "unmeasured; conjecture linear in k with the 007 and 006 per-leg costs",
       "measured": false,
       "source": "board/cards/007.json, 006.json"
     }
   ],
   "issuance": [
-    "as card 007: every identifier that may later be co-proven is, or carries, a ZK-openable commitment to s (X3 applied to identifiers)"
+    "as record 007: every identifier that may later be co-proven is, or carries, a ZK-openable commitment to s (X3 applied to identifiers)"
   ],
   "provenance": {
     "spec": [
@@ -121,11 +121,11 @@
       "task": "board/request"
     },
     {
-      "to": "carded",
+      "to": "specified",
       "by": "mitchuski",
       "date": "2026-09-05",
-      "evidence": "composed from 007 + 006 + 003 under one transcript; yield and negative space written fresh (composition rule)",
-      "task": "board/card"
+      "evidence": "composed from 007 + 006 + 003 under one transcript; disclosure set and negative space written fresh (composition rule)",
+      "task": "board/specify"
     }
   ]
 }

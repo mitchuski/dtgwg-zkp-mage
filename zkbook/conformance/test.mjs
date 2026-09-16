@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 the contributors to the Trust over IP Foundation DTG ZKP Task Force. Contributed under the ToIP JDF charter.
 // conformance/test.mjs — the two checks continuous integration runs on this repository. Zero dependencies.
 //   1. every record / request / proving-system entry validates (validate.mjs)
 //   2. the generated sections of spec/body.md are current: the digest stamped in body.md equals the digest of

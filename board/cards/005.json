@@ -10,22 +10,22 @@
     "by": "mitchuski",
     "need": "ADR-001 needs an S6: the voucher is not the holder; multi-issuer needs k distinct accredited issuers"
   },
-  "dish": "A verifier learns that two credentials in one proof come from two distinct members (or issuers), with the duplicate case unsatisfiable rather than merely rejected.",
-  "ingredients": [
+  "statement": "A verifier learns that two credentials in one proof come from two distinct members (or issuers), with the duplicate case unsatisfiable rather than merely rejected.",
+  "witness": [
     "two credential leaves/secrets and their paths"
   ],
-  "pantry": [
+  "publicInputs": [
     "root(s)",
     "the two nullifiers or issuer ids as constrained public signals"
   ],
-  "method": [
+  "relation": [
     {
       "clause": "leaf_a ≠ leaf_b (or issuer_a ≠ issuer_b) enforced as a non-zero inverse constraint — no witness exists for equality",
       "gadget": "distinctness",
       "runtime": "runtimes/circom-gadget/circuits/dual_issuer.circom"
     }
   ],
-  "yield": [
+  "disclosureSet": [
     "that the two are distinct — nothing about which two"
   ],
   "doesNotEstablish": [
@@ -45,7 +45,7 @@
   "horizon": [
     "root cryptoperiod"
   ],
-  "tasting": {
+  "fixtures": {
     "families": [
       "accepts",
       "rejects-unsat"
@@ -56,21 +56,21 @@
       "duplicate-seat-unsatisfiable"
     ]
   },
-  "substitutions": [
+  "options": [
     {
-      "route": "dual_issuer k=2 (lab)",
+      "construction": "dual_issuer k=2 (lab)",
       "cost": "10,717 constraints (--O2) · ~740 ms · ~8 ms · 725 B",
       "measured": true,
       "source": "CIRCUITS.md"
     },
     {
-      "route": "guardian_threshold t=3 (lab)",
+      "construction": "guardian_threshold t=3 (lab)",
       "cost": "16,078 constraints · ~830 ms · ~10 ms",
       "measured": true,
       "source": "CIRCUITS.md"
     },
     {
-      "route": "f_distinct over context pseudonyms (paper §5.3)",
+      "construction": "f_distinct over context pseudonyms (paper §5.3)",
       "cost": "predicate inside the commit-and-prove SNARK",
       "measured": false,
       "source": "ePrint 2026/333 §5.3"
@@ -94,11 +94,11 @@
       "task": "board/request"
     },
     {
-      "to": "carded",
+      "to": "specified",
       "by": "mitchuski",
       "date": "2026-08-28",
       "evidence": "X8 + dual_issuer design",
-      "task": "board/card"
+      "task": "board/specify"
     },
     {
       "to": "constructed",

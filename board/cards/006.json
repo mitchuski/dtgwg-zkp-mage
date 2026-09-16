@@ -2,7 +2,7 @@
   "id": "006",
   "name": "Non-revocation against a status root",
   "kind": "primitive",
-  "state": "carded",
+  "state": "specified",
   "priority": "P1",
   "owner": "mitchuski",
   "request": {
@@ -10,30 +10,30 @@
     "by": "stormer78 (ADR-001 C1–C4)",
     "need": "a proof must not verify if any credential it relies on is revoked, and checking must not identify the holder"
   },
-  "dish": "A verifier learns that the credential's nullifier is not in the revocation set at the stated registry state, without the registry learning who asked.",
-  "ingredients": [
+  "statement": "A verifier learns that the credential's nullifier is not in the revocation set at the stated registry state, without the registry learning who asked.",
+  "witness": [
     "the credential's revocation handle (scoped, never the static PHC attribute)",
     "non-membership witness against rl_root"
   ],
-  "pantry": [
+  "publicInputs": [
     "rl_root — revocation/status root at a stated epoch",
     "epoch"
   ],
-  "method": [
+  "relation": [
     {
       "clause": "non-membership of the handle in the set committed by rl_root (sorted-leaf neighbours or accumulator non-witness)",
       "gadget": "non-revocation",
       "runtime": ""
     }
   ],
-  "yield": [
+  "disclosureSet": [
     "rl_root",
     "epoch"
   ],
   "doesNotEstablish": [
     "that revocation is instantaneous — only that the handle was not revoked as of `epoch` (C4's published bound)",
     "that the registry's revocation decision was correct",
-    "that the verifier performed no live lookup — the card makes the presentation self-carrying (public root + ZK proof; witness remains private); whether a deployment still phones home is a profile statement, not a proof property"
+    "that the verifier performed no live lookup — the construction makes the presentation self-carrying (public root + ZK proof; witness remains private); whether a deployment still phones home is a profile statement, not a proof property"
   ],
   "adversary": [
     {
@@ -48,7 +48,7 @@
     "status freshness (C4 bound)",
     "epoch rollover"
   ],
-  "tasting": {
+  "fixtures": {
     "families": [
       "accepts",
       "rejects-unsat",
@@ -59,27 +59,27 @@
       "handle-revoked"
     ]
   },
-  "substitutions": [
+  "options": [
     {
-      "route": "sorted-leaf non-membership Merkle (indexed tree)",
-      "cost": "≈ 2× card 001",
+      "construction": "sorted-leaf non-membership Merkle (indexed tree)",
+      "cost": "≈ 2× record 001",
       "measured": false,
       "source": "explorations/O4-registry-zk-revocation.md"
     },
     {
-      "route": "RL membership check inside f with nullifier as PHC attribute (paper §5.4) — carries the paper's own linkability caveat",
+      "construction": "RL membership check inside f with nullifier as PHC attribute (paper §5.4) — carries the paper's own linkability caveat",
       "cost": "depends on RL representation",
       "measured": false,
       "source": "ePrint 2026/333 §5.4"
     },
     {
-      "route": "set-root primitive (cred-tf #40 unification): a signed, published set root + a membership or non-membership proof carried in the presentation — accumulator non-membership witness as a private proof input; the same public-input object serves anchoring (card 001), revocation status (this card) and registry membership",
+      "construction": "set-root primitive (cred-tf #40 unification): a signed, published set root + a membership or non-membership proof carried in the presentation — accumulator non-membership witness as a private proof input; the same public-input object serves anchoring (record 001), revocation status (this record) and registry membership",
       "cost": "unmeasured — ScottJeezey: \"ours to pressure-test\", priority",
       "measured": false,
       "source": "cred-tf #40 (stormer78 08-22; ScottJeezey 08-24) · cred-tf #39 (ScottJeezey 08-25)"
     },
     {
-      "route": "Flock-class prover over an indexed (sorted-leaf) non-membership tree built with the registry’s existing standard hash — the set-root primitive without a hash migration",
+      "construction": "Flock-class prover over an indexed (sorted-leaf) non-membership tree built with the registry’s existing standard hash — the set-root primitive without a hash migration",
       "cost": "unmeasured — conjecture ≈ 2× the standard-hash membership path",
       "measured": false,
       "source": "board/stacks/flock.json · cred-tf #40 (set-root primitive)"
@@ -106,11 +106,11 @@
       "task": "board/request"
     },
     {
-      "to": "carded",
+      "to": "specified",
       "by": "mitchuski",
       "date": "2026-08-28",
       "evidence": "O4 + X6 explorations; ADR-001 C-clauses",
-      "task": "board/card"
+      "task": "board/specify"
     }
   ]
 }

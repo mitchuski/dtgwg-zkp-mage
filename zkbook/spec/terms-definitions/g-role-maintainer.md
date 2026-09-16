@@ -1,3 +1,3 @@
 [[def: maintainer]]
 
-~ The human who publishes: updates the board row, pushes, speaks the rite. Admission and publication are judgment and are never delegated.
+~ The human who publishes: updates the register row, pushes, and records the publication decision. Admission and publication are judgment and are never delegated.

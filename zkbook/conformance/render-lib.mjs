@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 the contributors to the Trust over IP Foundation DTG ZKP Task Force. Contributed under the ToIP JDF charter.
 // Pure specification renderer, also shipped in conformance/render-lib.mjs.
-// the vocabulary the recipes are written in — one term file per entry, generated
+// the vocabulary the construction records are written in — one term file per entry, generated
 export const GADGET_DEFS = {
   'set-membership': 'A gadget proving that a hidden leaf is a member of the set committed to by a public root, at a stated registry state, without revealing which leaf.',
   'nullifier': 'A gadget deriving a deterministic, context-scoped pseudonym from a holder secret and a context descriptor, so reuse within one declared context is detectable and nothing links across contexts.',
@@ -14,13 +16,13 @@ export const GADGET_DEFS = {
   'hidden-equality': 'A gadget proving that a hidden field of one authenticated credential equals a hidden field of another, the two signed by different parties, with no holder secret in the relation — the dual of distinctness: a differing pair is unsatisfiable and neither value is disclosed.',
 };
 export const ROLE_DEFS = {
-  'requester': 'The party who asks for a proof on the board: what it must prove, for which specification or market need, at what priority. A requester never writes a card’s claims.',
-  'constructor': 'The party who writes a card, binds each clause to a gadget, builds the runtime and records its measurements. A constructor never vets their own construction.',
-  'runner': 'The party who reproduces a runtime on independent hardware: fixtures green, digests re-derived. A runner is never the constructor of the same card.',
+  'requester': 'The party who asks for a proof in a task-force thread or issue: what it must prove, for which specification or market need, at what priority. A requester never writes a record’s claims.',
+  'constructor': 'The party who writes a record, binds each clause to a gadget, builds the runtime and records its measurements. A constructor never vets their own construction.',
+  'runner': 'The party who reproduces a runtime on independent hardware: fixtures green, digests re-derived. A runner is never the constructor of the same record.',
   'registry verifier': 'The acceptance flow that turns an independent run into a registry row. Not a reviewer of the circuit: reproduction and behaviour are not audit.',
-  'maintainer': 'The human who publishes: updates the board row, pushes, speaks the rite. Admission and publication are judgment and are never delegated.',
+  'maintainer': 'The human who publishes: updates the register row, pushes, and records the publication decision. Admission and publication are judgment and are never delegated.',
 };
-export const CARD_DEFS = {
+export const RECORD_DEFS = {
   'construction record': 'One section of this specification: a requested zero-knowledge proof over DTG credentials, stated as what a verifier learns, from whom, without what — with its witness, public inputs, clauses bound to gadgets, disclosure set, negative space, adversary, horizon, conformance fixtures, construction options and issuance requirements. Generated from a machine-checked record.',
   'primitive construction': 'A construction record that binds exactly one gadget. Primitive constructions are the components composed constructions are made of.',
   'composed construction': 'A construction record that is a named conjunction of primitive constructions under one presentation transcript and one declared disclosure set. Its disclosure set and negative space are written fresh, never inherited, because proofs that are individually sound can leak jointly.',
@@ -30,71 +32,76 @@ export const CARD_DEFS = {
   'public inputs': 'What the verifier supplies and sees when a construction is presented: context descriptor, set roots, epoch, revocation root, transcript digest, declared correlation scope. Shared conventions for these are given in the Public Inputs section.',
   'set root': 'A signed, published commitment to a set at a stated registry state — a membership root, a revocation root, an accredited-issuer root — against which membership or non-membership is proven in the presentation itself, so the verifier performs no live lookup.',
   'transcript digest': 'The digest of the canonical presentation transcript (challenge, disclosed fields, context descriptor), canonicalised under RFC 8785 JCS and encoded as digestMultibase, that every proof in a presentation is bound to.',
-  'record state': 'The evidence state of a construction record — requested, carded, constructed, run, vetted, published — advanced monotonically as evidence accumulates; evidence maturity does not confer normative status; adoption requires a separate task-force decision.',
+  'record state': 'The evidence state of a construction record — requested, specified, constructed, run, vetted, published — advanced monotonically as evidence accumulates; evidence maturity does not confer normative status; adoption requires a separate task-force decision.',
   'verification registry': 'The register of independent reproductions maintained in the evidence repository: rows recording that a party other than the constructor rebuilt a construction on independent hardware with fixtures green and required digests re-derived.',
 };
 
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+// Spec-Up-T (markdown-it-anchor's default slugify, after markdown-it's typographer) derives a heading's id from its text;
+// in-document links must derive theirs the same way — an apostrophe inside a word becomes ’ before the slug is taken
+const anchor = (heading) => encodeURIComponent(String(heading).replace(/(\w)'(\w)/g, '$1’$2').trim().toLowerCase().replace(/\s+/g, '-'));
+const constructionAnchor = (c) => anchor(`Construction ${c.id} · ${c.name}`);
+const stackAnchor = (s) => anchor(`Proving system · ${s.name}`);
 const li = (xs) => (xs || []).map(x => `- ${x}`).join('\n');
 const ref = (term) => `[[ref: ${term}]]`;
 
-export function renderRecipe(card, all) {
+export function renderConstruction(record, all) {
   const byId = Object.fromEntries(all.map(c => [c.id, c]));
   const stateNote = {
     requested: 'This record is at state `requested`: the construction has been asked for and not yet written. Every line below is a placeholder until a constructor writes the record.',
-    carded: 'This record is at state `carded`: it is written and validates; no runtime has measured it. Costs marked conjecture are conjecture (drafting rule 4). Informative.',
+    specified: 'This record is at state `specified`: it is written and validates; no runtime has measured it. Costs marked conjecture are conjecture (drafting rule 4). Informative.',
     constructed: 'This record is at state `constructed`: a runtime exists and has measured at least one construction option; no independent party has reproduced it. Informative.',
     run: 'This record is at state `run`: reproduced on independent hardware by a party other than the constructor; not yet vetted into the verification registry. Informative.',
     vetted: 'This record is at state `vetted`: a verification-registry row records an independent reproduction. Its clauses are candidates for normative text.',
     published: 'This record is at state `published`: its evidence has been vetted and published. Evidence publication alone does not confer normative status.',
-  }[card.state];
-  const method = card.method.map((m, i) => `${i + 1}. ${m.clause} — ${ref(m.gadget)}${m.component ? ` (${ref('construction record')} ${m.component}, [${byId[m.component]?.name || m.component}](#construction-${m.component}-${slug(byId[m.component]?.name || '')}))` : ''}${m.runtime ? ` · runtime \`${m.runtime}\`` : ''}`).join('\n');
-  const adv = card.adversary.map(a => `- **${a.against.join(' · ')}** — ${a.claim}`).join('\n');
-  const subs = card.substitutions.map(s => `| ${s.route} | ${s.cost || '—'} | ${s.measured ? '**measured**' : 'unmeasured'} | ${s.source || ''} |`).join('\n');
-  const prov = card.provenance || {};
-  const hist = card.history.map(h => `| ${h.date} | \`${h.to}\` | ${h.by} | ${h.evidence} |`).join('\n');
-  const rev = (card.revisions || []).map(r => `| ${r.date} | ${r.by} | ${r.note} |`).join('\n');
-  const composes = card.components?.length ? `\n**Composes:** ${card.components.map(c => `[${c}](#construction-${c}-${slug(byId[c]?.name || '')})`).join(' ∧ ')} — a ${ref('composed construction')}: one transcript, one ${ref('disclosure set')}, written fresh.` : `\n**Kind:** ${ref('primitive construction')} — binds the ${ref(card.method[0]?.gadget || 'gadget')} gadget and nothing else.`;
-  return `### Construction ${card.id} · ${card.name}
+  }[record.state];
+  const method = record.relation.map((m, i) => `${i + 1}. ${m.clause} — ${ref(m.gadget)}${m.component ? ` (${ref('construction record')} ${m.component}, [${byId[m.component]?.name || m.component}](#${byId[m.component] ? constructionAnchor(byId[m.component]) : m.component}))` : ''}${m.runtime ? ` · runtime \`${m.runtime}\`` : ''}`).join('\n');
+  const adv = record.adversary.map(a => `- **${a.against.join(' · ')}** — ${a.claim}`).join('\n');
+  const subs = record.options.map(s => `| ${s.construction} | ${s.cost || '—'} | ${s.measured ? '**measured**' : 'unmeasured'} | ${s.source || ''} |`).join('\n');
+  const prov = record.provenance || {};
+  const hist = record.history.map(h => `| ${h.date} | \`${h.to}\` | ${h.by} | ${h.evidence} |`).join('\n');
+  const rev = (record.revisions || []).map(r => `| ${r.date} | ${r.by} | ${r.note} |`).join('\n');
+  const composes = record.components?.length ? `\n**Composes:** ${record.components.map(c => `[${c}](#${byId[c] ? constructionAnchor(byId[c]) : c})`).join(' ∧ ')} — a ${ref('composed construction')}: one transcript, one ${ref('disclosure set')}, written fresh.` : `\n**Kind:** ${ref('primitive construction')} — binds the ${ref(record.relation[0]?.gadget || 'gadget')} gadget and nothing else.`;
+  return `### Construction ${record.id} · ${record.name}
 
 *${stateNote}*
 
 | | |
 |---|---|
-| kind | ${card.kind} |
-| state | \`${card.state}\` |
-| priority | ${card.priority || '—'} |
-| constructor | ${card.owner || '—'} |
-| requested by | ${card.request?.by || '—'} |
-| request | ${card.request?.issue || '—'} |
+| kind | ${record.kind} |
+| state | \`${record.state}\` |
+| priority | ${record.priority || '—'} |
+| constructor | ${record.owner || '—'} |
+| requested by | ${record.request?.by || '—'} |
+| request | ${record.request?.issue || '—'} |
 ${composes}
 
 #### Statement
 
-${card.dish}
+${record.statement}
 
-${card.request?.need ? `**Need.** ${card.request.need}\n` : ''}
+${record.request?.need ? `**Need.** ${record.request.need}\n` : ''}
 #### Witness
 
 *Never leaves the holder.*
 
-${li(card.ingredients)}
+${li(record.witness)}
 
 #### Public inputs
 
-${li(card.pantry)}
+${li(record.publicInputs)}
 
-#### Method
+#### Relation
 
 ${method}
 
 #### Disclosure set
 
-${li(card.yield)}
+${li(record.disclosureSet)}
 
 #### Does not establish
 
-${li(card.doesNotEstablish)}
+${li(record.doesNotEstablish)}
 
 #### Adversary, per claim
 
@@ -102,23 +109,23 @@ ${adv}
 
 #### Horizon
 
-${li(card.horizon)}
+${li(record.horizon)}
 
 #### Conformance fixtures
 
-Families: ${card.tasting.families.map(f => `\`${f}\``).join(' · ')}${card.tasting.vectors ? `\n\nVectors: \`${card.tasting.vectors}\`` : ''}${card.tasting.rejectionCodes?.length ? `\n\nRejection codes: ${card.tasting.rejectionCodes.map(c => `\`${c}\``).join(', ')}` : ''}
+Families: ${record.fixtures.families.map(f => `\`${f}\``).join(' · ')}${record.fixtures.vectors ? `\n\nVectors: \`${record.fixtures.vectors}\`` : ''}${record.fixtures.rejectionCodes?.length ? `\n\nRejection codes: ${record.fixtures.rejectionCodes.map(c => `\`${c}\``).join(', ')}` : ''}
 
 #### Construction options
 
-*Routes through the construction-selection gate ([DTG-ZKP-REQ] §16.1), each with its cost as measured or as conjectured.*
+*Candidate constructions, each evaluated against the construction-selection criteria ([DTG-ZKP-REQ] §16.1), with its cost as measured or as conjectured.*
 
-| route | cost | status | source |
+| construction | cost | status | source |
 |---|---|---|---|
 ${subs}
 
 #### Issuance requirements
 
-${li(card.issuance) || '- none beyond the credential as specified'}
+${li(record.issuance) || '- none beyond the credential as specified'}
 
 #### Provenance
 
@@ -132,16 +139,18 @@ ${rev ? `\nRevisions within a state:\n\n| date | by | note |\n|---|---|---|\n${r
 `;
 }
 
-export function renderRecipes(cards) {
-  const prim = cards.filter(c => c.kind === 'primitive'), comp = cards.filter(c => c.kind === 'composed');
-  const index = (xs) => xs.map(c => `| [${c.id}](#construction-${c.id}-${slug(c.name)}) | ${c.name} | \`${c.state}\` | ${c.priority || '—'} | ${c.components ? c.components.join(' ∧ ') : c.method.map(m => m.gadget).join(', ')} |`).join('\n');
+export function renderConstructions(records) {
+  const prim = records.filter(c => c.kind === 'primitive'), comp = records.filter(c => c.kind === 'composed');
+  const index = (xs) => xs.map(c => `| [${c.id}](#${constructionAnchor(c)}) | ${c.name} | \`${c.state}\` | ${c.priority || '—'} | ${c.components ? c.components.join(' ∧ ') : c.relation.map(m => m.gadget).join(', ')} |`).join('\n');
   return `## Construction Records
 
-This section is informative in this Working Draft: every record below is at state \`carded\` or \`constructed\`. Evidence maturity is printed at the head of each record. Normative adoption is a separate task-force decision; reproduction or publication alone does not confer it.
+This section is informative in this Working Draft: every record below is at state \`specified\` or \`constructed\`. Evidence maturity is printed at the head of each record. Normative adoption is a separate task-force decision; reproduction or publication alone does not confer it.
 
 This section is generated from the machine-readable records in \`conformance/records/\`. Changes are made to a record, never to this text; a record that fails validation does not render. Each record states its adversary, its horizon and what it does not establish, and labels conjecture as conjecture, because the validator refuses records that do not.
 
 ### Index of constructions
+
+Identifiers are stable handles, not a sequence: 001–009 are primitive constructions; 010–019 are compositions over community and relationship credentials; 020–029 are delegation and authority chains. Unused numbers in a range are unassigned, not missing.
 
 **Primitive constructions** — one gadget each.
 
@@ -155,16 +164,16 @@ ${index(prim)}
 |---|---|---|---|---|
 ${index(comp)}
 
-${cards.map(c => renderRecipe(c, cards)).join('\n')}`;
+${records.map(c => renderConstruction(c, records)).join('\n')}`;
 }
 
 // ---- privacy considerations derived from the records ----------------------------------------
-export function renderPrivacyDerived(cards) {
+export function renderPrivacyDerived(records) {
   const rows = [];
-  for (const c of cards) {
+  for (const c of records) {
     for (const a of c.adversary) rows.push(`- **Construction ${c.id}** — against ${a.against.join(', ')}: ${a.claim}`);
   }
-  const neg = cards.map(c => `- **Construction ${c.id}** does not establish: ${c.doesNotEstablish.slice(0, 3).join('; ')}${c.doesNotEstablish.length > 3 ? '; …' : ''}`);
+  const neg = records.map(c => `- **Construction ${c.id}** does not establish: ${c.doesNotEstablish.slice(0, 3).join('; ')}${c.doesNotEstablish.length > 3 ? '; …' : ''}`);
   return `### Privacy claims as recorded, per construction
 
 *Generated from the \`adversary\` field of every construction record. A claim appears here only against the party it is made against; a claim absent here is not made.*
@@ -179,21 +188,21 @@ ${neg.join('\n')}
 `;
 }
 
-// ---- records: the requests the recipes answer, in the requester's own form ------------------
-export function validateRecord(rec, cards) {
+// ---- requests: the requests the constructions answer, in the requester's own form ----------------
+export function validateRequest(rec, records) {
   const r = [];
-  for (const k of ['id', 'title', 'author', 'status', 'date', 'recipe', 'clauses']) if (!rec[k]) r.push(`record-missing-field:${k}`);
-  if (rec.recipe && !cards.some(c => c.id === rec.recipe)) r.push(`request-construction-missing:${rec.recipe}`);
+  for (const k of ['id', 'title', 'author', 'status', 'date', 'record', 'clauses']) if (!rec[k]) r.push(`request-missing-field:${k}`);
+  if (rec.record && !records.some(c => c.id === rec.record)) r.push(`request-construction-missing:${rec.record}`);
   for (const c of rec.clauses || []) {
-    if (!c.id || !c.text || !c.status) r.push(`record-clause-incomplete:${c.id || '?'}`);
-    if (c.status && !['covered', 'refined', 'added', 'partial', 'open'].includes(c.status)) r.push(`record-clause-bad-status:${c.id}`);
-    if (['refined', 'added', 'partial', 'open'].includes(c.status) && !c.refinement && c.status !== 'open') r.push(`record-clause-no-refinement:${c.id}`);
+    if (!c.id || !c.text || !c.status) r.push(`request-clause-incomplete:${c.id || '?'}`);
+    if (c.status && !['covered', 'refined', 'added', 'partial', 'open'].includes(c.status)) r.push(`request-clause-bad-status:${c.id}`);
+    if (['refined', 'added', 'partial', 'open'].includes(c.status) && !c.refinement && c.status !== 'open') r.push(`request-clause-no-refinement:${c.id}`);
   }
   return r;
 }
-export function renderRecord(rec, cards) {
-  const card = cards.find(c => c.id === rec.recipe);
-  const link = card ? `[Construction ${card.id} · ${card.name}](#construction-${card.id}-${slug(card.name)})` : rec.recipe;
+export function renderRequest(rec, records) {
+  const answered = records.find(c => c.id === rec.record);
+  const link = answered ? `[Construction ${answered.id} · ${answered.name}](#${constructionAnchor(answered)})` : rec.record;
   const counts = {}; for (const c of rec.clauses) counts[c.status] = (counts[c.status] || 0) + 1;
   const rows = rec.clauses.map(c => `| ${c.id} | ${c.group} | ${c.text} | ${c.boundTo || '—'} | **${c.status}** | ${c.refinement || ''} |`).join('\n');
   const tests = (rec.acceptanceTests || []).map(t => `| ${t.name} | ${t.text} | \`${t.family}\` |`).join('\n');
@@ -208,7 +217,7 @@ export function renderRecord(rec, cards) {
 | author | ${rec.author} |
 | status | ${rec.status} · ${rec.date} |
 | audience | ${rec.audience || '—'} |
-| source | ${rec.source?.url || '—'}${rec.source?.named ? ` · named on the board: ${rec.source.named}` : ''} |
+| source | ${rec.source?.url || '—'}${rec.source?.named ? ` · named in ${rec.source.named}` : ''} |
 | answered by | ${link} |
 
 ${rec.source?.note ? `> ${rec.source.note}\n` : ''}
@@ -229,7 +238,7 @@ ${rec.outOfScope?.length ? `#### Explicitly out of scope in the record\n\n${li(r
 ${asks ? `#### What the record asks of each group\n\n| group | ask |\n|---|---|\n${asks}\n` : ''}
 ${rec.consequencesNamed?.length ? `#### Consequences the record names\n\n${li(rec.consequencesNamed)}\n` : ''}`;
 }
-export function renderRecords(records, cards) {
+export function renderRequests(requests, records) {
   return `## Requests Answered
 
 This section is informative.
@@ -238,14 +247,14 @@ A request is kept in the requester's own form — an architecture decision recor
 
 The first request is Glenn Gore's ADR-001, *Community-Anchored Proof*, named by the task force as its first construction to seed the work: it defines what must be proven and what any implementation must satisfy, and deliberately does not choose how. The construction record is the how. Requests are ordered by date.
 
-${records.slice().sort((a, b) => (a.date || '').localeCompare(b.date || '')).map(r => renderRecord(r, cards)).join('\n')}`;
+${requests.slice().sort((a, b) => (a.date || '').localeCompare(b.date || '')).map(r => renderRequest(r, records)).join('\n')}`;
 }
 
 export function renderTermFile(term, def, aliases = []) {
   return `[[def: ${[term, ...aliases].join(', ')}]]\n\n~ ${def}\n`;
 }
 
-// ---- stacks: the proving systems a recipe may run on, as comparable facts ---------------------
+// ---- stacks: the proving systems a construction may run on, as comparable facts ---------------
 export const STACK_KINDS = ['general-stack', 'as-signed-catalog', 'hand-rolled', 'library', 'declaration'];
 export function validateStack(s, gadgets) {
   const r = [];
@@ -283,7 +292,7 @@ export function renderStack(s) {
 | provenance | ${Object.entries(s.provenance || {}).filter(([k]) => k !== 'contentAddressed').map(([k, v]) => `${k}: ${v}`).join(' · ')}${s.provenance?.contentAddressed ? ' · content-addressed' : ''} |
 | verified | ${s.verified} |
 
-#### Published figures (the stack's own, or the lab's — never this book's)
+#### Published figures (the proving system's own, or the evidence repository's — never this specification's)
 
 ${bench}
 
@@ -312,7 +321,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 
 | kind | entries | what the kind means |
 |---|---|---|
-${Object.entries(byKind).map(([k, ss]) => `| ${k} | ${ss.map(s => `[${s.id}](#stack-${slug(s.name)})`).join(' · ')} | ${KIND_NOTE[k] || ''} |`).join('\n')}
+${Object.entries(byKind).map(([k, ss]) => `| ${k} | ${ss.map(s => `[${s.id}](#${stackAnchor(s)})`).join(' · ')} | ${KIND_NOTE[k] || ''} |`).join('\n')}
 
 ${stacks.slice().sort((a, b) => a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id)).map(renderStack).join('\n')}`;
 }
@@ -321,6 +330,6 @@ export function renderTerms() {
   const terms = {};
   for (const [t, d] of Object.entries(GADGET_DEFS)) terms[`g-gadget-${slug(t)}.md`] = renderTermFile(t, d, [`${t} gadget`]);
   for (const [t, d] of Object.entries(ROLE_DEFS)) terms[`g-role-${slug(t)}.md`] = renderTermFile(t, d);
-  for (const [t, d] of Object.entries(CARD_DEFS)) terms[`g-${slug(t)}.md`] = renderTermFile(t, d, t === 'horizon' ? ['Horizon'] : []);
+  for (const [t, d] of Object.entries(RECORD_DEFS)) terms[`g-${slug(t)}.md`] = renderTermFile(t, d, t === 'horizon' ? ['Horizon'] : []);
   return terms;
 }

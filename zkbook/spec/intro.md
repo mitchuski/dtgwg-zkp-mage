@@ -11,13 +11,13 @@ This specification guides implementers from a required trust-graph outcome to a 
 | statement | what a verifier learns, from whom, without what — one sentence |
 | witness | the credentials, secrets, paths and openings kept private from the verifier; any delegated prover access is declared |
 | [[ref: public inputs]] | what the verifier supplies and sees: context descriptor, [[ref: set root]]s, epoch, revocation root, [[ref: transcript digest]], declared scope |
-| method | numbered clauses, each bound to a named [[ref: gadget]] and, once built, to a runtime |
+| relation | numbered clauses, each bound to a named [[ref: gadget]] and, once built, to a runtime |
 | [[ref: disclosure set]] | exactly the public signals plus anything the holder deliberately shows |
 | [[ref: negative space]] | what the proof does not establish |
 | adversary | for each privacy claim: the verifier, verifiers colluding, issuer and verifier colluding, or the registry operator |
 | horizon | the earliest of the clocks that bound the claim |
 | conformance fixtures | the fixture families that test the construction: accepts, rejects-unsatisfiable, rejects-verify, unlinkable, current |
-| construction options | routes through the task force's construction-selection gate, each with its measured or conjectured cost and its proving system |
+| construction options | candidate constructions, each evaluated against the task force's construction-selection criteria, with its measured or conjectured cost and its proving system |
 | issuance requirements | what the construction asks of issuers and registries, stated early |
 | provenance | the requests, records, registry rows and sources the construction rests on |
 
@@ -44,7 +44,7 @@ A construction record carries a [[ref: record state]], and the state is printed 
 | state | what must exist | what the record may claim |
 |---|---|---|
 | `requested` | a thread or issue with a one-sentence statement | nothing — a placeholder |
-| `carded` | a record that validates | an informative draft; costs are conjecture |
+| `specified` | a record that validates | an informative draft; costs are conjecture |
 | `constructed` | a runtime and at least one measured construction option | informative; numbers are the constructor's |
 | `run` | fixtures green on independent hardware, digests re-derived, by a party other than the constructor | reproduced once |
 | `vetted` | a row in the verification registry | candidate normative clauses |
@@ -58,7 +58,7 @@ The DTG Credentials Core Specification defines the credentials the constructions
 
 ### How to propose a construction
 
-Open a discussion or issue in the task-force repository with a one-sentence statement of what the proof must establish and for which specification or deployment need. A constructor writes the record; the record enters this specification when it validates, at state `carded`, and rises through the states as evidence accumulates.
+Open a discussion or issue in the task-force repository with a one-sentence statement of what the proof must establish and for which specification or deployment need. A constructor writes the record; the record enters this specification when it validates, at state `specified`, and rises through the states as evidence accumulates.
 
 ## Requirements Language
 

@@ -10,14 +10,14 @@ import { loadLatestSurvey, loadWatchMap, digestSurvey, watchHtml, survey as runS
 import { yourTurn, yourTurnHtml } from './yourturn.mjs';
 import { detectPosted } from './posted.mjs';
 import { loadReceipts } from './yourturn.mjs';
-import { writeCookbook } from './spec.mjs';
+import { writeSpec } from './spec.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const ROOT = resolve(HERE, '..');
 const CARDS = join(ROOT, 'cards');
 const REPO = resolve(ROOT, '..');
 
-export const STATES = ['requested', 'carded', 'constructed', 'run', 'vetted', 'published'];
+export const STATES = ['requested', 'specified', 'constructed', 'run', 'vetted', 'published'];
 export const GADGETS = ['set-membership', 'nullifier', 'transcript-bind', 'key-binding', 'distinctness', 'signature-verify', 'non-revocation', 'range', 'commitment-open', 'chain-resolve', 'hidden-equality'];
 export const ADVERSARIES = ['verifier', 'verifiers-colluding', 'issuer-verifier-colluding', 'registry-operator'];
 export const FAMILIES = ['accepts', 'rejects-unsat', 'rejects-verify', 'unlinkable', 'current'];
@@ -25,7 +25,7 @@ export const FAMILIES = ['accepts', 'rejects-unsat', 'rejects-verify', 'unlinkab
 // transition → trust-task envelope (the public trust-task format, mimicked)
 export const TASKS = {
   requested:   { task: 'board/request',   issuer: 'requester',   recipient: 'task-force', sideEffects: 'none',     exposure: 'metadata' },
-  carded:      { task: 'board/card',      issuer: 'constructor', recipient: 'task-force', sideEffects: 'none',     exposure: 'metadata' },
+  specified:      { task: 'board/specify',      issuer: 'constructor', recipient: 'task-force', sideEffects: 'none',     exposure: 'metadata' },
   constructed: { task: 'board/construct', issuer: 'constructor', recipient: 'task-force', sideEffects: 'mutating', exposure: 'metadata' },
   run:         { task: 'board/run',       issuer: 'runner',      recipient: 'task-force', sideEffects: 'none',     exposure: 'metadata' },
   vetted:      { task: 'board/vet',       issuer: 'verifier',    recipient: 'maintainer', sideEffects: 'mutating', exposure: 'metadata' },
@@ -51,60 +51,60 @@ export function validateCard(card, all = null) {
   const cards = all || loadCards();
   const ids = new Set(cards.map(c => c.id));
   const nonEmpty = (k) => Array.isArray(card[k]) && card[k].length > 0;
-  for (const k of ['id', 'name', 'kind', 'state', 'dish']) if (!card[k]) r.push(`card-missing-field:${k}`);
-  if (card.id && !/^[0-9]{3}$/.test(card.id)) r.push('card-bad-id');
-  if (card.kind && !['primitive', 'composed'].includes(card.kind)) r.push('card-bad-kind');
-  if (card.state && !STATES.includes(card.state)) r.push('card-bad-state');
-  if (card.dish && card.dish.length < 20) r.push('card-dish-too-short');
-  if (!nonEmpty('ingredients')) r.push('card-no-ingredients');
-  if (!nonEmpty('pantry')) r.push('card-no-pantry');
-  if (!nonEmpty('method')) r.push('card-no-method');
-  else card.method.forEach((m, i) => {
-    if (!m.clause) r.push(`card-clause-empty:${i + 1}`);
-    if (!m.gadget || !GADGETS.includes(m.gadget)) r.push(`card-clause-unbound:${i + 1}`);
-    if (m.component && !ids.has(m.component)) r.push(`card-component-missing:${m.component}`);
+  for (const k of ['id', 'name', 'kind', 'state', 'statement']) if (!card[k]) r.push(`record-missing-field:${k}`);
+  if (card.id && !/^[0-9]{3}$/.test(card.id)) r.push('record-bad-id');
+  if (card.kind && !['primitive', 'composed'].includes(card.kind)) r.push('record-bad-kind');
+  if (card.state && !STATES.includes(card.state)) r.push('record-bad-state');
+  if (card.statement && card.statement.length < 20) r.push('record-statement-too-short');
+  if (!nonEmpty('witness')) r.push('record-no-witness');
+  if (!nonEmpty('publicInputs')) r.push('record-no-public-inputs');
+  if (!nonEmpty('relation')) r.push('record-no-relation');
+  else card.relation.forEach((m, i) => {
+    if (!m.clause) r.push(`record-clause-empty:${i + 1}`);
+    if (!m.gadget || !GADGETS.includes(m.gadget)) r.push(`record-clause-unbound:${i + 1}`);
+    if (m.component && !ids.has(m.component)) r.push(`record-component-missing:${m.component}`);
   });
-  if (!nonEmpty('yield')) r.push('card-no-yield');
-  if (!nonEmpty('doesNotEstablish')) r.push('card-no-does-not-establish');
-  if (!nonEmpty('adversary')) r.push('card-no-adversary');
+  if (!nonEmpty('disclosureSet')) r.push('record-no-disclosure-set');
+  if (!nonEmpty('doesNotEstablish')) r.push('record-no-does-not-establish');
+  if (!nonEmpty('adversary')) r.push('record-no-adversary');
   else card.adversary.forEach((a, i) => {
-    if (!a.claim || !Array.isArray(a.against) || !a.against.length) r.push(`card-adversary-unnamed:${i + 1}`);
-    else a.against.forEach(x => { if (!ADVERSARIES.includes(x)) r.push(`card-adversary-unknown:${x}`); });
+    if (!a.claim || !Array.isArray(a.against) || !a.against.length) r.push(`record-adversary-unnamed:${i + 1}`);
+    else a.against.forEach(x => { if (!ADVERSARIES.includes(x)) r.push(`record-adversary-unknown:${x}`); });
   });
-  if (!nonEmpty('horizon')) r.push('card-no-horizon');
-  if (!card.tasting || !Array.isArray(card.tasting.families) || !card.tasting.families.length) r.push('card-no-tasting');
-  else card.tasting.families.forEach(f => { if (!FAMILIES.includes(f)) r.push(`card-tasting-unknown:${f}`); });
-  if (!nonEmpty('substitutions')) r.push('card-no-substitutions');
-  if (!Array.isArray(card.history)) r.push('card-no-history');
+  if (!nonEmpty('horizon')) r.push('record-no-horizon');
+  if (!card.fixtures || !Array.isArray(card.fixtures.families) || !card.fixtures.families.length) r.push('record-no-fixtures');
+  else card.fixtures.families.forEach(f => { if (!FAMILIES.includes(f)) r.push(`record-fixture-family-unknown:${f}`); });
+  if (!nonEmpty('options')) r.push('record-no-options');
+  if (!Array.isArray(card.history)) r.push('record-no-history');
   // composition rules
   if (card.kind === 'composed') {
-    if (!nonEmpty('components')) r.push('card-composed-no-components');
+    if (!nonEmpty('components')) r.push('record-composed-no-components');
     else {
       for (const c of card.components) {
-        if (!ids.has(c)) r.push(`card-component-missing:${c}`);
+        if (!ids.has(c)) r.push(`record-component-missing:${c}`);
         const comp = cards.find(x => x.id === c);
-        if (comp && comp.kind !== 'primitive') r.push(`card-component-not-primitive:${c}`);
+        if (comp && comp.kind !== 'primitive') r.push(`record-component-not-primitive:${c}`);
       }
       // yield must be declared fresh, not the union of parts
-      const union = new Set(card.components.flatMap(c => (cards.find(x => x.id === c)?.yield) || []));
-      const mine = new Set(card.yield || []);
-      if (mine.size && [...mine].every(y => union.has(y)) && [...union].every(y => mine.has(y))) r.push('card-composed-yield-is-union');
+      const union = new Set(card.components.flatMap(c => (cards.find(x => x.id === c)?.disclosureSet) || []));
+      const mine = new Set(card.disclosureSet || []);
+      if (mine.size && [...mine].every(y => union.has(y)) && [...union].every(y => mine.has(y))) r.push('record-composed-disclosure-is-union');
       const unionDNE = new Set(card.components.flatMap(c => (cards.find(x => x.id === c)?.doesNotEstablish) || []));
-      if ((card.doesNotEstablish || []).every(d => unionDNE.has(d))) r.push('card-composed-dne-is-union');
-      if (!(card.pantry || []).some(p => /transcript/i.test(p))) r.push('card-composed-no-single-transcript');
+      if ((card.doesNotEstablish || []).every(d => unionDNE.has(d))) r.push('record-composed-dne-is-union');
+      if (!(card.publicInputs || []).some(p => /transcript/i.test(p))) r.push('record-composed-no-single-transcript');
     }
   } else if (card.kind === 'primitive') {
-    const gadgets = new Set((card.method || []).map(m => m.gadget));
-    if (gadgets.size > 1) r.push('card-primitive-multi-gadget');
-    if (card.components && card.components.length) r.push('card-primitive-has-components');
+    const gadgets = new Set((card.relation || []).map(m => m.gadget));
+    if (gadgets.size > 1) r.push('record-primitive-multi-gadget');
+    if (card.components && card.components.length) r.push('record-primitive-has-components');
   }
   // state ↔ evidence coherence
   const si = STATES.indexOf(card.state);
   if (si >= STATES.indexOf('constructed')) {
-    if (!card.method.some(m => m.runtime)) r.push('construct-no-runtime');
-    if (!card.substitutions.some(s => s.measured)) r.push('construct-no-measurement');
+    if (!card.relation.some(m => m.runtime)) r.push('construct-no-runtime');
+    if (!card.options.some(s => s.measured)) r.push('construct-no-measurement');
   }
-  if (si >= STATES.indexOf('run') && !(card.tasting.vectors)) r.push('run-vectors-missing');
+  if (si >= STATES.indexOf('run') && !(card.fixtures.vectors)) r.push('run-vectors-missing');
   if (si >= STATES.indexOf('vetted') && !(card.provenance && card.provenance.registry)) r.push('vet-no-registry-row');
   // history must be monotone and end at the current state
   if (Array.isArray(card.history)) {
@@ -128,7 +128,7 @@ export function advance(card, to, { by, evidence, date } = {}) {
   if (ti !== from + 1) return { ok: false, refusal: ti <= from ? 'advance-not-monotone' : 'advance-skips-state' };
   if (!by) return { ok: false, refusal: 'advance-no-actor' };
   if (!evidence) return { ok: false, refusal: 'advance-no-evidence' };
-  const constructors = new Set(card.history.filter(h => h.to === 'carded' || h.to === 'constructed').map(h => h.by));
+  const constructors = new Set(card.history.filter(h => h.to === 'specified' || h.to === 'constructed').map(h => h.by));
   if (to === 'run' && constructors.has(by)) return { ok: false, refusal: 'run-same-hands' };
   if (to === 'vetted') {
     const runners = new Set(card.history.filter(h => h.to === 'run').map(h => h.by));
@@ -147,29 +147,29 @@ export function advance(card, to, { by, evidence, date } = {}) {
 // ---- rendering ---------------------------------------------------------------------------
 const li = (xs) => (xs || []).map(x => `- ${x}`).join('\n');
 export function renderCard(card) {
-  const m = card.method.map((x, i) => `${i + 1}. ${x.clause} → \`${x.gadget}\`${x.component ? ` (card ${x.component})` : ''}${x.runtime ? ` · runtime \`${x.runtime}\`` : ''}`).join('\n');
+  const m = card.relation.map((x, i) => `${i + 1}. ${x.clause} → \`${x.gadget}\`${x.component ? ` (record ${x.component})` : ''}${x.runtime ? ` · runtime \`${x.runtime}\`` : ''}`).join('\n');
   const adv = card.adversary.map(a => `- ${a.claim} — against: ${a.against.join(', ')}`).join('\n');
-  const subs = card.substitutions.map(s => `| ${s.route} | ${s.cost || '—'} | ${s.measured ? 'measured' : 'unmeasured'} | ${s.source || ''} |`).join('\n');
+  const subs = card.options.map(s => `| ${s.construction} | ${s.cost || '—'} | ${s.measured ? 'measured' : 'unmeasured'} | ${s.source || ''} |`).join('\n');
   const hist = card.history.map(h => `| ${h.date} | ${h.to} | ${h.task || TASKS[h.to].task} | ${h.by} | ${h.evidence} |`).join('\n');
   const prov = card.provenance || {};
-  return `# CARD ${card.id} · ${card.name}
+  return `# RECORD ${card.id} · ${card.name}
 
 **kind:** ${card.kind} · **state:** \`${card.state}\`${card.priority ? ` · **priority:** ${card.priority}` : ''}${card.owner ? ` · **owner:** ${card.owner}` : ''}${card.components ? ` · **composes:** ${card.components.join(' ∧ ')}` : ''}
 
-## Dish
-${card.dish}
+## Statement
+${card.statement}
 
-## Ingredients (witness — never leaves the holder)
-${li(card.ingredients)}
+## Witness (never leaves the holder)
+${li(card.witness)}
 
-## Pantry (public inputs)
-${li(card.pantry)}
+## Public inputs
+${li(card.publicInputs)}
 
-## Method
+## Relation
 ${m}
 
-## Yield (the disclosure set)
-${li(card.yield)}
+## Disclosure set
+${li(card.disclosureSet)}
 
 ## Does not establish
 ${li(card.doesNotEstablish)}
@@ -180,15 +180,15 @@ ${adv}
 ## Horizon
 ${li(card.horizon)}
 
-## Tasting
-families: ${card.tasting.families.join(' · ')}${card.tasting.vectors ? `\nvectors: \`${card.tasting.vectors}\`` : ''}${card.tasting.rejectionCodes?.length ? `\nrejection codes: ${card.tasting.rejectionCodes.map(c => `\`${c}\``).join(', ')}` : ''}
+## Conformance fixtures
+families: ${card.fixtures.families.join(' · ')}${card.fixtures.vectors ? `\nvectors: \`${card.fixtures.vectors}\`` : ''}${card.fixtures.rejectionCodes?.length ? `\nrejection codes: ${card.fixtures.rejectionCodes.map(c => `\`${c}\``).join(', ')}` : ''}
 
-## Substitutions (through the §25 gate)
-| route | cost | status | source |
+## Construction options (evaluated against the §25 criteria)
+| construction | cost | status | source |
 |---|---|---|---|
 ${subs}
 
-## Issuance (what this card requires of issuers)
+## Issuance (what this record requires of issuers)
 ${li(card.issuance) || '- none beyond the credential as specified'}
 
 ## Provenance
@@ -198,7 +198,7 @@ ${prov.spec?.length ? `- spec: ${prov.spec.join(' · ')}\n` : ''}${prov.catalog 
 |---|---|---|---|---|
 ${hist}
 ${card.revisions?.length ? `
-## Revisions (within a state — the card changed, the state did not)
+## Revisions (within a state — the record changed, the state did not)
 | date | by | note |
 |---|---|---|
 ${card.revisions.map(r => `| ${r.date} | ${r.by} | ${r.note} |`).join('\n')}
@@ -208,26 +208,26 @@ export function renderIssue(card) {
   const need = card.request?.need ? `\n**Need:** ${card.request.need}` : '';
   return `### ${card.id} · ${card.name}
 
-**Statement.** ${card.dish}
+**Statement.** ${card.statement}
 ${need}
-**Proves over:** ${card.ingredients.filter(x => /credential|VMC|VRC|VDC|PHC|attestation/i.test(x)).join('; ') || card.ingredients[0]}
+**Proves over:** ${card.witness.filter(x => /credential|VMC|VRC|VDC|PHC|attestation/i.test(x)).join('; ') || card.witness[0]}
 
 **Does not establish:** ${card.doesNotEstablish.slice(0, 3).join('; ')}${card.doesNotEstablish.length > 3 ? '; …' : ''}
 
-**State:** \`${card.state}\`${card.components ? ` · composes cards ${card.components.join(', ')}` : ''}
-**Card (full detail, rebuildable):** \`board/cards/${card.id}.json\` · rendered: \`board/render/${card.id}.md\`
-**Construction options:** ${card.substitutions.map(s => `${s.route.length > 90 ? s.route.slice(0, 87).trimEnd() + '…' : s.route}${s.measured ? ` (${s.cost})` : ' (unmeasured)'}`).join(' · ')}
+**State:** \`${card.state}\`${card.components ? ` · composes records ${card.components.join(', ')}` : ''}
+**Record (full detail, rebuildable):** \`board/cards/${card.id}.json\` · rendered: \`board/render/${card.id}.md\`
+**Construction options:** ${card.options.map(s => `${s.construction.length > 90 ? s.construction.slice(0, 87).trimEnd() + '…' : s.construction}${s.measured ? ` (${s.cost})` : ' (unmeasured)'}`).join(' · ')}
 `;
 }
 export function renderIndex(cards) {
-  const rows = cards.map(c => `| ${c.id} | ${c.name} | ${c.kind} | ${c.priority || '—'} | \`${c.state}\` | ${c.owner || '—'} | ${c.components ? c.components.join('+') : '—'} | ${c.method.some(m => m.runtime) ? 'yes' : 'no'} |`).join('\n');
+  const rows = cards.map(c => `| ${c.id} | ${c.name} | ${c.kind} | ${c.priority || '—'} | \`${c.state}\` | ${c.owner || '—'} | ${c.components ? c.components.join('+') : '—'} | ${c.relation.some(m => m.runtime) ? 'yes' : 'no'} |`).join('\n');
   return `# BOARD — requested ZK proofs (generated by \`board.mjs index\`, do not edit)
 
 | id | name | kind | priority | state | owner | composes | runtime |
 |---|---|---|---|---|---|---|---|
 ${rows}
 
-States: ${STATES.join(' → ')}. A row may not claim more than its card; a card no more than its runtime; a runtime no more than an independent run.
+States: ${STATES.join(' → ')}. A row may not claim more than its record; a record no more than its runtime; a runtime no more than an independent run.
 `;
 }
 
@@ -298,11 +298,11 @@ export function buildSite(cards) {
   const integrationReview = existsSync(integrationReviewPath) ? JSON.parse(readFileSync(integrationReviewPath, 'utf8')) : null;
   const syncPanel = (r, cls) => '<div class="' + cls + '"><h3>' + esc(r.title) + '</h3><p class="muted">Checked ' + esc(r.checkedAt) + (r.note ? ' · ' + esc(r.note) : '') + '</p><ul>' + r.items.map(item => '<li>' + esc(item) + '</li>').join('') + '</ul></div>';
   const integrationReviewHtml = integrationReview ? '<div class="panel" id="sync-review">' + syncPanel(integrationReview, 'sync-current') + ((integrationReview.previous || []).length ? '<details class="sync-history"><summary>Earlier syncs (' + integrationReview.previous.length + ') — historical, superseded above</summary>' + integrationReview.previous.map(r => syncPanel(r, 'sync-previous')).join('') + '</details>' : '') + '</div>' : '';
-  const doorsHtml = doors.length ? `<div class="panel"><table><tr><th>#</th><th>door</th><th>what</th><th>status</th><th>draft</th><th>cards</th><th>actor</th></tr>${doors.map(d => `<tr class="door-${esc(d.status)}"><td>${esc(d.id)}</td><td><a target="_blank" href="${esc(d.where)}">${esc(d.title)}</a></td><td>${esc(d.what)}</td><td><span class="chip">${esc(d.status)}</span></td><td>${d.draft ? `<a href="#draft-${esc(d.draft)}">${esc(d.draft)}</a>` : '—'}</td><td>${(d.cards || []).map(c => `<a href="#card-${c}">${c}</a>`).join(' ') || '—'}</td><td>${esc(d.actor || '')}</td></tr>`).join('')}</table></div>` : '<div class="panel">No doors file.</div>';
+  const doorsHtml = doors.length ? `<div class="panel"><table><tr><th>#</th><th>door</th><th>what</th><th>status</th><th>draft</th><th>records</th><th>actor</th></tr>${doors.map(d => `<tr class="door-${esc(d.status)}"><td>${esc(d.id)}</td><td><a target="_blank" href="${esc(d.where)}">${esc(d.title)}</a></td><td>${esc(d.what)}</td><td><span class="chip">${esc(d.status)}</span></td><td>${d.draft ? `<a href="#draft-${esc(d.draft)}">${esc(d.draft)}</a>` : '—'}</td><td>${(d.cards || []).map(c => `<a href="#card-${c}">${c}</a>`).join(' ') || '—'}</td><td>${esc(d.actor || '')}</td></tr>`).join('')}</table></div>` : '<div class="panel">No doors file.</div>';
   const cardHtml = cards.map(c => `
 <div class="card" data-k="card-${c.id}"><div class="head"><span class="ord">${c.id}</span>
   <span class="title">${esc(c.name)}</span><span class="chip">${c.kind}</span><span class="chip state">${c.state}</span></div>
-<div class="note">${esc(c.dish)}</div>
+<div class="note">${esc(c.statement)}</div>
 <div class="body"><pre>${esc(renderCard(c))}</pre></div>
 <div class="bar"><button onclick="cp(this)">Copy card markdown</button><span class="copied">copied ✓</span>
 <button class="ghost" onclick="cpIssue(this)">Copy board-issue body</button><pre class="hidden">${esc(renderIssue(c))}</pre></div></div>`).join('\n');
@@ -417,17 +417,17 @@ ${draftHtml}
 
 <h2 class="sec" id="process">Process — the board as a trust task</h2>
 <div class="panel">
-<p><b>Rule.</b> A row may not claim more than its card; a card no more than a runtime has measured; a runtime no more than an independent run has reproduced. States are monotone: <code>${STATES.join(' → ')}</code>.</p>
+<p><b>Rule.</b> A row may not claim more than its record; a record no more than a runtime has measured; a runtime no more than an independent run has reproduced. States are monotone: <code>${STATES.join(' → ')}</code>.</p>
 <table><tr><th>transition</th><th>trust task</th><th>issuer → recipient</th><th>sideEffects</th><th>exposure</th></tr>${stateRows}</table>
-<p style="margin-top:.8rem">Refusals are register strings (<code>card-clause-unbound</code>, <code>card-composed-yield-is-union</code>, <code>run-same-hands</code>, <code>vet-self-vouch</code>, <code>publish-without-rite</code> …). The runner may not be the constructor. Evidence fields currently record declared references; these transitions are not themselves independent verification of those references. Full text: <code>board/README.md</code>.</p>
+<p style="margin-top:.8rem">Refusals are register strings (<code>record-clause-unbound</code>, <code>record-composed-disclosure-is-union</code>, <code>run-same-hands</code>, <code>vet-self-vouch</code>, <code>publish-without-rite</code> …). The runner may not be the constructor. Evidence fields currently record declared references; these transitions are not themselves independent verification of those references. Full text: <code>board/README.md</code>.</p>
 <details><summary>README</summary><pre>${esc(readme)}</pre></details>
 </div>
 
-<h2 class="sec" id="cards">Cards — the recipes</h2>
+<h2 class="sec" id="cards">Records — the construction records</h2>
 ${cardHtml}
 
 <h2 class="sec" id="cookbook">ZK Book — the deck as a Spec-Up-T draft</h2>
-<div class="panel"><p><code>board.mjs spec</code> renders every card into <code>zkbook/spec/recipes.md</code> (one section per recipe; primitive and composed indexed separately) and generates a term for every gadget, role and recipe part. Hand-written chapters: header · intro · <b>pantry</b> (context descriptor, set roots, epoch, transcript digest, declared scope, public-signal order) · appendix. Render: <code>cd zkbook &amp;&amp; npm install &amp;&amp; npm run render</code> → <code>docs/index.html</code>. The state printed at the top of each recipe says how much weight the page can bear; evidence maturity does not confer normative status; adoption remains a task-force decision.</p><p>Offered upstream as draft R (the consolidated anchor) with the pull request body in draft P; the run above is the order. The specification repository is <code>trustoverip/dtgwg-zkp-spec</code> and the apparatus rides in as <code>conformance/</code>.</p></div>
+<div class="panel"><p><code>board.mjs spec</code> renders every record into <code>zkbook/spec/constructions.md</code> (one section per construction record; primitive and composed indexed separately) and generates a term for every gadget, role and record part. Hand-written chapters: header · intro · <b>public inputs</b> (context descriptor, set roots, epoch, transcript digest, declared scope, public-signal order) · appendix. Render: <code>cd zkbook &amp;&amp; npm install &amp;&amp; npm run render</code> → <code>docs/index.html</code>. The state printed at the top of each record says how much weight the page can bear; evidence maturity does not confer normative status; adoption remains a task-force decision.</p><p>Offered upstream as draft R (the consolidated anchor) with the pull request body in draft P; the run above is the order. The specification repository is <code>trustoverip/dtgwg-zkp-spec</code> and the apparatus rides in as <code>conformance/</code>.</p></div>
 
 <div class="foot">Generated from <code>board/cards/*.json</code> and <code>board/drafts/*.md</code>. Nothing here is posted or pushed by the tool; posting and publication are the maintainer's acts.</div>
 </div>
@@ -448,7 +448,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     for (const c of cards) { const r = validateCard(c, cards); if (r.length) { bad++; console.log(`${c.id} REFUSED ${r.join(' ')}`); } else console.log(`${c.id} ok (${c.kind}, ${c.state})`); }
     process.exit(bad ? 1 : 0);
   } else if (cmd === 'render' || cmd === 'issue') {
-    const c = loadCard(a1); if (!c) { console.log(`card-not-found:${a1}`); process.exit(1); }
+    const c = loadCard(a1); if (!c) { console.log(`record-not-found:${a1}`); process.exit(1); }
     process.stdout.write(cmd === 'render' ? renderCard(c) : renderIssue(c));
   } else if (cmd === 'index') {
     writeFileSync(join(ROOT, 'BOARD.md'), renderIndex(cards));
@@ -456,7 +456,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     for (const c of cards) writeFileSync(join(ROOT, 'render', `${c.id}.md`), renderCard(c));
     console.log(`BOARD.md + render/ written (${cards.length} cards)`);
   } else if (cmd === 'advance') {
-    const c = loadCard(a1); if (!c) { console.log(`card-not-found:${a1}`); process.exit(1); }
+    const c = loadCard(a1); if (!c) { console.log(`record-not-found:${a1}`); process.exit(1); }
     const res = advance(c, a2, { by: arg('--by'), evidence: arg('--evidence'), date: arg('--date') });
     if (!res.ok) { console.log(`REFUSED ${res.refusal}`); process.exit(1); }
     saveCard(res.card); console.log(`${a1} → ${a2} via ${res.task.task} (${res.task.issuer} → ${res.task.recipient})`);
@@ -472,9 +472,9 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const moved = digestSurvey(loadLatestSurvey());
     console.log(`survey/latest.json + WATCH.md written — fetched ${r.fetchedAt}, since ${r.since}, ${moved.length} threads moved across ${r.repos.join(', ')}`);
   } else if (cmd === 'spec') {
-    const r = writeCookbook(cards, GADGETS);
+    const r = writeSpec(cards, GADGETS);
     if (r.refusal) { console.log(`REFUSED ${r.refusal}`); process.exit(1); }
-    console.log(`zkbook/spec: recipes.md (${r.cards}) + records.md (${r.records}) + stacks.md (${r.stacks}) + ${r.terms} generated terms written${r.exists ? '' : ' — zkbook/specs.json missing'}`);
+    console.log(`zkbook/spec: constructions.md (${r.cards}) + records.md (${r.records}) + stacks.md (${r.stacks}) + ${r.terms} generated terms written${r.exists ? '' : ' — zkbook/specs.json missing'}`);
   } else {
     console.log('usage: board.mjs validate | render <id> | issue <id> | index | advance <id> <state> --by X --evidence Y | site | survey [--since ISO] | spec');
   }

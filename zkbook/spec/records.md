@@ -16,8 +16,8 @@ The first request is Glenn Gore's ADR-001, *Community-Anchored Proof*, named by 
 | author | Glenn Gore (stormer78), First Person Project |
 | status | Proposed · 2026-08-25 |
 | audience | Four working groups: DTG Credentials · ZKP · Trust Registry · Governance |
-| source | https://docs.fpp.storm.ws/ (ADR-001) · named on the board: zkp-tf #18 — ScottJeezey 2026-08-27: 'a natural first one to seed it with' |
-| answered by | [Construction 010 · Community-Anchored Proof (ADR-001)](#construction-010-community-anchored-proof-adr-001) |
+| source | https://docs.fpp.storm.ws/ (ADR-001) · named in zkp-tf #18 — ScottJeezey 2026-08-27: 'a natural first one to seed it with' |
+| answered by | [Construction 010 · Community-Anchored Proof (ADR-001)](#construction-010-%C2%B7-community-anchored-proof-(adr-001)) |
 
 > Clause texts below are close paraphrases for crosswalk purposes; the record of authority is Glenn's document. The ADR is deliberately format-agnostic and 'does not choose how to build it' — the construction record is the how.
 
@@ -39,32 +39,32 @@ Status: **covered** (the record carries it as written) · **refined** (carried w
 |---|---|---|---|---|---|
 | P1 | privacy | reveals no relationship identifier from the relationship credential | 010 adversary (verifier · verifiers-colluding) | **covered** |  |
 | P2 | privacy | reveals no identifier of the counterparty who issued it | 010 adversary | **covered** |  |
-| P3 | privacy | reveals no identifier of the holder beyond attributes the holder deliberately discloses | 010 yield (deliberate disclosure line) | **covered** |  |
-| P4 | privacy | two proofs from the same credentials cannot be linked — by one verifier or by verifiers comparing notes | 010 method (nullifier clause, parameterised) · adversary (verifiers-colluding) | **refined** | full show-unlinkability cannot coexist with reuse detection in the same context (ePrint 2026/333 §5.3); parameterise by context: unlinkable across contexts, the declared nullifier the only link within a reuse-detecting one |
-| P5 | privacy | a verifier learns the outcome and deliberately disclosed attributes, nothing further | 010 yield | **covered** |  |
+| P3 | privacy | reveals no identifier of the holder beyond attributes the holder deliberately discloses | 010 disclosure set (deliberate disclosure line) | **covered** |  |
+| P4 | privacy | two proofs from the same credentials cannot be linked — by one verifier or by verifiers comparing notes | 010 relation (nullifier clause, parameterised) · adversary (verifiers-colluding) | **refined** | full show-unlinkability cannot coexist with reuse detection in the same context (ePrint 2026/333 §5.3); parameterise by context: unlinkable across contexts, the declared nullifier the only link within a reuse-detecting one |
+| P5 | privacy | a verifier learns the outcome and deliberately disclosed attributes, nothing further | 010 disclosure set | **covered** |  |
 | S1 | soundness | a party lacking the required credentials cannot produce a verifying proof | 010 method 1–3 · conformance fixtures rejects-unsat / rejects-verify | **covered** |  |
-| S2 | soundness | clause 3 cannot be satisfied unless the counterparty genuinely holds a membership credential from the same community | 010 method (set-membership on the voucher's grant leaf, card 001) | **refined** | proves the community-issued grant half only (cred-spec PR #12 pair; PR #26 carve-out) — the acknowledgement is not in the presenter's hands |
-| S3 | soundness | the counterparty need not be online, consulted, or aware | 010 witness (proven from root_C, not from the voucher) | **refined** | under WD02 pairwise identifiers the voucher's linkage (VRC-side ↔ VMC-side identifier) must have been supplied at issuance or avoided by one directed identifier — card 007 / HR-2; otherwise clause 3 is unprovable offline |
-| S4 | soundness | the presenter proves they are the subject of the credentials, not merely a holder of copies | 010 method (key-binding, card 004) | **covered** |  |
-| S5 | soundness | bound to a verifier challenge; not replayable to another verifier or time | 010 method (transcript-bind, card 003) · public inputs transcriptDigest | **covered** |  |
-| S6 | soundness | (added by the ZKP TF) the voucher is not the holder — a self-vouch is unsatisfiable | 010 method (distinctness, card 005) | **added** | without it a member with two identifiers vouches for themselves and clauses 1–3 verify |
-| S7 | soundness | (added, WD02) the identifiers a party used in the VRC and in their VMC are controlled by one secret | 010 method (key-binding, card 007) | **added** | cred-spec PR #30 §Community-Anchored: 'the proof must additionally establish common control' |
-| C1 | currency | does not verify if any relied-on credential is revoked or suspended | 010 method (non-revocation, card 006) | **covered** |  |
-| C2 | currency | states the registry state it was made against; the verifier judges recency | 010 public inputs (root_C, rl_root, epoch) · yield | **covered** |  |
+| S2 | soundness | clause 3 cannot be satisfied unless the counterparty genuinely holds a membership credential from the same community | 010 relation (set-membership on the voucher's grant leaf, record 001) | **refined** | proves the community-issued grant half only (cred-spec PR #12 pair; PR #26 carve-out) — the acknowledgement is not in the presenter's hands |
+| S3 | soundness | the counterparty need not be online, consulted, or aware | 010 witness (proven from root_C, not from the voucher) | **refined** | under WD02 pairwise identifiers the voucher's linkage (VRC-side ↔ VMC-side identifier) must have been supplied at issuance or avoided by one directed identifier — record 007 / HR-2; otherwise clause 3 is unprovable offline |
+| S4 | soundness | the presenter proves they are the subject of the credentials, not merely a holder of copies | 010 relation (key-binding, record 004) | **covered** |  |
+| S5 | soundness | bound to a verifier challenge; not replayable to another verifier or time | 010 relation (transcript-bind, record 003) · public inputs transcriptDigest | **covered** |  |
+| S6 | soundness | (added by the ZKP TF) the voucher is not the holder — a self-vouch is unsatisfiable | 010 relation (distinctness, record 005) | **added** | without it a member with two identifiers vouches for themselves and clauses 1–3 verify |
+| S7 | soundness | (added, WD02) the identifiers a party used in the VRC and in their VMC are controlled by one secret | 010 relation (key-binding, record 007) | **added** | cred-spec PR #30 §Community-Anchored: 'the proof must additionally establish common control' |
+| C1 | currency | does not verify if any relied-on credential is revoked or suspended | 010 relation (non-revocation, record 006) | **covered** |  |
+| C2 | currency | states the registry state it was made against; the verifier judges recency | 010 public inputs (root_C, rl_root, epoch) · disclosure set | **covered** |  |
 | C3 | currency | establishing currency must not itself identify the holder | 010 adversary (registry-operator · issuer-verifier-colluding) | **covered** | holds only if roots are fetched without a per-holder query — stated as the condition |
 | C4 | currency | the delay between a change and proofs reflecting it is bounded and published | 010 horizon (status freshness, C4 bound) | **open** | the bound is a registry/governance publication, not a proof property — construction carries it as a horizon input |
 | T1 | registry | a verifier confirms the community is one it recognises without learning which member | 010 public inputs (root_C at a stated registry state) | **covered** |  |
 | T2 | registry | whatever the proof relies on from a registry is independently checkable by a party that did not create it | 006 set-root primitive route · public inputs set roots | **refined** | the set-root primitive (cred-tf #40): signed published root + zero-knowledge membership/status proof in the presentation; paths and openings stay private; root/witness retrieval requires an explicit privacy policy |
 | T3 | registry | two verifiers checking against the same registry state reach the same verdict | 010 conformance fixtures (current family) · fixtures determinism | **covered** |  |
 | T4 | registry | a registry's obligations are stated as an interface so any conformant registry can serve these proofs | — (Trust Registry TF) | **open** |  |
-| D1 | deployment | proving is feasible on the devices that hold credentials — a phone or an agent — within a stated time and memory budget | 010 substitutions (Groth16 est. ≈35–45k constraints ~2 s; blackbox 0.03 s/vouch) · stacks layer (ProveKit phone numbers) | **partial** | budgets not yet stated by the TF; the options layer supplies measured numbers per stack for the gate to set them |
+| D1 | deployment | proving is feasible on the devices that hold credentials — a phone or an agent — within a stated time and memory budget | 010 options (Groth16 est. ≈35–45k constraints ~2 s; blackbox 0.03 s/vouch) · stacks layer (ProveKit phone numbers) | **partial** | budgets not yet stated by the TF; the options layer supplies measured numbers per stack for the gate to set them |
 | D2 | deployment | verification is cheap enough to run inline | lab: ~8–10 ms verify (Groth16) | **covered** |  |
 | D3 | deployment | a proof fits the transports DTG credentials already travel over | stacks layer: proof size column (721 B Groth16 vs ~716 KB WHIR) | **open** | a profile decision; the options table shows both numbers |
 | X1 | conformance | published test vectors covering proofs that must verify and proofs that must fail | 010 conformance fixtures families · runtimes/fixtures format (accept/reject/lint vectors, rejection-reason register) | **partial** | format exists and is consumed cross-language; 010's own vector family not yet cut |
-| X2 | conformance | an independent implementation can verify another's proofs | registry (independent reproduction) · consumer-py (zero-shared-code consumer) | **partial** | reproduced for cards 001/002/003/005; 010 composition not yet built |
+| X2 | conformance | an independent implementation can verify another's proofs | registry (independent reproduction) · consumer-py (zero-shared-code consumer) | **partial** | reproduced for records 001/002/003/005; 010 composition not yet built |
 | X3 | conformance | any requirement on how credentials are issued is stated explicitly and early | 010 issuance (ZK-friendly signature or published commitment; issuer linkage MAY) · cred-spec #17 | **covered** |  |
 | G1 | governance | a community declares whether private presentation is required, default, or optional | — (Governance; cred-spec §Governance Considerations) | **open** |  |
-| G2 | governance | the assurance a proof carries is traceable to the governance of the issuing community | 010 yield (assurance class via C's governance) · doesNotEstablish (admission correctness) | **covered** |  |
+| G2 | governance | the assurance a proof carries is traceable to the governance of the issuing community | 010 disclosure set (assurance class via C's governance) · doesNotEstablish (admission correctness) | **covered** |  |
 
 #### Acceptance tests → fixture families
 

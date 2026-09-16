@@ -2,7 +2,7 @@
   "id": "004",
   "name": "Holder binding (key from secret)",
   "kind": "primitive",
-  "state": "carded",
+  "state": "specified",
   "priority": "P2",
   "owner": "mitchuski",
   "request": {
@@ -10,23 +10,23 @@
     "by": "ScottJeezey",
     "need": "PR-HLD / ADR-001 S4: the presenter is the subject, not a party holding a copy"
   },
-  "dish": "A verifier learns that the presenting key is derived from the same secret the credentials were issued to, without learning the secret or any long-term key.",
-  "ingredients": [
+  "statement": "A verifier learns that the presenting key is derived from the same secret the credentials were issued to, without learning the secret or any long-term key.",
+  "witness": [
     "holder PRF key / secret",
     "derivation randomness"
   ],
-  "pantry": [
+  "publicInputs": [
     "presentation key or its commitment",
     "transcriptDigest"
   ],
-  "method": [
+  "relation": [
     {
       "clause": "pk_presentation = PRF(secret, context) and the credential commitment opens to the same secret",
       "gadget": "key-binding",
       "runtime": ""
     }
   ],
-  "yield": [
+  "disclosureSet": [
     "presentation key (context-scoped)"
   ],
   "doesNotEstablish": [
@@ -48,7 +48,7 @@
     "key cryptoperiod",
     "credential validity"
   ],
-  "tasting": {
+  "fixtures": {
     "families": [
       "accepts",
       "rejects-unsat"
@@ -57,15 +57,15 @@
       "key-not-derived-from-secret"
     ]
   },
-  "substitutions": [
+  "options": [
     {
-      "route": "EdDSA/Baby-Jubjub identity in-circuit (lab plan)",
+      "construction": "EdDSA/Baby-Jubjub identity in-circuit (lab plan)",
       "cost": "unmeasured",
       "measured": false,
       "source": "PATH-MAP P4 open item"
     },
     {
-      "route": "L_PRF Schnorr proof of PRF-key ownership (paper §9.1)",
+      "construction": "L_PRF Schnorr proof of PRF-key ownership (paper §9.1)",
       "cost": "one Schnorr proof",
       "measured": false,
       "source": "ePrint 2026/333 §7.2.2, §9.1"
@@ -90,11 +90,11 @@
       "task": "board/request"
     },
     {
-      "to": "carded",
+      "to": "specified",
       "by": "mitchuski",
       "date": "2026-08-28",
       "evidence": "runtimes/04-holder-binding STUB.md + paper §7.2 languages",
-      "task": "board/card"
+      "task": "board/specify"
     }
   ]
 }

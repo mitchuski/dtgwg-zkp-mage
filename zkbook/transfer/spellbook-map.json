@@ -12,6 +12,7 @@
     "frontierNote": "Zero Spellbook Part VIII frontier tales (v2.1 form) — Technical Bridge only, same parser, same exclusions; the v3.0 compilation and the Zero Spellbook are parallel works (grimoire v10.4 narrative_sync ruling) and are never merged here, only both read",
     "specRegister": "In the specification text the source is not named as a spellbook or by tale: subsections carry the plain titles in `topics`, the source work is cited once in References as the agentprivacy body of work, and the licence statement lives in the appendix. The tale machinery below is internal to this repository."
   },
+  "direction": "**WG-13 — Direction: the Cryptographic Background and the companion guide.** This chapter is reference material — it reads as a study of zero-knowledge proofs rather than as specification text — and the editors intend it for the companion implementation guide when the working group separates a terse core specification from its guide. It stays in this document for now: the construction records cite it section by section, and Round 1 reviewers need the context beside the records. The separation will happen, but not yet. Status: editors' direction; no group decision recorded.",
   "sections": [
     {
       "id": "P1",

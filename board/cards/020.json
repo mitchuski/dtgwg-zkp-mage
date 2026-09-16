@@ -2,7 +2,7 @@
   "id": "020",
   "name": "Delegation chain (VDC) — agent acts for a member",
   "kind": "composed",
-  "state": "carded",
+  "state": "specified",
   "priority": "P2",
   "owner": "construction: sankarshanmukhopadhyay · DenisPopov15 · mitchuski (per ScottJeezey, cred-tf #40) · record: stormer78 (PR #19)",
   "components": [
@@ -17,19 +17,19 @@
     "by": "stormer78 / sankarshanmukhopadhyay",
     "need": "prove an agent may act for a principal within scope S until T, chain attenuation-only, without revealing the principal — in the chained PROFILE only: the WD02 core VDC is single-hop, principal-issued, delegate-countersigned and needs no chain proof (cred-tf #40 §1)"
   },
-  "dish": "A verifier learns that the presenting agent holds a delegation chain rooted at a principal who is a member of a recognised community, with scope narrowing at every hop, no hop expired or revoked, and every hop accepted by its delegate — without learning the principal. (Profile case; the core single-hop VDC is verified by five local checks and no proof.)",
-  "ingredients": [
+  "statement": "A verifier learns that the presenting agent holds a delegation chain rooted at a principal who is a member of a recognised community, with scope narrowing at every hop, no hop expired or revoked, and every hop accepted by its delegate — without learning the principal. (Profile case; the core single-hop VDC is verified by five local checks and no proof.)",
+  "witness": [
     "the VDC chain (grant credentials), each hop's scope, validUntil, maxDepth",
     "the principal's membership leaf",
     "the agent's key secret",
     "each hop’s acceptance countersignature (`delegation.accepts` = SAID of the grant) — the acceptance is constitutive, not optional evidence (cred-tf #40 §3, KERI two-seal shape)"
   ],
-  "pantry": [
+  "publicInputs": [
     "root_C, rl_root, epoch",
     "the invoked scope term (disclosed)",
     "transcriptDigest"
   ],
-  "method": [
+  "relation": [
     {
       "clause": "act ∈ scope_n ⊆ … ⊆ scope_root (set inclusion over exact matches), validUntil monotone along the chain, and depth bounded by every ancestor: a hop below a parent bearing `maxDepth` n bears at most n − 1, no hop lies more than n steps below an ancestor bearing n, and no hop exists below a parent that omits `maxDepth` or sets it to 0; the chain terminates in a root delegation issued by the principal (cred-spec §Delegation Chains, WD02, checks 2–5)",
       "gadget": "chain-resolve"
@@ -64,7 +64,7 @@
       "component": "003"
     }
   ],
-  "yield": [
+  "disclosureSet": [
     "the invoked scope term",
     "root_C, rl_root, epoch",
     "transcriptDigest"
@@ -73,7 +73,7 @@
     "that the principal authorised this specific act (grant ≠ invocation — the invocation is a trust-task artifact)",
     "the principal's identity",
     "that the agent is not also acting for others",
-    "that the principal has not declined renewal — in the core, revocation is non-renewal within one validUntil; the profile’s credentialStatus re-adds a live lookup and this card’s non-revocation leg is what lets the presentation carry it instead",
+    "that the principal has not declined renewal — in the core, revocation is non-renewal within one validUntil; the profile’s credentialStatus re-adds a live lookup and this record’s non-revocation leg is what lets the presentation carry it instead",
     "what the delegate actually did in the principal’s name — the invocation record lives on the framework side (the artifact gap, cred-tf #40 Q8)",
     "chain-length hiding without a validated fixed-shape or padded profile",
     "that the principal is the party the verifier intends to deal with — §Delegation Chains check 5 is the verifier's own check, outside the proof; the proof shows the root's issuer is a leaf of root_C, not that it is the intended party",
@@ -93,7 +93,7 @@
     "the shortest validUntil in the chain",
     "status freshness"
   ],
-  "tasting": {
+  "fixtures": {
     "families": [
       "accepts",
       "rejects-unsat",
@@ -105,15 +105,15 @@
       "hop-revoked"
     ]
   },
-  "substitutions": [
+  "options": [
     {
-      "route": "bounded monolithic proof of a fixed maximum chain depth; padding semantics and authenticated hop checks to be defined",
+      "construction": "bounded monolithic proof of a fixed maximum chain depth; padding semantics and authenticated hop checks to be defined",
       "cost": "unmeasured",
       "measured": false,
       "source": "editorial alternative for review, 2026-09-08"
     },
     {
-      "route": "recursive/folding proof per hop",
+      "construction": "recursive/folding proof per hop",
       "cost": "unmeasured",
       "measured": false,
       "source": "PATH-MAP P4 (PLONKish/folding counter-proposal welcome)"
@@ -146,11 +146,11 @@
       "task": "board/request"
     },
     {
-      "to": "carded",
+      "to": "specified",
       "by": "mitchuski",
       "date": "2026-09-05",
       "evidence": "ScottJeezey accepted delegation-chain validity as a ZKP TF target (cred-tf #40, 2026-08-24); predicate shape + acceptance clause + core/profile split from stormer78’s note; issuance lines from cred-spec #31",
-      "task": "board/card"
+      "task": "board/specify"
     }
   ],
   "revisions": [

@@ -5,46 +5,80 @@
   "state": "requested",
   "priority": "P3",
   "owner": "mitchuski",
-  "components": ["001", "003"],
+  "components": [
+    "001",
+    "003"
+  ],
   "request": {
     "issue": "cred-spec #25 (stormer78 2026-08-24: forming a cross-community edge needs both communities' policies to admit it, and neither side can learn the other's policy before publishing a half; first signal of inadmissibility is a rejection after one half is already out) · cred-spec #25 (mitchuski 2026-08-25: step one is plain published admissibility predicates, no proof machinery; the stronger form — 'my half would be admissible under the counterparty's policy' proven without revealing the policy or the member — is future work for the ZKP task force) · cred-spec #25 (geoffturk 2026-09-07: the two predicates in WD02 vocabulary — which correlation scopes a community accepts for the subject of a VRC its members publish, and whether it admits a non-member subject)",
     "by": "stormer78 (OpenVTC implementation, cred-spec #25) · geoffturk (WD02 restatement) — requested by the ZKP TF co-chair on the record",
     "need": "turn a failed cross-community publish into a pre-flight check that reveals nothing about either membership: each party proves its half would be admissible under the other community's published policy commitment before either half is published, and the two proofs are exchanged commit-before-reveal so that whoever goes first has not already disclosed"
   },
-  "dish": "Placeholder at state `requested`: each party learns that the counterparty's half of a proposed cross-community edge would be admitted under this party's own community policy — subject scope and non-member admission — without learning the counterparty's identifier, membership or policy beyond the yes, and with neither half published until both answers are yes.",
-  "ingredients": [
-    "to be carded: this party's proposed half (identifier, declared scope, membership evidence) and the opening of its commitment; the counterparty's published policy commitment and this party's satisfying witness under it"
+  "statement": "Placeholder at state `requested`: each party learns that the counterparty's half of a proposed cross-community edge would be admitted under this party's own community policy — subject scope and non-member admission — without learning the counterparty's identifier, membership or policy beyond the yes, and with neither half published until both answers are yes.",
+  "witness": [
+    "to be specified: this party's proposed half (identifier, declared scope, membership evidence) and the opening of its commitment; the counterparty's published policy commitment and this party's satisfying witness under it"
   ],
-  "pantry": [
-    "to be carded: each community's published admissibility-policy commitment (the two WD02 predicates as a committed set); the commitment to each half; transcriptDigest for the exchange"
+  "publicInputs": [
+    "to be specified: each community's published admissibility-policy commitment (the two WD02 predicates as a committed set); the commitment to each half; transcriptDigest for the exchange"
   ],
-  "method": [
-    {"clause": "to be carded — commit to this party's half before anything is published (commit-before-reveal ordering, cred-spec #25 question 3)", "gadget": "commitment-open"},
-    {"clause": "to be carded — this half's subject scope and membership status are members of the counterparty community's accepted-forms set, proven against its published policy commitment", "gadget": "set-membership", "component": "001"},
-    {"clause": "to be carded — bound to one exchange transcript so an admissibility answer cannot be replayed against a different half", "gadget": "transcript-bind", "component": "003"}
+  "relation": [
+    {
+      "clause": "to be specified — commit to this party's half before anything is published (commit-before-reveal ordering, cred-spec #25 question 3)",
+      "gadget": "commitment-open"
+    },
+    {
+      "clause": "to be specified — this half's subject scope and membership status are members of the counterparty community's accepted-forms set, proven against its published policy commitment",
+      "gadget": "set-membership",
+      "component": "001"
+    },
+    {
+      "clause": "to be specified — bound to one exchange transcript so an admissibility answer cannot be replayed against a different half",
+      "gadget": "transcript-bind",
+      "component": "003"
+    }
   ],
-  "yield": [
-    "to be carded: the two yes/no answers and the transcript digest; the halves themselves only after both answers are yes"
+  "disclosureSet": [
+    "to be specified: the two yes/no answers and the transcript digest; the halves themselves only after both answers are yes"
   ],
   "doesNotEstablish": [
-    "to be carded: that the edge will be accepted once published — admissibility under a policy commitment is not acceptance by a community's verifier; that either party is a member of anything beyond what the policy predicate asked; that the policy commitment is current"
+    "to be specified: that the edge will be accepted once published — admissibility under a policy commitment is not acceptance by a community's verifier; that either party is a member of anything beyond what the policy predicate asked; that the policy commitment is current"
   ],
   "adversary": [
-    {"claim": "to be carded: the counterparty learns only the admissibility answer, not the half, the identifier or the membership behind it", "against": ["verifier"]}
+    {
+      "claim": "to be specified: the counterparty learns only the admissibility answer, not the half, the identifier or the membership behind it",
+      "against": [
+        "verifier"
+      ]
+    }
   ],
   "horizon": [
-    "to be carded: the validity of each community's published policy commitment; the exchange transcript's challenge"
+    "to be specified: the validity of each community's published policy commitment; the exchange transcript's challenge"
   ],
-  "tasting": {
-    "families": ["accepts", "rejects-unsat"],
-    "rejectionCodes": ["half-inadmissible (unsat: the half's form is not in the counterparty's accepted set)"]
+  "fixtures": {
+    "families": [
+      "accepts",
+      "rejects-unsat"
+    ],
+    "rejectionCodes": [
+      "half-inadmissible (unsat: the half's form is not in the counterparty's accepted set)"
+    ]
   },
-  "substitutions": [
-    {"route": "step one, no proof — the two predicates published as discoverable fields on the community profile (the proposed answer on #25; reveals nothing about membership)", "cost": "zero; a pre-flight read", "measured": false, "source": "cred-spec #25 proposed answer · geoffturk 2026-09-07 WD02 restatement"},
-    {"route": "to be carded — membership of the half's form in a committed policy set, exchanged commit-before-reveal", "cost": "unmeasured", "measured": false, "source": "cred-spec #25 (mitchuski 2026-08-25): 'mutual admissibility as a zero-knowledge predicate'"}
+  "options": [
+    {
+      "construction": "step one, no proof — the two predicates published as discoverable fields on the community profile (the proposed answer on #25; reveals nothing about membership)",
+      "cost": "zero; a pre-flight read",
+      "measured": false,
+      "source": "cred-spec #25 proposed answer · geoffturk 2026-09-07 WD02 restatement"
+    },
+    {
+      "construction": "to be specified — membership of the half's form in a committed policy set, exchanged commit-before-reveal",
+      "cost": "unmeasured",
+      "measured": false,
+      "source": "cred-spec #25 (mitchuski 2026-08-25): 'mutual admissibility as a zero-knowledge predicate'"
+    }
   ],
   "issuance": [
-    "to be carded: a community publishes its admissibility predicates as a commitment the proof can open against (the registry-ZK interaction the credential specification leaves to this task force)"
+    "to be specified: a community publishes its admissibility predicates as a commitment the proof can open against (the registry-ZK interaction the credential specification leaves to this task force)"
   ],
   "provenance": {
     "spec": [
@@ -55,6 +89,12 @@
     "commit": "github.com/mitchuski/dtgwg-zkp-mage"
   },
   "history": [
-    {"to": "requested", "by": "mitchuski (on cred-spec #25, 2026-08-25) — requested by stormer78's issue and geoffturk's 2026-09-07 restatement", "date": "2026-09-11", "evidence": "cred-spec #25: 'There is a stronger form the ZKP task force can carry as future work: proving my half would be admissible under the counterparty's policy without revealing the policy or the member' — placed on the board 2026-09-11 (door D23); every field above is a placeholder until carded", "task": "board/request"}
+    {
+      "to": "requested",
+      "by": "mitchuski (on cred-spec #25, 2026-08-25) — requested by stormer78's issue and geoffturk's 2026-09-07 restatement",
+      "date": "2026-09-11",
+      "evidence": "cred-spec #25: 'There is a stronger form the ZKP task force can carry as future work: proving my half would be admissible under the counterparty's policy without revealing the policy or the member' — placed on the request register 2026-09-11 (open item D23); every field above is a placeholder until specified",
+      "task": "board/request"
+    }
   ]
 }

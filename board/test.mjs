@@ -1,7 +1,7 @@
 // board/test.mjs — the suite. Zero deps. Run: node board/test.mjs
 import { loadCards, validateCard, advance, renderCard, renderIssue, renderIndex, buildSite, STATES, TASKS, GADGETS } from './tools/board.mjs';
 import { digestSurvey } from './tools/watch.mjs';
-import { renderRecipes, GADGET_DEFS, loadRecords, validateRecord, renderRecords, loadStacks, renderStacks } from './tools/spec.mjs';
+import { renderConstructions, GADGET_DEFS, loadRecords, validateRequest, renderRequests, loadStacks, renderStacks } from './tools/spec.mjs';
 import { ROOT } from './tools/board.mjs';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
@@ -19,43 +19,43 @@ t('T3 010 is composed of primitives that exist', () => { const c = cards.find(x 
 
 // refusals, each triggered live
 const base = structuredClone(cards.find(x => x.id === '010'));
-t('R1 card-clause-unbound', () => { const c = structuredClone(base); c.method[0].gadget = 'magic'; return has(validateCard(c, cards), 'card-clause-unbound:1'); });
-t('R2 card-no-does-not-establish', () => { const c = structuredClone(base); c.doesNotEstablish = []; return has(validateCard(c, cards), 'card-no-does-not-establish'); });
-t('R3 card-no-adversary', () => { const c = structuredClone(base); c.adversary = []; return has(validateCard(c, cards), 'card-no-adversary'); });
-t('R4 card-adversary-unknown', () => { const c = structuredClone(base); c.adversary[0].against = ['the-void']; return has(validateCard(c, cards), 'card-adversary-unknown:the-void'); });
-t('R5 card-no-horizon', () => { const c = structuredClone(base); c.horizon = []; return has(validateCard(c, cards), 'card-no-horizon'); });
-t('R6 card-component-missing', () => { const c = structuredClone(base); c.components.push('999'); return has(validateCard(c, cards), 'card-component-missing:999'); });
-t('R7 card-composed-yield-is-union (composition must declare its own disclosure set)', () => {
-  const c = structuredClone(base); c.yield = [...new Set(c.components.flatMap(k => cards.find(x => x.id === k).yield))];
-  return has(validateCard(c, cards), 'card-composed-yield-is-union');
+t('R1 record-clause-unbound', () => { const c = structuredClone(base); c.relation[0].gadget = 'magic'; return has(validateCard(c, cards), 'record-clause-unbound:1'); });
+t('R2 record-no-does-not-establish', () => { const c = structuredClone(base); c.doesNotEstablish = []; return has(validateCard(c, cards), 'record-no-does-not-establish'); });
+t('R3 record-no-adversary', () => { const c = structuredClone(base); c.adversary = []; return has(validateCard(c, cards), 'record-no-adversary'); });
+t('R4 record-adversary-unknown', () => { const c = structuredClone(base); c.adversary[0].against = ['the-void']; return has(validateCard(c, cards), 'record-adversary-unknown:the-void'); });
+t('R5 record-no-horizon', () => { const c = structuredClone(base); c.horizon = []; return has(validateCard(c, cards), 'record-no-horizon'); });
+t('R6 record-component-missing', () => { const c = structuredClone(base); c.components.push('999'); return has(validateCard(c, cards), 'record-component-missing:999'); });
+t('R7 record-composed-disclosure-is-union (composition must declare its own disclosure set)', () => {
+  const c = structuredClone(base); c.disclosureSet = [...new Set(c.components.flatMap(k => cards.find(x => x.id === k).disclosureSet))];
+  return has(validateCard(c, cards), 'record-composed-disclosure-is-union');
 });
-t('R8 card-composed-no-single-transcript', () => { const c = structuredClone(base); c.pantry = c.pantry.filter(p => !/transcript/i.test(p)); return has(validateCard(c, cards), 'card-composed-no-single-transcript'); });
-t('R9 card-primitive-multi-gadget', () => { const c = structuredClone(cards.find(x => x.id === '001')); c.method.push({ clause: 'x', gadget: 'range' }); return has(validateCard(c, cards), 'card-primitive-multi-gadget'); });
-t('R10 construct-no-measurement when state says constructed', () => { const c = structuredClone(base); c.state = 'constructed'; c.history.push({ to: 'constructed', by: 'x', date: 'd', evidence: 'e' }); c.substitutions.forEach(s => s.measured = false); c.method.forEach(m => m.runtime = 'r'); return has(validateCard(c, cards), 'construct-no-measurement'); });
+t('R8 record-composed-no-single-transcript', () => { const c = structuredClone(base); c.publicInputs = c.publicInputs.filter(p => !/transcript/i.test(p)); return has(validateCard(c, cards), 'record-composed-no-single-transcript'); });
+t('R9 record-primitive-multi-gadget', () => { const c = structuredClone(cards.find(x => x.id === '001')); c.relation.push({ clause: 'x', gadget: 'range' }); return has(validateCard(c, cards), 'record-primitive-multi-gadget'); });
+t('R10 construct-no-measurement when state says constructed', () => { const c = structuredClone(base); c.state = 'constructed'; c.history.push({ to: 'constructed', by: 'x', date: 'd', evidence: 'e' }); c.options.forEach(s => s.measured = false); c.relation.forEach(m => m.runtime = 'r'); return has(validateCard(c, cards), 'construct-no-measurement'); });
 t('R11 history-not-monotone', () => { const c = structuredClone(base); c.history.push({ to: 'requested', by: 'x', date: 'd', evidence: 'e' }); return has(validateCard(c, cards), 'history-not-monotone:requested'); });
 
 // the state machine as a trust task
 t('S1 advance refuses a skipped state', () => { const r = advance(structuredClone(base), 'run', { by: 'a', evidence: 'e' }); return !r.ok && r.refusal === 'advance-skips-state' || JSON.stringify(r); });
 t('S2 advance refuses without evidence', () => { const r = advance(structuredClone(base), 'constructed', { by: 'a' }); return !r.ok && r.refusal === 'advance-no-evidence' || JSON.stringify(r); });
 t('S3 advance refuses without actor', () => { const r = advance(structuredClone(base), 'constructed', { evidence: 'e' }); return !r.ok && r.refusal === 'advance-no-actor' || JSON.stringify(r); });
-t('S4 carded → constructed needs runtime + measurement (refused on bare evidence)', () => { const r = advance(structuredClone(base), 'constructed', { by: 'mitchuski', evidence: 'runtimes/circom-gadget' }); return (!r.ok && r.refusal === 'construct-no-runtime') || (r.ok ? 'accepted without runtime' : r.refusal); });
+t('S4 specified → constructed needs runtime + measurement (refused on bare evidence)', () => { const r = advance(structuredClone(base), 'constructed', { by: 'mitchuski', evidence: 'runtimes/circom-gadget' }); return (!r.ok && r.refusal === 'construct-no-runtime') || (r.ok ? 'accepted without runtime' : r.refusal); });
 t('S5 full happy path 001: constructed → run → vetted → published, different hands', () => {
   let c = structuredClone(cards.find(x => x.id === '001'));
-  c.tasting.vectors = 'runtimes/fixtures/vectors';
+  c.fixtures.vectors = 'runtimes/fixtures/vectors';
   let r = advance(c, 'run', { by: 'runner-7f', evidence: 'fixtures 13/13 on darwin/arm64' }); if (!r.ok) return 'run: ' + r.refusal;
   r = advance(r.card, 'vetted', { by: 'verifier', evidence: 'registry 0007-seat-7f-card001' }); if (!r.ok) return 'vet: ' + r.refusal;
   r.card.provenance.registry = '0007-seat-7f-card001';
   r = advance(r.card, 'published', { by: 'mitchuski', evidence: 'rite activated 2026-08-xx; board row updated' }); if (!r.ok) return 'pub: ' + r.refusal;
-  return r.card.state === 'published' && r.card.history.length === 6 && r.card.history.map(h => h.to).join('>') === 'requested>carded>constructed>run>vetted>published' || 'bad end state: ' + r.card.history.map(h => h.to).join('>');
+  return r.card.state === 'published' && r.card.history.length === 6 && r.card.history.map(h => h.to).join('>') === 'requested>specified>constructed>run>vetted>published' || 'bad end state: ' + r.card.history.map(h => h.to).join('>');
 });
-t('S6 run-same-hands: the constructor may not be the runner', () => { let c = structuredClone(cards.find(x => x.id === '001')); c.tasting.vectors = 'v'; const r = advance(c, 'run', { by: 'mitchuski', evidence: 'ran it myself' }); return !r.ok && r.refusal === 'run-same-hands' || JSON.stringify(r); });
+t('S6 run-same-hands: the constructor may not be the runner', () => { let c = structuredClone(cards.find(x => x.id === '001')); c.fixtures.vectors = 'v'; const r = advance(c, 'run', { by: 'mitchuski', evidence: 'ran it myself' }); return !r.ok && r.refusal === 'run-same-hands' || JSON.stringify(r); });
 t('S7 vet-self-vouch: a runner who constructed cannot be vetted', () => {
-  let c = structuredClone(cards.find(x => x.id === '001')); c.tasting.vectors = 'v';
+  let c = structuredClone(cards.find(x => x.id === '001')); c.fixtures.vectors = 'v';
   c.history.push({ to: 'run', by: 'mitchuski', date: 'd', evidence: 'e' }); c.state = 'run';
   const r = advance(c, 'vetted', { by: 'verifier', evidence: 'registry 0007' }); return !r.ok && r.refusal === 'vet-self-vouch' || JSON.stringify(r);
 });
 t('S8 publish-without-rite', () => {
-  let c = structuredClone(cards.find(x => x.id === '001')); c.tasting.vectors = 'v'; c.provenance.registry = '0007';
+  let c = structuredClone(cards.find(x => x.id === '001')); c.fixtures.vectors = 'v'; c.provenance.registry = '0007';
   c.history.push({ to: 'run', by: 'r', date: 'd', evidence: 'e' }, { to: 'vetted', by: 'v', date: 'd', evidence: 'registry 0007' }); c.state = 'vetted';
   const r = advance(c, 'published', { by: 'mitchuski', evidence: 'pushed' }); return !r.ok && r.refusal === 'publish-without-rite' || JSON.stringify(r);
 });
@@ -63,19 +63,19 @@ t('S9 every transition carries a trust-task envelope', () => STATES.every(s => T
 
 // rendering
 t('P1 render is deterministic', () => renderCard(base) === renderCard(structuredClone(base)) || 'nondeterministic');
-t('P2 rendered card names every clause gadget and the does-not list', () => { const md = renderCard(base); return base.method.every(m => md.includes('`' + m.gadget + '`')) && md.includes('## Does not establish') || 'missing sections'; });
+t('P2 rendered card names every clause gadget and the does-not list', () => { const md = renderCard(base); return base.relation.every(m => md.includes('`' + m.gadget + '`')) && md.includes('## Does not establish') || 'missing sections'; });
 t('P3 issue body is pasteable and links the card', () => { const b = renderIssue(base); return b.length < 4000 && b.includes('board/cards/010.json') || `bad issue body (${renderIssue(base).length} chars)`; });
 t('P4 index lists every card', () => { const i = renderIndex(cards); return cards.every(c => i.includes(`| ${c.id} |`)) || 'missing row'; });
 t('P5 site builds, embeds every card and the drafts, no absolute local paths', () => { const h = buildSite(cards); return cards.every(c => h.includes(`data-k="card-${c.id}"`)) && h.includes('id="drafts"') && !/C:\\Users|\/Users\/mitch/.test(h) || 'site incomplete or leaks a path'; });
 
 // 2026-09-05 — WD02 vocabulary, the watch, the cookbook
-t('T4 seed set grew (007, 008, 012 present; 020 carded)', () => { const ids = cards.map(c => c.id); const c020 = cards.find(c => c.id === '020'); return ['007', '008', '012'].every(i => ids.includes(i)) && c020.state === 'carded' || ids.join(','); });
+t('T4 seed set grew (007, 008, 012 present; 020 specified)', () => { const ids = cards.map(c => c.id); const c020 = cards.find(c => c.id === '020'); return ['007', '008', '012'].every(i => ids.includes(i)) && c020.state === 'specified' || ids.join(','); });
 t('V1 no retired identifier acronyms (R/M/C/P-DID) in any card body', () => {
-  const bad = cards.filter(c => /\b[RMCP]-DIDs?\b/.test(JSON.stringify([c.dish, c.ingredients, c.pantry, c.method, c.yield, c.doesNotEstablish, c.adversary, c.issuance]))).map(c => c.id);
+  const bad = cards.filter(c => /\b[RMCP]-DIDs?\b/.test(JSON.stringify([c.statement, c.witness, c.publicInputs, c.relation, c.disclosureSet, c.doesNotEstablish, c.adversary, c.issuance]))).map(c => c.id);
   return bad.length === 0 || 'retired vocabulary in ' + bad.join(',');
 });
-t('V2 010 and 011 route common control through card 007', () => ['010', '011'].every(id => { const c = cards.find(x => x.id === id); return c.components.includes('007') && c.method.some(m => m.component === '007'); }) || 'missing 007');
-t('V3 a re-carded card records the change as a revision, not a second history entry', () => { const c = cards.find(x => x.id === '010'); return c.revisions?.length >= 1 && c.history.filter(h => h.to === 'carded').length === 1 || 'revision missing or history duplicated'; });
+t('V2 010 and 011 route common control through card 007', () => ['010', '011'].every(id => { const c = cards.find(x => x.id === id); return c.components.includes('007') && c.relation.some(m => m.component === '007'); }) || 'missing 007');
+t('V3 a re-specified card records the change as a revision, not a second history entry', () => { const c = cards.find(x => x.id === '010'); return c.revisions?.length >= 1 && c.history.filter(h => h.to === 'specified').length === 1 || 'revision missing or history duplicated'; });
 t('W1 digest lists only threads with events after the watermark, newest first', () => {
   const sv = { fetchedAt: '2026-09-05T00:00:00Z', since: '2026-09-01T00:00:00Z', repos: { r: { discussions: [
     { number: 1, title: 'old', url: 'u1', author: 'a', createdAt: '2026-08-01T00:00:00Z', updatedAt: '2026-08-02T00:00:00Z', comments: [] },
@@ -84,14 +84,14 @@ t('W1 digest lists only threads with events after the watermark, newest first', 
   const d = digestSurvey(sv); return d.length === 2 && d[0].number === 3 && d[1].number === 2 && d[1].relevant === true && d[1].events.length === 1 || JSON.stringify(d.map(x => [x.number, x.relevant]));
 });
 t('W2 site keeps historical activation separate from publication of this revision (unverified, or verified by an upstream match that says so)', () => { const h = buildSite(cards); return h.includes('id="watch"') && h.includes('id="doors"') && h.includes('id="cookbook"') && (h.includes('Historical activation — publication unverified') || /✓ POSTED \d{4}-\d{2}-\d{2} · match/.test(h)) && !h.includes('data-posted=') || 'section or honest historical state missing'; });
-t('K1 construction records render once each with state note, negative space and adversary sections', () => { const md = renderRecipes(cards); return cards.every(c => (md.match(new RegExp(`^### Construction ${c.id} · `, 'mg')) || []).length === 1) && (md.match(/#### Does not establish/g) || []).length === cards.length && (md.match(/#### Adversary, per claim/g) || []).length === cards.length || 'construction sections incomplete'; });
-t('K1b specification register: generated text carries no kitchen vocabulary and no emoji in headings', () => { const md = renderRecipes(cards) + renderRecords(loadRecords(), cards) + renderStacks(loadStacks()); const kitchen = md.match(/\b(recipe|recipes|pantry|dish|ingredients|tasting|kitchen|cookbook)\b/gi) || []; const emojiHeads = md.split('\n').filter(l => /^#{2,4} /.test(l) && /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(l)); return kitchen.length === 0 && emojiHeads.length === 0 || `kitchen words: ${[...new Set(kitchen)].join(',')} · emoji headings: ${emojiHeads.length}`; });
-t('K2 every gadget a card binds has a generated term', () => { const g = new Set(cards.flatMap(c => c.method.map(m => m.gadget))); return [...g].every(x => GADGET_DEFS[x]) || 'undefined gadget: ' + [...g].filter(x => !GADGET_DEFS[x]).join(','); });
-t('K3 recipes.md carries no retired acronyms and no absolute local paths', () => { const md = renderRecipes(cards); return !/\b[RMCP]-DIDs?\b/.test(md.replace(/R\/M\/C\/P-DID/g, '')) && !/C:\\Users|\/Users\/mitch/.test(md) || 'leak'; });
+t('K1 construction records render once each with state note, negative space and adversary sections', () => { const md = renderConstructions(cards); return cards.every(c => (md.match(new RegExp(`^### Construction ${c.id} · `, 'mg')) || []).length === 1) && (md.match(/#### Does not establish/g) || []).length === cards.length && (md.match(/#### Adversary, per claim/g) || []).length === cards.length || 'construction sections incomplete'; });
+t('K1b specification register: generated text carries no kitchen vocabulary and no emoji in headings', () => { const md = renderConstructions(cards) + renderRequests(loadRecords(), cards) + renderStacks(loadStacks()); const kitchen = md.match(/\b(recipe|recipes|pantry|dish|ingredients|tasting|kitchen|cookbook)\b/gi) || []; const emojiHeads = md.split('\n').filter(l => /^#{2,4} /.test(l) && /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(l)); return kitchen.length === 0 && emojiHeads.length === 0 || `kitchen words: ${[...new Set(kitchen)].join(',')} · emoji headings: ${emojiHeads.length}`; });
+t('K2 every gadget a card binds has a generated term', () => { const g = new Set(cards.flatMap(c => c.relation.map(m => m.gadget))); return [...g].every(x => GADGET_DEFS[x]) || 'undefined gadget: ' + [...g].filter(x => !GADGET_DEFS[x]).join(','); });
+t('K3 recipes.md carries no retired acronyms and no absolute local paths', () => { const md = renderConstructions(cards); return !/\b[RMCP]-DIDs?\b/.test(md.replace(/R\/M\/C\/P-DID/g, '')) && !/C:\\Users|\/Users\/mitch/.test(md) || 'leak'; });
 
 // records (ADR-001 first) and the primer (spellbook Technical Bridges only)
-t('Q1 ADR-001 record validates and answers recipe 010 with every clause bound', () => { const recs = loadRecords(); const adr = recs.find(r => r.id === 'ADR-001'); if (!adr) return 'ADR-001 missing'; const v = validateRecord(adr, cards); return v.length === 0 && adr.recipe === '010' && adr.clauses.length >= 26 && adr.clauses.every(c => c.boundTo) || JSON.stringify(v); });
-t('Q2 requests render ADR-001 first with the crosswalk and the four acceptance tests', () => { const md = renderRecords(loadRecords(), cards); return md.indexOf('### Request ADR-001') > 0 && /\| S6 \|/.test(md) && /\| S7 \|/.test(md) && /Accepts/.test(md) && /Unlinkable/.test(md) && /Current/.test(md) || 'requests render incomplete'; });
+t('Q1 ADR-001 record validates and answers recipe 010 with every clause bound', () => { const recs = loadRecords(); const adr = recs.find(r => r.id === 'ADR-001'); if (!adr) return 'ADR-001 missing'; const v = validateRequest(adr, cards); return v.length === 0 && adr.record === '010' && adr.clauses.length >= 26 && adr.clauses.every(c => c.boundTo) || JSON.stringify(v); });
+t('Q2 requests render ADR-001 first with the crosswalk and the four acceptance tests', () => { const md = renderRequests(loadRecords(), cards); return md.indexOf('### Request ADR-001') > 0 && /\| S6 \|/.test(md) && /\| S7 \|/.test(md) && /Accepts/.test(md) && /Unlinkable/.test(md) && /Current/.test(md) || 'requests render incomplete'; });
 t('E1 exported specification has the template\'s required sections, each declared normative or informative', () => {
   // the chapters are the ordered files in the clone's specs.json, not body.md alone: the background and the
   // operational chapters are their own files there, and a check that reads only body.md would miss them

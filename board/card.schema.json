@@ -1,57 +1,295 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "dtg-zkp/board/card/v0",
-  "title": "Board card — one requested ZK proof, in recipe form",
+  "$id": "dtg-zkp/construction-record/v1",
+  "title": "Construction record — one requested zero-knowledge proof over DTG credentials, machine-checked",
   "type": "object",
-  "required": ["id", "name", "kind", "state", "dish", "ingredients", "pantry", "method", "yield", "doesNotEstablish", "adversary", "horizon", "tasting", "substitutions", "issuance", "provenance", "history"],
+  "required": [
+    "id",
+    "name",
+    "kind",
+    "state",
+    "statement",
+    "witness",
+    "publicInputs",
+    "relation",
+    "disclosureSet",
+    "doesNotEstablish",
+    "adversary",
+    "horizon",
+    "fixtures",
+    "options",
+    "issuance",
+    "provenance",
+    "history"
+  ],
   "properties": {
-    "id": { "type": "string", "pattern": "^[0-9]{3}$" },
-    "name": { "type": "string", "minLength": 3 },
-    "kind": { "enum": ["primitive", "composed"] },
-    "state": { "enum": ["requested", "carded", "constructed", "run", "vetted", "published"] },
-    "priority": { "enum": ["P1", "P2", "P3"] },
-    "owner": { "type": "string" },
-    "request": { "type": "object", "properties": { "issue": { "type": "string" }, "by": { "type": "string" }, "need": { "type": "string" } } },
-    "dish": { "type": "string", "minLength": 20 },
-    "ingredients": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-    "pantry": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-    "method": {
-      "type": "array", "minItems": 1,
-      "items": {
-        "type": "object", "required": ["clause", "gadget"],
-        "properties": {
-          "clause": { "type": "string" },
-          "gadget": { "enum": ["set-membership", "nullifier", "transcript-bind", "key-binding", "distinctness", "signature-verify", "non-revocation", "range", "commitment-open", "chain-resolve", "hidden-equality"] },
-          "runtime": { "type": "string" },
-          "component": { "type": "string", "pattern": "^[0-9]{3}$" }
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9]{3}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "kind": {
+      "enum": [
+        "primitive",
+        "composed"
+      ]
+    },
+    "state": {
+      "enum": [
+        "requested",
+        "specified",
+        "constructed",
+        "run",
+        "vetted",
+        "published"
+      ]
+    },
+    "priority": {
+      "enum": [
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    "owner": {
+      "type": "string"
+    },
+    "request": {
+      "type": "object",
+      "properties": {
+        "issue": {
+          "type": "string"
+        },
+        "by": {
+          "type": "string"
+        },
+        "need": {
+          "type": "string"
         }
       }
     },
-    "yield": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-    "doesNotEstablish": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-    "adversary": {
-      "type": "array", "minItems": 1,
-      "items": { "type": "object", "required": ["claim", "against"], "properties": { "claim": { "type": "string" }, "against": { "type": "array", "items": { "enum": ["verifier", "verifiers-colluding", "issuer-verifier-colluding", "registry-operator"] } } } }
+    "statement": {
+      "type": "string",
+      "minLength": 20
     },
-    "horizon": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-    "tasting": {
-      "type": "object", "required": ["families"],
-      "properties": {
-        "families": { "type": "array", "items": { "enum": ["accepts", "rejects-unsat", "rejects-verify", "unlinkable", "current"] }, "minItems": 1 },
-        "vectors": { "type": "string" },
-        "rejectionCodes": { "type": "array", "items": { "type": "string" } }
+    "witness": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "publicInputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "relation": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "clause",
+          "gadget"
+        ],
+        "properties": {
+          "clause": {
+            "type": "string"
+          },
+          "gadget": {
+            "enum": [
+              "set-membership",
+              "nullifier",
+              "transcript-bind",
+              "key-binding",
+              "distinctness",
+              "signature-verify",
+              "non-revocation",
+              "range",
+              "commitment-open",
+              "chain-resolve",
+              "hidden-equality"
+            ]
+          },
+          "runtime": {
+            "type": "string"
+          },
+          "component": {
+            "type": "string",
+            "pattern": "^[0-9]{3}$"
+          }
+        }
       }
     },
-    "substitutions": {
-      "type": "array", "minItems": 1,
-      "items": { "type": "object", "required": ["route"], "properties": { "route": { "type": "string" }, "cost": { "type": "string" }, "measured": { "type": "boolean" }, "source": { "type": "string" } } }
+    "disclosureSet": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
     },
-    "issuance": { "type": "array", "items": { "type": "string" } },
-    "provenance": { "type": "object", "properties": { "catalog": { "type": "string" }, "registry": { "type": "string" }, "commit": { "type": "string" }, "spec": { "type": "array", "items": { "type": "string" } } } },
-    "components": { "type": "array", "items": { "type": "string", "pattern": "^[0-9]{3}$" } },
+    "doesNotEstablish": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "adversary": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "against"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "against": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "verifier",
+                "verifiers-colluding",
+                "issuer-verifier-colluding",
+                "registry-operator"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "horizon": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "fixtures": {
+      "type": "object",
+      "required": [
+        "families"
+      ],
+      "properties": {
+        "families": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "accepts",
+              "rejects-unsat",
+              "rejects-verify",
+              "unlinkable",
+              "current"
+            ]
+          },
+          "minItems": 1
+        },
+        "vectors": {
+          "type": "string"
+        },
+        "rejectionCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "options": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "construction"
+        ],
+        "properties": {
+          "construction": {
+            "type": "string"
+          },
+          "cost": {
+            "type": "string"
+          },
+          "measured": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "issuance": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "catalog": {
+          "type": "string"
+        },
+        "registry": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        },
+        "spec": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9]{3}$"
+      }
+    },
     "history": {
       "type": "array",
-      "items": { "type": "object", "required": ["to", "by", "date", "evidence"], "properties": { "to": { "type": "string" }, "by": { "type": "string" }, "date": { "type": "string" }, "evidence": { "type": "string" }, "task": { "type": "string" } } }
+      "items": {
+        "type": "object",
+        "required": [
+          "to",
+          "by",
+          "date",
+          "evidence"
+        ],
+        "properties": {
+          "to": {
+            "type": "string"
+          },
+          "by": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "task": {
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }

@@ -10,21 +10,21 @@
     "by": "ScottJeezey",
     "need": "PR-FRE: a proof bound to this challenge and this presentation, unreplayable elsewhere"
   },
-  "dish": "A verifier checks that the proof binds the supplied transcript scalar. Interpreting that scalar as this authenticated request also requires the profile’s canonical encoding, digest conversion, audience and freshness checks.",
-  "ingredients": [
+  "statement": "A verifier checks that the proof binds the supplied transcript scalar. Interpreting that scalar as this authenticated request also requires the profile’s canonical encoding, digest conversion, audience and freshness checks.",
+  "witness": [
     "nothing extra — the transcript digest is bound as a public input inside the proof"
   ],
-  "pantry": [
+  "publicInputs": [
     "transcriptDigest — profile-defined circuit scalar; the lab hashes domain-separated, length-prefixed canonical transcript bytes and reduces the digest modulo the BN254 scalar prime"
   ],
-  "method": [
+  "relation": [
     {
       "clause": "the proof's public signals include transcriptDigest and the circuit constrains it (cannot be swapped post hoc)",
       "gadget": "transcript-bind",
       "runtime": "runtimes/canonical + runtimes/circom-gadget (public signal 4)"
     }
   ],
-  "yield": [
+  "disclosureSet": [
     "transcriptDigest"
   ],
   "doesNotEstablish": [
@@ -48,7 +48,7 @@
   "horizon": [
     "the transcript's own validity window"
   ],
-  "tasting": {
+  "fixtures": {
     "families": [
       "accepts",
       "rejects-verify"
@@ -59,21 +59,21 @@
       "bare-nonce-insufficient"
     ]
   },
-  "substitutions": [
+  "options": [
     {
-      "route": "public-signal binding in Groth16 (lab)",
+      "construction": "public-signal binding in Groth16 (lab)",
       "cost": "+1 constraint (11,522 → 11,523)",
       "measured": true,
       "source": "CIRCUITS.md"
     },
     {
-      "route": "tag-based SE-NIZK: tag = transcript (paper Def. 5)",
+      "construction": "tag-based SE-NIZK: tag = transcript (paper Def. 5)",
       "cost": "unmeasured; proof-system security requirement, not established by the lab public-input binding",
       "measured": false,
       "source": "ePrint 2026/333 §3.5"
     },
     {
-      "route": "Flock-class prover binding a SHA-256 digestMultibase transcript digest natively (no Poseidon detour for the canonical transcript)",
+      "construction": "Flock-class prover binding a SHA-256 digestMultibase transcript digest natively (no Poseidon detour for the canonical transcript)",
       "cost": "unmeasured — one SHA-256 compression per 64-byte block of the canonical transcript",
       "measured": false,
       "source": "board/stacks/flock.json"
@@ -99,11 +99,11 @@
       "task": "board/request"
     },
     {
-      "to": "carded",
+      "to": "specified",
       "by": "mitchuski",
       "date": "2026-08-28",
       "evidence": "X2 context legibility + canonical runtime 11/11",
-      "task": "board/card"
+      "task": "board/specify"
     },
     {
       "to": "constructed",

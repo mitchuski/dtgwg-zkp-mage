@@ -10,29 +10,29 @@
     "by": "talltree/ScottJeezey",
     "need": "the membership leg every DTG proof stands on (VMC from a VTC in the verifier's anchor set) · alias: issuer-as-predicate (ScottJeezey, cred-tf #39 2026-08-25) — prove an issuer belongs to an accredited set rather than naming it, because the observer is often a venue or event and therefore the most identifying element"
   },
-  "dish": "A verifier learns that the holder's credential commitment is a leaf of a published membership root, without learning which leaf.",
-  "ingredients": [
+  "statement": "A verifier learns that the holder's credential commitment is a leaf of a published membership root, without learning which leaf.",
+  "witness": [
     "membership credential secret / commitment preimage (the VMC leaf)",
     "Merkle path (depth 20 ≈ 1M leaves) and path indices"
   ],
-  "pantry": [
+  "publicInputs": [
     "root — the accredited/membership root the verifier recognises (registry state)",
     "context descriptor digest"
   ],
-  "method": [
+  "relation": [
     {
       "clause": "the committed leaf is in the tree at `root`",
       "gadget": "set-membership",
       "runtime": "runtimes/circom-gadget/circuits/nullifier_membership.circom"
     }
   ],
-  "yield": [
+  "disclosureSet": [
     "root",
     "context"
   ],
   "doesNotEstablish": [
     "that the community's admission decision was correct (assurance boundary)",
-    "that the leaf is current (see card 006)",
+    "that the leaf is current (see record 006)",
     "which member the holder is",
     "that the leaf authenticates an issuer-signed credential or binds its holder key; the enclosing profile must establish those facts and the registry leaf semantics"
   ],
@@ -55,7 +55,7 @@
     "root cryptoperiod (root rotation)",
     "VMC validity"
   ],
-  "tasting": {
+  "fixtures": {
     "families": [
       "accepts",
       "rejects-unsat",
@@ -67,27 +67,27 @@
       "path-invalid"
     ]
   },
-  "substitutions": [
+  "options": [
     {
-      "route": "Groth16 / BN254 / Poseidon Merkle (lab)",
-      "cost": "11,522 constraints · ~680 ms prove · ~8 ms verify · 721 B (with card 003 bound)",
+      "construction": "Groth16 / BN254 / Poseidon Merkle (lab)",
+      "cost": "11,522 constraints · ~680 ms prove · ~8 ms verify · 721 B (with record 003 bound)",
       "measured": true,
       "source": "CIRCUITS.md · registry 0002–0006"
     },
     {
-      "route": "KZG / accumulator membership (paper §3.7 hiding KZG)",
+      "construction": "KZG / accumulator membership (paper §3.7 hiding KZG)",
       "cost": "constant-size opening; pairing verify",
       "measured": false,
       "source": "ePrint 2026/333 §3.7, §8"
     },
     {
-      "route": "Semaphore v4 tree (structurally conformant, byte-incompatible)",
+      "construction": "Semaphore v4 tree (structurally conformant, byte-incompatible)",
       "cost": "see cross-check",
       "measured": false,
       "source": "explorations/SEMAPHORE-V4-CROSSCHECK.md"
     },
     {
-      "route": "Flock-class binary-field prover over a standard-hash (BLAKE3 or SHA-256) Merkle tree — the path is a batch of compressions, Flock’s native workload; removes the Poseidon requirement on the registry side and gives a post-quantum path (LIV-ALG-07)",
+      "construction": "Flock-class binary-field prover over a standard-hash (BLAKE3 or SHA-256) Merkle tree — the path is a batch of compressions, Flock’s native workload; removes the Poseidon requirement on the registry side and gives a post-quantum path (LIV-ALG-07)",
       "cost": "unmeasured — conjecture: depth-20 path ≈ 20–40 compressions ≈ well under a millisecond of prover work per the published 82,100 compressions/s single-core figure; proof size in the hundreds of kB class",
       "measured": false,
       "source": "board/stacks/flock.json (blog.succinct.xyz/introducing-flock)"
@@ -100,9 +100,9 @@
     "spec": [
       "cred-spec VMC",
       "liveness reqs v0.4 §13 (PR-UNQ membership leg)",
-      "cred-tf #39 (ScottJeezey 2026-08-25): issuer-as-predicate named as a ZKP TF work item — this card"
+      "cred-tf #39 (ScottJeezey 2026-08-25): issuer-as-predicate named as a ZKP TF work item — this record"
     ],
-    "registry": "0002–0006 (circuit reproduced, card-level run pending)",
+    "registry": "0002–0006 (circuit reproduced, record-level run pending)",
     "commit": "github.com/mitchuski/dtgwg-zkp-mage"
   },
   "history": [
@@ -114,11 +114,11 @@
       "task": "board/request"
     },
     {
-      "to": "carded",
+      "to": "specified",
       "by": "mitchuski",
       "date": "2026-08-28",
       "evidence": "runtimes/01-uniqueness-nullifier NOTES + decision §13",
-      "task": "board/card"
+      "task": "board/specify"
     },
     {
       "to": "constructed",

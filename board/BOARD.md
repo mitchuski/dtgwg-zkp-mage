@@ -5,17 +5,17 @@
 | 001 | Set membership over an accredited root | primitive | P1 | `constructed` | mitchuski | — | yes |
 | 002 | Scoped nullifier (reuse detection) | primitive | P1 | `constructed` | mitchuski | — | yes |
 | 003 | Transcript binding | primitive | P1 | `constructed` | mitchuski | — | yes |
-| 004 | Holder binding (key from secret) | primitive | P2 | `carded` | mitchuski | — | no |
+| 004 | Holder binding (key from secret) | primitive | P2 | `specified` | mitchuski | — | no |
 | 005 | Distinct member / distinct issuer | primitive | P1 | `constructed` | mitchuski | — | yes |
-| 006 | Non-revocation against a status root | primitive | P1 | `carded` | mitchuski | — | no |
-| 007 | Common control across identifiers | primitive | P1 | `carded` | mitchuski | — | no |
-| 008 | Blinded binder (taskContext hiding; presentation correlation unresolved) | primitive | P2 | `carded` | mitchuski (card) · ScottJeezey (named the work item) | — | no |
-| 009 | Hidden-value equality across credentials | primitive | P1 | `carded` | mitchuski | — | no |
-| 010 | Community-Anchored Proof (ADR-001) | composed | P1 | `carded` | mitchuski + DenisPopov15 (construction) · stormer78 (record) | 001+002+003+004+005+006+007 | no |
-| 011 | Pairwise edge (VRC possession, directed personas shown, pairwise identifiers hidden) | composed | P2 | `carded` | mitchuski | 003+004+006+007 | no |
-| 012 | Intentional correlation — one controller across k credentials | composed | P2 | `carded` | mitchuski | 003+006+007 | no |
+| 006 | Non-revocation against a status root | primitive | P1 | `specified` | mitchuski | — | no |
+| 007 | Common control across identifiers | primitive | P1 | `specified` | mitchuski | — | no |
+| 008 | Blinded binder (taskContext hiding; presentation correlation unresolved) | primitive | P2 | `specified` | mitchuski (record) · ScottJeezey (named the work item) | — | no |
+| 009 | Hidden-value equality across credentials | primitive | P1 | `specified` | mitchuski | — | no |
+| 010 | Community-Anchored Proof (ADR-001) | composed | P1 | `specified` | mitchuski + DenisPopov15 (construction) · stormer78 (record) | 001+002+003+004+005+006+007 | no |
+| 011 | Pairwise edge (VRC possession, directed personas shown, pairwise identifiers hidden) | composed | P2 | `specified` | mitchuski | 003+004+006+007 | no |
+| 012 | Intentional correlation — one controller across k credentials | composed | P2 | `specified` | mitchuski | 003+006+007 | no |
 | 013 | Mutual edge admissibility — each half admissible under the other community's policy, neither policy nor member revealed | composed | P3 | `requested` | mitchuski | 001+003 | no |
-| 020 | Delegation chain (VDC) — agent acts for a member | composed | P2 | `carded` | construction: sankarshanmukhopadhyay · DenisPopov15 · mitchuski (per ScottJeezey, cred-tf #40) · record: stormer78 (PR #19) | 001+003+004+006+009 | no |
-| 021 | Authority chain (VAC) — an agent or device acts as itself under attenuated authority | composed | P2 | `carded` | mitchuski | 001+003+004+006+009 | no |
+| 020 | Delegation chain (VDC) — agent acts for a member | composed | P2 | `specified` | construction: sankarshanmukhopadhyay · DenisPopov15 · mitchuski (per ScottJeezey, cred-tf #40) · record: stormer78 (PR #19) | 001+003+004+006+009 | no |
+| 021 | Authority chain (VAC) — an agent or device acts as itself under attenuated authority | composed | P2 | `specified` | mitchuski | 001+003+004+006+009 | no |
 
-States: requested → carded → constructed → run → vetted → published. A row may not claim more than its card; a card no more than its runtime; a runtime no more than an independent run.
+States: requested → specified → constructed → run → vetted → published. A row may not claim more than its record; a record no more than its runtime; a runtime no more than an independent run.

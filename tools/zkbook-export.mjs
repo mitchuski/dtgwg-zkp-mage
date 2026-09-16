@@ -8,8 +8,9 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, existsSy
 import { join, dirname, resolve, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { execSync } from 'node:child_process';
 import { markedSection } from '../zkbook/conformance/generate.mjs';
-import { renderTerms, renderRecords, renderRecipes, renderStacks, renderPrivacyDerived } from '../board/tools/spec-render.mjs';
+import { renderTerms, renderRequests, renderConstructions, renderStacks, renderPrivacyDerived } from '../board/tools/spec-render.mjs';
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ZKBOOK = join(REPO, 'zkbook');
@@ -39,14 +40,14 @@ for (const f of ['header.md', 'intro.md', 'terms-and-definitions-intro.md', 'app
 // body.md = the chapters between the terminology and the appendices, in specification order
 // The Cryptographic Background is its own chapter file in the spec repo (specs.json lists it), so it is written
 // separately below rather than inlined here — inlining it as well would render the chapter twice.
-const BODY_ORDER = ['records.md', 'pantry.md', 'recipes.md', 'stacks.md', 'considerations.md', 'conformance.md', 'references.md'];
+const BODY_ORDER = ['records.md', 'public-inputs.md', 'constructions.md', 'stacks.md', 'considerations.md', 'conformance.md', 'references.md'];
 // derived privacy list is spliced into Privacy Considerations, after the editors' numbered items
 function assembleBody() {
   const parts = [];
   for (const f of BODY_ORDER) {
     const p = join(SPEC, f);
     if (!existsSync(p)) { console.log(`REFUSED body-chapter-missing:${f} (run board.mjs spec / transfer-spellbook.mjs first)`); process.exit(1); }
-    const key = { 'records.md': 'requests', 'recipes.md': 'constructions', 'stacks.md': 'stacks' }[f];
+    const key = { 'records.md': 'requests', 'constructions.md': 'constructions', 'stacks.md': 'stacks' }[f];
     let t = key ? markedSection(key, generated[key]) : read(p).trim();
     if (f === 'considerations.md') {
       const derived = markedSection('privacy', generated.privacy);
@@ -56,6 +57,29 @@ function assembleBody() {
   }
   return parts.join('\n\n');
 }
+
+// ---- 1b. provenance stamp: Appendix B names the evidence commit this export was taken from ------------------------
+// The stamp is the commit that contains the records as exported, so it is only true when the working tree is clean:
+// commit this repository first, then export, then commit the clone. A dirty tree is reported, not refused.
+function evidenceHead() {
+  try { return execSync('git rev-parse HEAD', { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { /* git not on PATH: read .git directly */ }
+  try {
+    const head = read(join(REPO, '.git', 'HEAD')).trim(), m = head.match(/^ref: (.+)$/);
+    if (!m) return head;
+    const refPath = join(REPO, '.git', m[1]);
+    if (existsSync(refPath)) return read(refPath).trim();
+    const line = read(join(REPO, '.git', 'packed-refs')).split('\n').find(l => l.endsWith(' ' + m[1]));
+    return line ? line.split(' ')[0] : '';
+  } catch { return ''; }
+}
+function evidenceDirty() {
+  try { return execSync('git status --porcelain -- board/cards board/records board/stacks board/card.schema.json board/tools/spec-render.mjs zkbook/spec zkbook/conformance', { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim().length > 0; } catch { return null; }
+}
+const evidenceCommit = evidenceHead();
+const STAMP = /(exported from \[DTG-ZKP-EVIDENCE\] at commit `)[0-9a-f]{7,40}(`)/;
+if (evidenceCommit && STAMP.test(planned.get('spec/appendix.md'))) plan('spec/appendix.md', planned.get('spec/appendix.md').replace(STAMP, `$1${evidenceCommit}$2`));
+else console.log(`  note: Appendix B evidence-commit stamp ${evidenceCommit ? 'not found in appendix.md' : 'skipped — HEAD unreadable'}`);
+const dirty = evidenceDirty();
 
 // ---- 2. conformance apparatus ------------------------------------------------------------------------------------
 const CONF_SRC = { records: join(REPO, 'board', 'cards'), requests: join(REPO, 'board', 'records'), stacks: join(REPO, 'board', 'stacks') };
@@ -72,7 +96,7 @@ for (const [d, src] of Object.entries(CONF_SRC)) {
   }
 }
 const recordsDigest = digestH.digest('hex');
-const generated = { requests: renderRecords(data.requests, data.records), constructions: renderRecipes(data.records), stacks: renderStacks(data.stacks), privacy: renderPrivacyDerived(data.records) };
+const generated = { requests: renderRequests(data.requests, data.records), constructions: renderConstructions(data.records), stacks: renderStacks(data.stacks), privacy: renderPrivacyDerived(data.records) };
 for (const [rel, src] of [
   ['conformance/schema/construction-record.schema.json', join(REPO, 'board', 'card.schema.json')],
   ['conformance/validate.mjs', join(ZKBOOK, 'conformance', 'validate.mjs')],
@@ -243,6 +267,7 @@ console.log(`${CHECK ? 'CHECK' : 'EXPORT'} → ${TO}`);
 console.log(`  added ${report.added.length} · changed ${report.changed.length} · unchanged ${report.unchanged.length} · removed ${report.removed.length}`);
 for (const k of ['added', 'changed', 'removed']) for (const f of report[k]) console.log(`  ${k.padEnd(8)} ${f}`);
 console.log(`  records digest ${recordsDigest.slice(0, 16)}… stamped in spec/body.md`);
+if (evidenceCommit) console.log(`  evidence commit ${evidenceCommit.slice(0, 12)} stamped in spec/appendix.md${dirty ? ' — WORKING TREE DIRTY: that commit does not contain the exported records; commit here first, then export again' : dirty === null ? ' (cleanliness unknown: git not on PATH)' : ''}`);
 if (diverged.length) console.log(`  ${diverged.length} authored file(s) diverged in the clone${CHECK ? ' - the clone is the newer side; --adopt takes them back' : ' - OVERWRITTEN by --force'}: ${diverged.map(d => d.rel).join(' ')}`);
 if (!CHECK) { const m = {}; for (const [rel, content] of planned) if (authored.has(rel)) m[rel] = sha(Buffer.from(content)); writeFileSync(MANIFEST, JSON.stringify(m, null, 2) + '\n'); }
 if (pathsMissing.length) console.log(`  note: specs.json markdown_paths does not list ${pathsMissing.join(' ')} - the render will skip that chapter`);

@@ -14,11 +14,17 @@ Render locally with Spec-Up-T: `npm install && npm run render`; output in `docs/
 
 The task force keeps reference runtimes, conformance fixtures, a verification registry of independent reproductions and the working board from which construction records are promoted in a separate public repository, [DTG-ZKP-EVIDENCE]. That repository is deliberately not part of this specification: a specification should never depend on one laboratory, and a laboratory should never be mistaken for a specification. What crosses the boundary is data — records, fixtures, registry row identifiers — and the rule that nothing in this document claims more than that data shows.
 
+**Provenance of this revision.** The generated sections carry the SHA-256 of the records they were generated from (the stamp at the head of `spec/body.md`), and this revision was exported from [DTG-ZKP-EVIDENCE] at commit `0000000000000000000000000000000000000000`, under which the same records, the fixtures and the registry rows they cite can be read. The evidence repository is hosted under a contributor's account and is licensed Apache-2.0 for code and CC BY 4.0 for documents, matching the task force's IPR posture; the conformance code shipped in this repository carries SPDX Apache-2.0 headers. Reproduction of the generated text needs only this repository; reproduction of a runtime needs the evidence repository at the pinned commit.
+
+> **WG-12 — Discuss: home and pinning of the evidence repository.** The runtimes, fixtures and verification registry this draft cites live in a contributor-hosted repository. Decide whether to mirror or transfer it under the trustoverip organisation before this draft advances beyond Working Draft, and whether each Working Draft pins a tagged evidence revision rather than a commit. Status: proposed; no group decision recorded.
+
 ### Appendix C: Acknowledgements
 
 The constructions in this specification rest on discussions in the DTG ZKP Task Force, the DTG Credentials Task Force and the DTG Credentials Core Specification repository. The editors thank Scott Jones for the working board and the work items placed on the record; Sankarshan Mukhopadhyay for the pressure tests that became negative-space clauses and for the requirements document's v0.4 draft; Glenn Gore for ADR-001 and the delegation design note; Geoff Turk and Drummond Reed for the correlation-scope resolution and the Working Draft 02 merge plan; Brendan Miller and Alberto Leon for the privacy-seam postulate and the implementation feedback that shaped the edge-verifiability definition; Denys Popov for the construction-detail work; and the authors of [PoP-2026] for the vouchable-credential model that construction 010 leans on.
 
 ### Appendix D: Changelog
+
+- **Vocabulary revision (2026-09-16)** — the machine-readable records and the sections generated from them use this specification's own terms throughout, in the JSON as well as the prose: `statement`, `witness`, `publicInputs`, `relation`, `disclosureSet`, `fixtures`, `options` (each with its `construction`), and a request's `record`; the record state `carded` is renamed `specified`; validator refusals are `record-*` for construction records and `request-*` for requests; the schema is `dtg-zkp/construction-record/v1`. In-document links to constructions and proving systems now resolve to the rendered heading ids. Provenance tightened: SPDX headers on the conformance code, [DTG-CRED] read at a named commit, the evidence-repository commit named in Appendix B (WG-12), and the editors' direction for the Cryptographic Background recorded (WG-13). No construction, claim, state or evidence changed.
 
 - **Local review revision (2026-09-11)** — records 007 and 020 revised against the credential specification's merged VDC and VAC text and the common-control thread of 2026-09-10 (subject-or-issuer; chain predicates named as hidden-value equality); new primitive record 009 (hidden-value equality) and composed record 021 (VAC attenuation chain); the `hidden-equality` gadget; record 010 gains the blind-signature vouch option from the 8 September call; Security Considerations 5 widened; Internationalization hedged to WG-06a; conformance vector count corrected to the manifest; references pinned and completed; Appendix E review-notes index. Evidence states unchanged; nothing adopted.
 
@@ -48,6 +54,8 @@ The numbered working-group notes are the decision points this draft asks reviewe
 | WG-09 | proposed for discussion | Appendices (maintenance note) | the survey-and-research maintenance method | optional editorial proposal |
 | WG-10 | proposed for ratification | Introduction | general DTG scope, personhood and liveness as one use-case family | proposed; no decision recorded |
 | WG-11 | proposed for discussion | Appendices (verification worklist) | the verification priorities V01–V12 | proposed queue |
+| WG-12 | discuss | Appendices (evidence repository) | home and pinning of the evidence repository; licence coverage of the runtimes it hosts | proposed; no decision recorded |
+| WG-13 | direction | Cryptographic Background | move the chapter to the companion implementation guide when the core/guide split happens; it stays for now as context beside the records | editors' direction; no decision recorded |
 
 ### Maintenance Note: Research Across the DTG Workspace
 

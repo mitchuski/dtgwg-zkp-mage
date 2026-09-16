@@ -34,7 +34,7 @@
       "text": "the party who issued that relationship credential also holds a valid membership credential from the same community C — 'the hard one': a statement about someone else's credential, proven without the other party online, asked, or aware"
     }
   ],
-  "recipe": "010",
+  "record": "010",
   "clauses": [
     {
       "id": "P1",
@@ -54,14 +54,14 @@
       "id": "P3",
       "group": "privacy",
       "text": "reveals no identifier of the holder beyond attributes the holder deliberately discloses",
-      "boundTo": "010 yield (deliberate disclosure line)",
+      "boundTo": "010 disclosure set (deliberate disclosure line)",
       "status": "covered"
     },
     {
       "id": "P4",
       "group": "privacy",
       "text": "two proofs from the same credentials cannot be linked — by one verifier or by verifiers comparing notes",
-      "boundTo": "010 method (nullifier clause, parameterised) · adversary (verifiers-colluding)",
+      "boundTo": "010 relation (nullifier clause, parameterised) · adversary (verifiers-colluding)",
       "status": "refined",
       "refinement": "full show-unlinkability cannot coexist with reuse detection in the same context (ePrint 2026/333 §5.3); parameterise by context: unlinkable across contexts, the declared nullifier the only link within a reuse-detecting one"
     },
@@ -69,7 +69,7 @@
       "id": "P5",
       "group": "privacy",
       "text": "a verifier learns the outcome and deliberately disclosed attributes, nothing further",
-      "boundTo": "010 yield",
+      "boundTo": "010 disclosure set",
       "status": "covered"
     },
     {
@@ -83,7 +83,7 @@
       "id": "S2",
       "group": "soundness",
       "text": "clause 3 cannot be satisfied unless the counterparty genuinely holds a membership credential from the same community",
-      "boundTo": "010 method (set-membership on the voucher's grant leaf, card 001)",
+      "boundTo": "010 relation (set-membership on the voucher's grant leaf, record 001)",
       "status": "refined",
       "refinement": "proves the community-issued grant half only (cred-spec PR #12 pair; PR #26 carve-out) — the acknowledgement is not in the presenter's hands"
     },
@@ -93,27 +93,27 @@
       "text": "the counterparty need not be online, consulted, or aware",
       "boundTo": "010 witness (proven from root_C, not from the voucher)",
       "status": "refined",
-      "refinement": "under WD02 pairwise identifiers the voucher's linkage (VRC-side ↔ VMC-side identifier) must have been supplied at issuance or avoided by one directed identifier — card 007 / HR-2; otherwise clause 3 is unprovable offline"
+      "refinement": "under WD02 pairwise identifiers the voucher's linkage (VRC-side ↔ VMC-side identifier) must have been supplied at issuance or avoided by one directed identifier — record 007 / HR-2; otherwise clause 3 is unprovable offline"
     },
     {
       "id": "S4",
       "group": "soundness",
       "text": "the presenter proves they are the subject of the credentials, not merely a holder of copies",
-      "boundTo": "010 method (key-binding, card 004)",
+      "boundTo": "010 relation (key-binding, record 004)",
       "status": "covered"
     },
     {
       "id": "S5",
       "group": "soundness",
       "text": "bound to a verifier challenge; not replayable to another verifier or time",
-      "boundTo": "010 method (transcript-bind, card 003) · public inputs transcriptDigest",
+      "boundTo": "010 relation (transcript-bind, record 003) · public inputs transcriptDigest",
       "status": "covered"
     },
     {
       "id": "S6",
       "group": "soundness",
       "text": "(added by the ZKP TF) the voucher is not the holder — a self-vouch is unsatisfiable",
-      "boundTo": "010 method (distinctness, card 005)",
+      "boundTo": "010 relation (distinctness, record 005)",
       "status": "added",
       "refinement": "without it a member with two identifiers vouches for themselves and clauses 1–3 verify"
     },
@@ -121,7 +121,7 @@
       "id": "S7",
       "group": "soundness",
       "text": "(added, WD02) the identifiers a party used in the VRC and in their VMC are controlled by one secret",
-      "boundTo": "010 method (key-binding, card 007)",
+      "boundTo": "010 relation (key-binding, record 007)",
       "status": "added",
       "refinement": "cred-spec PR #30 §Community-Anchored: 'the proof must additionally establish common control'"
     },
@@ -129,14 +129,14 @@
       "id": "C1",
       "group": "currency",
       "text": "does not verify if any relied-on credential is revoked or suspended",
-      "boundTo": "010 method (non-revocation, card 006)",
+      "boundTo": "010 relation (non-revocation, record 006)",
       "status": "covered"
     },
     {
       "id": "C2",
       "group": "currency",
       "text": "states the registry state it was made against; the verifier judges recency",
-      "boundTo": "010 public inputs (root_C, rl_root, epoch) · yield",
+      "boundTo": "010 public inputs (root_C, rl_root, epoch) · disclosure set",
       "status": "covered"
     },
     {
@@ -188,7 +188,7 @@
       "id": "D1",
       "group": "deployment",
       "text": "proving is feasible on the devices that hold credentials — a phone or an agent — within a stated time and memory budget",
-      "boundTo": "010 substitutions (Groth16 est. ≈35–45k constraints ~2 s; blackbox 0.03 s/vouch) · stacks layer (ProveKit phone numbers)",
+      "boundTo": "010 options (Groth16 est. ≈35–45k constraints ~2 s; blackbox 0.03 s/vouch) · stacks layer (ProveKit phone numbers)",
       "status": "partial",
       "refinement": "budgets not yet stated by the TF; the options layer supplies measured numbers per stack for the gate to set them"
     },
@@ -221,7 +221,7 @@
       "text": "an independent implementation can verify another's proofs",
       "boundTo": "registry (independent reproduction) · consumer-py (zero-shared-code consumer)",
       "status": "partial",
-      "refinement": "reproduced for cards 001/002/003/005; 010 composition not yet built"
+      "refinement": "reproduced for records 001/002/003/005; 010 composition not yet built"
     },
     {
       "id": "X3",
@@ -241,7 +241,7 @@
       "id": "G2",
       "group": "governance",
       "text": "the assurance a proof carries is traceable to the governance of the issuing community",
-      "boundTo": "010 yield (assurance class via C's governance) · doesNotEstablish (admission correctness)",
+      "boundTo": "010 disclosure set (assurance class via C's governance) · doesNotEstablish (admission correctness)",
       "status": "covered"
     }
   ],

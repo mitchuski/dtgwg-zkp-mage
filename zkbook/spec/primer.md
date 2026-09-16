@@ -2,6 +2,8 @@
 
 This section is informative.
 
+> **WG-13 — Direction: the Cryptographic Background and the companion guide.** This chapter is reference material — it reads as a study of zero-knowledge proofs rather than as specification text — and the editors intend it for the companion implementation guide when the working group separates a terse core specification from its guide. It stays in this document for now: the construction records cite it section by section, and Round 1 reviewers need the context beside the records. The separation will happen, but not yet. Status: editors' direction; no group decision recorded.
+
 This section gives the cryptographic background the construction records rely on, in the order a reader needs it: what a proof is and what a transcript binds; fields and curves; constraints, witnesses and public inputs; commitments and the setup question; transparent and hash-based proving; recursion and folding; the commit–membership–nullifier shape every construction inherits; how circuits fail in practice; and agents that prove. It is drawn from the editor's expository work in the agentprivacy body of work ([AGENTPRIVACY], see References), with the expository material carried and nothing else; provenance and licence are in Appendix A. Each subsection states which construction records, public-input conventions or proving-system entries lean on the idea, so a reader who wants only what a given construction needs can stop there.
 
 ### P1 · What a proof is, and what a transcript binds

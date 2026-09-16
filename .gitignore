@@ -20,3 +20,6 @@ calls/
 .ledger-history/
 proverb-ledger.json.lock
 proverb-ledger.json.tmp
+
+# export gate memory: hashes of the last export to the spec clone (machine-local; re-created by tools/zkbook-export.mjs)
+zkbook/.export-manifest.json

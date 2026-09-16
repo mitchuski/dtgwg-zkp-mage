@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 the contributors to the Trust over IP Foundation DTG ZKP Task Force. Contributed under the ToIP JDF charter.
 // Self-contained generation: no dependency on the evidence repository at runtime.
 import { readFileSync, readdirSync, writeFileSync, existsSync, mkdirSync, unlinkSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { renderRecords, renderRecipes, renderStacks, renderPrivacyDerived, renderTerms } from './render-lib.mjs';
+import { renderRequests, renderConstructions, renderStacks, renderPrivacyDerived, renderTerms } from './render-lib.mjs';
 import { validateAll } from './validate.mjs';
 
 export const canonical = value => value === null || typeof value !== 'object' ? JSON.stringify(value) : Array.isArray(value) ? '[' + value.map(canonical).join(',') + ']' : '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k])).join(',') + '}';
@@ -19,7 +21,7 @@ export function loadSources(root) {
   return { ...data, digest: hash.digest('hex') };
 }
 export function generatedSections(data) {
-  return { requests: renderRecords(data.requests, data.records).trim(), constructions: renderRecipes(data.records).trim(),
+  return { requests: renderRequests(data.requests, data.records).trim(), constructions: renderConstructions(data.records).trim(),
     stacks: renderStacks(data.stacks).trim(), privacy: renderPrivacyDerived(data.records).trim() };
 }
 export function markedSection(name, text) {

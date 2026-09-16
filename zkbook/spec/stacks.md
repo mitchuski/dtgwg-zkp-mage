@@ -6,9 +6,9 @@ A proving-system entry records facts a reader can check — proof system, field,
 
 | kind | entries | what the kind means |
 |---|---|---|
-| general-stack | [flock](#stack-flock-binary-field-snark-for-batched-boolean-computation-standard-hashes) · [provekit](#stack-provekit-world-noir-whir-client-side-proving) | general-purpose proving systems — any statement the frontend expresses; issuer-agnostic |
-| hand-rolled | [lab-groth16-circom](#stack-lab-groth16-circom-2-snarkjs-bn254-poseidon) | constructions written and measured in the evidence repository as reference implementations |
-| as-signed-catalog | [siros-longfellow](#stack-siros-circuit-catalog-longfellow-libzk-v1-mdl-eudi-pid-as-signed) | catalogs of circuits that prove over credentials exactly as already signed — substrate for the legacy-rails route, not DTG construction routes |
+| general-stack | [flock](#proving-system-%C2%B7-flock-%E2%80%94-binary-field-snark-for-batched-boolean-computation-(standard-hashes)) · [provekit](#proving-system-%C2%B7-provekit-(world)-%E2%80%94-noir-%E2%86%92-whir-client-side-proving) | general-purpose proving systems — any statement the frontend expresses; issuer-agnostic |
+| hand-rolled | [lab-groth16-circom](#proving-system-%C2%B7-lab-groth16-(circom-2-%C2%B7-snarkjs-%C2%B7-bn254-%C2%B7-poseidon)) | constructions written and measured in the evidence repository as reference implementations |
+| as-signed-catalog | [siros-longfellow](#proving-system-%C2%B7-siros-circuit-catalog-%E2%80%94-longfellow-libzk-v1-(mdl-%2F-eudi-pid%2C-as-signed)) | catalogs of circuits that prove over credentials exactly as already signed — substrate for the legacy-rails route, not DTG construction routes |
 
 ### Proving system · SIROS circuit catalog — Longfellow libzk v1 (mDL / EUDI PID, as signed)
 
@@ -32,7 +32,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | provenance | repo: https://github.com/sirosfoundation/go-zk-circuits · manifest: https://api.circuits.siros.org/v1/manifest.json · version: manifestVersion 1 · entrySchema: id · aliases · system · systemVersion · docTypes · published · status · params · artifact{url, sha256, size, zstd, uncompressed} · source{origin, toolchain, license, openSource} · publishedAt · notes · content-addressed |
 | verified | 2026-09-05 — api.circuits.siros.org/v1/manifest.json, go-zk-circuits README |
 
-#### Published figures (the stack's own, or the lab's — never this book's)
+#### Published figures (the proving system's own, or the evidence repository's — never this specification's)
 
 *No benchmark figures recorded.*
 
@@ -79,7 +79,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | provenance | repo: https://github.com/succinctlabs/flock · paper: https://github.com/succinctlabs/flock/blob/main/paper/flock-paper.pdf · benchmarkRepo: https://github.com/Layr-Labs/flock-challenge (Apache-2.0 / MIT) · optimisedAt: https://www.yukon.org/flock — the BLAKE3 R1CS prover being made fast for Ethereum on x86; a prebuilt, checksum-pinned verifier controls private inputs, timing, correctness and score |
 | verified | 2026-09-05 — blog.succinct.xyz/introducing-flock, Layr-Labs/flock-challenge README (local clone), yukon.org/flock |
 
-#### Published figures (the stack's own, or the lab's — never this book's)
+#### Published figures (the proving system's own, or the evidence repository's — never this specification's)
 
 | statement | device | figure | source |
 |---|---|---|---|
@@ -135,7 +135,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | provenance | repo: https://github.com/worldfnd/provekit · version: v1.0.0 |
 | verified | 2026-09-05 — provekit.org, docs.provekit.org, github README |
 
-#### Published figures (the stack's own, or the lab's — never this book's)
+#### Published figures (the proving system's own, or the evidence repository's — never this specification's)
 
 | statement | device | figure | source |
 |---|---|---|---|
@@ -187,7 +187,7 @@ A proving-system entry records facts a reader can check — proof system, field,
 | provenance | repo: github.com/mitchuski/dtgwg-zkp-mage — runtimes/circom-gadget · version: artifacts.manifest.json (pinned required digests) · content-addressed |
 | verified | 2026-09-05 — CIRCUITS.md, registry/data |
 
-#### Published figures (the stack's own, or the lab's — never this book's)
+#### Published figures (the proving system's own, or the evidence repository's — never this specification's)
 
 | statement | device | figure | source |
 |---|---|---|---|
