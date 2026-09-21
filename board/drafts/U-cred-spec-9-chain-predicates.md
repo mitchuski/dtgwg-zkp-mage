@@ -1,5 +1,5 @@
 # U · cred-spec #9 — the requirement sentence accepted; where each of the four predicates lands (007 · 009 · 020 · 021)
-chip: WAITING ON THE ZKP TF · REPLY TO 09-10
+chip: SUPERSEDED by AK (21 Sept) · WAITING ON THE ZKP TF · REPLY TO 09-10
 thread: https://github.com/trustoverip/dtgwg-cred-spec/issues/9
 note: talltree (09-08) translated the ask and proposed sharing a general requirement with the ZKP TF; geoffturk (09-10) added four points and a candidate sentence. This answers the four in order and names the records. Review 007, 009, 020 and 021 before posting — the reply cites them by id. Post after re-reading the thread for anything later than 09-10 13:37 UTC.
 ledger: 34

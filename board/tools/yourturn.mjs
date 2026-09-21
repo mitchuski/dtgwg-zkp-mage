@@ -29,7 +29,7 @@ export function loadDrafts(draftsDir) {
     const head = t.split('\n---\n')[0];
     const letter = f.match(/^([A-Z]{1,2})-/)[1];
     const thread = (head.match(/^thread:\s*(\S+)/m) || [])[1] || '';
-    out.push({ letter, file: f, title: (head.match(/^# (.*)$/m) || [])[1] || f, thread, key: threadKey(thread), ledger: (head.match(/^ledger:\s*(\d+)/m) || [])[1] || null, note: (head.match(/^note:\s*(.*)$/m) || [])[1] || '', body: t.split('\n---\n').slice(1).join('\n---\n') });
+    out.push({ letter, file: f, title: (head.match(/^# (.*)$/m) || [])[1] || f, chip: (head.match(/^chip:s*(.*)$/m) || [])[1] || '', thread, key: threadKey(thread), ledger: (head.match(/^ledger:\s*(\d+)/m) || [])[1] || null, note: (head.match(/^note:\s*(.*)$/m) || [])[1] || '', body: t.split('\n---\n').slice(1).join('\n---\n') });
   }
   return out;
 }
@@ -73,7 +73,7 @@ export function yourTurn({ sv, contribute, watchMap = {}, draftsDir, receiptsDir
   for (const f of legacyReceipts) if (existsSync(f)) for (const r of JSON.parse(readFileSync(f, 'utf8'))) postedLetters.add(r.id);
   // the single-letter drafts A–S are the 5–8 September generation: posted or superseded unless the queue still names them
   const queued = new Set([...(contribute?.ready || []), ...(contribute?.held || [])].map(r => r.draft));
-  const live = (d) => !postedLetters.has(d.letter) && (queued.has(d.letter) || !/^[A-S]$/.test(d.letter));
+  const live = (d) => !postedLetters.has(d.letter) && !/^SUPERSEDED/i.test(d.chip || '') && (queued.has(d.letter) || !/^[A-S]$/.test(d.letter));
   const draftsFor = (key) => drafts.filter(d => d.key === key && live(d));
   const all = sv ? threads(sv, me) : [];
   const byKey = Object.fromEntries(all.map(t => [t.key, t]));

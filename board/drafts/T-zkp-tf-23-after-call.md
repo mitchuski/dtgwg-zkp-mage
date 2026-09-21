@@ -1,5 +1,5 @@
 # T · zkp-tf #23 (reply) — after the 8 September call: what was clarified, what is still open, what changed in the draft
-chip: AFTER-CALL NOTE · REPLY UNDER THE ANCHOR
+chip: SUPERSEDED by AJ (21 Sept; PR #8 merged 16 Sept) · AFTER-CALL NOTE · REPLY UNDER THE ANCHOR
 thread: https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23
 note: The readers package (PR #22) left T as placeholders. This fills them from the Confluence meeting notes (page 1132953601, version 6, edited 2026-09-08 22:00 UTC). Attributions re-checked against v6 on 2026-09-15 (page unchanged): Erkan removed from the signature-scheme parenthesis — his recorded remark was on a signature family, not the non-swappability point. Posted as a reply so the Round 1 thread carries the call.
 ledger: 35

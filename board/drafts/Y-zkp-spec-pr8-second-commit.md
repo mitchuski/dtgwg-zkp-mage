@@ -1,5 +1,5 @@
 # Y · dtgwg-zkp-spec PR #8 (comment) — second commit: what changed since 8 September, and what did not
-chip: AFTER THE PUSH · FIRST IN THE QUEUE · MAKES U/T/V/W/X CITABLE
+chip: SUPERSEDED by the merge (16 Sept) and AI (21 Sept) · AFTER THE PUSH · FIRST IN THE QUEUE · MAKES U/T/V/W/X CITABLE
 thread: https://github.com/trustoverip/dtgwg-zkp-spec/pull/8
 note: Post immediately after `git push origin zk-book` lands the second commit; sha e1afc3f inserted 2026-09-14. Five lines, no argument — the arguments are in the records and in the threads U/T/W/X reply to. Keep the PR a draft until the editors line is confirmed (door D21); this comment does not change that.
 ledger: 40

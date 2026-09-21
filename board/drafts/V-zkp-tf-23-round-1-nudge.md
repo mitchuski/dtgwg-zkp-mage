@@ -1,5 +1,5 @@
 # V · zkp-tf #23 (reply) — Round 1 closes 22 September: how to read the draft, and the ask repeated from the call
-chip: ROUND 1 NUDGE · REVIEW STATUS CHECKED 12 SEPTEMBER
+chip: SUPERSEDED by AJ (21 Sept) · ROUND 1 NUDGE · REVIEW STATUS CHECKED 12 SEPTEMBER
 thread: https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23
 note: R proposed a two-week shape round from 8 September; nothing has landed on the PR or the thread. The second commit is on the branch (14 September). Post after Z and T, so the thread reads anchor → update → call → ask. Keep it to the reading path and the date; the shape questions are already in R.
 ledger: 36
