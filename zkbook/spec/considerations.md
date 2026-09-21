@@ -22,6 +22,8 @@ This section is informative. Items 1–6 are written by the editors; the numbere
 5. **What the credential layer holds.** A construction can blind only what the credential or framework gives it in committed form. Durable correlators that live in Trust Task artefacts — identifiers, thread identifiers, the task-context pairing — are outside any construction's protection until the framework commits to them (construction 008, [DTG-CRED-TF-39]); the credential specification's digest-valued references are enumerable until their hashed representation carries a salt (construction 022, [DTG-CRED-38]).
 6. **Intentional correlation is the holder's act.** A proof of common control across identifiers (constructions 007, 012) discloses to the party it is made to and widens no identifier's declared scope. Verifiers MUST NOT infer from such a proof that the identifiers may be correlated elsewhere.
 
+> **WG-15 — Discuss: blinded digest references (record 022).** Which of the credential specification's digest-valued members carry a salt, and where the salt lives, is that specification's disposition (cred-spec #38). Record 022 states what the proof needs of each placement — a salt the proof can treat as a witness, content-binding references kept bound to exact content, chain references salted only where a chain is proven undisclosed — and its proof-side preference (a salt member inside the referenced credential). Status: record specified; disposition open on #38.
+
 ## Governance Considerations
 
 This section is informative.

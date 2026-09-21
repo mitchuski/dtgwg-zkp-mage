@@ -58,7 +58,7 @@ The numbered working-group notes are the decision points this draft asks reviewe
 | WG-11 | proposed for discussion | Appendices (verification worklist) | the verification priorities V01–V12 | proposed queue |
 | WG-12 | discuss | Appendices (evidence repository) | home and pinning of the evidence repository; licence coverage of the runtimes it hosts | proposed; no decision recorded |
 | WG-14 | proposed for ratification | Integration (identifier commitment profile) | the ZK-openable commitment lives in the DID document as a verification method; the co-control requirement is a MUST conditioned on the key profile; the first implementation finds out which example DID method can carry it | proposed 2026-09-21; no decision recorded |
-| WG-15 | discuss | Construction Records (022) | blinded digest references: which digest-valued members carry a salt and where it lives is the credential specification's disposition (cred-spec #38); this draft states what the proof needs of each placement | record specified; disposition open on #38 |
+| WG-15 | discuss | Privacy Considerations (record 022) | blinded digest references: which digest-valued members carry a salt and where it lives is the credential specification's disposition (cred-spec #38); this draft states what the proof needs of each placement | record specified; disposition open on #38 |
 | WG-13 | direction | Cryptographic Background | move the chapter to the companion implementation guide when the core/guide split happens; it stays for now as context beside the records | editors' direction; no decision recorded |
 
 ### Maintenance Note: Research Across the DTG Workspace
