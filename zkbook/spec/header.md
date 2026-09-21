@@ -1,8 +1,8 @@
 # Decentralized Trust Graph — Zero-Knowledge Proof Specification
 
-_Version:_ 0.1  
-_Document Status:_ Working Draft  
-_Status of this draft (2026-09-16):_ every construction record is at state `specified` or `constructed` — written, validated, and in four cases measured by its constructor; none has been independently reproduced, vetted or adopted. This is a checked draft of what to build, not yet an implementable specification, and nothing in it is normative.  
+_Version:_ 1.0  
+_Document Status:_ Working Draft 0.1.0  
+_Status of this draft (2026-09-21):_ merged as the task force's working draft on 16 September 2026; Round 1 (shape review) runs on the task-force thread to 22 September. Every construction record is at state `requested`, `specified` or `constructed` — written, validated, and in four cases measured by its constructor; none has been independently reproduced, vetted or adopted. This is a checked draft of what to build, not yet an implementable specification, and nothing in it is normative. Document Status follows the credential specification's semantic-versioning convention (Introduction, *Relationship to other specifications*).  
 <!-- _DOI:_ To be assigned when this specification reaches ToIP Approved Deliverable status. See https://lf-toip.atlassian.net/wiki/spaces/HOME/pages/767787009/ToIP+Approved+Deliverable+Process#Persistent-DOI-Link -->
 _GitHub:_ <https://github.com/trustoverip/dtgwg-zkp-spec>
 

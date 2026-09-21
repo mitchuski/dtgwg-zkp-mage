@@ -51,7 +51,7 @@
       "component": "001"
     },
     {
-      "clause": "S7 (WD02, PR #30) — the identifier the presenter used in the VRC and the identifier the presenter’s VMC grant names are controlled by one secret; likewise the voucher's VRC-issuing identifier and the voucher’s VMC-grant identifier (from the voucher’s linkage artifact, or trivially if the voucher used one `directed` identifier) — otherwise clauses 1–3 are about four unrelated identifiers",
+      "clause": "S7 (WD02 §Community-Anchored Zero-Knowledge Proof) — the identifier the presenter used in the VRC and the identifier the presenter’s VMC grant names are controlled by one secret; likewise the voucher's VRC-issuing identifier and the voucher’s VMC-grant identifier (from the voucher’s linkage artifact, or trivially if the voucher used one `directed` identifier) — otherwise clauses 1–3 are about four unrelated identifiers",
       "gadget": "key-binding",
       "component": "007"
     },
@@ -93,8 +93,8 @@
     "that the voucher endorses this request — a VRC is standing, not per-request; S5 binds the proof, not the relationship",
     "that the presenter is one natural person (that is PR-UNQ in a different context, record 002 under its own declaration)",
     "that C's admission decision for either member was correct (assurance boundary — accreditation carries assurance)",
-    "the voucher's consent to this disclosure — the VRC's effective disclosure is the wider of its two halves (cred-spec PR #27)",
-    "that the voucher's membership was consented in the PR #12 sense — clause 3 proves the community-issued grant only; the acknowledgement half is not in the presenter's hands",
+    "the voucher's consent to this disclosure — the VRC's effective disclosure is the wider of its two halves (cred-spec §Privacy Considerations: the effective disclosure of an edge)",
+    "that the voucher's membership was consented in the sense of §VMC (Verifiable Membership Credential), both directions — clause 3 proves the community-issued grant only; the acknowledgement half is not in the presenter's hands",
     "key non-transfer, absence of coercion, agent authority",
     "that the voucher is still a member in any sense stronger than 'not revoked as of epoch'",
     "that the voucher's two identifiers are co-controlled when the voucher supplied no linkage and used pairwise identifiers for both — then clause 3 is unprovable by the presenter, and the record says so rather than reading a link out of a field (cred-spec #9)",
@@ -183,39 +183,25 @@
   "issuance": [
     "X3, concretely: the VMC and VRC signatures or a published commitment must be ZK-friendly — either SPS on BLS12-381 (blackbox), a SNARK-native signature, or an additional Poseidon/KZG commitment alongside `eddsa-jcs-2022` (cred-spec #17)",
     "C publishes root_C and rl_root per epoch, fetchable anonymously (T2, C3)",
-    "membership leaf = the community-issued grant (PR #12 pair): the proof covers the grant half",
+    "membership leaf = the community-issued grant (§VMC, the membership pair): the proof covers the grant half",
     "a VRC issued from a pairwise-scope identifier by a member who wants it usable in community-anchored proofs carries the issuer's co-control attestation to their VMC-side identifier (record 007 at issuance) — or the member declares `directed` and uses one identifier; the credential layer names the option, not the link (cred-spec #9)"
   ],
   "provenance": {
     "spec": [
       "ADR-001 Community-Anchored Proof (Proposed 2026-08-25)",
-      "cred-spec construction 2 (community-anchored ZKP)",
-      "cred-spec #21 → PR #26 (edge verifiability w.r.t. a verifier)",
-      "cred-spec #8 → PR #12 (VMC pair)",
+      "cred-spec §Community-Anchored Zero-Knowledge Proof",
+      "cred-spec §Edge Verifiability (issue #21; merged 2026-09-05)",
+      "cred-spec §VMC (Verifiable Membership Credential), both directions (issue #8; merged 2026-08-28)",
       "ePrint 2026/333 §2.3–2.4, §5.3–5.4, §7.2, §8–10",
-      "cred-spec PR #30 §Community-Anchored Zero-Knowledge Proof (WD02 draft): \"the proof must additionally establish common control\" · cred-spec #31 row #9",
+      "cred-spec §Community-Anchored Zero-Knowledge Proof: \"the proof must additionally establish common control\" · cred-spec #31 row #9",
       "cred-spec §Community-Anchored Zero-Knowledge Proof (merged WD02): a verifier 'SHOULD treat statement 3 as establishing that the community attested the VRC issuer's membership, and SHOULD NOT treat it as establishing that the issuer acknowledged that membership' — the record's does-not-establish line, now in the credential specification's own words",
       "DTG ZKP TF meeting notes 2026-09-08: ADR-001 confirmed as the first proof; the blind-signature vouch alternative; same-context pseudonym reuse as the one case where freshness does not hold; the credential signature scheme as the non-swappable choice",
-      "cred-spec PR #50 (2026-09-12, supersedes #49): identity vetting as a community statement predicate — its identityCommitment and livenessConfirmed are not the voucher linkage; the card-digest byte-input ambiguity (received bytes vs canonical form) is carried, not adopted (review of 2026-09-13)"
+      "cred-spec PR #50 (2026-09-12, supersedes #49): identity vetting as a community statement predicate — its identityCommitment and livenessConfirmed are not the voucher linkage; the card-digest byte-input ambiguity (received bytes vs canonical form) is carried, not adopted (review of 2026-09-13)",
+      "zkp-spec PR #8 review (geoffturk, 2026-09-16, the credential maintainer's reading of the interface) — the answer to question 2 of zkp-tf #23 (which credential, holder-key and offline-voucher artifacts the first implementation supports): the WD02 examples as they stand — `did:key` and `did:peer` Ed25519 identifiers, the VMC pair with the community-issued grant as the membership leaf, a VRC issued from a `pairwise` identifier carrying the issuer's linkage proof under the MAY. Read against record 007's issuance line the Ed25519 `did:key` half of that set cannot carry the commitment (record 007, WG-14)",
+      "cred-spec §Community-Anchored Zero-Knowledge Proof: Governance Considerations 1 confirmed to carry the membership-pair rule; statement 3's negative space confirmed to match the SHOULD / SHOULD NOT wording (review of 2026-09-16)"
     ],
     "commit": "github.com/mitchuski/dtgwg-zkp-mage"
   },
-  "history": [
-    {
-      "to": "requested",
-      "by": "mitchuski",
-      "date": "2026-08-28",
-      "evidence": "zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board",
-      "task": "board/request"
-    },
-    {
-      "to": "specified",
-      "by": "mitchuski",
-      "date": "2026-08-28",
-      "evidence": "ZKP_TF_RUN-2026-08-28.md §3 (ten refinements) + this record; method fully bound to gadgets; composed disclosure set and does-not-establish written fresh",
-      "task": "board/specify"
-    }
-  ],
   "revisions": [
     {
       "date": "2026-09-05",
@@ -231,6 +217,27 @@
       "date": "2026-09-13",
       "by": "mitchuski",
       "note": "cred-spec PR #50 (vetting as a statement predicate, superseding #49): negative-space line — vetting evidence is not the voucher linkage; three fixture requirements recorded as rejection codes without vectors; provenance. State unchanged."
+    },
+    {
+      "date": "2026-09-21",
+      "by": "mitchuski",
+      "note": "Review of 2026-09-16: the credential maintainer's answer to question 2 of #23 recorded; the example set's Ed25519 `did:key` identifiers found unable to carry the commitment record 007 requires (WG-14). Citations by section title. State unchanged."
+    }
+  ],
+  "history": [
+    {
+      "to": "requested",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "zkp-tf #18 (talltree 08-26 / Scott 08-27): seed set for the board",
+      "task": "board/request"
+    },
+    {
+      "to": "specified",
+      "by": "mitchuski",
+      "date": "2026-08-28",
+      "evidence": "ZKP_TF_RUN-2026-08-28.md §3 (ten refinements) + this record; method fully bound to gadgets; composed disclosure set and does-not-establish written fresh",
+      "task": "board/specify"
     }
   ]
 }

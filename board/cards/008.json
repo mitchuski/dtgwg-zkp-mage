@@ -12,7 +12,7 @@
   },
   "statement": "A verifier that holds a trust-task context learns that the presented credential was issued within that exchange, while the credential at rest and every other presentation of it carry no plaintext binder that recognises the exchange or the holder.",
   "witness": [
-    "the taskContext value (the id/threadId pairing the framework assigned to the exchange)",
+    "the taskContext value — under cred-spec PR #56 (open, 2026-09-17) the `id` of the exchange's initiating document together with `taskDigestMultibase`, the task digest of that document; before it, the id/threadId pairing",
     "the blinding salt u the issuer used when committing to it",
     "the credential carrying the commitment"
   ],
@@ -91,7 +91,7 @@
     }
   ],
   "issuance": [
-    "issuers place the commitment C in `taskContext` (or beside it) instead of the plaintext pairing — a change to cred-spec §The `taskContext` Property, and the one member this record asks the credential layer for",
+    "issuers carry a committed form of the exchange citation in place of the plaintext pair — under cred-spec PR #56 that pair is `taskContext` (the initiating document's `id`) and `taskDigestMultibase` (its task digest), both durable correlators of the credential across presentations; this is a change to cred-spec §The `taskContext` Property and §The `taskDigestMultibase` Property, and the one member this record asks the credential layer for. Filed against the credential specification as its own issue on 2026-09-21 (the review asked that it be an issue the Credentials TF can schedule; PR #18 is parked and is not it)",
     "C is digestMultibase-encoded (WD02 D-A) so both layers agree on the encoding",
     "the framework (Trust Tasks) commits to the taskContext in a form the proof can open — 'we can only blind what the framework gives us a committed form of' (ScottJeezey, cred-tf #39)",
     "Specify generation, distribution and retention of the secret blinding value; do not publish it beside a low-entropy plaintext-hiding commitment."
@@ -100,28 +100,14 @@
     "spec": [
       "cred-tf #39 (ScottJeezey 2026-08-25 — ZKP TF work items on the record)",
       "cred-tf #40 (the artifact gap; delegation as a design-time case)",
-      "cred-spec §Trust Task Context Binding / §The `taskContext` Property (WD01)",
+      "cred-spec §Trust Task Context Binding / §The `taskContext` Property",
       "cred-spec #31 D-A (digestMultibase settled) · trustoverip/dtgwg-trust-tasks-tf#236 (§4.9.3)",
       "DTG ZKP TF meeting notes 2026-09-08 (Arka Rai Choudhuri): two parties who interact again in the same context reuse the same pseudonyms and can be linked; breaking that needs a new mechanism — the one case in which freshness does not hold; route 2's per-context pseudonym is that case by construction",
-      "cred-spec PR #50 (2026-09-12) §The identity commitment: a per-application 32-byte salt carried inside the card to vetters and never to the community; every vetter recomputes the same commitment; a fresh salt per application leaves separate applications unrelated — this record's route 1 shape with the profile's own retention caveat (a vetter who keeps a card can recognise the commitment later)"
+      "cred-spec PR #50 (2026-09-12) §The identity commitment: a per-application 32-byte salt carried inside the card to vetters and never to the community; every vetter recomputes the same commitment; a fresh salt per application leaves separate applications unrelated — this record's route 1 shape with the profile's own retention caveat (a vetter who keeps a card can recognise the commitment later)",
+      "cred-spec PR #56 (albertoleon7794, 2026-09-17, open): `taskContext` becomes the initiating document's `id` (not the threadId) and gains `taskDigestMultibase`, the task digest of that document, taken with `proof` removed — a sixth digest-valued member, and a second plaintext correlator beside the first",
+      "zkp-spec PR #8 review (geoffturk, 2026-09-16, the credential maintainer's reading of the interface): this record is scoped to the trust-task binder; the five digest-valued members of cred-spec #38 are record 022; the taskContext change is to be filed against the credential specification as an issue"
     ]
   },
-  "history": [
-    {
-      "to": "requested",
-      "by": "ScottJeezey (ZKP TF co-chair, cred-tf #39)",
-      "date": "2026-08-25",
-      "evidence": "cred-tf #39 comment 2026-08-25T14:41Z: 'we are treating these as work items: a blinded, non-correlating form of the binder (taskContext)…'",
-      "task": "board/request"
-    },
-    {
-      "to": "specified",
-      "by": "mitchuski",
-      "date": "2026-09-05",
-      "evidence": "specified from Scott's two routes + cred-spec §Trust Task Context Binding + the lab's descriptor-digest and nullifier shapes; costs labelled conjecture",
-      "task": "board/specify"
-    }
-  ],
   "revisions": [
     {
       "date": "2026-09-07",
@@ -137,6 +123,27 @@
       "date": "2026-09-13",
       "by": "mitchuski",
       "note": "Provenance: cred-spec PR #50's salted identity commitment recorded as an instance of route 1, with its retention caveat. State unchanged."
+    },
+    {
+      "date": "2026-09-21",
+      "by": "mitchuski",
+      "note": "Review of 2026-09-16: witness and issuance re-read against cred-spec PR #56 (initiating-document id + task digest); the #38 digest members moved to their own record, 022; the taskContext ask filed as a credential-specification issue. State unchanged."
+    }
+  ],
+  "history": [
+    {
+      "to": "requested",
+      "by": "ScottJeezey (ZKP TF co-chair, cred-tf #39)",
+      "date": "2026-08-25",
+      "evidence": "cred-tf #39 comment 2026-08-25T14:41Z: 'we are treating these as work items: a blinded, non-correlating form of the binder (taskContext)…'",
+      "task": "board/request"
+    },
+    {
+      "to": "specified",
+      "by": "mitchuski",
+      "date": "2026-09-05",
+      "evidence": "specified from Scott's two routes + cred-spec §Trust Task Context Binding + the lab's descriptor-digest and nullifier shapes; costs labelled conjecture",
+      "task": "board/specify"
     }
   ]
 }

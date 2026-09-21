@@ -1,0 +1,126 @@
+{
+  "id": "022",
+  "name": "Blinded digest references — the digest-valued members of the credential specification, unenumerable at rest and openable in proof",
+  "kind": "primitive",
+  "state": "specified",
+  "priority": "P2",
+  "owner": "mitchuski",
+  "request": {
+    "issue": "cred-spec #38 (geoffturk 2026-09-05: every digest-valued binder is an unsalted JCS-SHA-256 digest over often low-entropy content — enumerable where the referenced credential is not disclosed; blinding deferred from WD02) · cred-spec #38 (stormer78 2026-09-07: five members, of two kinds — the acknowledgement, the acceptance and the statement adopt the exact content they name; the VDC's and VAC's `parent` are chain references re-checked against a presented parent) · cred-tf #40 E3 (stormer78: forty published scope strings, a committed subset matched by enumeration in milliseconds) · cred-tf #39 (ScottJeezey 2026-08-25: salted commitments now, PRF-derived pseudonyms later) · zkp-spec PR #8 review (geoffturk 2026-09-16, request 3: 'give #38 a record' — widen 008 or open a sibling; the disposition of which members carry a salt and where it lives stays on #38)",
+    "by": "geoffturk / stormer78 (cred-spec #38) · ScottJeezey (cred-tf #39) — specified by the ZKP TF co-chair on the maintainer's request of 2026-09-16",
+    "need": "a verifier shown a digest-valued reference but not the credential it names must not be able to recover that credential by trying the plausible values; and a proof that reads the referenced credential (an acknowledged grant, an accepted appointment, an attested object, a parent in a chain) must be able to open the reference to it without the reference becoming a durable correlator of the presenting credential"
+  },
+  "statement": "A verifier learns that a digest-valued reference carried by a presented credential names exactly the credential the enclosing record's clauses read — the community-issued grant a member-issued VMC acknowledges, the appointment a VDC accepts, the credential a VSC's statement is about, the parent a VDC or a VAC derives from — while the reference value is not enumerable by a party not shown the referenced credential and, where the enclosing record hides the reference, is not shown at all.",
+  "witness": [
+    "the referenced credential's canonical bytes — its JSON representation without the top-level `proof`, canonicalized per JCS (RFC 8785), as §Digest Encoding prescribes — or, where the enclosing record needs only the digest, the digest itself",
+    "the blinding value u under which the digest was taken (a 32-byte random salt), held by whoever holds the referenced credential",
+    "the referencing credential that carries the reference (its bytes stay with the holder; only what the enclosing record discloses is shown)"
+  ],
+  "publicInputs": [
+    "the reference value as the referencing credential carries it (route 1: a salted digest, visible; route 2: nothing — the reference is opened inside the proof and the enclosing record's public inputs stand in for it)",
+    "transcriptDigest — the presentation transcript this proof is bound to",
+    "the hash algorithm the reference declares in its Multihash header (`sha2-256` unless a governing VTC or VTN permits another), so verifier and circuit agree on the function being opened"
+  ],
+  "relation": [
+    {
+      "clause": "the reference opens to (canonical bytes of the referenced credential, u) under the declared digest function: reference = Multibase(Multihash(H(bytes ∥ u))) — a different credential or a different salt is unsatisfiable; and when the enclosing record reads the referenced credential (the grant's fields in record 010, the parent's fields in records 020 and 021, the object in a VSC-based record) the bytes opened here are the bytes those clauses read — one credential, not one for the digest and another for the predicate",
+      "gadget": "commitment-open"
+    }
+  ],
+  "disclosureSet": [
+    "the outcome (the reference names the credential the clauses read / not shown)",
+    "transcriptDigest",
+    "the reference value only as far as the enclosing record already discloses it — route 1 shows the salted digest, which is stable for the referencing credential; route 2 adds nothing to the disclosure set"
+  ],
+  "doesNotEstablish": [
+    "that the referenced credential is currently valid, unrevoked or accepted (record 006; the enclosing record's own clauses)",
+    "that the party issuing the referencing credential was entitled to reference that credential — an acknowledgement by a non-member, an acceptance by the wrong delegate, a witness with no standing: governance and the enclosing record decide that, not the opening",
+    "unlinkability of presentations that show the same salted digest (route 1): hiding the plaintext behind a salt stops enumeration and nothing else; a stable visible reference still links every presentation of the referencing credential, exactly as record 008 says of a visible commitment C",
+    "which digest-valued members carry a salt and where the salt lives — that disposition is the credential specification's (cred-spec #38); this record states what the proof needs of whichever placement is chosen",
+    "that a chain reference (a VDC's or VAC's `parent`) needs blinding for safety: the credential specification re-checks every link against the parent actually presented, so a chain reference is unforgeable within a presented chain without a salt; blinding it serves uniformity and enumeration resistance, not chain soundness"
+  ],
+  "adversary": [
+    {
+      "claim": "a verifier shown the reference but not the referenced credential learns nothing about that credential's content that it could not have guessed without the reference — the salt removes the enumeration oracle",
+      "against": [
+        "verifier"
+      ]
+    },
+    {
+      "claim": "route 2 only: two verifiers comparing what they were shown cannot link two presentations of the referencing credential through the reference, because neither saw a reference value",
+      "against": [
+        "verifiers-colluding"
+      ]
+    }
+  ],
+  "horizon": [
+    "the salt's confidentiality: the claim fails for any party that holds u and the schema — the referencing credential's holder, the referenced credential's holder, and whoever either gave the salt to; the disposition on #38 decides who those are",
+    "the digest function: opening a SHA-256 digest in-circuit is the cost horizon of route 2; a profile that permits another Multihash algorithm changes the gadget, not the record",
+    "the validity horizon of the enclosing record — this record adds none of its own"
+  ],
+  "fixtures": {
+    "families": [
+      "accepts",
+      "rejects-unsat"
+    ],
+    "rejectionCodes": [
+      "reference-mismatch (unsat: no (bytes, u) opens the presented reference to the credential the clauses read)",
+      "reference-unsalted (lint: a profile that requires blinding presented a reference whose hashed representation carries no salt)"
+    ]
+  },
+  "options": [
+    {
+      "construction": "salt in the referenced credential's hashed block (an ACDC-style `u` member: 32 random bytes the issuer places in the credential, so every digest of that credential is unpredictable without the credential itself). Route 1: no change to the digest computation of §Digest Encoding beyond the bytes it hashes; a verifier shown the referenced credential recomputes as today; enumeration is defeated for every reference to that credential at once, and the salt travels with the credential that owns it",
+      "cost": "zero outside a proof; inside a proof, a SHA-256 preimage over the canonical bytes — on the order of 25–30k R1CS constraints per 64-byte block in circom's sha256 (conjecture for this record, not measured); a 1.5 KB credential is roughly 24 blocks",
+      "measured": false,
+      "source": "cred-spec #38 (the ACDC `u` salty-nonce placement named in the issue); KERI/ACDC specification, blinding of SAIDs by a `u` field; circomlib sha256 constraint counts as commonly reported"
+    },
+    {
+      "construction": "salt held beside the reference, outside the credential at rest (record 008's route 1 shape): the referencing credential carries H(bytes ∥ u) and the two parties to the reference hold u; the referenced credential is unchanged. Blinds one reference rather than every reference to a credential, and requires a distribution and retention rule for u",
+      "cost": "as above in-circuit; a retention rule outside it",
+      "measured": false,
+      "source": "cred-tf #39 (salted commitments available now); record 008 route 1 and its retention caveat"
+    },
+    {
+      "construction": "a SNARK-native commitment (Poseidon or Pedersen over a field encoding of the digest) as the reference — cheap to open in-circuit, but a second hashed representation beside §Digest Encoding's, which is the encoding migration #38 was scoped to avoid; recorded as the not-preferred option",
+      "cost": "a few hundred constraints to open; a second encoding for every consumer",
+      "measured": false,
+      "source": "cred-spec #38 ('so a blinding scheme can later change what is hashed without a second encoding migration')"
+    }
+  ],
+  "issuance": [
+    "the members this record covers are the five §Digest Encoding names — the member-issued VMC's `digestMultibase`, a VSC's `object.digestMultibase`, a VDC's `delegation.parent` and `delegation.accepts`, a VAC's `authority.parent` — and, once cred-spec PR #56 merges, `taskDigestMultibase` as a sixth; record 008 covers the trust-task citation itself",
+    "the hashed representation of a referenced credential must contain a salt the proof can treat as a witness; the proof-side preference is the first option above (a salt member inside the referenced credential), because it blinds every reference at once, moves with the credential, and changes neither the referencing credential nor the encoding — the disposition is #38's",
+    "content-binding references (acknowledgement, acceptance, statement object) must stay bound to the exact content they name: a salted digest preserves that binding, a re-randomizable commitment would not without a further opening",
+    "chain references (a VDC's and a VAC's `parent`) are re-checked by the verifier against the parent presented, so a profile may leave them unsalted where the whole chain is disclosed, and must salt them where a chain is proven without disclosure (records 020 and 021)",
+    "the encoding of the reference is unchanged: Multibase base-58-btc over a Multihash of the salted digest, compared as decoded bytes, as §Digest Encoding requires"
+  ],
+  "provenance": {
+    "spec": [
+      "cred-spec #38 — 'Digest-valued binders are unsalted and enumerable; blinding is deferred from WD02' (geoffturk 2026-09-05; stormer78 2026-09-07 scope note: five members, two kinds; mitchuski 2026-09-08: record 008's reading)",
+      "cred-spec §Digest Encoding — the five members, the JCS-SHA-256-Multihash-Multibase procedure, and the editor's note pointing at this task force for the blinding construction",
+      "cred-spec §Zero-Knowledge and Selective Disclosure editor's note (merged 2026-09-10): 'none of the digest-valued members … is salted … blinding them is cross-cutting work with the same task force'",
+      "cred-tf #39 (ScottJeezey 2026-08-25: salted commitments now; PRF-derived per-context pseudonyms as the fuller construction) · cred-tf #40 E3 (stormer78: enumeration of a committed scope subset)",
+      "cred-spec PR #56 (open, 2026-09-17): `taskDigestMultibase` — a task digest over the initiating document, the same encoding, a sixth member",
+      "zkp-spec PR #8 review (geoffturk 2026-09-16, request 3): give #38 a record, widen 008 or open a sibling; the disposition stays on #38",
+      "records 020 and 021: the chain clauses already read `parent` inside the relation; this record is the opening they compose"
+    ],
+    "commit": "github.com/mitchuski/dtgwg-zkp-mage"
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "geoffturk / stormer78 (cred-spec #38) · ScottJeezey (cred-tf #39)",
+      "date": "2026-09-07",
+      "evidence": "cred-spec #38 scope note: five digest-valued members of two kinds; the issue's third tracked item is coordination with the ZKP task force's blinded-binder work",
+      "task": "board/request"
+    },
+    {
+      "to": "specified",
+      "by": "mitchuski",
+      "date": "2026-09-21",
+      "evidence": "the credential maintainer's review of PR #8 (2026-09-16) asked for a record a reader coming from #38 will find; this record: statement, witness, public inputs, one clause bound to commitment-open (the opening, with the opened bytes tied to what the enclosing record reads), the two reference kinds kept apart in the issuance lines, three placements with their costs (conjecture), the disposition left to #38",
+      "task": "board/specify"
+    }
+  ]
+}

@@ -13,7 +13,7 @@
     "009"
   ],
   "request": {
-    "issue": "cred-spec PR #42 editor's note (merged 2026-09-10): 'Holder holds a VAC conferring action X at scope S, and its chain is valid and unrevoked: each link is issued by its parent's subject, narrows its parent, no link is revoked, depth is within every limit its links set, and the root is issued by the party governing S — without disclosing the chain' · cred-spec §VAC (PR #29, #39, #40, #41, #42 merged 2026-09-10): §Attenuation, §Invocation, §Withdrawal, §Authority and membership are separate credentials · cred-spec #9 (2026-09-10): the VAC chain predicate is hidden-value equality, not common control",
+    "issue": "cred-spec §Zero-Knowledge and Selective Disclosure editor's note (merged 2026-09-10): 'Holder holds a VAC conferring action X at scope S, and its chain is valid and unrevoked: each link is issued by its parent's subject, narrows its parent, no link is revoked, depth is within every limit its links set, and the root is issued by the party governing S — without disclosing the chain' · cred-spec §VAC (Verifiable Authority Credential) (merged 2026-09-10): §Attenuation, §Invocation, §Withdrawal, §Authority and membership are separate credentials · cred-spec #9 (2026-09-10): the VAC chain predicate is hidden-value equality, not common control",
     "by": "stormer78 / geoffturk (spec side) — specified by the ZKP TF co-chair",
     "need": "a VAC chain is presented whole on every use, so every verifier sees the identifier of the party that equipped the agent (cred-spec Privacy Considerations item 13); the credential specification names the zero-knowledge form as waiting on this task force and states what holds until it lands"
   },
@@ -147,19 +147,19 @@
       "construction": "no proof — the chain is presented whole and every check is performed on disclosed credentials (the credential specification's stated fallback, at the cost of Privacy Considerations item 13)",
       "cost": "zero constraints; the cost is disclosing the ancestry",
       "measured": false,
-      "source": "cred-spec PR #42 editor's note, 'What holds until this work lands'"
+      "source": "cred-spec §Zero-Knowledge and Selective Disclosure editor's note, 'What holds until this work lands'"
     }
   ],
   "issuance": [
     "VAC content that the chain clauses read — `issuer`, `credentialSubject.id`, `authority.scope`, `authority.actions`, `authority.parent`, `authority.maxAttenuation`, `validUntil` — must be ZK-openable inside the authenticated credential: X3 applied to the VAC (cred-spec #17)",
-    "`authority.parent` is a digestMultibase digest of the parent (§Digest Encoding); the unsalted-digest concern of cred-spec #38 applies to it — record 008's blinding question reaches the chain link as well",
+    "`authority.parent` is a digestMultibase digest of the parent (§Digest Encoding); the unsalted-digest concern of cred-spec #38 applies to it — record 022 (blinded digest references) is the construction for that member and the four others; record 008's blinding question is the trust-task binder's",
     "the governing party publishes rl_root per epoch, fetchable without a per-chain query; where the root carries `credentialStatus` the governing party states the timing correlation it accepts (cred-spec Privacy Considerations item 14)",
     "a governing party that requires derived subjects to independently qualify says so in its governance framework, so a profile knows whether clause 7 is in the statement (§Attenuation)"
   ],
   "provenance": {
     "spec": [
       "cred-spec §VAC (Verifiable Authority Credential), merged 2026-09-10: §Attenuation (by default; `maxAttenuation`; depth ceiling 8; 'Who may hold derived authority'), §Invocation (not a bearer credential), §Withdrawal (cascade), §Authority is not delegation, §Relationship to the VDC, §Authority and membership are separate credentials",
-      "cred-spec PR #42 editor's note (2026-09-10): the VAC chain predicate waiting on the ZKP task force; 'implementations SHOULD NOT defer shipping a rule of this specification on the grounds that its zero-knowledge form is unspecified'",
+      "cred-spec §Zero-Knowledge and Selective Disclosure editor's note (2026-09-10): the VAC chain predicate waiting on the ZKP task force; 'implementations SHOULD NOT defer shipping a rule of this specification on the grounds that its zero-knowledge form is unspecified'",
       "cred-spec #9 (geoffturk 2026-09-10): chain predicates are hidden-value equality — record 009",
       "cred-spec Privacy Considerations items 13 (chain disclosure) and 14 (status on a root)",
       "record 020 (delegation chain) — the sibling record; the two differ in default (attenuation by default vs re-delegation opt-in), in attribution (as itself vs in another's name) and in cascade"

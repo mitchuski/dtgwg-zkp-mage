@@ -13,7 +13,7 @@
   ],
   "request": {
     "issue": "zkp-tf #18",
-    "by": "cred-spec construction 1",
+    "by": "cred-spec §Pairwise Zero-Knowledge Proof",
     "need": "prove two known personas have a relationship without exposing the private pairwise channel (cred-spec §Pairwise Zero-Knowledge Proof, WD02 wording: disclose the parties’ `directed` persona identifiers while hiding the underlying `pairwise` ones)"
   },
   "statement": "A verifier learns that two disclosed persona identifiers (declared `directed`) hold a valid relationship credential between them, without learning the pairwise-scope identifiers under it and without a handle that correlates this presentation with any other.",
@@ -107,11 +107,24 @@
   ],
   "provenance": {
     "spec": [
-      "cred-spec §Pairwise Zero-Knowledge Proof (WD02 wording, PR #30)",
+      "cred-spec §Pairwise Zero-Knowledge Proof (WD02 wording)",
       "cred-spec #9 (F post: co-control as requirement, not field)",
-      "cred-spec PR #30 §Correlation Scope"
+      "cred-spec §Correlation Scope",
+      "zkp-spec PR #8 review (geoffturk, 2026-09-16, the credential maintainer's reading of the interface): record 011 answers the first two questions of cred-spec #9 implicitly — the persona-to-pairwise link is a co-control witness (record 007 in the presenter's hands), and the VPC plays no part in the proof; the counterparty's persona-to-pairwise link needs the counterparty's attestation, the same asymmetry as statement 3 of the community-anchored proof. Stated on #9 on 2026-09-21"
     ]
   },
+  "revisions": [
+    {
+      "date": "2026-09-05",
+      "by": "mitchuski",
+      "note": "WD02 vocabulary; co-control routed through record 007 — re-specified, state unchanged"
+    },
+    {
+      "date": "2026-09-21",
+      "by": "mitchuski",
+      "note": "Review of 2026-09-16: the record's implicit answers to cred-spec #9's first two questions made explicit in provenance and stated on the thread; the counterparty-attestation asymmetry noted. State unchanged."
+    }
+  ],
   "history": [
     {
       "to": "requested",
@@ -126,13 +139,6 @@
       "date": "2026-08-28",
       "evidence": "cred-spec construction 1 + #9 F post",
       "task": "board/specify"
-    }
-  ],
-  "revisions": [
-    {
-      "date": "2026-09-05",
-      "by": "mitchuski",
-      "note": "WD02 vocabulary; co-control routed through record 007 — re-specified, state unchanged"
     }
   ]
 }

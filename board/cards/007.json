@@ -6,7 +6,7 @@
   "priority": "P1",
   "owner": "mitchuski",
   "request": {
-    "issue": "cred-spec #9 (Sankarshan: identity linkages the ZKP constructions require; talltree 09-08 translation; geoffturk 09-10: subject-or-issuer, non-correlation carried in the requirement, chain predicates named separately) · cred-spec #31 (geoffturk 09-02: '#9 stays open — and gains weight') · cred-spec PR #30 §Community-Anchored ZKP ('the proof must establish common control across them') · cred-spec PR #42 editor's note (merged 09-10): of the four predicates listed as resting on the #9 primitive, two rest on this record — the community-anchored proof and the VMC+VAC shared-subject rule where the two identifiers differ; the two chain predicates are hidden-value equality (record 009) inside records 020 and 021",
+    "issue": "cred-spec #9 (Sankarshan: identity linkages the ZKP constructions require; talltree 09-08 translation; geoffturk 09-10: subject-or-issuer, non-correlation carried in the requirement, chain predicates named separately) · cred-spec #31 (geoffturk 09-02: '#9 stays open — and gains weight') · cred-spec §Community-Anchored Zero-Knowledge Proof ('the proof must establish common control across them') · cred-spec §Zero-Knowledge and Selective Disclosure editor's note (merged 2026-09-10): of the four predicates listed as resting on the #9 primitive, two rest on this record — the community-anchored proof and the VMC+VAC shared-subject rule where the two identifiers differ; the two chain predicates are hidden-value equality (record 009) inside records 020 and 021",
     "by": "sankarshanmukhopadhyay / geoffturk / stormer78 (spec side) — specified by the ZKP TF co-chair",
     "need": "under WD02's three correlation scopes, two `pairwise` identifiers of one controller differ by construction, so any proof that reads one party out of two credentials must first prove one holder controls both identifiers — whether the identifiers appear as credential subject or as credential issuer (the VRC-issuer case is statement 3 of record 010) — without a field that says so"
   },
@@ -75,7 +75,7 @@
       "construction": "no proof — the holder declares one `directed` identifier and uses it in both credentials (WD02 §Choosing a scope: correlation evident on the face of the credentials)",
       "cost": "zero constraints; the cost is the declaration itself",
       "measured": false,
-      "source": "cred-spec PR #30 §Choosing a scope / §Community-Anchored ZKP"
+      "source": "cred-spec §Choosing a scope / §Community-Anchored Zero-Knowledge Proof"
     },
     {
       "construction": "Groth16/Poseidon: two Poseidon commitment openings sharing the secret input (the circom-gadget leaf commitment, twice) — conjecture ~500–600 constraints total (~65%), unmeasured; one compile settles it",
@@ -91,21 +91,37 @@
     }
   ],
   "issuance": [
-    "each identifier that may need to be proven co-controlled must be, or carry, a ZK-openable commitment to the holder secret: a SNARK-native key (e.g. BabyJubJub did:key) or a published Poseidon/KZG commitment beside an Ed25519 key — the X3 requirement of record 010, now applied to identifiers rather than signatures (cred-spec #17)",
+    "each identifier that may need to be proven co-controlled must be, or carry, a ZK-openable commitment to the holder secret: a SNARK-native key (e.g. a BabyJubJub or BLS12-381 Multikey) or a published Poseidon/KZG commitment beside an Ed25519 key — the X3 requirement of record 010 applied to identifiers rather than signatures (cred-spec #17)",
     "the credential layer carries the requirement to be able to prove co-control, never a field that states the link (cred-spec #9, the 08-25 position)",
     "the credential layer's candidate requirement (cred-spec #9, 2026-09-10): a party controlling more than one DID appearing in DTG credentials, as subject or issuer, regardless of each identifier's declared scope, MUST be able to prove in zero knowledge that those DIDs are under its control, without disclosing them and without the proof introducing a value that correlates across presentations — this record is the construction that requirement points at; the requirement text is the credential specification's to write",
-    "a VRC MAY carry its issuer's linkage proof to its VMC-side identifier (the one-line MAY proposed on #9, 2026-08-25 and taken up 2026-09-10) — the credential layer's member, produced by the counterparty at issuance by running this record; record 010 consumes it"
+    "a VRC MAY carry its issuer's linkage proof to its VMC-side identifier (the one-line MAY proposed on #9, 2026-08-25 and taken up 2026-09-10) — the credential layer's member, produced by the counterparty at issuance by running this record; record 010 consumes it",
+    "where the commitment lives — the task force's preference, stated for the credential specification to give it a home: as a verification method in the identifier's DID document (a `Multikey` entry carrying the commitment or the SNARK-native key), not as a member of any credential. The commitment is a property of the identifier — one per identifier, shared by every credential that names it, resolved the way a verifier already resolves the signing key — so it changes no credential schema and leaves the credential layer one requirement (which DID methods can carry it) instead of a member on every type. A credential member is the fallback only for a profile whose DID method cannot carry a second verification method",
+    "the WD02 example set read against this line (the credential maintainer's answer to question 2 of zkp-tf #23): `did:key` over Ed25519 carries exactly one key and cannot carry a second verification method, so an Ed25519 `did:key` identifier has no place for the commitment and cannot satisfy this record as it stands; `did:peer` (numalgo 2 and 4) and `did:webvh` can carry one. The first implementation should mint the narrow-scope identifiers that may be co-proven as `did:peer` with the commitment as a second verification method, or as `did:key` over a SNARK-native key type — and that is the first thing for it to find out (WG-14)",
+    "whether the requirement can be a MUST: yes, conditioned on the identifier's key profile rather than on a derivation the whole graph shares. The sentence should bind an identifier minted under a profile that declares co-control provable (a derivable key with a published commitment, or a SNARK-native key); a key held in a secure element with no available scalar is outside that profile, and co-control for it is established at issuance by the party who can prove it (the issuance-time attestation route of record 010) or not at all. WG-02's decision on derivation selects the first profile; it does not need to precede the sentence"
   ],
   "provenance": {
     "spec": [
-      "cred-spec PR #30 §Correlation Scope / §Choosing a scope / §Community-Anchored Zero-Knowledge Proof (WD02 draft, 2026-09-02)",
+      "cred-spec §Correlation Scope / §Choosing a scope / §Community-Anchored Zero-Knowledge Proof (correlation-scope revision, merged 2026-09-05)",
       "cred-spec #9 (identity linkages required by the ZKP constructions)",
       "cred-spec #31 disposition table (#9 stays open and gains weight; cross-TF work with the ZKP TF)",
       "ADR-001 S4 (holder binding) — generalised to two identifiers",
       "cred-spec #9 comments of 2026-09-08 (talltree) and 2026-09-10 (geoffturk): the requirement sentence, the subject-or-issuer widening, the chain-predicate caveat, the xref path",
-      "cred-spec PR #42 (merged 2026-09-10) §Zero-Knowledge and Selective Disclosure editor's note — 'what is waiting on the ZKP task force'"
+      "cred-spec §Zero-Knowledge and Selective Disclosure (editor's note merged 2026-09-10) editor's note — 'what is waiting on the ZKP task force'",
+      "zkp-spec PR #8 review (geoffturk, 2026-09-16, the credential maintainer's reading of the interface): records 007, 009, 010 and 011 confirmed against cred-spec #9 as settled on 2026-09-10; two asks new to the credential layer — where the ZK-openable commitment lives, and whether the requirement can be a MUST — answered in the issuance lines above"
     ]
   },
+  "revisions": [
+    {
+      "date": "2026-09-11",
+      "by": "mitchuski",
+      "note": "cred-spec #9 (2026-09-10): statement widened to identifiers held as subject or issuer; the '#31 four dependants' line narrowed — the VDC/VAC chain predicates are hidden-value equality (new record 009), not common control; candidate requirement sentence and the VRC-carried issuer linkage MAY recorded as issuance lines. State unchanged."
+    },
+    {
+      "date": "2026-09-21",
+      "by": "mitchuski",
+      "note": "Review of 2026-09-16 (credential maintainer): the commitment's home stated as a task-force preference (DID-document verification method; credential member only as fallback); the requirement sentence conditioned on a key profile rather than on universal derivation; the WD02 example set found unable to satisfy this record as it stands (Ed25519 `did:key` cannot carry the commitment) — WG-14. Citations by section title. State unchanged."
+    }
+  ],
   "history": [
     {
       "to": "requested",
@@ -120,13 +136,6 @@
       "date": "2026-09-05",
       "evidence": "specified from PR #30's §Community-Anchored text + #9 + the lab's key-binding gadget shape; cost line labelled conjecture per drafting rule 4",
       "task": "board/specify"
-    }
-  ],
-  "revisions": [
-    {
-      "date": "2026-09-11",
-      "by": "mitchuski",
-      "note": "cred-spec #9 (2026-09-10): statement widened to identifiers held as subject or issuer; the '#31 four dependants' line narrowed — the VDC/VAC chain predicates are hidden-value equality (new record 009), not common control; candidate requirement sentence and the VRC-carried issuer linkage MAY recorded as issuance lines. State unchanged."
     }
   ]
 }

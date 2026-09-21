@@ -65,7 +65,7 @@ The reference gadget reports one additional constraint for binding an already su
 
 Under the credentials specification's Working Draft 02, an identifier carries a holder-declared [correlation scope](https://github.com/trustoverip/dtgwg-cred-spec/pull/30) — `pairwise | directed | public`, monotonic — and roles come from credentials. The scope is a public input where a construction's disclosure depends on it: a `pairwise` identifier appears in a proof only behind a commitment; a `directed` persona identifier may be shown on purpose (construction 011); and whether a proof of common control is needed at all is decided by the declaration (constructions 007 and 012: no proof where one `directed` or `public` identifier was deliberately reused). Where a declaration is carried remains a profile dependency: the credentials specification has settled that the declaration lives in the credential, made by the issuer about its own identifier, but the property that carries it and its `@context` term are not yet named ([cred-spec #46](https://github.com/trustoverip/dtgwg-cred-spec/issues/46)); the verifier needs an authenticated source for the declaration, and its encoding can change the construction inputs.
 
-*Source: cred-spec #22, PR #30 §Correlation Scope and §Choosing a scope; cred-tf #41; cred-spec #46 (the property and `@context` term, open).*
+*Source: cred-spec #22, §Correlation Scope and §Choosing a scope; cred-tf #41; cred-spec #46 (the property and `@context` term, open).*
 
 ### Public-signal order (offered for ratification)
 

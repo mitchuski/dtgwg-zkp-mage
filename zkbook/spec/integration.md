@@ -45,6 +45,17 @@ Document which component issues credentials, stores witnesses, obtains registry 
 
 An integration demonstration identifies real and simulated components, runs the versioned task exchange and preserves failure evidence. For later state-changing operations, durable operation identifiers and reconciliation prevent ambiguous retries from being mistaken for permission to repeat an action. A simulated receipt is not a cryptographically verified service receipt.
 
+### Identifier commitment profile
+
+Records 007, 009, 010 and 012 require every identifier that may be proven co-controlled to be, or carry, a ZK-openable commitment to the holder secret. The credential specification asked where that commitment lives and whether the requirement can be a MUST; both are stated here as this specification's profile, for the credential layer to give a home.
+
+- **Where it lives.** As a verification method in the identifier's DID document — a `Multikey` entry carrying the commitment, or a SNARK-native key as the identifier's own key — not as a member of any credential. The commitment is a property of the identifier: one per identifier, shared by every credential that names it, resolved the way a verifier already resolves the signing key. This changes no credential schema and leaves the credential layer one requirement (which DID methods can carry it) rather than a member on every credential type. A credential member is the fallback only for a profile whose DID method cannot carry a second verification method.
+- **What it means for the example set.** An Ed25519 `did:key` identifier carries exactly one key and cannot carry a second verification method, so the WD02 examples as they stand cannot satisfy record 007's issuance line. `did:peer` (numalgo 2 and 4) and `did:webvh` can carry one. The first implementation should mint the narrow-scope identifiers that may be co-proven as `did:peer` with the commitment as a second verification method, or as `did:key` over a SNARK-native key type; finding out which is the first task of that implementation (WG-14).
+- **MUST, conditioned on the key profile.** The requirement sentence binds an identifier minted under a profile that declares co-control provable — a derivable key with a published commitment, or a SNARK-native key. A key held in a secure element with no available scalar is outside that profile; co-control for it is established at issuance by the party who can prove it (the issuance-time attestation route of record 010) or not at all. WG-02 selects the first profile; the sentence does not wait on it.
+- **Whose conformance.** This specification profiles the issuer-side requirement (Conformance target 5); the credential specification's Conformance section is not extended by it.
+
+> **WG-14 — Proposed for ratification: the identifier commitment profile.** The commitment lives in the DID document as a verification method; the co-control requirement is a MUST conditioned on the identifier's key profile; the first implementation determines which DID method of the example set can carry it. Status: proposed in answer to the credential maintainer's review of 16 September; no group decision recorded.
+
 ### Decisions still needed
 
 - Pin compatible credential, task and implementation revisions and reconcile their terminology.

@@ -6,8 +6,8 @@
   "priority": "P1",
   "owner": "mitchuski",
   "request": {
-    "issue": "cred-spec #9 (geoffturk 2026-09-10, point 4: 'a child's issuer MUST equal its parent's subject, so proving chain validity without disclosing the chain is hidden-value equality across credentials signed by different parties. No holder secret is involved … name the chain predicates separately so they do not appear covered while having no stated primitive') · cred-spec PR #42 editor's note (merged 2026-09-10): the VDC chain, the VAC chain and 'two credentials presented together share a subject' listed as predicates waiting on the ZKP task force",
-    "by": "geoffturk / stormer78 (cred-spec #9, PR #42) — specified by the ZKP TF co-chair",
+    "issue": "cred-spec #9 (geoffturk 2026-09-10, point 4: 'a child's issuer MUST equal its parent's subject, so proving chain validity without disclosing the chain is hidden-value equality across credentials signed by different parties. No holder secret is involved … name the chain predicates separately so they do not appear covered while having no stated primitive') · cred-spec §Zero-Knowledge and Selective Disclosure editor's note (merged 2026-09-10): the VDC chain, the VAC chain and 'two credentials presented together share a subject' listed as predicates waiting on the ZKP task force",
+    "by": "geoffturk / stormer78 (cred-spec #9; §Zero-Knowledge and Selective Disclosure editor's note) — specified by the ZKP TF co-chair",
     "need": "three credential-layer predicates need a proof that a hidden value in one signed credential equals a hidden value in another signed credential — a child hop's `issuer` and its parent's `credentialSubject.id`; the subject of a VMC and the subject of a VAC presented together — with no holder secret in the relation, so record 007 does not apply and nothing else names it"
   },
   "statement": "A verifier learns that a hidden field of one authenticated credential equals a hidden field of another authenticated credential — the two signed by different parties — without learning the value, and without the proof introducing a value that correlates across presentations.",
@@ -84,7 +84,7 @@
       "construction": "no proof — the shared value is disclosed and compared in the clear (the credential specification's stated fallback: 'every requirement here can be checked by presenting the credentials themselves … the cost is privacy rather than correctness')",
       "cost": "zero constraints; the cost is the disclosure of the whole chain or both subjects",
       "measured": false,
-      "source": "cred-spec PR #42 editor's note, 'What holds until this work lands'"
+      "source": "cred-spec §Zero-Knowledge and Selective Disclosure editor's note, 'What holds until this work lands'"
     }
   ],
   "issuance": [
@@ -94,9 +94,10 @@
   "provenance": {
     "spec": [
       "cred-spec #9, geoffturk 2026-09-10 point 4 — the chain predicates as hidden-value equality, to be named separately",
-      "cred-spec PR #42 (merged 2026-09-10) §Zero-Knowledge and Selective Disclosure — the VDC chain, the VAC chain and the shared-subject predicates",
+      "cred-spec §Zero-Knowledge and Selective Disclosure (editor's note merged 2026-09-10) — the VDC chain, the VAC chain and the shared-subject predicates",
       "cred-spec §Delegation Edges (acceptance `issuer` = grant `credentialSubject.id`), §Delegation Chains, §Attenuation (child `issuer` = parent `credentialSubject.id`), §Authority and membership are separate credentials (shared-subject proof when both are proven with the subject withheld)",
-      "record 005 (distinctness) — the dual: a non-zero-inverse constraint proves ≠, a zero-difference constraint proves ="
+      "record 005 (distinctness) — the dual: a non-zero-inverse constraint proves ≠, a zero-difference constraint proves =",
+      "zkp-spec PR #8 review (geoffturk, 2026-09-16, the credential maintainer's reading of the interface): \"Record 009 is the right separation\" — the chain predicates and the shared-subject rule are hidden-value equality, not common control; the credential specification's editor's note is to be reworked to two primitives (007, 009) citing 009, 011, 012 and 021"
     ],
     "commit": "github.com/mitchuski/dtgwg-zkp-mage"
   },

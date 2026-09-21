@@ -4,7 +4,7 @@
   "kind": "composed",
   "state": "specified",
   "priority": "P2",
-  "owner": "construction: sankarshanmukhopadhyay · DenisPopov15 · mitchuski (per ScottJeezey, cred-tf #40) · record: stormer78 (PR #19)",
+  "owner": "construction: sankarshanmukhopadhyay · DenisPopov15 · mitchuski (per ScottJeezey, cred-tf #40) · record: stormer78 (§VDC, merged 2026-09-06)",
   "components": [
     "001",
     "003",
@@ -13,7 +13,7 @@
     "009"
   ],
   "request": {
-    "issue": "cred-spec PR #19 open question 6; ADR-001 §05 'deserves its own record once this one is proven' · cred-tf #40 (stormer78 08-22 design note; ScottJeezey 08-24: \"on our list alongside Q2\") · cred-spec #31 pre-merge list for #19",
+    "issue": "cred-spec §VDC (Verifiable Delegation Credential), open question 6 of its merge review; ADR-001 §05 'deserves its own record once this one is proven' · cred-tf #40 (stormer78 08-22 design note; ScottJeezey 08-24: \"on our list alongside Q2\") · cred-spec #31 pre-merge list for #19",
     "by": "stormer78 / sankarshanmukhopadhyay",
     "need": "prove an agent may act for a principal within scope S until T, chain attenuation-only, without revealing the principal — in the chained PROFILE only: the WD02 core VDC is single-hop, principal-issued, delegate-countersigned and needs no chain proof (cred-tf #40 §1)"
   },
@@ -128,8 +128,8 @@
   ],
   "provenance": {
     "spec": [
-      "cred-spec §VDC (Verifiable Delegation Credential) — merged 2026-09-06 (PR #19 over WD02): §Delegation Edges, §Delegation Chains (five chain checks; 'chain validity is a candidate for zero-knowledge presentation'), §Invocation Binding",
-      "cred-spec PR #42 editor's note (2026-09-10): 'proving a VDC chain valid without disclosing it' named as a predicate waiting on the ZKP task force",
+      "cred-spec §VDC (Verifiable Delegation Credential) — merged 2026-09-06 (over WD02): §Delegation Edges, §Delegation Chains (five chain checks; 'chain validity is a candidate for zero-knowledge presentation'), §Invocation Binding",
+      "cred-spec §Zero-Knowledge and Selective Disclosure editor's note (2026-09-10): 'proving a VDC chain valid without disclosing it' named as a predicate waiting on the ZKP task force",
       "cred-spec #9 (geoffturk 2026-09-10): the chain predicates are hidden-value equality, not common control — record 009",
       "liveness reqs v0.4 delegation evidence",
       "ADR-001 §05",
@@ -137,6 +137,13 @@
       "cred-tf #40 (delegation as a design-time case; the chain-resolution boundary) · cred-spec #31 (#19 pre-merge checklist)"
     ]
   },
+  "revisions": [
+    {
+      "date": "2026-09-11",
+      "by": "mitchuski",
+      "note": "Door D17 — re-read against the merged VDC text (cred-spec main, 2026-09-06/10): depth restated as the per-ancestor bound; the issuer-equals-parent-subject clause added and bound to record 009 (hidden-value equality); `credentialStatus` corrected — conditional on every VDC, not only chained ones; issuance and provenance now cite the merged sections; three negative-space lines added (intended-party check, invocation demonstration, chain length). State unchanged."
+    }
+  ],
   "history": [
     {
       "to": "requested",
@@ -151,13 +158,6 @@
       "date": "2026-09-05",
       "evidence": "ScottJeezey accepted delegation-chain validity as a ZKP TF target (cred-tf #40, 2026-08-24); predicate shape + acceptance clause + core/profile split from stormer78’s note; issuance lines from cred-spec #31",
       "task": "board/specify"
-    }
-  ],
-  "revisions": [
-    {
-      "date": "2026-09-11",
-      "by": "mitchuski",
-      "note": "Door D17 — re-read against the merged VDC text (cred-spec main, 2026-09-06/10): depth restated as the per-ancestor bound; the issuer-equals-parent-subject clause added and bound to record 009 (hidden-value equality); `credentialStatus` corrected — conditional on every VDC, not only chained ones; issuance and provenance now cite the merged sections; three negative-space lines added (intended-party check, invocation demonstration, chain length). State unchanged."
     }
   ]
 }

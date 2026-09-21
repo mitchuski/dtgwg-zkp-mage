@@ -11,7 +11,7 @@
     "007"
   ],
   "request": {
-    "issue": "cred-spec #22 (talltree 08-29: 'the ZK proof simply needs to prove the same person controls the DIDs') · cred-spec PR #30 §Choosing a scope",
+    "issue": "cred-spec #22 (talltree 08-29: 'the ZK proof simply needs to prove the same person controls the DIDs') · cred-spec §Choosing a scope",
     "by": "talltree / geoffturk / stormer78",
     "need": "under three correlation scopes, a holder who used `pairwise` identifiers (distinct by definition) or distinct wider-scoped ones, and now wishes to be recognised as the same party across several communities or relationships, needs one proof — and no other case needs any"
   },
@@ -93,7 +93,7 @@
       "construction": "no proof — where the holder deliberately reused one `directed` or `public` identifier across the credentials, the correlation is on their face (WD02 §Choosing a scope)",
       "cost": "zero",
       "measured": false,
-      "source": "cred-spec PR #30"
+      "source": "cred-spec §Choosing a scope"
     },
     {
       "construction": "Groth16 composition: (k−1) × record-007 openings + k non-revocation legs + 1 transcript constraint",
@@ -108,7 +108,7 @@
   "provenance": {
     "spec": [
       "cred-spec #22 (talltree 2026-08-29T22:40Z: the three-scope ZK observation)",
-      "cred-spec PR #30 §Choosing a scope (WD02 draft) · Privacy Consideration 2 (intentional correlation via personas)",
+      "cred-spec §Choosing a scope · Privacy Consideration 2 (intentional correlation via personas)",
       "cred-spec §VPC (Verifiable Persona Credential) — the credential-layer instrument for the same intent"
     ]
   },

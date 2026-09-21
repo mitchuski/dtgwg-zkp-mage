@@ -85,7 +85,7 @@
       "text": "clause 3 cannot be satisfied unless the counterparty genuinely holds a membership credential from the same community",
       "boundTo": "010 relation (set-membership on the voucher's grant leaf, record 001)",
       "status": "refined",
-      "refinement": "proves the community-issued grant half only (cred-spec PR #12 pair; PR #26 carve-out) — the acknowledgement is not in the presenter's hands"
+      "refinement": "proves the community-issued grant half only (cred-spec §VMC, both directions; §Membership Edge Completion carve-out) — the acknowledgement is not in the presenter's hands"
     },
     {
       "id": "S3",
@@ -123,7 +123,7 @@
       "text": "(added, WD02) the identifiers a party used in the VRC and in their VMC are controlled by one secret",
       "boundTo": "010 relation (key-binding, record 007)",
       "status": "added",
-      "refinement": "cred-spec PR #30 §Community-Anchored: 'the proof must additionally establish common control'"
+      "refinement": "cred-spec §Community-Anchored Zero-Knowledge Proof: 'the proof must additionally establish common control'"
     },
     {
       "id": "C1",
