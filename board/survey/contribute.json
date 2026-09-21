@@ -1,7 +1,7 @@
 {
- "checkedAt": "2026-09-21T14:40:00Z",
- "title": "Contribute here — the specific threads, gated one by one on 21 September; eleven posts out, three held, the ledger spoken",
- "lead": "Second pass, gated by Mitch item by item (14:00–14:40 UTC): W (PR #50) · AB (vds-spec PR #11, revised — the byte-input question is answered there) · X (#52, revised to bmiller59's shape) · AN (PR #56) · AO (NEW trust-tasks-tf discussion #544 — the WG-14 template question) · AA (general #31) POSTED. HELD on Mitch's call as quiet threads: AQ (#25, 7 Sept), AR (cred-tf #40, 24 Aug), AS (general #25 agenthood, re-targeted from Q). AC retired (trust-tasks-tf #8 closed 15 Sept; the task merged). AE/AF stay candidates, undrafted. Ledger: 37 41 42 44–53 56 spoken; 34 35 36 40 43 retired; 54 55 57 served for the held drafts. First pass (11:00 UTC): AI AJ AK AL (#58) AM; PR #11 open.",
+ "checkedAt": "2026-09-21T17:25:00Z",
+ "title": "Contribute here — 21 September, evening: the chair's Round 1 position answered (record 023 on PR #11); thirteen posts out; Round 1 closes tomorrow",
+ "lead": "Evening: ScottJeezey filed his Round 1 position on PR #11 (15:27 UTC) — ratify · refine ×4 · build the two-vouch admission proof · scope the crypto-internal clauses to the cryptographers' sign-off. Mitch ruled: specify 023 now; WG-13 moves with the core/guide split after Round 1; tag + reviews part + positions table; draft then gate. Done: record 023 at `specified` (Berkeley's reference code named, unmeasured), `reviews` part, field mapping in the Introduction, Round 1 positions table, evidence tag `wd-0.1.0` pinned; PR #11 = 3 commits, checks green. Posted on the gate: AT (PR #11, by move) · AU (#23 mirror). albertoleon7794 folded AN into PR #56 (taskDigestMultibase = sixth digest member; #58 noted; WG-14 acknowledged) — nothing to do there. Earlier today: AI AJ AK AL(#58) AM · W AB X AN AO(#544) AA. Held: AQ AR AS Q. Ledger 58/59 served, unspoken.",
  "span": {
   "watched": [
    "dtgwg-zkp-spec",
@@ -167,6 +167,30 @@
    "category": "post",
    "line": "B",
    "note": "Gate 7."
+  },
+  {
+   "draft": "AT",
+   "ledger": 58,
+   "where": "zkp-spec PR #11 (comment) — reply to the chair's Round 1 position",
+   "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11#issuecomment-5764634686",
+   "why": "Answered by move: positions table; the mapping; WG-13 scheduled; ranges; tag pin; record 023; the reviews part. Asks back: the reference-code link; the sign-off.",
+   "records": "023 007 009 022",
+   "status": "POSTED 21 Sept 17:22 UTC — https://github.com/trustoverip/dtgwg-zkp-spec/pull/11#issuecomment-5764634686",
+   "category": "post",
+   "line": "B",
+   "note": "Third commit 315cf44."
+  },
+  {
+   "draft": "AU",
+   "ledger": 59,
+   "where": "zkp-tf #23 (reply) — the position, for the record",
+   "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18543089",
+   "why": "Six lines: the chair's position, the disposition, 023, positions welcome until the round closes; Round 2 opens with WG-14 and 023.",
+   "records": "023",
+   "status": "POSTED 21 Sept 17:22 UTC — https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18543089",
+   "category": "post",
+   "line": "B",
+   "note": "Mirror of AT."
   }
  ],
  "held": [
@@ -294,22 +318,22 @@
  ],
  "maintain": [
   {
-   "where": "dtgwg-zkp-spec PR #11 — the review revision (2 commits)",
+   "where": "dtgwg-zkp-spec PR #11 — the review revision (3 commits; record 023 in)",
    "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11",
-   "why": "Open 21 Sept; DCO · EasyCLA · validate green; reviewers ScottJeezey + geoffturk. Answer reviews as they land; merge = the chair.",
-   "action": "answer reviews as they land; nothing until then"
+   "why": "Chair's Round 1 position answered (AT). Waiting: Denys + Berkeley sign-off on 007/009/022 (→ `reviews` part), the reference-code link for 023 (→ option 1 figures; toward `constructed`). Merge = the chair.",
+   "action": "answer reviews as they land; when the Berkeley link comes, fill 023 option 1 and add a reviews row"
   },
   {
    "where": "zkp-tf #23 — Round 1 closes 22 September",
    "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23",
-   "why": "AJ carries the merge and the silence line. On 23 Sept the Round 2 opener goes here: records one by one, WG-14 and the example-set finding first, then 022/WG-15.",
+   "why": "AJ + AU carry the merge, the chair's position and the silence line. On 23 Sept the Round 2 opener goes here: WG-14 and the example-set finding first, then 023, then 022/WG-15; WG-13 (the split) scheduled.",
    "action": "draft AP on 23 Sept: the Round 2 opener"
   },
   {
-   "where": "proverb ledger — 34–57",
+   "where": "proverb ledger — 34–59",
    "url": "https://github.com/mitchuski/dtgwg-zkp-mage",
-   "why": "Spoken 21 Sept on Mitch's approval: 37 41 42 44 45 46 47 48 49 50 51 52 53 56. Retired: 34 35 36 40 43. Served, unspoken (held drafts): 54 (AQ) 55 (AR) 57 (AS). Head 15551cb6….",
-   "action": "speak 54/55/57 when their drafts post"
+   "why": "Spoken: 37 41 42 44–53 56. Retired: 34 35 36 40 43. Served, unspoken: 54 (AQ) 55 (AR) 57 (AS) held; 58 (AT) 59 (AU) posted.",
+   "action": "speak 58 59 now; 54/55/57 when their drafts post"
   },
   {
    "where": "mitchuski/dtgwg-zkp-mage PR #3 (publication-review-2026-09-08 → main)",
@@ -363,5 +387,5 @@
    "records": "004 · exploration X9 · runtimes/guardian-recovery"
   }
  ],
- "order": "Gated pass complete. Watch: #544 (WG-14 owner), PR #11 reviews, #58, PR #56. Held for movement: AQ (#25) · AR (#40) · AS (general #25) · Q. On 23 Sept: AP, the Round 2 opener on zkp-tf #23 — WG-14 and the example-set finding first, then 022/WG-15."
+ "order": "Round 1 closes tomorrow. Watch: PR #11 (sign-off + the Berkeley link), #544 (the template slot), #58, PR #56/#17. Held for movement: AQ AR AS Q. On 23 Sept: AP."
 }
