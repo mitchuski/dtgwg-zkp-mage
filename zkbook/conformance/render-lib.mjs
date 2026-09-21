@@ -61,6 +61,7 @@ export function renderConstruction(record, all) {
   const prov = record.provenance || {};
   const hist = record.history.map(h => `| ${h.date} | \`${h.to}\` | ${h.by} | ${h.evidence} |`).join('\n');
   const rev = (record.revisions || []).map(r => `| ${r.date} | ${r.by} | ${r.note} |`).join('\n');
+  const reviews = (record.reviews || []).map(r => `| ${r.date} | ${r.by} | ${r.scope} | \`${r.verdict}\` | ${r.evidence || ''} |`).join('\n');
   const composes = record.components?.length ? `\n**Composes:** ${record.components.map(c => `[${c}](#${byId[c] ? constructionAnchor(byId[c]) : c})`).join(' ∧ ')} — a ${ref('composed construction')}: one transcript, one ${ref('disclosure set')}, written fresh.` : `\n**Kind:** ${ref('primitive construction')} — binds the ${ref(record.relation[0]?.gadget || 'gadget')} gadget and nothing else.`;
   return `### Construction ${record.id} · ${record.name}
 
@@ -135,7 +136,7 @@ ${prov.spec?.length ? li(prov.spec) + '\n' : ''}${prov.catalog ? `- catalog: ${p
 | date | to | by | evidence |
 |---|---|---|---|
 ${hist}
-${rev ? `\nRevisions within a state:\n\n| date | by | note |\n|---|---|---|\n${rev}\n` : ''}
+${rev ? `\nRevisions within a state:\n\n| date | by | note |\n|---|---|---|\n${rev}\n` : ''}${reviews ? `\n#### Reviews\n\nRecorded reviewer sign-off on this record's clauses; a review is not a state advance and confers no evidence state.\n\n| date | reviewer | scope | verdict | evidence |\n|---|---|---|---|---|\n${reviews}\n` : ''}
 `;
 }
 
