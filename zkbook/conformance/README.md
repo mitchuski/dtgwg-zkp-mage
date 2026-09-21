@@ -35,5 +35,6 @@ The JSON field names are the specification's own terms, so a record and its rend
 | `issuance` | Issuance requirements | what the construction asks of issuers and registries |
 | `provenance` | Provenance | specification citations, registry rows, commit |
 | `history` | Record history | every state advance: date, state, actor, evidence |
+| `reviews` | Reviews | optional: recorded reviewer sign-off — reviewer, date, scope (which clauses), verdict (`signed-off` · `refined` · `refuted` · `pending`), evidence |
 
 State names: `requested` → `specified` → `constructed` → `run` → `vetted` → `published`. Refusal codes are `record-*` for construction records, `request-*` for requests and `stack-*` for proving-system entries.

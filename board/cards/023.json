@@ -1,0 +1,195 @@
+{
+  "id": "023",
+  "name": "Two-vouch admission proof — an applicant proves k ≥ 2 vouches from distinct current members to the issuing community, without disclosing which members",
+  "kind": "composed",
+  "state": "specified",
+  "priority": "P1",
+  "owner": "mitchuski",
+  "components": [
+    "001",
+    "003",
+    "004",
+    "005",
+    "006",
+    "007"
+  ],
+  "request": {
+    "issue": "zkp-spec PR #11 review (ScottJeezey 2026-09-21, Round 1 position, 'Build'): 'we need a record for the two-vouch admission proof. Per Arka, what Berkeley is building and Glenn is integrating for Linux Plumbers is an admission proof (a non-member proves two vouches from distinct members to the issuer), which is a different statement from record 010. That's the LPC-relevant construction and it has no home yet. Proposing we add it and reference Berkeley's reference code as the constructor.' · general #31 (stormer78 2026-08-26): the Phase 4 join — one member invite, vouched connections with at least two other members, an ID check, presented once to the community, whose rules engine decides",
+    "by": "ScottJeezey (chair, on the record for Round 1) · Arka Rai Choudhuri / Berkeley (the construction being built) · Glenn Gore (the Linux Plumbers integration) — specified by the ZKP TF co-chair on the chair's request",
+    "need": "the join moment of an open-source community's onboarding: an applicant who is not yet a member presents evidence that at least two distinct current members vouch for them, to the community that will issue the membership, without the community learning which members vouched and without the vouchers being online — a different statement from record 010, where a member shows a verifier a relationship with an offline voucher"
+  },
+  "statement": "The issuing community learns that the applicant — the subject named in a pending join request — holds relationship credentials issued by at least k distinct current members of this community (k = 2 in the reference policy), each naming the applicant's identifier as subject and each issued by a member whose community-issued grant is a leaf of the community's current membership root, without learning which members issued them and without any voucher taking part in the presentation.",
+  "witness": [
+    "the k relationship credentials (VRCs) the vouchers issued to the applicant, with their signatures",
+    "for each voucher: the voucher's community-issued VMC grant and its Merkle path to root_C (the voucher's membership, proven from the root, not from the voucher)",
+    "for each voucher: the linkage between the identifier the voucher used as VRC issuer and the identifier the voucher's grant names — one `directed` identifier reused, or the voucher's co-control attestation carried by the VRC (record 007 run by the voucher at issuance; the MAY of cred-spec #9)",
+    "the applicant's holder secret and the derivation of the identifier(s) the VRCs name (record 004); where the applicant used a different `pairwise` identifier toward each voucher, the openings that prove them one controller's (record 007)",
+    "non-revocation witnesses for each voucher's membership handle under rl_root at the epoch"
+  ],
+  "publicInputs": [
+    "root_C and rl_root at a stated epoch — the community's membership and revocation roots, fetched by the applicant without a per-applicant query",
+    "k — the vouch threshold the community's admission policy declares (the reference policy: 2)",
+    "the applicant's admission identifier — the subject the join request names and the VMC would be issued to; disclosed by construction, since the applicant is applying",
+    "context descriptor — the community and the join-request exchange (the Trust Tasks `vtc/join-requests` submission), so the proof cannot be replayed to another community or another request",
+    "transcriptDigest — the presentation transcript, bound to the join request"
+  ],
+  "relation": [
+    {
+      "clause": "each of the k VRCs verifies as issued by its voucher's VRC-side identifier over a subject equal to the applicant's admission identifier, or to an identifier the applicant proves co-controlled with it (clause 5)",
+      "gadget": "signature-verify"
+    },
+    {
+      "clause": "each voucher's community-issued VMC grant is a leaf of root_C — the voucher is a current member, proven from the root while the voucher is offline",
+      "gadget": "set-membership",
+      "component": "001"
+    },
+    {
+      "clause": "for each voucher, the identifier that issued the VRC and the identifier the voucher's grant names are one controller's — reused `directed` identifier, or the voucher's issuance-time attestation opened here",
+      "gadget": "key-binding",
+      "component": "007"
+    },
+    {
+      "clause": "the k authenticated member leaves are pairwise distinct — the same member cannot be counted twice under two identifiers or two credentials",
+      "gadget": "distinctness",
+      "component": "005"
+    },
+    {
+      "clause": "the applicant's presentation key derives from the secret the VRCs' subject identifier(s) bind to; where the VRCs name different `pairwise` identifiers of the applicant, those identifiers open to the same secret",
+      "gadget": "key-binding",
+      "component": "004"
+    },
+    {
+      "clause": "no voucher's membership handle is in the set under rl_root at the epoch — a vouch from a revoked member does not count",
+      "gadget": "non-revocation",
+      "component": "006"
+    },
+    {
+      "clause": "the whole show is bound to transcriptDigest and to the context descriptor of this community and this join request",
+      "gadget": "transcript-bind",
+      "component": "003"
+    }
+  ],
+  "disclosureSet": [
+    "the outcome (at least k distinct current members vouch for this applicant / not shown)",
+    "k, root_C, rl_root, epoch — the policy threshold and the registry state the proof was made against",
+    "the applicant's admission identifier and the context descriptor of the join request",
+    "transcriptDigest",
+    "under a community policy that requires it, the vouchers' identities as a deliberate disclosure — then this record's privacy claims do not apply to that presentation and the flow is the credentials themselves"
+  ],
+  "doesNotEstablish": [
+    "that any voucher consented to be counted toward this admission — a relationship credential is evidence of a relationship, and whether it is a vouch is the community's reading under its rules (general #31: 'vouching is social, not technical')",
+    "that the applicant is not already a member — a member can hold k VRCs; if the policy needs 'not a member', the statement gains a non-membership clause against root_C (record 006's gadget applied to the membership set), which this record does not include",
+    "that the k vouchers are k distinct natural persons — distinct member leaves, not distinct people (record 002's negative space; personhood is never inferred)",
+    "the invitation or the identity check — the VIC and the vetting statement are presented as credentials beside this proof, not proven inside it (the vetting statement's PASS limits carry: cred-spec PR #50)",
+    "that the community will admit the applicant — the proof's outcome is one input to the community's policy engine; verifying it, accepting it under policy and issuing the VMC are three acts (WG-04)",
+    "what the VRCs say beyond naming the applicant as subject — attributes, scopes and the relationship's own terms are outside the statement"
+  ],
+  "adversary": [
+    {
+      "claim": "the issuing community learns nothing about which members vouched beyond the count reaching k — no voucher identifier, VRC-side or VMC-side, no path position, no leaf",
+      "against": [
+        "verifier"
+      ]
+    },
+    {
+      "claim": "two join requests by one applicant to two communities, or a repeated request to one, cannot be linked through this proof beyond the disclosed admission identifier — the proof emits no identifier-derived value; the admission identifier is disclosed by the applicant's own act",
+      "against": [
+        "verifiers-colluding"
+      ]
+    },
+    {
+      "claim": "fetching root_C and rl_root does not identify the applicant or the vouchers — holds only if roots are fetched without a per-applicant query",
+      "against": [
+        "registry-operator",
+        "issuer-verifier-colluding"
+      ]
+    }
+  ],
+  "horizon": [
+    "earliest of: each VRC's validity · each voucher's membership validity · epoch rollover · status freshness (the community's published bound) · root_C cryptoperiod",
+    "the join request's own validity — a proof bound to a withdrawn or decided request (Trust Tasks `vtc/join-requests/withdraw`, `decide`) is not replayable to the next one"
+  ],
+  "fixtures": {
+    "families": [
+      "accepts",
+      "rejects-unsat",
+      "rejects-verify",
+      "unlinkable",
+      "current"
+    ],
+    "rejectionCodes": [
+      "voucher-not-member (unsat: a VRC issuer with no grant leaf under root_C)",
+      "voucher-duplicate (unsat: one member leaf behind two VRCs)",
+      "vouch-count-below-k (unsat: fewer than k distinct vouchers)",
+      "subject-mismatch (unsat: a VRC naming a subject the applicant cannot open to the admission identifier)",
+      "voucher-linkage-missing (unsat: a `pairwise` VRC issuer with no co-control attestation and no directed reuse — the offline-linkage question of zkp-tf #18)",
+      "voucher-revoked (unsat at epoch)",
+      "vrc-signature-invalid (verify)",
+      "transcript-digest-mismatch (verify)",
+      "join-request-context-mismatch (verify: the proof was made for another community or another request)",
+      "rl-root-stale"
+    ]
+  },
+  "options": [
+    {
+      "construction": "Berkeley's reference code for the admission proof — the construction being built for the Linux Plumbers integration (per Arka Rai Choudhuri; Glenn Gore integrating), named by the chair as the constructor; link, proving system and measured figures to be recorded when the code is public",
+      "cost": "unmeasured here; to be filled from the reference code's own figures with revision and workload named",
+      "measured": false,
+      "source": "zkp-spec PR #11 (ScottJeezey 2026-09-21); ePrint 2026/333 and its forthcoming community follow-up (the 8 September call)"
+    },
+    {
+      "construction": "Groth16 / BN254 / Poseidon composition — k parallel instances of record 010's clauses 1–3, 6, 7 (VRC authenticity, voucher membership, voucher linkage, non-revocation) sharing one holder-binding clause (004), one distinctness clause over the k leaves (005) and one transcript binding (003); the applicant's own membership clause of 010 dropped, since the applicant is not a member",
+      "cost": "unmeasured for the complete statement; roughly k × the voucher-side share of record 010 plus one shared binding — component figures cannot be added into a measurement",
+      "measured": false,
+      "source": "this record's composition of 001 · 003 · 004 · 005 · 006 · 007; record 010's option 1"
+    },
+    {
+      "construction": "vouchers disclosed — the applicant presents the k VRCs and the vouchers' membership evidence in the clear; the community checks distinctness and membership against its registry. No proof; the privacy claims above do not apply",
+      "cost": "zero",
+      "measured": false,
+      "source": "general #31 (the flow as drawn); a community policy that requires knowing its vouchers"
+    },
+    {
+      "construction": "blind-signature vouch — each voucher blind-signs at vouch time and the applicant later proves possession of k unblinded signatures from distinct members (record 010's option 5, applied k times); composition with the membership and non-revocation clauses is the open design question",
+      "cost": "unmeasured — no construction published",
+      "measured": false,
+      "source": "DTG ZKP TF call 2026-09-08 (Sanjam Garg)"
+    }
+  ],
+  "issuance": [
+    "as record 010's X3 line: the VRCs' signatures must be provable in-circuit, or a ZK-openable commitment must sit beside each (cred-spec #17); the signature scheme is the non-swappable choice",
+    "the community publishes root_C and rl_root per epoch, fetchable anonymously, and declares k in its admission policy (Governance Considerations 4; WG-05)",
+    "each voucher's VRC-side identifier must be linkable to the voucher's VMC-side identifier offline: the voucher reuses one `directed` identifier, or the VRC carries the voucher's co-control attestation (the MAY of cred-spec #9; record 007 at issuance) — the same offline-linkage requirement as record 010, now on k vouchers",
+    "the applicant's identifier(s) named in the VRCs must be, or carry, a ZK-openable commitment to the applicant's secret where they differ from the admission identifier (record 007; WG-14) — or the applicant uses one `directed` identifier toward every voucher and the community, in which case clause 5 is holder binding alone",
+    "the join request (Trust Tasks `vtc/join-requests/submit`, with `supplement` for a deferred answer) carries the presentation, and its exchange is the context descriptor the proof binds — the citation of that exchange on the VMC later issued is record 008's concern (cred-spec #58)",
+    "the invitation (VIC) and the identity check (the vetting statement) travel beside the proof as credentials; the policy engine combines them with the proof's outcome under the community's rules (WG-04)"
+  ],
+  "provenance": {
+    "spec": [
+      "zkp-spec PR #11 review (ScottJeezey 2026-09-21, Round 1 position): the build ask — an admission proof, a different statement from 010, Berkeley's reference code as constructor, LPC-relevant",
+      "general #31 (stormer78 2026-08-26) — the Phase 4 join: 1 member invite + 2 member vouches + ID check, presented once; 'rules do the gatekeeping, not people'; mapped to records in the reply of 2026-09-21 (AA)",
+      "DTG ZKP TF call 2026-09-08 (Arka Rai Choudhuri): the community-modelling follow-up to ePrint 2026/333 is what the Linux-kernel work ties to; the blind-signature vouch (Sanjam Garg)",
+      "cred-spec §VMC (Verifiable Membership Credential), both directions; §Membership Edge Completion — the voucher's membership is the community-issued grant half (Governance Considerations 1)",
+      "cred-spec §Community-Anchored Zero-Knowledge Proof — statement 3's offline-linkage requirement, applied here to each voucher",
+      "trust-tasks-tf `vtc/join-requests` (submit · supplement #526 · withdraw #518 · decide) and #543 (a community can ask an applicant to tell it about themselves) — the exchange the proof binds",
+      "record 010 — the sibling statement (a member shows a verifier a relationship with an offline voucher); this record drops the presenter's own membership and multiplies the voucher side by k"
+    ],
+    "commit": "github.com/mitchuski/dtgwg-zkp-mage"
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "ScottJeezey (chair) on zkp-spec PR #11, for the record on zkp-tf #23",
+      "date": "2026-09-21",
+      "evidence": "Round 1 position, 'Build': the two-vouch admission proof has no home; add it and reference Berkeley's reference code as the constructor",
+      "task": "board/request"
+    },
+    {
+      "to": "specified",
+      "by": "mitchuski",
+      "date": "2026-09-21",
+      "evidence": "statement, witness, public inputs, seven clauses composed from 001 · 003 · 004 · 005 · 006 · 007, disclosure set, negative space, three adversary claims, horizon, ten rejection codes, four options (the reference code named, unmeasured); written from the chair's ask, the Phase 4 flow and record 010's sibling statement — the constructor's own figures are the next evidence",
+      "task": "board/specify"
+    }
+  ]
+}

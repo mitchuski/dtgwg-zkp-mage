@@ -290,6 +290,40 @@
           }
         }
       }
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "by",
+          "date",
+          "scope",
+          "verdict"
+        ],
+        "properties": {
+          "by": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "verdict": {
+            "enum": [
+              "signed-off",
+              "refined",
+              "refuted",
+              "pending"
+            ]
+          },
+          "evidence": {
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }

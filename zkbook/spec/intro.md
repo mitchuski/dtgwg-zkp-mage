@@ -6,18 +6,22 @@ The zero-knowledge layer supplies selective evidence about relationships in a De
 
 This specification guides implementers from a required trust-graph outcome to a checkable zero-knowledge presentation. Start with the Implementation Guide: select the outcome, establish which credential and witness inputs exist, choose a compatible construction profile, and demonstrate both acceptance and rejection. The records that follow supply the technical detail and evidence boundaries. Its central object is the **construction record**: a structured statement of one zero-knowledge proof over DTG credentials, carrying twelve parts a reader can hold the construction to.
 
-| part | what it holds |
-|---|---|
-| statement | what a verifier learns, from whom, without what — one sentence |
-| witness | the credentials, secrets, paths and openings kept private from the verifier; any delegated prover access is declared |
-| [[ref: public inputs]] | what the verifier supplies and sees: context descriptor, [[ref: set root]]s, epoch, revocation root, [[ref: transcript digest]], declared scope |
-| relation | numbered clauses, each bound to a named [[ref: gadget]] and, once built, to a runtime |
-| [[ref: disclosure set]] | exactly the public signals plus anything the holder deliberately shows |
-| [[ref: negative space]] | what the proof does not establish |
-| adversary | for each privacy claim: the verifier, verifiers colluding, issuer and verifier colluding, or the registry operator |
-| horizon | the earliest of the clocks that bound the claim |
-| conformance fixtures | the fixture families that test the construction: accepts, rejects-unsatisfiable, rejects-verify, unlinkable, current |
-| construction options | candidate constructions, each evaluated against the task force's construction-selection criteria, with its measured or conjectured cost and its proving system |
+| part (rendered) | JSON field | what it holds |
+|---|---|---|
+| Statement | `statement` | what a verifier learns, from whom, without what — one sentence |
+| Witness | `witness` | the credentials, secrets, paths and openings kept private from the verifier; any delegated prover access is declared |
+| [[ref: public inputs]] | `publicInputs` | what the verifier supplies and sees: context descriptor, [[ref: set root]]s, epoch, revocation root, [[ref: transcript digest]], declared scope |
+| Relation | `relation` | numbered clauses, each bound to a named [[ref: gadget]] and, once built, to a runtime |
+| [[ref: disclosure set]] | `disclosureSet` | exactly the public signals plus anything the holder deliberately shows |
+| Does not establish ([[ref: negative space]]) | `doesNotEstablish` | what the proof does not establish |
+| Adversary | `adversary` | for each privacy claim: the verifier, verifiers colluding, issuer and verifier colluding, or the registry operator |
+| Horizon | `horizon` | the earliest of the clocks that bound the claim |
+| Conformance fixtures | `fixtures` | the fixture families that test the construction: accepts, rejects-unsatisfiable, rejects-verify, unlinkable, current |
+| Construction options | `options` | candidate constructions, each evaluated against the task force's construction-selection criteria, with its measured or conjectured cost and its proving system |
+| Issuance requirements | `issuance` | what the construction asks of issuers and registries |
+| Provenance · Record history · Reviews | `provenance` · `history` · `reviews` | citations and commit; every state advance with its evidence; recorded reviewer sign-off on the record's clauses (scope, verdict, date) |
+
+The JSON field is the rendered name in the specification's own terms; a record and its section read the same way, and the same table is kept in `conformance/README.md`.
 | issuance requirements | what the construction asks of issuers and registries, stated early |
 | provenance | the requests, records, registry rows and sources the construction rests on |
 

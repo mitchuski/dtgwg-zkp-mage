@@ -76,6 +76,10 @@ function evidenceDirty() {
   try { return execSync('git status --porcelain -- board/cards board/records board/stacks board/card.schema.json board/tools/spec-render.mjs zkbook/spec zkbook/conformance', { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim().length > 0; } catch { return null; }
 }
 const evidenceCommit = evidenceHead();
+function evidenceTag() { try { return execSync('git describe --tags --exact-match HEAD', { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; } }
+const evidenceTagName = evidenceTag();
+const TAGSTAMP = /(, tag `)[^`]+(`)/;
+if (TAGSTAMP.test(planned.get('spec/appendix.md'))) plan('spec/appendix.md', planned.get('spec/appendix.md').replace(TAGSTAMP, `$1${evidenceTagName || 'untagged'}$2`));
 const STAMP = /(exported from \[DTG-ZKP-EVIDENCE\] at commit `)[0-9a-f]{7,40}(`)/;
 if (evidenceCommit && STAMP.test(planned.get('spec/appendix.md'))) plan('spec/appendix.md', planned.get('spec/appendix.md').replace(STAMP, `$1${evidenceCommit}$2`));
 else console.log(`  note: Appendix B evidence-commit stamp ${evidenceCommit ? 'not found in appendix.md' : 'skipped — HEAD unreadable'}`);
@@ -267,7 +271,7 @@ console.log(`${CHECK ? 'CHECK' : 'EXPORT'} → ${TO}`);
 console.log(`  added ${report.added.length} · changed ${report.changed.length} · unchanged ${report.unchanged.length} · removed ${report.removed.length}`);
 for (const k of ['added', 'changed', 'removed']) for (const f of report[k]) console.log(`  ${k.padEnd(8)} ${f}`);
 console.log(`  records digest ${recordsDigest.slice(0, 16)}… stamped in spec/body.md`);
-if (evidenceCommit) console.log(`  evidence commit ${evidenceCommit.slice(0, 12)} stamped in spec/appendix.md${dirty ? ' — WORKING TREE DIRTY: that commit does not contain the exported records; commit here first, then export again' : dirty === null ? ' (cleanliness unknown: git not on PATH)' : ''}`);
+if (evidenceCommit) console.log(`  evidence commit ${evidenceCommit.slice(0, 12)}${evidenceTagName ? ` (tag ${evidenceTagName})` : ' (untagged)'} stamped in spec/appendix.md${dirty ? ' — WORKING TREE DIRTY: that commit does not contain the exported records; commit here first, then export again' : dirty === null ? ' (cleanliness unknown: git not on PATH)' : ''}`);
 if (diverged.length) console.log(`  ${diverged.length} authored file(s) diverged in the clone${CHECK ? ' - the clone is the newer side; --adopt takes them back' : ' - OVERWRITTEN by --force'}: ${diverged.map(d => d.rel).join(' ')}`);
 if (!CHECK) { const m = {}; for (const [rel, content] of planned) if (authored.has(rel)) m[rel] = sha(Buffer.from(content)); writeFileSync(MANIFEST, JSON.stringify(m, null, 2) + '\n'); }
 if (pathsMissing.length) console.log(`  note: specs.json markdown_paths does not list ${pathsMissing.join(' ')} - the render will skip that chapter`);
