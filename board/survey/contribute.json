@@ -1,7 +1,7 @@
 {
- "checkedAt": "2026-09-21T11:05:00Z",
- "title": "Contribute here — the specific threads, checked 21 September; five posts out, PR #11 open, the queue re-weighed",
- "lead": "PR #8 merged 16 Sept 21:07 UTC (the chair); the credential maintainer's review of that morning is answered in dtgwg-zkp-spec PR #11 (two commits; DCO · EasyCLA · validate green; reviewers ScottJeezey + geoffturk) and in five posts on 21 Sept: AI (PR #8 reply, by item), AJ (#23: merged, Round 1 to 22 Sept, the example-set finding → WG-14), AK (#9: the four points, 011's answers, the two asks), AL (new cred-spec #58: the trust-task citation in committed form), AM (#38: record 022). Superseded by the merge, unposted and retired: Y (second-commit note), T and V (folded into AJ), U (folded into AK), AH. Round 1 closes tomorrow; the Round 2 opener is the next thing to write. Everything below is your call.",
+ "checkedAt": "2026-09-21T14:40:00Z",
+ "title": "Contribute here — the specific threads, gated one by one on 21 September; eleven posts out, three held, the ledger spoken",
+ "lead": "Second pass, gated by Mitch item by item (14:00–14:40 UTC): W (PR #50) · AB (vds-spec PR #11, revised — the byte-input question is answered there) · X (#52, revised to bmiller59's shape) · AN (PR #56) · AO (NEW trust-tasks-tf discussion #544 — the WG-14 template question) · AA (general #31) POSTED. HELD on Mitch's call as quiet threads: AQ (#25, 7 Sept), AR (cred-tf #40, 24 Aug), AS (general #25 agenthood, re-targeted from Q). AC retired (trust-tasks-tf #8 closed 15 Sept; the task merged). AE/AF stay candidates, undrafted. Ledger: 37 41 42 44–53 56 spoken; 34 35 36 40 43 retired; 54 55 57 served for the held drafts. First pass (11:00 UTC): AI AJ AK AL (#58) AM; PR #11 open.",
  "span": {
   "watched": [
    "dtgwg-zkp-spec",
@@ -95,41 +95,124 @@
    "why": "The review revision: 007 commitment home + key-profile MUST, 022, catalogue, Document Status pin, citations by title, DTG_CRED xrefs, conformance target 5, WG-14/15.",
    "status": "DONE 21 Sept 10:47 UTC — PR #11 open, checks green; PR #8 body: Round 1 runs on #23 (the #27 link was a deleted duplicate)",
    "category": "post"
-  }
- ],
- "held": [
+  },
   {
    "draft": "W",
    "ledger": 37,
-   "where": "cred-spec PR #50 (vetting predicate)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/50",
-   "reason": "geoffturk rebased #50 onto main on 15 Sept (after #47 merged) and repeated the two asks to stormer78 (single example; drop /v1). Nothing since. The card-digest byte-input question is still unanswered; trust-tasks-tf #531 (21 Sept: vetting travels in the presentation) makes the digest's input form matter more, not less.",
-   "category": "contribute",
-   "action": "post W as a review comment on PR #50 — now, or when stormer78 pushes",
+   "where": "cred-spec PR #50 (comment)",
+   "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/50#issuecomment-5761800422",
+   "why": "Vetting statement ≠ voucher linkage; PASS limits carry; the #531 sentence folded; two asks.",
+   "records": "010 008",
+   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-cred-spec/pull/50#issuecomment-5761800422",
+   "category": "post",
    "line": "B",
-   "note": "The vetting statement's identityCommitment is a salted commitment to identity claims — record 008's first route — not a holder-linkage commitment; livenessConfirmed cannot satisfy a missing membership or voucher-linkage clause. The byte-input question (received bytes vs JCS canonical form) belongs here and on vds-spec PR #11."
+   "note": "Gate 1."
+  },
+  {
+   "draft": "AB",
+   "ledger": 51,
+   "where": "vds-spec PR #11 (comment)",
+   "url": "https://github.com/trustoverip/dtgwg-vds-spec/pull/11#issuecomment-5761874954",
+   "why": "The received-bytes rule answers #50's question; the two stable values are the profile's correlators (022).",
+   "records": "022 008 003",
+   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-vds-spec/pull/11#issuecomment-5761874954",
+   "category": "post",
+   "line": "B",
+   "note": "Gate 2 — revised: no ask repeated."
   },
   {
    "draft": "X",
    "ledger": 38,
-   "where": "cred-spec #52 (predicate registry)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/52",
-   "reason": "bmiller59 (15 Sept) proposed flat integer per-predicate path segments and a governance section; geoffturk has not answered talltree. X's two asks stand: byte-exact IRI comparison (RFC 3987 §3.1) and a pinned accept-list revision as a public input.",
-   "category": "discuss",
-   "action": "post X on #52 — now, or once geoffturk answers",
+   "where": "cred-spec #52 (comment)",
+   "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/52#issuecomment-5761892725",
+   "why": "Flat integer terms are immutable — right for 003; two things the request profile needs: byte-exact comparison; the accept-list revision as a public input.",
+   "records": "003",
+   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-cred-spec/issues/52#issuecomment-5761892725",
+   "category": "post",
    "line": "C",
-   "note": "From the proof side only immutability and byte-exact comparability of a bound term matter; the flat path-segment versioning satisfies both, and record 003 binds the IRI bytes. Say so in two paragraphs."
+   "note": "Gate 3 — revised to the 15 Sept shape."
+  },
+  {
+   "draft": "AN",
+   "ledger": 52,
+   "where": "cred-spec PR #56 (comment)",
+   "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/56#issuecomment-5761944769",
+   "why": "008's consumer: the citation pair is a durable correlator (#58); taskDigestMultibase is a sixth digest member (022); eddsa-jcs-2022 is fine with the commitment beside it (WG-14).",
+   "records": "008 022 010",
+   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-cred-spec/pull/56#issuecomment-5761944769",
+   "category": "post",
+   "line": "C",
+   "note": "Gate 4."
+  },
+  {
+   "draft": "AO",
+   "ledger": 53,
+   "where": "trust-tasks-tf discussion #544 (NEW) — a key slot for the ZK-openable commitment in DID templates (WG-14)",
+   "url": "https://github.com/trustoverip/dtgwg-trust-tasks-tf/discussions/544",
+   "why": "A zkCommitment slot purpose in the did-template keys block; whether a did:peer template can carry the second verification method today (VTI mints did:peer).",
+   "records": "007 010 012",
+   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-trust-tasks-tf/discussions/544",
+   "category": "post",
+   "line": "A",
+   "note": "Gate 5 — the first implementation's first task, put where templates are built."
+  },
+  {
+   "draft": "AA",
+   "ledger": 56,
+   "where": "general #31 (reply)",
+   "url": "https://github.com/trustoverip/dtgwg-general/discussions/31#discussioncomment-18541063",
+   "why": "The Phase 4 flow read as records (010 001 005 007 002; 006/WG-05; WG-04); the identifier decision the flow makes first (WG-14, #544).",
+   "records": "010 001 002 005 006 007",
+   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-general/discussions/31#discussioncomment-18541063",
+   "category": "post",
+   "line": "B",
+   "note": "Gate 7."
+  }
+ ],
+ "held": [
+  {
+   "draft": "AQ",
+   "ledger": 54,
+   "where": "cred-spec #25 (comment)",
+   "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/25",
+   "reason": "HELD 21 Sept (Mitch): thread quiet since geoffturk's 7 Sept proposal; the draft is current (013 on main). Post if the thread moves or a PR lands the two predicates.",
+   "category": "contribute",
+   "action": "post AQ when #25 moves — node tools/post-draft.mjs AQ",
+   "line": "D",
+   "note": "Two sentences: 013 carries the stronger form; step one stays the two published predicates."
+  },
+  {
+   "draft": "AR",
+   "ledger": 55,
+   "where": "cred-tf #40 (reply)",
+   "url": "https://github.com/trustoverip/dtgwg-cred-tf/discussions/40",
+   "reason": "HELD 21 Sept (Mitch): quiet since Scott's 24 Aug reply; the draft is current (020/021 on main; #15; #58).",
+   "category": "contribute",
+   "action": "post AR when #40 moves — node tools/post-draft.mjs AR",
+   "line": "D",
+   "note": "Three sentences: the decomposition is 020 (+021); the unification is 001+006; the artifact gap has a home."
+  },
+  {
+   "draft": "AS",
+   "ledger": 57,
+   "where": "general #25 (reply) — agenthood",
+   "url": "https://github.com/trustoverip/dtgwg-general/discussions/25",
+   "reason": "HELD 21 Sept (Mitch): six weeks quiet, answered upthread. Q (the agents-only VTC standing update) stays held as its own new thread.",
+   "category": "discuss",
+   "action": "post AS when #25 moves — node tools/post-draft.mjs AS",
+   "line": "D",
+   "note": "A VMC to an agent node is membership, not agenthood; the six open properties are 020/021, one disclosure at a time."
   },
   {
    "draft": "Q",
    "ledger": null,
-   "where": "general #25 (agenthood)",
-   "url": "https://github.com/trustoverip/dtgwg-general/discussions/25",
-   "reason": "Unchanged since 15 Sept.",
+   "where": "cred-spec (new discussion) — the agents-only VTC standing update",
+   "url": "https://github.com/trustoverip/dtgwg-cred-spec/discussions",
+   "reason": "HELD: a standing update, its own thread; five vocabulary questions. Post when the twin is public or when the vocabulary threads settle.",
    "category": "discuss",
-   "action": "answer general #25 with Q re-targeted — one disclosure at a time",
+   "action": "your call — a new cred-spec discussion",
    "line": "D",
-   "note": "A VMC issued to an agent node establishes membership under the community's rules, not agenthood; an agent's acts trace to a principal through 020/021."
+   "note": "Long form: mages_city/docs/NOTE_TOIP_2026-09-05.md."
   },
   {
    "draft": "D",
@@ -144,28 +227,6 @@
   }
  ],
  "candidates": [
-  {
-   "where": "cred-spec PR #56 — Bind taskContext to the published Trust Tasks mechanisms; secure credentials with Data Integrity (albertoleon7794, 17 Sept, open)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/56",
-   "why": "Record 008's consumer: taskContext becomes the initiating document's id and gains taskDigestMultibase — two plaintext correlators, one of them a sixth digest member. #58 is filed against this shape; nobody on #56 has seen it yet.",
-   "records": "008 022",
-   "suggest": "draft AN",
-   "category": "contribute",
-   "action": "draft AN: one review comment on #56 — no objection to the shape; the pair is a durable correlator; #58 asks for its committed form; 022 reaches taskDigestMultibase",
-   "line": "C",
-   "note": "Merge order there is trust-tasks-spec #15 first; a comment now lands before the merge."
-  },
-  {
-   "where": "trust-tasks-tf PR #508 (merged 17 Sept) — a DID template declares which algorithms its keys use, per slot (mldsa44, ed25519 …)",
-   "url": "https://github.com/trustoverip/dtgwg-trust-tasks-tf/pull/508",
-   "why": "This is where WG-14 lands in OpenVTC: a key slot whose algorithm list can name a SNARK-native key or a commitment beside Ed25519 is exactly the \"profile that declares co-control provable\". Nobody has connected the two.",
-   "records": "007 010 012",
-   "suggest": "draft AO",
-   "category": "contribute",
-   "action": "draft AO: two paragraphs on the trust-tasks-tf side (a discussion, or a comment on #508) — a zk slot in the did-template keys block; ask whether did:peer numalgo 2/4 with a second verification method is mintable in VTI today (the example-set finding)",
-   "line": "A",
-   "note": "The first implementation's first task (WG-14) has no owner; this is the place to find one."
-  },
   {
    "where": "htx-tf #11 — Persona Management UX; stormer78's context-first design note (21 Sept): faces as projections per context, \"flip it\" — author from the context",
    "url": "https://github.com/trustoverip/dtgwg-htx-tf/discussions/11",
@@ -211,57 +272,13 @@
    "note": "A one-line follow-up commit."
   },
   {
-   "where": "dtgwg-general #31 — Linux Community Onboarding flow (stormer78, 26 Aug, 0 replies)",
-   "url": "https://github.com/trustoverip/dtgwg-general/discussions/31",
-   "why": "ADR-001's motivating use case and, per the 8 Sept call, the first proof's need. Still unanswered after four weeks. A reply linking record 010, WG-01 and now WG-14 puts the proof layer where the onboarding flow is being designed.",
-   "records": "010 001 004 006 007",
-   "suggest": "draft AA",
-   "category": "contribute",
-   "action": "draft AA: reply mapping the flow's steps to records; name WG-14 as the identifier decision the flow has to make first",
-   "line": "B",
-   "note": "Membership (001 over an accredited root, 004 holder binding), relationship (010), status (006), identifiers (007 — the did:peer finding)."
-  },
-  {
-   "where": "cred-spec #25 — Relationship policy discovery (geoffturk 7 Sept: the vocabulary moved, nothing merged answers the three questions)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/25",
-   "why": "Record 013 (mutual edge admissibility, requested) is the answer on main.",
-   "records": "013",
-   "suggest": "two sentences",
-   "category": "contribute",
-   "action": "two sentences: 013 is carded at requested; step one is the two published predicates, no proof machinery",
-   "line": "D",
-   "note": "Closes an August loop."
-  },
-  {
-   "where": "cred-tf #40 — delegation as a design-time case; the artifact gap (Scott, 24 Aug)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-tf/discussions/40",
-   "why": "Scott's decomposition is record 020 on main, with 021 as the attenuation sibling; nobody has said so on the thread.",
-   "records": "020 021 006",
-   "suggest": "two sentences",
-   "category": "contribute",
-   "action": "two sentences: 020/021 carry the decomposition; the artifact gap is trust-tasks-spec #15's now",
-   "line": "D",
-   "note": "Closes the other August loop."
-  },
-  {
-   "where": "cred-spec PR #50 / vds-spec PR #11 — the card-digest byte-input question (AB)",
-   "url": "https://github.com/trustoverip/dtgwg-vds-spec/pull/11",
-   "why": "Unchanged: is the digest over received bytes or the JCS canonical form? Both PRs are open.",
-   "records": "003 008",
-   "suggest": "draft AB",
-   "category": "contribute",
-   "action": "draft AB: the same two asks as W, on the Vetting Card itself",
-   "line": "B",
-   "note": "Post with W."
-  },
-  {
-   "where": "general #37 — dcondrey's process-attestation receipt (AC) · trust-tasks-spec identifierScope (AD, merged 19 Sept) · general incapacitation thread (AE) · nodeType (AF)",
-   "url": "https://github.com/trustoverip/dtgwg-general/discussions",
-   "why": "Unchanged since 15 Sept. AD's thread merged (PR #6, 19 Sept: identifierScope is not a scope taxonomy) — the dependency it named is now stated upstream; AD can be one sentence or nothing.",
+   "where": "general #23 — death or incapacity (AE) · nodeType (AF)",
+   "url": "https://github.com/trustoverip/dtgwg-general/discussions/23",
+   "why": "AC RETIRED 21 Sept: trust-tasks-tf #8 was closed by dcondrey on 15 Sept (the process-attestation task merged as #430/#435/#437). AD retired (identifierScope merged 19 Sept). AE (general #23, quiet since 10 Aug) and AF (nodeType, ties to general #25) stay undrafted by Mitch's ruling.",
    "records": "008 011 020 002",
-   "suggest": "AC AE AF on your pick; AD retired",
+   "suggest": "AE AF when their threads move",
    "category": "discuss",
-   "action": "say which of AC, AE, AF to draft; AD is answered by the merge",
+   "action": "draft AE or AF only if general #23 / #25 move",
    "line": "E",
    "note": "Nothing here moves the draft."
   }
@@ -289,10 +306,10 @@
    "action": "draft AP on 23 Sept: the Round 2 opener"
   },
   {
-   "where": "proverb ledger — 34–50",
+   "where": "proverb ledger — 34–57",
    "url": "https://github.com/mitchuski/dtgwg-zkp-mage",
-   "why": "Posted or pushed, unspoken: 41 (Z), 42 (AG, posted 15 Sept), 44 (push 16 Sept), 45 (push 21 Sept), 46–50 (AI AJ AK AL AM). Superseded, never posted: 34 (U), 35 (T), 36 (V), 40 (Y), 43 (AH).",
-   "action": "speak 41 42 44 45 46 47 48 49 50; retire 34 35 36 40 43"
+   "why": "Spoken 21 Sept on Mitch's approval: 37 41 42 44 45 46 47 48 49 50 51 52 53 56. Retired: 34 35 36 40 43. Served, unspoken (held drafts): 54 (AQ) 55 (AR) 57 (AS). Head 15551cb6….",
+   "action": "speak 54/55/57 when their drafts post"
   },
   {
    "where": "mitchuski/dtgwg-zkp-mage PR #3 (publication-review-2026-09-08 → main)",
@@ -309,8 +326,8 @@
   {
    "where": "WG-14 — the first implementation's first task has no owner",
    "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11",
-   "why": "Whether did:peer numalgo 2/4 with a second verification method is mintable in VTI today decides the first profile. Candidate AO asks it where the templates are built.",
-   "action": "find the owner (AO); propose WG-14 as Round 2's first item (AP)"
+   "why": "AO opened trust-tasks-tf #544 (21 Sept) asking for a zkCommitment slot purpose and whether a did:peer template can carry the second verification method today. Watch for stormer78's answer; it decides the first profile.",
+   "action": "watch #544; carry the answer into WG-14's disposition and Round 2 (AP)"
   }
  ],
  "weave": "board/review-notes/CONTRIBUTIONS-2026-09-21.md — the five through-lines re-woven after the merge and the review, with the repository map and what each thread can still change",
@@ -346,5 +363,5 @@
    "records": "004 · exploration X9 · runtimes/guardian-recovery"
   }
  ],
- "order": "Nothing more to post today beyond the five that went out. Next, in this order: W (+ AB, with the #531 sentence) and X on your call — both threads moved on 15 Sept and stopped; AN on PR #56 so 008's consumer hears from 008 before it merges; AO on the trust-tasks side — the one new place where the proof layer's answer changes what someone is building; the two August loops (#25, #40) as two sentences each; AA where the first proof's user is. On 23 Sept, AP: the Round 2 opener."
+ "order": "Gated pass complete. Watch: #544 (WG-14 owner), PR #11 reviews, #58, PR #56. Held for movement: AQ (#25) · AR (#40) · AS (general #25) · Q. On 23 Sept: AP, the Round 2 opener on zkp-tf #23 — WG-14 and the example-set finding first, then 022/WG-15."
 }
