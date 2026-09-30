@@ -425,3 +425,25 @@ X1 fixture-format consequence the dual circuit recorded for `'duplicate-issuer-i
 - `setup-guardian.mjs` — compile (`--O2`) + groth16 setup, staleness-aware like `setup.mjs`;
   ptau cache reused.
 - `test-guardian.mjs` — G1c–G8c; run `node setup-guardian.mjs` then `node test-guardian.mjs`.
+
+## Hidden-vetting admission — record 024, Groth16 route (2026-09-23)
+
+`circuits/vetting_attest.circom` (one vetter's leg) + `circuits/vetting_bind.circom` (the applicant's binding), `harness-vetting.mjs` (JS mirror + the community's admission check), `setup-vetting.mjs`, `test-vetting.mjs` (`npm run test:vetting`). H1–H12 **12/12** on the first full run (win32/x64, Node 22.20.0, fresh `build/`).
+
+| measure (k = 5 of n = 10, cap 3) | value |
+|---|---|
+| constraints | attest 5,677 · bind 238 (--O2) |
+| prove | ~813 ms per leg (each vetter, own time) · ~123 ms binding (snarkjs/wasm) |
+| community verify | ~110 ms for 5 legs + binding |
+| submission | 1,376 B compressed points / 2,144 B uncompressed (computed from point sizes); 7,009 B snarkjs JSON |
+| trusted setup | lab-only (one contributor, fixed entropy) |
+
+Design findings:
+
+1. **Why k proofs, not one.** The distinctness tag has to come from the vetter's secret. A tag derived from anything public (the leaf, the DID) lets the community recompute it for every enrolled vetter; H11 asserts none can be. The applicant does not hold vetters' secrets, so each vetter proves its own leg. One proof would need recursion, aggregation (e.g. SnarkPack) or a construction over re-randomisable signatures — not built.
+2. **Enrolment need not be blind.** The community sees each vetter register a commitment, but the proof hides which leaf attests, and the tag is unlinkable to it.
+3. **Removing one vetter mid-period is a new root** (H10): nobody else is re-enrolled, and legs made under the old root are refused.
+4. **The rate limit is per vetter and in-circuit** (H4, H5): `cap` serials per period derived from the vetter's own secret, with nothing issued.
+5. **Clause "none is the applicant" is not built.** It holds only while applicants are outside the vetter set.
+6. **Tag distinctness is checked by the community over public tags**, not in-circuit, since legs are separate proofs.
+7. **Privacy under a future quantum adversary.** Tags, serials and leaves are Poseidon hashes of secrets, and Groth16 is perfectly zero-knowledge, so an archived submission does not become linkable when discrete log falls. Soundness (BN254) does not survive; privacy does, at hash strength. Stated, not tested.

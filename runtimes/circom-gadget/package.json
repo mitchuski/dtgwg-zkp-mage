@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Shared circom gadget: Poseidon nullifier + Merkle membership (O2 M3; also the O4 / multi-issuer / guardian-recovery membership leg)",
   "scripts": {
-    "test": "node test.mjs"
+    "test": "node test.mjs",
+    "test:vetting": "node test-vetting.mjs"
   },
   "dependencies": {
     "circomlib": "^2.0.5",
