@@ -123,6 +123,11 @@
       "date": "2026-09-21",
       "by": "mitchuski",
       "note": "Review of 2026-09-16: the record's implicit answers to cred-spec #9's first two questions made explicit in provenance and stated on the thread; the counterparty-attestation asymmetry noted. State unchanged."
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, composed from the gadget library); no state change"
     }
   ],
   "history": [
@@ -140,5 +145,32 @@
       "evidence": "cred-spec construction 1 + #9 F post",
       "task": "board/specify"
     }
-  ]
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Composed/R011.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "clauses 2 and 3 composed: the presenter's key (record 004) and the persona ↔ pairwise linkage (record 007)",
+    "theorems": [
+      {
+        "name": "Formal.R011.key_behind_persona",
+        "proves": "the presenter's key is derived from the secret behind the disclosed persona, not only the hidden pairwise identifier"
+      },
+      {
+        "name": "Formal.R011.persona_linkage_needed",
+        "proves": "without clause 2 the key check says nothing about the persona"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-com (record 007)",
+        "carries": "the identifier derivation binds (secret, salt)"
+      },
+      {
+        "name": "H-sig",
+        "carries": "clause 1: the VRC verifies under the issuing pairwise identifier's key (not modelled here)"
+      }
+    ],
+    "scope": "the composition of clauses 2 and 3; the VRC signature (1), revocation (4) and transcript (5) are records' own gadgets; the counterparty's linkage rests on its attestation"
+  }
 }

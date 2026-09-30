@@ -324,6 +324,76 @@
           }
         }
       }
+    },
+    "formal": {
+      "type": "object",
+      "description": "A machine-checked model of this record: the statement as a definition, theorems proved against it, and the hypotheses each rests on. Formal verification of the counting and policy logic is not evidence of the construction's cryptography; the hypotheses name what remains to discharge against the construction.",
+      "required": [
+        "system",
+        "location",
+        "reproduce",
+        "statement",
+        "theorems",
+        "hypotheses",
+        "scope"
+      ],
+      "properties": {
+        "system": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "reproduce": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "theorems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "proves": {
+                "type": "string"
+              },
+              "carries": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "hypotheses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "proves": {
+                "type": "string"
+              },
+              "carries": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

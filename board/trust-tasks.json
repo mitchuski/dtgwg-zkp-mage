@@ -1,0 +1,138 @@
+{
+  "title": "Trust Tasks — what the co-chair is proposing upstream",
+  "checkedAt": "2026-09-29",
+  "lead": "The registry (trustoverip/dtgwg-trust-tasks-tf, 635 specs, framework 0.7.0) is admitting external work: process-attestation/0.1 (David Condrey) is merged, and a 28-family series is entering as one categories PR (#672) plus one PR per family (#674 social-recovery is the shape template). These are our proposals against that bar. Everything below is local and untracked in the workbench; PR mechanics are Mitch's.",
+  "workbench": "~/dtgwg-trust-tasks-tf-mage",
+  "bar": [
+    "DCO sign-off (git commit -s) and EasyCLA",
+    "conventional-commit PR title, feat(<slug>): … — PRs are squash-merged, the title is the changelog entry",
+    "payload.schema.json beside every spec.md (the build finds specs by one, the generators by the other)",
+    "one PR per family so CODEOWNERS routes by slug; the category enum and website/assets/data.js move together if a category is new (none of ours is)",
+    "§4.10 lowerCamelCase for closed-set values and member names; §7.3 item 17 issuedAtRequirement; item 19 maxLength on free text; §12 four Security & Privacy sub-headings",
+    "worked examples round-trip verified against an implementation, or say plainly which are not",
+    "findings that point back at the registry are welcomed as separate issues"
+  ],
+  "order": [
+    "understanding family (4 specs) + its ceremony — smallest, first, as our shape template",
+    "wait for the maintainer's view of the shape",
+    "agent-admission family (6 specs) + its ceremony",
+    "dual-agent-harness ceremony (no new task)",
+    "findings issues, any time"
+  ],
+  "proposals": [
+    {
+      "id": "TT-1",
+      "kind": "task family",
+      "slug": "understanding",
+      "specs": [
+        "understanding/offer",
+        "understanding/exchange",
+        "understanding/seal",
+        "understanding/grant"
+      ],
+      "proposes": "A consent-first join: the joiner offers address and intent, reads the host's gateway terms, proves it understood them in its own words, proposes its own machine-readable privacy terms (IEEE 7012), and the host's acceptance seals a bilateral agreement witnessed outside both parties; scoped, expiring grants follow under it.",
+      "category": "consent",
+      "buildsOn": [
+        "consent/*",
+        "task-consent/*",
+        "credential-exchange/*"
+      ],
+      "state": "validated",
+      "prOrder": 1,
+      "source": "~/dtgwg-cred-spec-main_mage/SPEC-DRAFT-proof-of-understanding-trust-task.md; LAN ceremony (resolve → handshake → exchange → seal)",
+      "knownOpen": "Worked examples are not round-trip verified against an implementation; the LAN ceremony ran as a rite, not as trust-task envelopes."
+    },
+    {
+      "id": "TT-2",
+      "kind": "ceremony",
+      "slug": "understanding",
+      "proposes": "The four steps as a definition under /ceremony/: offer opens, exchange, seal (terminal), grant (optional, up to three rounds); an evidentiary witness role; receipt evidence with host and joiner as recorders; aggregate exposure secret because of the grant.",
+      "buildsOn": [
+        "trust-ceremony-receipt"
+      ],
+      "state": "validated",
+      "prOrder": 1,
+      "source": "ceremonies/understanding/0.1/ceremony.json"
+    },
+    {
+      "id": "TT-3",
+      "kind": "task family",
+      "slug": "agent-admission",
+      "specs": [
+        "agent-admission/apply",
+        "agent-admission/respond",
+        "agent-admission/approve",
+        "agent-admission/issue",
+        "agent-admission/revoke",
+        "agent-admission/status"
+      ],
+      "proposes": "Know-Your-Agent admission through two gates that are never substitutable: an understanding gate on criteria drawn deterministically from the agent's own submission digest, and a human gate an accountable supervisor records; a bilateral credential closes it, revocation mirrors to every anchor, and status is the authoritative read that anchors only mirror.",
+      "category": "ai-agents",
+      "buildsOn": [
+        "vtc/join-requests/*",
+        "vetting/*",
+        "trust-ceremony-receipt"
+      ],
+      "state": "validated",
+      "prOrder": 2,
+      "source": "docs/design-notes/agent-admission-ceremony.md; Gatehouse KY-A (github.com/mitchuski/kyra_gatehouse) — trust-task bridge with byte-exact canonicalisation parity, 200 checks, 14 e2e beats",
+      "knownOpen": "Tier vocabulary and anchor neutrality (design note §8); the prototype plays gate authority and supervisor as one party, the definition separates them."
+    },
+    {
+      "id": "TT-4",
+      "kind": "ceremony",
+      "slug": "agent-admission",
+      "proposes": "The two-gate rule as a partial order: respond and approve both depend only on apply and never rejoin; issue depends on both and is terminal and compensatable; a denial is a complete enactment; receipt evidence with gate and supervisor as recorders.",
+      "buildsOn": [
+        "trust-ceremony-receipt",
+        "vtc/member-onboarding (the sibling definition)"
+      ],
+      "state": "validated",
+      "prOrder": 2,
+      "source": "ceremonies/agent-admission/0.1/ceremony.json"
+    },
+    {
+      "id": "TT-5",
+      "kind": "ceremony",
+      "slug": "dual-agent-harness",
+      "proposes": "One round of the agentprivacy dual-agent loop composed from existing tasks only: process-attestation (the Gap's canonical proposal digest is the artifact, the code-derived seed is the Verifier-supplied challenge), confirm/request and confirm/response (the critic's signed verdict, terminal), and the ceremony receipt as the chronicle. No new task minted.",
+      "buildsOn": [
+        "process-attestation",
+        "confirm/request",
+        "confirm/response",
+        "trust-ceremony-receipt"
+      ],
+      "state": "validated",
+      "prOrder": 3,
+      "source": "docs/design-notes/dual-agent-harness-ceremony.md; github.com/mitchuski/agentprivacy-harness",
+      "knownOpen": "Whether process-attestation's disclosure categories can carry the drawn check's answers, or a harness/assay task is needed; whether a policy-engine critic should use task-consent/decision instead of confirm/response."
+    },
+    {
+      "id": "TT-6",
+      "kind": "findings (issues, no PR)",
+      "slug": "—",
+      "proposes": "Three registry findings from the proof side: persona/correlation/analyze 1.1 read against records 011/012 (what the analyzer can and cannot establish about issuer-scope linkage); process-attestation's challenge echo read against record 003's transcript binding; trust-ceremony-receipt as the framework-side twin of record 008 route 2 (a completion receipt is a citation the credential does not carry).",
+      "buildsOn": [
+        "persona/correlation/analyze",
+        "process-attestation",
+        "trust-ceremony-receipt"
+      ],
+      "state": "candidate — not drafted",
+      "prOrder": 0,
+      "source": "CONTRIBUTIONS-2026-09-29.md item 4"
+    },
+    {
+      "id": "TT-7",
+      "kind": "design note",
+      "slug": "predicate-shows-and-bundle-profiles",
+      "proposes": "X3 show composition and governed bundle profiles, and the credential/artifact wall (a proof show is never completion evidence) as a framework consideration.",
+      "buildsOn": [
+        "registry/authorization",
+        "policy/evaluate"
+      ],
+      "state": "drafted 18 July — needs a re-read against framework 0.7.0 (outcome evidence, §7.3 item 20) before it moves",
+      "prOrder": 4,
+      "source": "docs/design-notes/predicate-shows-and-bundle-profiles.md"
+    }
+  ]
+}

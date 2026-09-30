@@ -116,5 +116,31 @@
       "evidence": "specified from the merged VDC/VAC chain rules and the shared-subject rule; bound to the new `hidden-equality` gadget (the dual of record 005's distinctness); cost lines labelled conjecture per drafting rule 4 — DRAFT for review, drop to requested if the task force prefers to bind this to commitment-open",
       "task": "board/specify"
     }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Gadgets/P009HiddenEquality.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "the constraint field_a − field_b = 0 over the circuit field Fin n",
+    "theorems": [
+      {
+        "name": "sub_zero_iff_eq",
+        "proves": "a − b = 0 exactly when a = b in Fin n, any n > 0 — the constraint is equality, both ways, without primality"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "authenticated openings",
+        "carries": "the compared fields are the openings the enclosing record's signature-verify or membership clauses bind — carried by the enclosing record"
+      }
+    ],
+    "scope": "the equality clause alone; common control, authenticity, intent and meaning (does-not-establish 1–4) are out of scope by construction — the clause compares two witnesses"
+  },
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, gadget library): the clause as a definition, its soundness, the counter-deployments that show which hypotheses are necessary, and the negative space classified; no state change"
+    }
   ]
 }

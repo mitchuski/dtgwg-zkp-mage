@@ -2,65 +2,99 @@
   "id": "013",
   "name": "Mutual edge admissibility — each half admissible under the other community's policy, neither policy nor member revealed",
   "kind": "composed",
-  "state": "requested",
+  "state": "specified",
   "priority": "P3",
   "owner": "mitchuski",
   "components": [
     "001",
-    "003"
+    "003",
+    "022"
   ],
   "request": {
     "issue": "cred-spec #25 (stormer78 2026-08-24: forming a cross-community edge needs both communities' policies to admit it, and neither side can learn the other's policy before publishing a half; first signal of inadmissibility is a rejection after one half is already out) · cred-spec #25 (mitchuski 2026-08-25: step one is plain published admissibility predicates, no proof machinery; the stronger form — 'my half would be admissible under the counterparty's policy' proven without revealing the policy or the member — is future work for the ZKP task force) · cred-spec #25 (geoffturk 2026-09-07: the two predicates in WD02 vocabulary — which correlation scopes a community accepts for the subject of a VRC its members publish, and whether it admits a non-member subject)",
     "by": "stormer78 (OpenVTC implementation, cred-spec #25) · geoffturk (WD02 restatement) — requested by the ZKP TF co-chair on the record",
     "need": "turn a failed cross-community publish into a pre-flight check that reveals nothing about either membership: each party proves its half would be admissible under the other community's published policy commitment before either half is published, and the two proofs are exchanged commit-before-reveal so that whoever goes first has not already disclosed"
   },
-  "statement": "Placeholder at state `requested`: each party learns that the counterparty's half of a proposed cross-community edge would be admitted under this party's own community policy — subject scope and non-member admission — without learning the counterparty's identifier, membership or policy beyond the yes, and with neither half published until both answers are yes.",
+  "statement": "Each party to a proposed cross-community edge learns that the counterparty's committed half would be admitted under this party's community's published admissibility policy — the half's form (its subject's correlation scope and whether it claims membership) is one the policy accepts, and where the form claims membership, the subject is a member of the counterparty's community — without learning the counterparty's identifier, membership or anything of its half beyond the yes; neither half is revealed until both answers are yes.",
   "witness": [
-    "to be specified: this party's proposed half (identifier, declared scope, membership evidence) and the opening of its commitment; the counterparty's published policy commitment and this party's satisfying witness under it"
+    "the prover's proposed half — the relationship credential half it would publish (its subject identifier, declared correlation scope and membership status) — as canonical bytes, and the salt u under which it was committed (record 022)",
+    "the Merkle path of the half's form (correlation scope, membership claimed) to the counterparty community's policy root",
+    "where the form claims membership: the subject's community-issued grant and its Merkle path to the prover's own community root (record 001)"
   ],
   "publicInputs": [
-    "to be specified: each community's published admissibility-policy commitment (the two WD02 predicates as a committed set); the commitment to each half; transcriptDigest for the exchange"
+    "the counterparty community's published admissibility-policy root — a commitment to the forms it accepts, the two WD02 predicates (which correlation scopes it accepts for the subject of a VRC its members publish; whether it admits a non-member subject) as a committed set",
+    "the prover's community membership root at a stated epoch, where the form claims membership",
+    "C — the commitment to the prover's half, exchanged before either proof",
+    "transcriptDigest — over both commitments and the exchange's challenge"
   ],
   "relation": [
     {
-      "clause": "to be specified — commit to this party's half before anything is published (commit-before-reveal ordering, cred-spec #25 question 3)",
-      "gadget": "commitment-open"
+      "clause": "C opens to the canonical bytes of the proposed half under the salt u — the half is fixed before either party answers, and the half later revealed is the one the proof was about",
+      "gadget": "commitment-open",
+      "component": "022"
     },
     {
-      "clause": "to be specified — this half's subject scope and membership status are members of the counterparty community's accepted-forms set, proven against its published policy commitment",
+      "clause": "the half's form (the subject's correlation scope, membership claimed or not) is a leaf of the counterparty community's policy root",
       "gadget": "set-membership",
       "component": "001"
     },
     {
-      "clause": "to be specified — bound to one exchange transcript so an admissibility answer cannot be replayed against a different half",
+      "clause": "where the form claims membership, the subject's grant is a leaf of the prover's own community root at the stated epoch — a claimed membership is real, never merely declared",
+      "gadget": "set-membership",
+      "component": "001"
+    },
+    {
+      "clause": "the proof is bound to transcriptDigest over both commitments and the exchange's challenge, so an admissibility answer cannot be replayed against a different half or a different exchange",
       "gadget": "transcript-bind",
       "component": "003"
     }
   ],
   "disclosureSet": [
-    "to be specified: the two yes/no answers and the transcript digest; the halves themselves only after both answers are yes"
+    "each direction's outcome (the counterparty's committed half has a form this community's policy accepts / not shown)",
+    "the two commitments C and transcriptDigest",
+    "the policy roots and the membership root, already published",
+    "the halves themselves, only after both answers are yes — a rule of the exchange, not of either proof"
   ],
   "doesNotEstablish": [
-    "to be specified: that the edge will be accepted once published — admissibility under a policy commitment is not acceptance by a community's verifier; that either party is a member of anything beyond what the policy predicate asked; that the policy commitment is current"
+    "that the edge will be accepted once published — admissibility under a policy commitment is not acceptance by a community's verifier",
+    "privacy of either policy — proving a form is in the counterparty's accepted set needs that set's path, so the policies are published (the request's step one); hiding a policy from prospective counterparties is not addressed",
+    "fairness — after both answers are yes, nothing compels a party to reveal its half; a party can learn the yes and walk away (the formal model's no_fairness)",
+    "that the half's declared correlation scope is honest beyond the form — a non-member form proves nothing about the subject, and the scope is the prover's declaration inside its own committed half",
+    "that the policy root is current beyond the stated epoch or version",
+    "that either party is a member of anything beyond what the policy's form asked"
   ],
   "adversary": [
     {
-      "claim": "to be specified: the counterparty learns only the admissibility answer, not the half, the identifier or the membership behind it",
+      "claim": "the counterparty learns that this party's half has a form its policy accepts, not the half, its subject identifier or the membership behind it — holds while C is hiding (the salt u) and while the policy accepts more than one form; a policy that accepts exactly one form turns yes into the form",
+      "against": [
+        "verifier"
+      ]
+    },
+    {
+      "claim": "a party that answers first cannot be met by a counterparty that re-commits to a different half after seeing the answer — commitments are frozen once an answer exists (the formal model's commit_frozen)",
       "against": [
         "verifier"
       ]
     }
   ],
   "horizon": [
-    "to be specified: the validity of each community's published policy commitment; the exchange transcript's challenge"
+    "earliest of: each community's policy root version, the prover's membership root epoch, and the exchange challenge",
+    "the exchange itself: an unanswered exchange expires with its challenge; a new exchange needs new commitments"
   ],
   "fixtures": {
     "families": [
       "accepts",
-      "rejects-unsat"
+      "rejects-unsat",
+      "rejects-verify"
     ],
     "rejectionCodes": [
-      "half-inadmissible (unsat: the half's form is not in the counterparty's accepted set)"
+      "half-inadmissible (unsat: the half's form is not a leaf of the counterparty's policy root)",
+      "membership-unproven (unsat: the form claims membership and no grant leaf exists under the prover's root)",
+      "commitment-mismatch (unsat: C does not open to the half the proof reads)",
+      "transcript-digest-mismatch (verify: the proof was made for another exchange)",
+      "answer-before-commitments (exchange: refused until both commitments are in)",
+      "reveal-before-both-yes (exchange: refused)",
+      "recommit-after-answer (exchange: refused)"
     ]
   },
   "options": [
@@ -71,14 +105,17 @@
       "source": "cred-spec #25 proposed answer · geoffturk 2026-09-07 WD02 restatement"
     },
     {
-      "construction": "to be specified — membership of the half's form in a committed policy set, exchanged commit-before-reveal",
+      "construction": "Groth16 / BN254 / Poseidon composition — the lab's membership circuit (record 001) against the policy root and, where claimed, the membership root, with a Poseidon commitment opening (record 022) and transcript binding (record 003); the exchange runs outside the circuit",
       "cost": "unmeasured",
       "measured": false,
-      "source": "cred-spec #25 (mitchuski 2026-08-25): 'mutual admissibility as a zero-knowledge predicate'"
+      "source": "this record's clauses over the lab's components; record 001's runtime"
     }
   ],
   "issuance": [
-    "to be specified: a community publishes its admissibility predicates as a commitment the proof can open against (the registry-ZK interaction the credential specification leaves to this task force)"
+    "a community publishes its admissibility predicates as a Merkle root over the forms it accepts (correlation scope × membership status), per policy version — the registry-ZK interaction the credential specification leaves to this task force",
+    "the tree hashes forms and internal nodes under separate domains, or every path has the tree's fixed depth (record 001's requirement)",
+    "the proposed half's canonical bytes are committed with a fresh salt before the exchange (record 022's route 1)",
+    "the exchange runs in order — both commitments, then the proofs, then revelation only after both answers are yes; no commitment changes once an answer exists"
   ],
   "provenance": {
     "spec": [
@@ -95,6 +132,48 @@
       "date": "2026-09-11",
       "evidence": "cred-spec #25: 'There is a stronger form the ZKP task force can carry as future work: proving my half would be admissible under the counterparty's policy without revealing the policy or the member' — placed on the request register 2026-09-11 (open item D23); every field above is a placeholder until specified",
       "task": "board/request"
+    },
+    {
+      "to": "specified",
+      "by": "mitchuski",
+      "date": "2026-09-23",
+      "evidence": "statement, witness, public inputs, four clauses composed from 001 · 003 · 022, disclosure set, six doesNotEstablish lines (policy privacy and fairness named), two adversary claims, horizon, seven rejection codes (three for the exchange), two options, four issuance lines; formal model of one direction and of the exchange ordering",
+      "task": "board/specify"
     }
-  ]
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Composed/R013.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.R013.Accepts for one direction; the exchange as a state machine (Formal.R013.step, Safe)",
+    "theorems": [
+      {
+        "name": "Formal.R013.soundness",
+        "proves": "clauses 1–3: the committed half is the one whose form was proven, the form is a leaf of the counterparty's policy tree, and a claimed membership is a leaf of the prover's tree (records 022 and 001 twice)"
+      },
+      {
+        "name": "Formal.R013.exchange_safe",
+        "proves": "over any sequence of events, a half is revealed only after both answers are yes, and no answer exists before both commitments"
+      },
+      {
+        "name": "Formal.R013.commit_frozen",
+        "proves": "no commitment changes once an answer exists"
+      },
+      {
+        "name": "Formal.R013.no_fairness",
+        "proves": "does-not-establish 3: after both yes answers the exchange can stop with nothing revealed"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-digest (record 022)",
+        "carries": "clause 1: the commitment is collision-free over (bytes, salt)"
+      },
+      {
+        "name": "H-leaf, H-node, H-domain (record 001)",
+        "carries": "clauses 2 and 3: both trees' hashes are collision-free, leaves and nodes under separate domains"
+      }
+    ],
+    "scope": "clauses 1–3 as a model and the exchange ordering; clause 4 (transcript) is record 003's; the commitment's hiding and the policy's privacy are outside the model"
+  }
 }

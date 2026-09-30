@@ -85,7 +85,8 @@
       "liveness reqs v0.4 PR-FRE",
       "decision §15 canonical transcript",
       "cred-spec #17 item 1 (JCS)",
-      "2026-09-14 predicate-binding probe over runtimes/canonical/canonical.mjs (sha256 d50fd9a3…): four assertions — equal/NFC-vs-NFD/v1-vs-v2/unknown-accepted; encoding evidence, not registry-aware verification (peer-lane research cycle 2026-09-14-vocabulary-binding)"
+      "2026-09-14 predicate-binding probe over runtimes/canonical/canonical.mjs (sha256 d50fd9a3…): four assertions — equal/NFC-vs-NFD/v1-vs-v2/unknown-accepted; encoding evidence, not registry-aware verification (peer-lane research cycle 2026-09-14-vocabulary-binding)",
+      "cred-spec #52 and #48 CLOSED 2026-09-28 (cred-spec PR #64, merged): a predicate is identified by `https://registry.trustoverip.org/dtg/vsc/<name>/<n>` — an integer revision per predicate — and the registry is `trustoverip/dtgwg-vsc-registry`; its first community profiles `vetted/1` and `presented/1` were admitted as drafts on 2026-09-30 (registry PR #19; cred-spec PR #70). The identifier a transcript binds now has a concrete form and a revision inside the string; which identifiers a verifier accepts is still the profile's"
     ],
     "registry": "0002–0006",
     "commit": "github.com/mitchuski/dtgwg-zkp-mage"
@@ -118,6 +119,39 @@
       "date": "2026-09-14",
       "by": "mitchuski",
       "note": "cred-spec #52 (predicate registry): negative-space line — binding an identifier does not make it accepted or meaningful; probe cited in provenance. State unchanged (constructed)."
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, gadget library): the clause as a definition, its soundness, the counter-deployments that show which hypotheses are necessary, and the negative space classified; no state change"
+    },
+    {
+      "date": "2026-09-30",
+      "by": "mitchuski",
+      "note": "cred-spec #52/#48 closed (28 Sept): the predicate identifier has a registry form with the revision in the IRI, and a registry to resolve it against. Provenance line only; the negative-space line of 14 Sept stands as written (binding an identifier does not make it accepted). State unchanged (constructed)."
     }
-  ]
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Gadgets/P003Transcript.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "the proof's public transcript scalar; H-bind states that a verifying proof was made for the scalar it verifies against",
+    "theorems": [
+      {
+        "name": "swap_fails",
+        "proves": "a proof moved to another transcript scalar fails"
+      },
+      {
+        "name": "digest_reduction_collides",
+        "proves": "the 256-bit digest reduced mod the BN254 scalar prime is not injective (0 and r collide): the proof binds the scalar, and the scalar stands for one request only through the digest's collision resistance — does-not-establish 3 made exact"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-bind",
+        "carries": "soundness of the proof system with the transcript scalar as a public input"
+      }
+    ],
+    "scope": "binding of the scalar only; canonical encoding, audience, freshness and replay policy are the profile's (does-not-establish 1, 2, 5, 6, 7 out of scope by construction; the replay remedy is a verifier spent set)"
+  }
 }

@@ -4,7 +4,7 @@ This section is informative.
 
 The zero-knowledge layer supplies selective evidence about relationships in a Decentralized Trust Graph. Its privacy depends on both the proof construction and the surrounding disclosure, transport, registry and storage behavior. The [DTG Credentials Core Specification](https://trustoverip.github.io/dtgwg-cred-spec/) defines the credentials that form the graph's nodes and edges — seven types at Document Status 0.4.0: the edge credentials [[xref: DTG_CRED, VMC]], [[xref: DTG_CRED, VRC]] and [[xref: DTG_CRED, VDC]]; the [[xref: DTG_CRED, VIC]]; the annotation credentials [[xref: DTG_CRED, VPC]] and [[xref: DTG_CRED, VSC]] (of which the endorsement and witness credentials are now predicate profiles); and the [[xref: DTG_CRED, VAC]] — and names two zero-knowledge constructions over them, the pairwise proof and the community-anchored proof, while deferring their definition to this specification. The task force's [Privacy-Preserving Proof of Liveness — Requirements](https://github.com/trustoverip/dtgwg-zkp-tf/blob/main/proof-of-liveness-requirements.md) is an important source for the personhood and liveness use-case family and for reusable assurance-boundary concepts. It does not define the whole scope of this specification. Each construction identifies which requirements apply to its own trust-graph outcome.
 
-This specification guides implementers from a required trust-graph outcome to a checkable zero-knowledge presentation. Start with the Implementation Guide: select the outcome, establish which credential and witness inputs exist, choose a compatible construction profile, and demonstrate both acceptance and rejection. The records that follow supply the technical detail and evidence boundaries. Its central object is the **construction record**: a structured statement of one zero-knowledge proof over DTG credentials, carrying twelve parts a reader can hold the construction to.
+This specification guides implementers from a required trust-graph outcome to a checkable zero-knowledge presentation. Use the separate companion Implementation Guide for the walkthrough: select the outcome, establish which credential and witness inputs exist, choose a compatible construction profile, and demonstrate both acceptance and rejection. The records that follow supply the technical detail and evidence boundaries. Its central object is the **construction record**: a structured statement of one zero-knowledge proof over DTG credentials, carrying twelve parts a reader can hold the construction to.
 
 | part (rendered) | JSON field | what it holds |
 |---|---|---|
@@ -69,3 +69,28 @@ Open a discussion or issue in the task-force repository with a one-sentence stat
 ## Requirements Language
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [IETF RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119). In this Working Draft they carry normative force only in sections that state "This section is normative."; elsewhere they are quotations from the threads a record cites. Construction records in this contribution are informative. Evidence maturity alone does not confer normative force; adopting normative construction clauses requires a separately recorded task-force decision.
+
+### Structure and construction navigation
+
+Read Public Inputs for shared conventions, Construction Records for the exact statements and dependencies, Integration for unresolved profile requirements, and Conformance for validation targets. The construction index gives stable identifiers, kinds and evidence states. The guide provides explanation; it does not define additional conformance requirements.
+
+- Admission with multiple vouchers: 023; compare 010, which includes presenter membership.
+- Relationship presentations: 010 and 011.
+- Common control and equality: 007, 009 and 012.
+- Context and digest binding: 003, 008 and 022.
+- Delegation and authority: 020 and 021.
+- Mutual edge admissibility: 013, still requested.
+
+Constructions remain in this versioned specification. A separate construction registry has not been selected. Evidence registries and third-party artifact catalogues have different roles.
+
+### Reading the formal evidence
+
+Seventeen records carry optional formal metadata: the ten primitives (001–009 and 022) and the composed records 010, 011, 012, 020, 021, 023 and 024. Each block gives the Lean statement, named theorem roots, assumptions, reproduction command and a scope line. The scope line says which clauses the model covers and which it leaves to other records or to named hypotheses. These are machine-checked properties of abstract models. They do not establish implementation correspondence, zero knowledge, end-to-end admission correctness or task-force adoption, and do not advance a record's evidence state. The referenced evidence sources are currently local, uncommitted work; public reproduction requires a reviewed immutable revision.
+
+Record 024's block models the counting rule for a class-credential construction, the reading of the construction named for the Linux Plumbers integration. It is not a proof of the Groth16 lab route or of any compiled circuit. Clause-by-clause correspondence, applicant exclusion, verifier state transitions and privacy arguments remain separate obligations.
+
+> **WG-16 — Admission statement selection.** Review whether the requested admission flow needs construction 023 (vouches over relationship credentials), 024 (hidden vetting), or separate modes. A partial runtime or a model theorem does not establish interchangeability. Status: proposed; no decision recorded.
+
+### Composition review and deferred circuit work
+
+The composed records' models are built over the primitives' definitions: a composed model's soundness applies the primitives' theorems rather than restating them. The evidence audit checks 63 named roots and emits a source-hashed receipt. A formal block is not a coverage claim for every clause: the clause review distinguishes partial models (011's covers clauses 2 and 3), assumed signature relations and uncovered implementation obligations across 18 records and 59 clauses. Full circuit correspondence (G8) is deferred. Record 013 remains requested. Public reproduction still requires an immutable evidence revision; local receipt hashes alone are not a published pin.

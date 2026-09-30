@@ -94,7 +94,8 @@
     }
   ],
   "issuance": [
-    "issuer publishes a ZK-friendly commitment per member (Poseidon leaf) or an accumulator"
+    "issuer publishes a ZK-friendly commitment per member (Poseidon leaf) or an accumulator",
+    "the membership tree hashes leaves and internal nodes under separate domains, or every membership path has the tree's fixed depth (the lab's depth 20) — with neither, an internal node's preimage passes as a leaf (the formal model's counter-deployment `no_domain_second_preimage`)"
   ],
   "provenance": {
     "spec": [
@@ -126,6 +127,53 @@
       "date": "2026-08-28",
       "evidence": "circom-gadget nullifier_membership 10/10, numbers in CIRCUITS.md",
       "task": "board/construct"
+    }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Gadgets/P001Membership.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.Gadgets.pathRoot over Formal.Gadgets.MTree — the membership clause as a Merkle path recomputation from the leaf hash to the root",
+    "theorems": [
+      {
+        "name": "path_sound",
+        "proves": "a path that hashes the leaf to the root proves the leaf is in the tree"
+      },
+      {
+        "name": "path_complete",
+        "proves": "every leaf of the tree has such a path"
+      },
+      {
+        "name": "path_sound_fixed_depth",
+        "proves": "for a tree of uniform depth d and a path of exactly d steps, soundness holds without leaf/node domain separation — the lab circuit's shape (depth 20)"
+      },
+      {
+        "name": "no_domain_second_preimage",
+        "proves": "with variable-length paths and no domain separation, an internal node passes as a leaf (the second-preimage shape): the defence is required, not optional"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-leaf, H-node",
+        "carries": "the leaf and node hashes are collision-free (modelled as injective)"
+      },
+      {
+        "name": "H-domain or fixed depth",
+        "carries": "no leaf hash equals a node hash, or every path has the tree's fixed depth — one of the two must hold of the circuit (to discharge at the circuit gate)"
+      }
+    ],
+    "scope": "the membership clause over abstract hashes; not the hash function's collision resistance, and not which registry state the root is (that the verifier recognises the root is registry policy)"
+  },
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, gadget library): the clause as a definition, its soundness, the counter-deployments that show which hypotheses are necessary, and the negative space classified; no state change"
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "issuance requirement added from the formal model: leaf/node domain separation or a fixed path depth; no state change"
     }
   ]
 }

@@ -27,9 +27,9 @@ A proving-system entry records facts a reader can check — proof system, field,
 | verifier | per system |
 | licence | BSD-2-Clause (catalog repo); per-entry `source.license` field — citable; artifacts stay in the catalog, the book cites entry ids |
 | audit | 'Every circuit here is experimental and unvetted' |
-| maturity | experimental catalog — 14 entries (manifest v1, 2026-09-05): 10 Longfellow libzk v1 (systemVersion 6/7/8, 1–4 attributes, ~300 KB each) + 4 vega-mc P-256 keys (r11 deprecated, r12 active, 135–157 MB) |
+| maturity | experimental catalog — 14 entries (manifest v1 generated 2026-08-27; read 2026-09-05 and again 2026-09-29, unchanged): 10 Longfellow libzk v1 (systemVersion 6/7/8, 1–4 attributes, ~300 KB each) + 4 vega-mc P-256 keys (r11 deprecated, r12 active, 135–157 MB) |
 | independent implementations | 0 |
-| provenance | repo: https://github.com/sirosfoundation/go-zk-circuits · manifest: https://api.circuits.siros.org/v1/manifest.json · version: manifestVersion 1 · entrySchema: id · aliases · system · systemVersion · docTypes · published · status · params · artifact{url, sha256, size, zstd, uncompressed} · source{origin, toolchain, license, openSource} · publishedAt · notes · content-addressed |
+| provenance | repo: https://github.com/sirosfoundation/go-zk-circuits · manifest: https://api.circuits.siros.org/v1/manifest.json · version: manifestVersion 1 · entrySchema: id · aliases · system · systemVersion · docTypes · published · status · params · artifact{url, sha256, size, zstd, uncompressed} · source{origin, toolchain, license, openSource} · publishedAt · notes · readAt: 2026-09-29 · candidateArtifact: [object Object] · content-addressed |
 | verified | 2026-09-05 — api.circuits.siros.org/v1/manifest.json, go-zk-circuits README |
 
 #### Published figures (the proving system's own, or the evidence repository's — never this specification's)

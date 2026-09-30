@@ -127,5 +127,39 @@
       "evidence": "composed from 007 + 006 + 003 under one transcript; disclosure set and negative space written fresh (composition rule)",
       "task": "board/specify"
     }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Composed/R012.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "clause 1: k − 1 common-control clauses against identifier_1",
+    "theorems": [
+      {
+        "name": "Formal.R012.star_to_clique",
+        "proves": "with H-com and k ≥ 2, the k − 1 clauses give every pair of the k identifiers one controller"
+      },
+      {
+        "name": "Formal.R012.star_without_binding_not_clique",
+        "proves": "without a binding derivation they do not — the record's 'sharing one witness' carries the statement then"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-com (record 007)",
+        "carries": "the identifier derivation binds (secret, salt)"
+      },
+      {
+        "name": "k ≥ 2",
+        "carries": "at k = 1 there is no clause and nothing establishes a secret behind identifier_1"
+      }
+    ],
+    "scope": "clause 1; non-revocation (2) and the transcript (3) are records 006 and 003"
+  },
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, composed from the gadget library); no state change"
+    }
   ]
 }

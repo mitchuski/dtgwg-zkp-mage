@@ -104,3 +104,8 @@ recorded as advisory and your own green suites carry the proving-system claim. T
 
 Code: Apache-2.0 · Documents: CC-BY-4.0 — matching the task force's IPR posture
 (W3C-mode patents / Apache-2.0 code / CC-BY-4.0 docs).
+
+## Clean room: Lean/Clean component experiments
+
+The [Clean room](clean-room/README.md) extends run-on-your-own-box verification with a request-driven proposal, first arithmetic kernels for records005/009 and partial023, and a reproducible dual-agent handoff. See its [results](clean-room/RESULTS.md) for the exact proved scope. This is local evidence-bench work, not an adopted specification or a complete admission proof.
+

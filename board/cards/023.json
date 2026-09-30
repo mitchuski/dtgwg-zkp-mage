@@ -79,10 +79,13 @@
   "doesNotEstablish": [
     "that any voucher consented to be counted toward this admission — a relationship credential is evidence of a relationship, and whether it is a vouch is the community's reading under its rules (general #31: 'vouching is social, not technical')",
     "that the applicant is not already a member — a member can hold k VRCs; if the policy needs 'not a member', the statement gains a non-membership clause against root_C (record 006's gadget applied to the membership set), which this record does not include",
+    "that no voucher is the applicant — the statement has no clause excluding it, and an applicant who is already a member can vouch for itself through its own grant, so one of the k counted members is the applicant (the formal model's counter-deployment `self_vouch_counted`); the refusal is the community's admission check, which must refuse an applicant who is already a member (record 024 carries the key-level exclusion as its clause 7)",
     "that the k vouchers are k distinct natural persons — distinct member leaves, not distinct people (record 002's negative space; personhood is never inferred)",
     "the invitation or the identity check — the VIC and the vetting statement are presented as credentials beside this proof, not proven inside it (the vetting statement's PASS limits carry: cred-spec PR #50)",
     "that the community will admit the applicant — the proof's outcome is one input to the community's policy engine; verifying it, accepting it under policy and issuing the VMC are three acts (WG-04)",
-    "what the VRCs say beyond naming the applicant as subject — attributes, scopes and the relationship's own terms are outside the statement"
+    "what the VRCs say beyond naming the applicant as subject — attributes, scopes and the relationship's own terms are outside the statement",
+    "that a community's admission path mints the witness this record needs — an admission that issues no relationship credentials has no VRC to prove over; record 024 states the hidden-vetting statement such a path can run",
+    "a commitment in the applicant's identifier — under the blind-signature (PCS) route the voucher linkage is bound to an enrolment secret inside the credential system and no DID verification-method commitment (component 007, WG-14) is exercised; nothing ties the proof to the applicant's DID beyond what the credential itself binds. Whether the admission path must satisfy 007 is a Round 2 question (PR #11 review, 2026-09-28)"
   ],
   "adversary": [
     {
@@ -132,10 +135,10 @@
   },
   "options": [
     {
-      "construction": "Berkeley's reference code for the admission proof — the construction being built for the Linux Plumbers integration (per Arka Rai Choudhuri; Glenn Gore integrating), named by the chair as the constructor; link, proving system and measured figures to be recorded when the code is public",
-      "cost": "unmeasured here; to be filled from the reference code's own figures with revision and workload named",
+      "construction": "blind-signature admission — the construction the chair named on PR #11 (Berkeley, Glenn Gore integrating) and the blind-signature vouch of the 2026-09-08 call are one construction: membership by possession of a blind signature rather than by Merkle inclusion, which is the Predicate Credential System (PCS) and is record 024's option 1 with the five public Trust Tasks as its issuance lines. Recorded there, not here: 024 admits on k distinct attestations from a hidden vetter set; this record admits on k distinct vouching members of a known set over relationship credentials, and its own constructions are membership ones. Under the PCS route the voucher linkage rests on a secret bound at enrolment inside the credential system, so component 007 is bypassed rather than satisfied (see does-not-establish)",
+      "cost": "not recorded here — see record 024 option 1 (PCS source public at OpenVTC/predicate-credential-system 4f4edf5 since 2026-09-28; sizes constructor-reported, unmeasured)",
       "measured": false,
-      "source": "zkp-spec PR #11 (ScottJeezey 2026-09-21); ePrint 2026/333 and its forthcoming community follow-up (the 8 September call)"
+      "source": "zkp-spec PR #11 inline review (DenisPopov15 2026-09-28) folding the two rows; the chair on PR #11 (2026-09-21); DTG ZKP TF call 2026-09-08 (Sanjam Garg); record 024 · OpenVTC/predicate-credential-system 4f4edf5"
     },
     {
       "construction": "Groth16 / BN254 / Poseidon composition — k parallel instances of record 010's clauses 1–3, 6, 7 (VRC authenticity, voucher membership, voucher linkage, non-revocation) sharing one holder-binding clause (004), one distinctness clause over the k leaves (005) and one transcript binding (003); the applicant's own membership clause of 010 dropped, since the applicant is not a member",
@@ -148,12 +151,6 @@
       "cost": "zero",
       "measured": false,
       "source": "general #31 (the flow as drawn); a community policy that requires knowing its vouchers"
-    },
-    {
-      "construction": "blind-signature vouch — each voucher blind-signs at vouch time and the applicant later proves possession of k unblinded signatures from distinct members (record 010's option 5, applied k times); composition with the membership and non-revocation clauses is the open design question",
-      "cost": "unmeasured — no construction published",
-      "measured": false,
-      "source": "DTG ZKP TF call 2026-09-08 (Sanjam Garg)"
     }
   ],
   "issuance": [
@@ -162,7 +159,8 @@
     "each voucher's VRC-side identifier must be linkable to the voucher's VMC-side identifier offline: the voucher reuses one `directed` identifier, or the VRC carries the voucher's co-control attestation (the MAY of cred-spec #9; record 007 at issuance) — the same offline-linkage requirement as record 010, now on k vouchers",
     "the applicant's identifier(s) named in the VRCs must be, or carry, a ZK-openable commitment to the applicant's secret where they differ from the admission identifier (record 007; WG-14) — or the applicant uses one `directed` identifier toward every voucher and the community, in which case clause 5 is holder binding alone",
     "the join request (Trust Tasks `vtc/join-requests/submit`, with `supplement` for a deferred answer) carries the presentation, and its exchange is the context descriptor the proof binds — the citation of that exchange on the VMC later issued is record 008's concern (cred-spec #58)",
-    "the invitation (VIC) and the identity check (the vetting statement) travel beside the proof as credentials; the policy engine combines them with the proof's outcome under the community's rules (WG-04)"
+    "the invitation (VIC) and the identity check (the vetting statement) travel beside the proof as credentials; the policy engine combines them with the proof's outcome under the community's rules (WG-04)",
+    "the context the proof binds should include a challenge the community mints per applicant and spends when the proof is counted — a proof verifies as often as it is submitted, so a join-request context alone lets the same bytes count twice; an applicant answering `requestMore` obtains a fresh challenge"
   ],
   "provenance": {
     "spec": [
@@ -191,5 +189,61 @@
       "evidence": "statement, witness, public inputs, seven clauses composed from 001 · 003 · 004 · 005 · 006 · 007, disclosure set, negative space, three adversary claims, horizon, ten rejection codes, four options (the reference code named, unmeasured); written from the chair's ask, the Phase 4 flow and record 010's sibling statement — the constructor's own figures are the next evidence",
       "task": "board/specify"
     }
-  ]
+  ],
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "doesNotEstablish line added from the formal model: no clause excludes a self-vouch by an applicant who is already a member; the refusal is placed on the admission check; no state change"
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, composed from the gadget library); no state change"
+    },
+    {
+      "date": "2026-09-29",
+      "by": "mitchuski",
+      "note": "PR #11 inline review (DenisPopov15, 28 Sept): options 0 and 3 folded into one blind-signature option that points to record 024; new does-not-establish line for the 007 bypass under that route; figures unchanged (none recorded). State unchanged."
+    }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/R023/Soundness.lean (with Model.lean, NegativeSpace.lean) in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.R023.Statement — at least k pairwise-distinct members, each with its grant leaf in the membership tree and its handle unrevoked, each linked through one controller to a VRC whose subject is the applicant's admission identifier or opens to it",
+    "theorems": [
+      {
+        "name": "Formal.R023.soundness",
+        "proves": "the verifier's relation (clauses 1–6 as gadget relations) establishes the statement, through record 001's path_sound, record 005's distinct-leaves lemma and record 006's neighbours_sound"
+      },
+      {
+        "name": "Formal.R023.no_vrc_no_statement",
+        "proves": "does-not-establish 8: an admission path that issues no VRC can never satisfy the statement, for any k ≥ 1"
+      },
+      {
+        "name": "Formal.R023.self_vouch_counted",
+        "proves": "does-not-establish 3: an applicant who is already a member vouches for itself through its own grant — the relation accepts k = 2 and the statement holds"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-sig",
+        "carries": "clause 1: a verifying VRC is one a member issued"
+      },
+      {
+        "name": "H-leaf, H-node, H-domain (record 001)",
+        "carries": "the membership tree's hashes are collision-free and leaves and nodes are hashed under separate domains"
+      },
+      {
+        "name": "H-sorted (record 006)",
+        "carries": "the revocation root is committed over strictly sorted handles"
+      },
+      {
+        "name": "H-com (record 007)",
+        "carries": "the identifier derivation binds (secret, salt)"
+      }
+    ],
+    "scope": "clauses 1–6 as a counting model; clause 7 (transcript) is record 003's; consent, invitation, identity check and admission are outside any clause"
+  }
 }

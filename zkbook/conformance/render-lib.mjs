@@ -62,6 +62,8 @@ export function renderConstruction(record, all) {
   const hist = record.history.map(h => `| ${h.date} | \`${h.to}\` | ${h.by} | ${h.evidence} |`).join('\n');
   const rev = (record.revisions || []).map(r => `| ${r.date} | ${r.by} | ${r.note} |`).join('\n');
   const reviews = (record.reviews || []).map(r => `| ${r.date} | ${r.by} | ${r.scope} | \`${r.verdict}\` | ${r.evidence || ''} |`).join('\n');
+  const fm = record.formal;
+  const formal = fm ? `\n#### Formal verification\n\n*A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*\n\n- system: ${fm.system}\n- location: ${fm.location}\n- reproduce: ${fm.reproduce}\n- statement: ${fm.statement}\n- scope: ${fm.scope}\n\n| theorem | proves |\n|---|---|\n${fm.theorems.map(t => `| \`${t.name}\` | ${t.proves || ''} |`).join('\n')}\n\n| hypothesis | carries |\n|---|---|\n${fm.hypotheses.map(h => `| ${h.name} | ${h.carries || ''} |`).join('\n')}\n` : '';
   const composes = record.components?.length ? `\n**Composes:** ${record.components.map(c => `[${c}](#${byId[c] ? constructionAnchor(byId[c]) : c})`).join(' ∧ ')} — a ${ref('composed construction')}: one transcript, one ${ref('disclosure set')}, written fresh.` : `\n**Kind:** ${ref('primitive construction')} — binds the ${ref(record.relation[0]?.gadget || 'gadget')} gadget and nothing else.`;
   return `### Construction ${record.id} · ${record.name}
 
@@ -136,7 +138,7 @@ ${prov.spec?.length ? li(prov.spec) + '\n' : ''}${prov.catalog ? `- catalog: ${p
 | date | to | by | evidence |
 |---|---|---|---|
 ${hist}
-${rev ? `\nRevisions within a state:\n\n| date | by | note |\n|---|---|---|\n${rev}\n` : ''}${reviews ? `\n#### Reviews\n\nRecorded reviewer sign-off on this record's clauses; a review is not a state advance and confers no evidence state.\n\n| date | reviewer | scope | verdict | evidence |\n|---|---|---|---|---|\n${reviews}\n` : ''}
+${rev ? `\nRevisions within a state:\n\n| date | by | note |\n|---|---|---|\n${rev}\n` : ''}${formal}${reviews ? `\n#### Reviews\n\nRecorded reviewer sign-off on this record's clauses; a review is not a state advance and confers no evidence state.\n\n| date | reviewer | scope | verdict | evidence |\n|---|---|---|---|---|\n${reviews}\n` : ''}
 `;
 }
 
@@ -151,7 +153,7 @@ This section is generated from the machine-readable records in \`conformance/rec
 
 ### Index of constructions
 
-Identifiers are stable handles, not a sequence: 001–009 are primitive constructions; 010–019 are compositions over community and relationship credentials; 020–029 are delegation and authority chains. Unused numbers in a range are unassigned, not missing.
+Identifiers are stable handles, not a type taxonomy or contiguous sequence. The kind column identifies primitives and compositions. Records 020 and 021 concern chains, 022 is a digest-reference primitive, and 023 and 024 concern admission; unassigned numbers are not missing records.
 
 **Primitive constructions** — one gadget each.
 

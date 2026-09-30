@@ -11,6 +11,7 @@ import { yourTurn, yourTurnHtml } from './yourturn.mjs';
 import { detectPosted } from './posted.mjs';
 import { loadReceipts } from './yourturn.mjs';
 import { writeSpec } from './spec.mjs';
+import { trustTasksHtml, linuxPlumbersHtml, sirosHtml } from './trusttasks.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const ROOT = resolve(HERE, '..');
@@ -77,6 +78,13 @@ export function validateCard(card, all = null) {
   if (!nonEmpty('options')) r.push('record-no-options');
   if (!Array.isArray(card.history)) r.push('record-no-history');
   // composition rules
+  if (card.formal !== undefined) {
+    const f = card.formal;
+    for (const k of ['system', 'location', 'reproduce', 'statement', 'scope']) if (!f?.[k]) r.push(`record-formal-no-${k}`);
+    if (!Array.isArray(f?.theorems) || !f.theorems.length || f.theorems.some(t => !t.name || !t.proves)) r.push('record-formal-theorems-incomplete');
+    // a formal part must name what it rests on: no hypotheses would read as an unconditional claim
+    if (!Array.isArray(f?.hypotheses) || !f.hypotheses.length || f.hypotheses.some(h => !h.name || !h.carries)) r.push('record-formal-hypotheses-incomplete');
+  }
   if (card.kind === 'composed') {
     if (!nonEmpty('components')) r.push('record-composed-no-components');
     else {
@@ -294,6 +302,7 @@ export function buildSite(cards) {
     + '<h4>Nothing to do</h4><ul>' + (contribute.nothing_to_do || []).map(x => '<li class="muted">' + esc(x) + '</li>').join('') + '</ul></div>' : '';
   const yourTurnData = yourTurn({ sv, contribute, watchMap, draftsDir: join(ROOT, 'drafts'), receiptsDir: join(ROOT, 'survey'), legacyReceipts: [join(REPO, 'task-force-readers', 'outputs', 'publication-results.json')], posted });
   const yourTurnPanel = yourTurnHtml(yourTurnData);
+  const callBriefHtml = existsSync(join(ROOT, 'survey', 'call-brief.html')) ? readFileSync(join(ROOT, 'survey', 'call-brief.html'), 'utf8') : '';
   const integrationReviewPath = join(ROOT, 'survey', 'integration-review.json');
   const integrationReview = existsSync(integrationReviewPath) ? JSON.parse(readFileSync(integrationReviewPath, 'utf8')) : null;
   const syncPanel = (r, cls) => '<div class="' + cls + '"><h3>' + esc(r.title) + '</h3><p class="muted">Checked ' + esc(r.checkedAt) + (r.note ? ' · ' + esc(r.note) : '') + '</p><ul>' + r.items.map(item => '<li>' + esc(item) + '</li>').join('') + '</ul></div>';
@@ -396,8 +405,9 @@ button:disabled{opacity:.45;cursor:not-allowed}.receipt-url{flex:1;min-width:180
 </style></head><body><div class="wrap">
 <h1>ZKP Board · the book 📖</h1>
 <div class="sub">zkp-tf #18 lane — requested proofs as cards; drafts to post; the process as a trust task. Local, private, generated ${new Date().toISOString().slice(0, 10)} by <code>board.mjs site</code>.</div>
-<nav><a href="#yourturn">Your turn (${yourTurnData.post.length + yourTurnData.reply.length})</a><a href="#run">Run</a><a href="#watch">Watch (${moved.length})</a><a href="#doors">Doors (${doors.length})</a><a href="#drafts">Drafts</a><a href="#process">Process</a><a href="#cards">Cards (${cards.length})</a><a href="#cookbook">ZK Book</a></nav>
+<nav><a href="#call-brief">WG call</a><a href="#yourturn">Your turn (${yourTurnData.post.length + yourTurnData.reply.length})</a><a href="#run">Run</a><a href="#watch">Watch (${moved.length})</a><a href="#doors">Doors (${doors.length})</a><a href="#drafts">Drafts</a><a href="#trust-tasks">Trust Tasks</a><a href="#linux-plumbers">Linux Plumbers</a><a href="#siros">SIROS</a><a href="#process">Process</a><a href="#cards">Cards (${cards.length})</a><a href="#cookbook">ZK Book</a></nav>
 
+${callBriefHtml}
 <h2 class="sec" id="run">Run — step by step, in the order it leaves the machine</h2>
 ${yourTurnPanel}
 ${contributeHtml}
@@ -414,6 +424,15 @@ ${doorsHtml}
 <h2 class="sec" id="drafts">Publication queue — run order, then follow-ups</h2>
 <div class="ritedef"><b>The proverb is your review pause.</b> Acknowledgment applies to the exact draft revision and destination. Copying does not publish. Publication URLs entered here are your reports, explicitly unverified. Records are stored in this browser; export receipts to preserve them. Earlier ledger activations do not confirm publication of a revised draft.</div>
 ${draftHtml}
+
+<h2 class="sec" id="trust-tasks-sec">Trust Tasks — proposals the co-chair is making upstream</h2>
+${trustTasksHtml()}
+
+<h2 class="sec" id="linux-plumbers-sec">Linux Plumbers — status and how it can play out</h2>
+${linuxPlumbersHtml()}
+
+<h2 class="sec" id="siros-sec">SIROS — reading path, questions for the foundation, comparison packet</h2>
+${sirosHtml()}
 
 <h2 class="sec" id="process">Process — the board as a trust task</h2>
 <div class="panel">

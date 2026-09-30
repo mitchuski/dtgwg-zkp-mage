@@ -140,7 +140,9 @@ t('E5 the review-notes index (Appendix E) lists every WG note the chapters carry
   const inText = new Set();
   for (const f of readdirSync(dir).filter(f => f.endsWith('.md'))) for (const id of ids(readFileSync(join(dir, f), 'utf8'))) inText.add(id);
   const appendix = readFileSync(join(dir, 'appendix.md'), 'utf8');
-  const table = appendix.slice(appendix.indexOf('### Appendix E'), appendix.indexOf('### Maintenance Note'));
+  const start = appendix.indexOf('### Appendix E');
+  const stop = appendix.indexOf('### Guide maintenance', start);
+  const table = appendix.slice(start, stop < 0 ? undefined : stop);
   const inIndex = new Set([...table.matchAll(/^\| (WG-\d+[a-z]?) \|/gm)].map(m => m[1]));
   const missing = [...inText].filter(x => !inIndex.has(x)), stale = [...inIndex].filter(x => !inText.has(x));
   return (inText.size > 0 && missing.length === 0 && stale.length === 0) || `index missing [${missing}] stale [${stale}] (text has ${inText.size})`;

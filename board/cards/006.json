@@ -86,7 +86,8 @@
     }
   ],
   "issuance": [
-    "registry publishes rl_root per epoch, fetchable without identifying the fetcher (X4)"
+    "registry publishes rl_root per epoch, fetchable without identifying the fetcher (X4)",
+    "the registry commits rl_root over strictly sorted handles — adjacent neighbours prove a handle absent only over a sorted list; over an unsorted one they can bracket a handle that is present (the formal model's counter-deployment `unsorted_neighbours_unsound`)"
   ],
   "provenance": {
     "spec": [
@@ -111,6 +112,49 @@
       "date": "2026-08-28",
       "evidence": "O4 + X6 explorations; ADR-001 C-clauses",
       "task": "board/specify"
+    }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Gadgets/P006NonRevocation.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.Gadgets.Sorted and adjacent neighbours lo < h < hi in the committed revocation list",
+    "theorems": [
+      {
+        "name": "neighbours_sound",
+        "proves": "two adjacent entries of a strictly sorted list bracketing h prove h is not in the list"
+      },
+      {
+        "name": "unsorted_neighbours_unsound",
+        "proves": "sortedness is necessary: on an unsorted list adjacent neighbours bracket a present handle"
+      },
+      {
+        "name": "stale_root_passes",
+        "proves": "does-not-establish 1: a handle revoked after the epoch still passes against the epoch's list"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-sorted",
+        "carries": "the registry commits rl_root over strictly sorted leaves — a registry obligation, not a proof property"
+      },
+      {
+        "name": "neighbour membership",
+        "carries": "the two neighbours are leaves under rl_root: record 001's clause, applied twice"
+      }
+    ],
+    "scope": "non-membership against the committed list; the registry's decision and live-lookup behaviour (does-not-establish 2, 3) are out of scope"
+  },
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, gadget library): the clause as a definition, its soundness, the counter-deployments that show which hypotheses are necessary, and the negative space classified; no state change"
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "issuance requirement added from the formal model: rl_root over strictly sorted handles; no state change"
     }
   ]
 }

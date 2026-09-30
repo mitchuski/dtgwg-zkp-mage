@@ -107,5 +107,47 @@
       "evidence": "dual_issuer 7/7, guardian 8/8; duplicate = no witness",
       "task": "board/construct"
     }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Gadgets/P005Distinct.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "the inverse constraint (a − b) · inv = 1 over the circuit field Fin n; and Formal.Gadgets.owners_distinct, the k-ary form composed records use",
+    "theorems": [
+      {
+        "name": "inverse_unsat_on_equal",
+        "proves": "the duplicate case has no witness: (a − b) · inv ≠ 1 when a = b"
+      },
+      {
+        "name": "FinOps",
+        "proves": "the three field facts the gadget needs hold for Fin n, n > 1 — so for the BN254 scalar field outright"
+      },
+      {
+        "name": "owners_distinct",
+        "proves": "pairwise-distinct values, each owned under a one-value-per-owner rule, come from as many pairwise-distinct owners (record 024's soundness is an instance)"
+      },
+      {
+        "name": "distinct_leaves_not_distinct_persons",
+        "proves": "does-not-establish 3: distinct leaves held by one person"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "one value per owner",
+        "carries": "the issuer's enrolment gives each member one leaf — carries owners_distinct"
+      },
+      {
+        "name": "inverse exists when a ≠ b",
+        "carries": "completeness of the constraint needs n prime; not proved here (circuit gate)"
+      }
+    ],
+    "scope": "unsatisfiability of the duplicate case, proved without cryptographic assumption; independence and honesty (does-not-establish 1, 2) are declarations outside any clause"
+  },
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, gadget library): the clause as a definition, its soundness, the counter-deployments that show which hypotheses are necessary, and the negative space classified; no state change"
+    }
   ]
 }

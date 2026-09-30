@@ -222,6 +222,11 @@
       "date": "2026-09-21",
       "by": "mitchuski",
       "note": "Review of 2026-09-16: the credential maintainer's answer to question 2 of #23 recorded; the example set's Ed25519 `did:key` identifiers found unable to carry the commitment record 007 requires (WG-14). Citations by section title. State unchanged."
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, composed from the gadget library); no state change"
     }
   ],
   "history": [
@@ -239,5 +244,40 @@
       "evidence": "ZKP_TF_RUN-2026-08-28.md §3 (ten refinements) + this record; method fully bound to gadgets; composed disclosure set and does-not-establish written fresh",
       "task": "board/specify"
     }
-  ]
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Composed/R010.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.R010.Accepts and soundness — two distinct members, both grants under the membership root, every handle unrevoked, a VRC from the voucher over the presenter's key",
+    "theorems": [
+      {
+        "name": "Formal.R010.soundness",
+        "proves": "clauses 1–5 and 7 as gadget relations establish two distinct current members related by a VRC (record 001 twice, record 006 per handle)"
+      },
+      {
+        "name": "Formal.R010.self_vouch_unsat",
+        "proves": "the rejection code self-vouch: one member leaf in both roles is never accepted (contrast record 023)"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-sig",
+        "carries": "clause 1: a verifying VRC is one the voucher issued over the presenter's key"
+      },
+      {
+        "name": "H-leaf, H-node, H-domain (record 001)",
+        "carries": "the membership tree's hashes are collision-free and leaves and nodes are hashed under separate domains"
+      },
+      {
+        "name": "H-sorted (record 006)",
+        "carries": "the revocation root is committed over strictly sorted handles"
+      },
+      {
+        "name": "H-com (record 007)",
+        "carries": "the identifier derivation binds (secret, salt)"
+      }
+    ],
+    "scope": "clauses 1–5 and 7; the presentation key (clause 6), the nullifier (clause 8) and the transcript (clause 9) are records 004, 002 and 003; distinct controllers from unequal leaves (does-not-establish 9) is record 005's negative space"
+  }
 }

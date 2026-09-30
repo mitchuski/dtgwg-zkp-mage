@@ -84,6 +84,8 @@ const STAMP = /(exported from \[DTG-ZKP-EVIDENCE\] at commit `)[0-9a-f]{7,40}(`)
 if (evidenceCommit && STAMP.test(planned.get('spec/appendix.md'))) plan('spec/appendix.md', planned.get('spec/appendix.md').replace(STAMP, `$1${evidenceCommit}$2`));
 else console.log(`  note: Appendix B evidence-commit stamp ${evidenceCommit ? 'not found in appendix.md' : 'skipped — HEAD unreadable'}`);
 const dirty = evidenceDirty();
+if (dirty !== false) plan('spec/appendix.md', planned.get('spec/appendix.md').replace('**Provenance of this revision.**', '**Local export draft.** This export includes uncommitted changes, or its cleanliness could not be checked. The commit below is the checkout base, not a reproducible pin for this draft. Commit the reviewed evidence changes and re-export before publication.\n\n**Provenance of this revision.**'));
+
 
 // ---- 2. conformance apparatus ------------------------------------------------------------------------------------
 const CONF_SRC = { records: join(REPO, 'board', 'cards'), requests: join(REPO, 'board', 'records'), stacks: join(REPO, 'board', 'stacks') };
@@ -114,7 +116,7 @@ const body = `<!-- generated-from: records-sha256=${recordsDigest} — the Reque
 plan('spec/body.md', body);
 // generated the same way body.md is: its source is the hand-kept transfer map in this repository, so an edit made in
 // the clone is overwritten here rather than adopted. Change zkbook/transfer/spellbook-map.json and re-run the transfer.
-plan('spec/cryptographic-background.md', read(join(SPEC, 'primer.md')).trimEnd() + '\n\n');
+plan('spec/cryptographic-background.md', read(join(SPEC, 'guide-pointer.md')).trimEnd() + '\n\n');
 
 // ---- 3. terms ------------------------------------------------------------------------------------------------------
 const TERMS = join(SPEC, 'terms-definitions');
@@ -180,7 +182,7 @@ jobs:
 // on it there, so --adopt has to unpick it — strip the marked regions, split what remains on its chapter headings, and
 // write each editor-owned chapter back to zkbook/spec/. Refuses rather than guesses if a marker or heading has moved.
 const BODY_CHAPTERS = [
-  ['## Public Inputs', 'pantry.md'],
+  ['## Public Inputs', 'public-inputs.md'],
   ['## Security Considerations', 'considerations.md'],
   ['## Conformance', 'conformance.md'],
   ['## References', 'references.md'],

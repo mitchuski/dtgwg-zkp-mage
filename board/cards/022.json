@@ -89,8 +89,8 @@
     }
   ],
   "issuance": [
-    "the members this record covers are the five §Digest Encoding names — the member-issued VMC's `digestMultibase`, a VSC's `object.digestMultibase`, a VDC's `delegation.parent` and `delegation.accepts`, a VAC's `authority.parent` — and, once cred-spec PR #56 merges, `taskDigestMultibase` as a sixth; record 008 covers the trust-task citation itself",
-    "the hashed representation of a referenced credential must contain a salt the proof can treat as a witness; the proof-side preference is the first option above (a salt member inside the referenced credential), because it blinds every reference at once, moves with the credential, and changes neither the referencing credential nor the encoding — the disposition is #38's",
+    "the members this record covers are the five §Digest Encoding names — the member-issued VMC's `digestMultibase`, a VSC's `object.digestMultibase`, a VDC's `delegation.parent` and `delegation.accepts`, a VAC's `authority.parent` — and, under cred-spec #58's detached citation (2026-09-25), the citation document's `credentialDigestMultibase`, a digest over the salted credential, in place of the `taskDigestMultibase` member PR #56 (merged 2026-09-22) put in the credential; record 008 covers the citation itself",
+    "the hashed representation of a referenced credential must contain a salt the proof can treat as a witness; the proof-side preference is the first option above (a salt member inside the referenced credential), because it blinds every reference at once, moves with the credential, and changes neither the referencing credential nor the encoding — the disposition is #38's — adopted in that shape on #38 (stormer78 2026-09-25; bmiller59 +1): a REQUIRED top-level `salt` on every DTG credential, exactly 32 bytes from a CSPRNG, fresh per credential, base-58-btc multibase, covered by the digest and the proof; mandatory-disclosure under selective-disclosure suites; no change to §Digest Encoding; defined from the `v2` context at the Implementers Draft and not emitted under `v1`",
     "content-binding references (acknowledgement, acceptance, statement object) must stay bound to the exact content they name: a salted digest preserves that binding, a re-randomizable commitment would not without a further opening",
     "chain references (a VDC's and a VAC's `parent`) are re-checked by the verifier against the parent presented, so a profile may leave them unsalted where the whole chain is disclosed, and must salt them where a chain is proven without disclosure (records 020 and 021)",
     "the encoding of the reference is unchanged: Multibase base-58-btc over a Multihash of the salted digest, compared as decoded bytes, as §Digest Encoding requires"
@@ -103,7 +103,11 @@
       "cred-tf #39 (ScottJeezey 2026-08-25: salted commitments now; PRF-derived per-context pseudonyms as the fuller construction) · cred-tf #40 E3 (stormer78: enumeration of a committed scope subset)",
       "cred-spec PR #56 (open, 2026-09-17): `taskDigestMultibase` — a task digest over the initiating document, the same encoding, a sixth member",
       "zkp-spec PR #8 review (geoffturk 2026-09-16, request 3): give #38 a record, widen 008 or open a sibling; the disposition stays on #38",
-      "records 020 and 021: the chain clauses already read `parent` inside the relation; this record is the opening they compose"
+      "records 020 and 021: the chain clauses already read `parent` inside the relation; this record is the opening they compose",
+      "cred-spec #38 (stormer78 2026-09-25): settle the first tracked question now — a `salt` member inside the hashed block of every DTG credential, 'matching record 022's preferred placement'; REQUIRED; 32 bytes CSPRNG; base-58-btc; mandatory-disclosure under `ecdsa-sd-2023`/BBS; out of scope: presentation linking and blinding the VSC `predicate` (stay with this task force); profile-defined digests (`cardDigestMultibase`, `identityCommitment`, `attestationTextDigest`) must reference something salted or say why guessing is no concern. bmiller59 +1 (22:42 UTC). Timing per #48: `v2`",
+      "cred-spec #58 (stormer78 2026-09-25): the detached citation's `credentialDigestMultibase` is a digest over the salted credential — 'only safe from guessing if the credential carries a `salt`' — so this record's option 1 is what makes the citation unguessable by a party holding exchange records alone",
+      "cred-spec #48 (geoffturk 2026-09-25; stormer78, bmiller59 +1): context `https://registry.trustoverip.org/dtg/context/v1` (byte-frozen; digest pinned normatively) and vocabulary `https://registry.trustoverip.org/dtg/credentials#`; `v1` = 0.5.0 shape + `issuerScope` (#46); one `v2` at the Implementers Draft carries `salt` (#38) and drops `taskContext`/`taskDigestMultibase` (#58); dtgwg-vsc-registry PR #7 open",
+      "cred-spec #38 (geoffturk 2026-09-30, the credential maintainer): 'To be implemented as part of DTG Contexts v2' — the REQUIRED in-credential `salt` lands with the `v2` context at the Implementers Draft; under `v1` the digest-valued members remain unsalted and the enumeration this record describes still applies. cred-spec #48 closed via PR #64 (2026-09-28): the context, vocabulary and predicate IRIs are in the specification text"
     ],
     "commit": "github.com/mitchuski/dtgwg-zkp-mage"
   },
@@ -121,6 +125,50 @@
       "date": "2026-09-21",
       "evidence": "the credential maintainer's review of PR #8 (2026-09-16) asked for a record a reader coming from #38 will find; this record: statement, witness, public inputs, one clause bound to commitment-open (the opening, with the opened bytes tied to what the enclosing record reads), the two reference kinds kept apart in the issuance lines, three placements with their costs (conjecture), the disposition left to #38",
       "task": "board/specify"
+    }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Gadgets/P022DigestRef.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.Gadgets.RefRel — the reference opens to (the bytes the enclosing clauses read, u)",
+    "theorems": [
+      {
+        "name": "reference_opens_once",
+        "proves": "reference-mismatch: a reference names one credential"
+      },
+      {
+        "name": "two_credential_gap",
+        "proves": "the one-credential clause is necessary: opened and read separately, the proof passes about a credential that is not the referenced one"
+      },
+      {
+        "name": "chain_sound_unsalted",
+        "proves": "does-not-establish 5: a chain reference re-checked against the presented parent is sound with no salt — blinding serves enumeration resistance, not chain soundness"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-digest",
+        "carries": "the declared digest is collision-free over (bytes, salt) (modelled as injective)"
+      }
+    ],
+    "scope": "the opening and the one-credential clause; validity, entitlement and salt placement (does-not-establish 1, 2, 4) are out of scope; route 1 linkability (line 3) is record 008's visible_value_links"
+  },
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, gadget library): the clause as a definition, its soundness, the counter-deployments that show which hypotheses are necessary, and the negative space classified; no state change"
+    },
+    {
+      "date": "2026-09-27",
+      "by": "mitchuski",
+      "note": "cred-spec #38 adopted this record's option 1 as written — a REQUIRED in-credential `salt`, 32 bytes, base-58-btc, mandatory-disclosure under SD suites, `v2` timing (stormer78 2026-09-25; bmiller59 +1); nothing for the proof side to change. The sixth-member line narrows: `taskDigestMultibase` leaves the credential under #58 and the citation's `credentialDigestMultibase` takes its place. Provenance carries the #48 context decision. State unchanged."
+    },
+    {
+      "date": "2026-09-30",
+      "by": "mitchuski",
+      "note": "cred-spec #38 ruled by the credential maintainer (30 Sept): option 1 lands in the `v2` context. Until `v2`, a `v1` credential's digest references are still enumerable, which is the horizon an implementer should read. Provenance only; state unchanged."
     }
   ]
 }

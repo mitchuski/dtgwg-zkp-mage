@@ -51,6 +51,13 @@ export function validateRecord(record, all) {
   if (!nonEmpty('options')) r.push('record-no-options');
   else record.options.forEach((s, i) => { if (s.measured && !s.source) r.push(`option-measured-without-source:${i + 1}`); });
   if (!Array.isArray(record.history)) r.push('record-no-history');
+  if (record.formal !== undefined) {
+    const f = record.formal;
+    for (const k of ['system', 'location', 'reproduce', 'statement', 'scope']) if (!f?.[k]) r.push(`record-formal-no-${k}`);
+    if (!Array.isArray(f?.theorems) || !f.theorems.length || f.theorems.some(t => !t.name || !t.proves)) r.push('record-formal-theorems-incomplete');
+    // a formal part must name what it rests on: no hypotheses would read as an unconditional claim
+    if (!Array.isArray(f?.hypotheses) || !f.hypotheses.length || f.hypotheses.some(h => !h.name || !h.carries)) r.push('record-formal-hypotheses-incomplete');
+  }
   if (record.kind === 'composed') {
     if (!nonEmpty('components')) r.push('record-composed-no-components');
     else {

@@ -1,0 +1,293 @@
+{
+  "id": "024",
+  "name": "Hidden-vetting admission — an applicant proves k attestations from pairwise-distinct eligible vetters of the issuing community, without disclosing which vetters",
+  "kind": "composed",
+  "state": "constructed",
+  "priority": "P1",
+  "owner": "mitchuski",
+  "components": [
+    "001",
+    "002",
+    "003",
+    "004",
+    "005"
+  ],
+  "request": {
+    "issue": "zkp-spec PR #11 (ScottJeezey 2026-09-21, Round 1 position, 'Build'): the admission proof being built for the Linux Plumbers integration · trust-tasks-tf `vtc/join-requests/manifest/0.2`: `vetting.ext` / `vetting.extCritical`, with `org.openvtc.hidden-vetting` as the example namespace of a criterion that must not receive named statements · general #31 (stormer78 2026-08-26): the Phase 4 join, whose identity check is the vetting step",
+    "by": "specified and constructed by the ZKP TF co-chair",
+    "need": "the identity-vetting step of a community's join: the criterion needs k statements from distinct eligible vetters, and a community running hidden vetting counts them without learning which of its vetters made them — so no vetter's DID reaches the community"
+  },
+  "statement": "The issuing community learns that k pairwise-distinct eligible vetters of the live period each attested this applicant's per-application identifier with the stated facts, without learning which of its vetters attested, any vetter's DID, or whether a vetter has attested for anyone else.",
+  "witness": [
+    "for each attesting vetter: its secret and the evidence that it is an eligible vetter of the live period (in the Groth16 route, the opening of its enrolled commitment and its Merkle path)",
+    "for each attestation: the profile-specific spend witness — either a secret-derived slot within the cap, or a valid blind-issued token and its opening",
+    "the applicant's per-application secret, from which the attested identifier derives"
+  ],
+  "publicInputs": [
+    "the community, eligible-vetter set commitment and live period, plus the selected cap profile and its parameters: per-vetter quota or aggregate token budget for a defined vetter set and accounting interval",
+    "k — the criterion's `minStatements`, with its per-method floors and independence caps",
+    "the requirements digest of the criterion version the applicant started under",
+    "the applicant's per-application identifier and join DID — disclosed by construction, since the applicant is applying",
+    "the challenge — minted by the community for this applicant and spent when the proof is counted",
+    "transcriptDigest over the challenge, the requirements digest, the join DID and every attestation's public values"
+  ],
+  "relation": [
+    {
+      "clause": "each attester is an eligible vetter of the live period, proven without its identifier",
+      "gadget": "set-membership",
+      "component": "001",
+      "runtime": "runtimes/circom-gadget/circuits/vetting_attest.circom"
+    },
+    {
+      "clause": "each attestation carries a tag derived from its vetter's secret and the applicant's identifier — deterministic for one vetter and one applicant, unlinkable across applicants, and not recomputable from anything public",
+      "gadget": "nullifier",
+      "component": "002",
+      "runtime": "runtimes/circom-gadget/circuits/vetting_attest.circom"
+    },
+    {
+      "clause": "the k tags are pairwise distinct, so one vetter attesting twice counts once",
+      "gadget": "distinctness",
+      "component": "005",
+      "runtime": "runtimes/circom-gadget/harness-vetting.mjs"
+    },
+    {
+      "clause": "each attestation consumes an authorized serial in the declared community, profile and accounting interval; the same spend cannot increase the count twice. A profile may derive serials from a stable vetter secret with bounded slots, or use blind-issued transferable tokens under an aggregate issuance budget. A conflicting reuse is refused; a profile may acknowledge an identical resubmission without adding a counted attestation",
+      "gadget": "nullifier",
+      "component": "002",
+      "runtime": "runtimes/circom-gadget/circuits/vetting_attest.circom"
+    },
+    {
+      "clause": "the attested identifier derives from the applicant's per-application secret, which the applicant holds",
+      "gadget": "key-binding",
+      "component": "004",
+      "runtime": "runtimes/circom-gadget/circuits/vetting_bind.circom"
+    },
+    {
+      "clause": "the submission is bound to transcriptDigest — the community's challenge, the requirements digest, the join DID and every attestation's public values",
+      "gadget": "transcript-bind",
+      "component": "003",
+      "runtime": "runtimes/circom-gadget/circuits/vetting_bind.circom"
+    },
+    {
+      "clause": "no attester is the applicant",
+      "gadget": "distinctness",
+      "component": "005"
+    }
+  ],
+  "disclosureSet": [
+    "the outcome (k distinct eligible vetters attested this applicant / not shown)",
+    "k tags — one per attestation, standing in the community's counting facts where a vetter DID stands on the named path",
+    "per statement: the facts the community's counting rule reads (method, verified claim types, validity window, identity commitment)",
+    "serials and their declared spend scope, checked against the community ledger; a profile defines whether identical resubmissions are refused or acknowledged without increasing the count",
+    "the vetter-set commitment, period, selected cap profile and accounting parameters; the requirements digest, join DID, challenge and transcriptDigest"
+  ],
+  "doesNotEstablish": [
+    "that the k attesters are k distinct people — distinct tags mean distinct vetter secrets; a vetter who hands its secret to another lets one person attest under two tags",
+    "that a transferable-token budget limits each vetter: vetters can pool tokens. A per-vetter quota requires a profile that binds authorized spends to a stable enrolled secret and bounds slots, or another construction demonstrating equivalent enforcement. Neither profile bounds distinct people or prevents sharing a secret (DG-024-4)",
+    "that no attester is the applicant, in the Groth16 route — clause 7 is not built there; it holds only while applicants are outside the vetter set",
+    "that the vetting session happened as attested — the vetter's check of the person is outside the proof, as on the named path",
+    "anything to a party other than the issuing community — it keeps the vetter set and verifies the proof; no third party can audit that admission followed the criterion",
+    "that the applicant is admitted — verifying the proof, counting it under policy and issuing the membership grant are three acts (WG-04)",
+    "any relationship between the applicant and the vetters — no relationship credential (VRC) is involved; a policy requiring a VRC pair with the vetters would disclose what this proof withholds",
+    "that proof acceptance enforces the complete admission policy: per-method floors, independence caps, statement validity and eligibility checks belong to the named policy evaluator. The lab harness checks total tag count and returns method facts; it does not implement the complete evaluator",
+    "that sequential replay tests establish concurrent or durable single-use behavior: the ledger must atomically prevent additional counting across requests, retries and restarts; the current asynchronous lab harness requires further review",
+    "the size of the anonymity set under an event label: a spend under `event-mode` narrows 'some vetter in this community' to 'some vetter at this event'; the framework's three mitigations — group floor, expiry, an `eventId` that names a gathering — are all MUST for the consumer (trust-tasks-tf PR #620) and bound that narrowing; the proof does not",
+    "a commitment in the applicant's identifier — the PCS binds voucher and attestation linkage to an enrolment secret inside the credential system, not to a DID verification-method commitment; component 007 (WG-14) is bypassed by this route, and a community admitting over it gets no 007 property (PR #11 review, 2026-09-28)"
+  ],
+  "adversary": [
+    {
+      "claim": "the community learns which of its eligible vetters attested no better than chance over the vetter set, less whatever the disclosed per-statement facts narrow that set",
+      "against": [
+        "verifier",
+        "issuer-verifier-colluding"
+      ]
+    },
+    {
+      "claim": "one vetter's attestations for two applicants cannot be linked through their tags or serials",
+      "against": [
+        "verifier"
+      ]
+    }
+  ],
+  "horizon": [
+    "earliest of: the vetter-set period · the vetter-set commitment in force (a vetter removed from the set cannot attest under the new commitment) · each statement's validity and the criterion's `maxStatementAge` · the requirements digest's `requirementsGrace`",
+    "the challenge — single use: spent when the proof is counted, so an applicant answering `requestMore` obtains a fresh challenge",
+    "under an event label, the event's expiry — tokens live and die with their label, so an event's stockpile cannot be spent under the monthly key (trust-tasks-tf PR #620)"
+  ],
+  "fixtures": {
+    "families": [
+      "accepts",
+      "rejects-unsat",
+      "rejects-verify",
+      "unlinkable",
+      "current"
+    ],
+    "rejectionCodes": [
+      "tag-duplicate (two attestations from one vetter)",
+      "token-serial-spent (conflicting or additional counted reuse; the lab profile refuses every repeat)",
+      "vetter-not-enrolled (unsat)",
+      "vetter-cap-exceeded (secret-derived profile only: a slot at or above the cap)",
+      "vetter-root-stale (verify: an attestation made under a replaced vetter-set commitment)",
+      "statement-metadata-mismatch (verify)",
+      "requirements-digest-mismatch (verify)",
+      "join-did-mismatch (verify: an attestation made for another applicant)",
+      "binding-proof-invalid (unsat: a binding made without the applicant secret)",
+      "challenge-replayed (verify)",
+      "challenge-not-minted (verify)",
+      "attestation-count-below-k",
+      "unsupported-extension (the criterion's `extCritical` names a namespace the client does not implement: it stops before gathering named statements)"
+    ]
+  },
+  "options": [
+    {
+      "construction": "the construction the chair named on PR #11 for the Linux Plumbers integration (Berkeley, with Glenn Gore integrating) — the Predicate Credential System (PCS): Σ-PS (Pointcheval–Sanders) credential base with the key-injective PRF Tag_DDH over BLS12-381, generalized Schnorr proofs under strong Fiat–Shamir; the applicant proves it holds attestations from k pairwise-distinct credentialed vetters, none of them itself, and receives a credential. SOURCE PUBLIC since 2026-09-28: OpenVTC/predicate-credential-system (MIT, arkworks 0.6, research artifact, not audited) at main 4f4edf5 — crate plus the demo pcs-vetting-prototype (Σ-PS + Tag_DDH; end-to-end tests: admission from two hidden vetters with no member id or vetter id in the facts; requestMore then resubmission counts once; one vetter counts once across submissions; a double-spent token does not count and the VTC cannot name anyone). Its five Trust Tasks are public (issuance lines; trust-tasks-tf PR #618/#620, 2026-09-23). Under this route the attestation linkage is bound to the vetter secret usk inside the credential system, not to a DID verification-method commitment (component 007 bypassed — see does-not-establish)",
+      "cost": "constructor-reported, from the repository README and asserted by its tests (fixed-format encoding over BLS12-381, not measured here): Σ-PS attestation 240 B, proof 1,392 B at k = 5, credential 96 B; Σ-BBS 416 / 2,272 / 112 B; Σ-EQ 480 / 2,512 / 192 B. Running times: criterion benches exist (benches/pcs.rs at k = 5) but no figures are published in the repository; the ~12 ms prove-and-verify quoted in review is unsourced here and is not recorded",
+      "measured": false,
+      "source": "OpenVTC/predicate-credential-system main 4f4edf5 (2026-09-28: import, demo, CI) — README §Instantiations, docs/testing-and-benchmarks.md, demo/README.md · zkp-spec PR #11 (ScottJeezey 2026-09-21) · trust-tasks-tf PR #618 and PR #620 (stormer78 2026-09-23) · OpenVTC/governance PR #25 (2026-09-24) · zkp-spec PR #11 inline review (DenisPopov15 2026-09-28/29: options 0 and 3 of record 023 are this construction; a local run of a reference flow confirmed, on a commit not on any public branch, so the record pins the public main)"
+    },
+    {
+      "construction": "vetters named — the named path: each vetter issues a signed vetting statement and the community counts vetter DIDs. No proof; the privacy claims above do not apply",
+      "cost": "zero",
+      "measured": false,
+      "source": "trust-tasks-tf `vtc/join-requests/manifest/0.2` (VettingRequirements)"
+    },
+    {
+      "construction": "Groth16 / BN254 / Poseidon (lab) — each vetter proves its own attestation (vetting_attest: leaf of the vetter-set root, tag = Poseidon(tag, secret, applicantId), serial = Poseidon(tag, secret, period, slot) with slot < cap, statement bound) and the applicant proves one binding (vetting_bind: applicantId from the applicant secret, transcript over the challenge, requirements digest, join DID and every attestation). The tag must come from the vetter's secret — a tag derived from anything public the community could recompute for every vetter — and the applicant does not hold vetters' secrets, so the route takes k + 1 proofs. Removing one vetter is a new root with nobody re-enrolled; the cap is per vetter and in-circuit, with no token issuance; tag distinctness is checked by the community over the public tags; clause 7 is not built",
+      "cost": "vetting_attest 5,677 constraints, vetting_bind 238 (--O2); one attestation proof ~813 ms, made by each vetter at its own time, the binding ~123 ms (snarkjs/wasm, Node 22, win32/x64); community verification at k = 5 ~110 ms; submission at k = 5 1,376 B with compressed points (2,144 B uncompressed), computed from point sizes, 7,009 B as snarkjs JSON; lab-only trusted setup (one contributor, fixed entropy)",
+      "measured": true,
+      "source": "evidence repository runtimes/circom-gadget/test-vetting.mjs, run 2026-09-23 — H1–H12 12/12"
+    }
+  ],
+  "issuance": [
+    "the community publishes the eligible-vetter set, live-period policy and selected cap profile. A secret-derived profile specifies a stable enrolled secret and bounded slots per accounting interval. A transferable-token profile specifies the exact vetter set, total issuance budget, quota/tick rules, token expiry and carry-over treatment; it does not imply a cap on each holder",
+    "the criterion publishes its parameters under `vetting.ext` in a namespace the community controls and names that namespace in `vetting.extCritical` (trust-tasks-tf `vtc/join-requests/manifest/0.2`), so a client that does not implement it refuses instead of gathering named statements",
+    "the community mints a challenge per applicant, keeps it, and spends it when the proof is counted — the wire is `vtc/vetting/pcs-challenge/0.1` (trust-tasks-tf PR #618, merged 2026-09-23): the challenge is 16 bytes as lowercase hex, compared for equality and never parsed; at most one open challenge per applicant (asking again replaces it); an `expiresAt`; spent when the proof is counted; a community that publishes no hidden-vetting criterion answers `notHiddenVetting`; the request carries a proof so no one consumes another applicant's open challenge",
+    "no signed vetting statement and no relationship credential is issued on this path",
+    "the requirements digest binds the cap profile, community, accounting interval and policy parameters. Define the serial namespace and identity of an identical spend; ledger updates and counting must be atomic and durable. An acknowledged retry adds neither a spend nor an attestation, and does not reuse a consumed challenge",
+    "name the admission policy evaluator and version: it applies per-method floors, independence caps, validity and eligibility rules to verified facts before a separate issuance decision. Assign these checks explicitly when the proof harness does not implement them",
+    "the vetter side of option 1 has a public wire (trust-tasks-tf PR #618 and PR #620, merged 2026-09-23): `vtc/vetting/vetters/pcs-root/0.1` — enrolment for a class label; the community checks a live vetter grant, no credential under this label yet and the identifier this member was bound to, then signs a commitment it cannot open · `vtc/vetting/vetters/pcs-tokens/0.1` — one tick of an unconditional token drip at the community's published rate (a fetch that happened only when someone was busy would announce that they were busy; the quota is the community's to refuse) · `vetting/attestation/0.1` — vetter to applicant, the facts of the session with no issuer; `identifierScope: any`; the applicant MUST NOT record the delivering `issuer` beside it; dates, not timestamps, on the validity window · `vtc/vetting/vetters/event-mode/0.1` — a separate token label for a named event with its own rate, expiry and a group floor, requested by the vetter and approved by someone else (no Trust Task for the approval, by design). These are the framework's obligations behind clauses 2–5 and the challenge; the proof reads their outputs as witness and adds nothing to their semantics"
+  ],
+  "provenance": {
+    "spec": [
+      "zkp-spec PR #11 (ScottJeezey 2026-09-21): the admission proof for the Linux Plumbers integration; record 023 is the vouch-shaped statement specified from that ask",
+      "trust-tasks-tf `vtc/join-requests/manifest/0.2`: `VettingRequirements` (`minStatements`, `minByMethod`, `eligibleVetters.role`, `independence`), `ext` and `extCritical`",
+      "general #31 (stormer78 2026-08-26): the Phase 4 join — invite, vouches, identity check",
+      "record 023 — the sibling admission statement over member-issued relationship credentials",
+      "trust-tasks-tf PR #618 (stormer78 2026-09-23, merged): 'the four tasks hidden-vetter admission needs' — pcs-root, pcs-tokens, vetting/attestation, pcs-challenge; three decisions for review: the drip is unconditional; `vetting/attestation` declares `identifierScope: any` and a consumer MUST NOT record the delivering issuer beside it; dates not timestamps on the attested validity window. 'Implemented against these schemas in both halves of a VTC deployment'",
+      "trust-tasks-tf PR #620 (stormer78 2026-09-23, merged): `vtc/vetting/vetters/event-mode/0.1` — not self-service, not a bigger number under the same key, not free; the response carries a count (`groupSize`, `groupFloor`), never a group",
+      "trust-tasks-tf PR #603 (2026-09-22, merged): `vtc/vetting/vetters/show/0.1` — by-DID vetter status (`live`/`revoked`/`expired`/`none`, `listed`); the answer is not evidence and costs the same whatever the status; the spec half of OpenVTC VTI #1651",
+      "OpenVTC/governance PR #25 (stormer78 2026-09-24) 'adding PCS' → `OpenVTC/predicate-credential-system` (public; README only at `e6a7bd3`)",
+      "OpenVTC/predicate-credential-system main 4f4edf5 (2026-09-28): the PCS source, MIT, with sizes asserted by tests and the pcs-vetting-prototype demo — option 1 now names a revision; figures are constructor-reported until a run on independent hardware (state stays constructed)",
+      "cred-spec PR #70 (merged 2026-09-30) with dtgwg-vsc-registry PR #19: the identity-vetting statement profile is published as the registry predicate `https://registry.trustoverip.org/dtg/vsc/vetted/1` (normative there, the specification's worked example informative); values in lowerCamelCase; `attestationTextDigest` optional. trust-tasks-tf PR #691 (stormer78 2026-09-30, draft): on the named-statement path the Vetting Statement becomes a `StatementCredential` under that predicate, vetter eligibility a community-issued authority credential (`actions: [\"role:vetter\"]`, `maxAttenuation: 0`), and `eligibleVetters.role` is matched as `role:<role>`. This record's path issues no signed statement; what it reads from that change is the eligible-vetter set, whose source credential changes type, not meaning"
+    ],
+    "commit": "github.com/mitchuski/dtgwg-zkp-mage"
+  },
+  "history": [
+    {
+      "to": "specified",
+      "by": "mitchuski",
+      "date": "2026-09-23",
+      "evidence": "statement, witness, public inputs, seven clauses composed from 001 · 002 · 003 · 004 · 005, disclosure set, negative space, two adversary claims, horizon, rejection codes, three options — from the chair's ask and the trust-tasks vetting requirements",
+      "task": "board/specify"
+    },
+    {
+      "to": "constructed",
+      "by": "mitchuski",
+      "date": "2026-09-23",
+      "evidence": "Groth16 route built in the evidence repository's lab (vetting_attest + vetting_bind + the community's admission check), H1–H12 12/12; clauses 1–6 carry runtimes, clause 7 is not built",
+      "task": "board/construct"
+    }
+  ],
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "clause 4 loosened to admit blind, transferable serials capped per vetter set, alongside serials derived from the vetter's secret; doesNotEstablish line added for the per-vetter cap (decision gate DG-024-4, zkbook/DECISION-024-clause4.md); no state change"
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "Local draft: align witness, public inputs, disclosure, issuance and fixtures with the two cap profiles; distinguish idempotent acknowledgement from double counting and identify external policy and atomic-ledger obligations. No state promotion or task-force adoption; no new runtime or formal conformance claim."
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, composed from the gadget library); no state change"
+    },
+    {
+      "date": "2026-09-27",
+      "by": "mitchuski",
+      "note": "the framework side of option 1 landed in public: five Trust Tasks (pcs-root, pcs-tokens, vetting/attestation, pcs-challenge, event-mode; trust-tasks-tf PR #618/#620, 2026-09-23) and a public OpenVTC repository for the PCS (README only). Issuance lines carry the wire; the challenge line carries its shape; a does-not-establish line and a horizon line for the event-label anonymity set; option 1 renamed to what it is. No figures yet; state unchanged."
+    },
+    {
+      "date": "2026-09-29",
+      "by": "mitchuski",
+      "note": "PR #11 inline review on 023 (DenisPopov15, 28 Sept) read across: does-not-establish line for the 007 bypass under option 1; 023's blind-signature rows now point here. Figures still held. State unchanged."
+    },
+    {
+      "date": "2026-09-29",
+      "by": "mitchuski",
+      "note": "PCS source public at OpenVTC/predicate-credential-system 4f4edf5 (28 Sept): option 1 pinned to that revision with the README sizes (1,392 B proof at k = 5) as constructor-reported, running times not recorded; provenance line. State unchanged (constructed, unmeasured)."
+    },
+    {
+      "date": "2026-09-30",
+      "by": "mitchuski",
+      "note": "the named-statement path beside this record moved to registry predicates (cred-spec PR #70, registry `vetted/1`; trust-tasks-tf PR #691 in draft): the eligible-vetter set is derived from community-issued authority credentials rather than role endorsements. Provenance only; no clause, option or figure changes. State unchanged."
+    }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/R024/Soundness.lean (with Model.lean, SingleUse.lean, NegativeSpace.lean) in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.R024.Statement, read for a class-credential construction — at least k pairwise-distinct members, none the applicant, each holding a credential under a live label whose tag on the applicant's identifier is among those counted",
+    "theorems": [
+      {
+        "name": "Formal.R024.soundness",
+        "proves": "if the counting rule accepts (tags extractable, pairwise distinct, at least k), the statement holds — through record 005's owners_distinct with record 002's tag as the value"
+      },
+      {
+        "name": "Formal.R024.completeness",
+        "proves": "k pairwise-distinct honest vetters give k pairwise-distinct tags — clause 3 does not over-collapse"
+      },
+      {
+        "name": "Formal.Gadgets.run_once",
+        "proves": "clause 4 and the challenge: over any run of presentations a spent value is counted at most once"
+      },
+      {
+        "name": "Formal.R024.not_minted_refused",
+        "proves": "a challenge the community did not issue is refused"
+      },
+      {
+        "name": "Formal.R024.batch_over_cap_refused",
+        "proves": "an issuance batch over the cap is refused (DG-024-4: both cap profiles share this)"
+      },
+      {
+        "name": "Formal.R024.distinct_members_not_distinct_people",
+        "proves": "does-not-establish 1: one person holding two memberships — the rule accepts and the statement holds"
+      },
+      {
+        "name": "Formal.R024.rekey_counts_twice",
+        "proves": "where one proof mixes periods, a vetter whose secret changes between them counts twice: the secret must be stable across periods"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-Σ (Extractable)",
+        "carries": "clauses 1, 2 and 7: soundness of the construction's proof — every accepted tag comes from a credential issued under a live label, not under the applicant's key"
+      },
+      {
+        "name": "H-stable (SecretStable)",
+        "carries": "a vetter's secret is one across periods, where a proof mixes them"
+      },
+      {
+        "name": "H-applicant (ApplicantSecret)",
+        "carries": "an applicant holding a credential holds it over its own key; vacuous for one holding none"
+      },
+      {
+        "name": "H-fresh, H-tag",
+        "carries": "completeness only: two members never share a secret; tags do not collide for one applicant"
+      }
+    ],
+    "scope": "the counting rule and the single-use rules over abstract primitives; not the construction's cryptography, unlinkability or the adversary claims; per-vetter cap attribution (DG-024-4) is not modelled"
+  }
+}

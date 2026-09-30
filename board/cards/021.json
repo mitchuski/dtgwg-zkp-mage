@@ -181,5 +181,55 @@
       "evidence": "specified from the merged §VAC rules (attenuation, invocation, withdrawal, shared subject) as a sibling of record 020; composition and negative space written fresh; every cost line conjecture — DRAFT for review",
       "task": "board/specify"
     }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Chains/Records.lean (with Presentation.lean and Gadgets/ChainResolve.lean) in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.Chains.Statement with the depth ceiling 8, plus clause 7's leaf membership where the governing party requires it",
+    "theorems": [
+      {
+        "name": "Formal.Chains.r021_soundness",
+        "proves": "the local per-link checks establish the global statement, and the leaf subject's membership where required"
+      },
+      {
+        "name": "Formal.Chains.r021_ceiling_unsat",
+        "proves": "the rejection code depth-ceiling-exceeded: more than 8 links is never accepted, whatever maxAttenuation says"
+      },
+      {
+        "name": "Formal.Chains.escalation_unsat",
+        "proves": "the rejection code action-not-conferred"
+      },
+      {
+        "name": "Formal.Chains.linked_of_constraint",
+        "proves": "clause 2: the in-circuit constraint issuer − subject = 0 is equality (record 009)"
+      },
+      {
+        "name": "Formal.Gadgets.scope_within_every_ancestor",
+        "proves": "clause 1: no link widens its parent's scope, across the whole chain"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-sig",
+        "carries": "clause 3: every link's signature verifies over the content the chain clauses read"
+      },
+      {
+        "name": "H-leaf, H-node, H-domain (record 001)",
+        "carries": "the membership tree's hashes are collision-free and leaves and nodes are hashed under separate domains"
+      },
+      {
+        "name": "H-sorted (record 006)",
+        "carries": "the revocation root is committed over strictly sorted handles"
+      }
+    ],
+    "scope": "clauses 1–4, 6 and 7; the presenter's key (5) and the transcript (8) are records 004 and 003; distinct controllers along the chain (does-not-establish 7) are outside any clause"
+  },
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, composed from the gadget library); no state change"
+    }
   ]
 }

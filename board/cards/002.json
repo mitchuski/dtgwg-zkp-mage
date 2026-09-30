@@ -111,5 +111,51 @@
       "evidence": "same circuit as 001; scoped preimage tested 9/9 in runtime 01",
       "task": "board/construct"
     }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Gadgets/P002Nullifier.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.Gadgets.NullifierRel — some secret behind this leaf gives this nullifier in this context",
+    "theorems": [
+      {
+        "name": "one_leaf_one_nullifier",
+        "proves": "one leaf has one nullifier per context"
+      },
+      {
+        "name": "reuse_refused",
+        "proves": "nullifier-reused: once a leaf's nullifier is spent in a context, a second presentation of that leaf there is refused"
+      },
+      {
+        "name": "unbound_nullifier_unsound",
+        "proves": "the same-secret clause is necessary: a nullifier taken from any secret lets one leaf yield two nullifiers in one context"
+      },
+      {
+        "name": "cross_context_not_detected",
+        "proves": "does-not-establish 3: one secret gives different nullifiers in different contexts — no cross-context detection"
+      },
+      {
+        "name": "one_person_two_nullifiers",
+        "proves": "does-not-establish 1: one person enrolled twice gives two accepted nullifiers in one context"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-leaf",
+        "carries": "the leaf commitment binds its secret (modelled as injective) — carries the same-secret clause"
+      },
+      {
+        "name": "spent set",
+        "carries": "the verifier keeps the context's spent nullifiers (Formal.Gadgets.Spent)"
+      }
+    ],
+    "scope": "reuse detection over abstract hashes; unlinkability across contexts is a computational claim outside this model; does-not-establish 2 is governance"
+  },
+  "revisions": [
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, gadget library): the clause as a definition, its soundness, the counter-deployments that show which hypotheses are necessary, and the negative space classified; no state change"
+    }
   ]
 }

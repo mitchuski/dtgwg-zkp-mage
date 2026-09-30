@@ -23,14 +23,22 @@
     "fileSet": null,
     "source": "circuits.siros.org"
   },
-  "maturity": "experimental catalog — 14 entries (manifest v1, 2026-09-05): 10 Longfellow libzk v1 (systemVersion 6/7/8, 1–4 attributes, ~300 KB each) + 4 vega-mc P-256 keys (r11 deprecated, r12 active, 135–157 MB)",
+  "maturity": "experimental catalog — 14 entries (manifest v1 generated 2026-08-27; read 2026-09-05 and again 2026-09-29, unchanged): 10 Longfellow libzk v1 (systemVersion 6/7/8, 1–4 attributes, ~300 KB each) + 4 vega-mc P-256 keys (r11 deprecated, r12 active, 135–157 MB)",
   "independentImplementations": 0,
   "provenance": {
     "repo": "https://github.com/sirosfoundation/go-zk-circuits",
     "manifest": "https://api.circuits.siros.org/v1/manifest.json",
     "version": "manifestVersion 1",
     "contentAddressed": true,
-    "entrySchema": "id · aliases · system · systemVersion · docTypes · published · status · params · artifact{url, sha256, size, zstd, uncompressed} · source{origin, toolchain, license, openSource} · publishedAt · notes"
+    "entrySchema": "id · aliases · system · systemVersion · docTypes · published · status · params · artifact{url, sha256, size, zstd, uncompressed} · source{origin, toolchain, license, openSource} · publishedAt · notes",
+    "readAt": "2026-09-29",
+    "candidateArtifact": {
+      "id": "longfellow-libzk-v1_7_1_4151_4096",
+      "sha256": "9016d173d8a579a1",
+      "circuitHash": "8d079211715200ff06c5109639245502bfe94aa869908d31176aae4016182121",
+      "upstream": "openwallet-foundation/multipaz@bfb5a44f",
+      "why": "one attribute, smallest statement, clean provenance; the v8 entries come from a private fork with no public commit, the vega-mc keys are unreviewed"
+    }
   },
   "benchmarks": [],
   "covers": {

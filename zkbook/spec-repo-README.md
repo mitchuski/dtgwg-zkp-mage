@@ -12,7 +12,7 @@ Rendered specification: <https://trustoverip.github.io/dtgwg-zkp-spec/>
 
 | path | what |
 |---|---|
-| `spec/` | the specification, rendered by [Spec-Up-T](https://trustoverip.github.io/spec-up-t-website/) (the ordered files in `specs.json`; operational material precedes the cryptographic background) |
+| `spec/` | the specification, rendered by [Spec-Up-T](https://trustoverip.github.io/spec-up-t-website/) (the ordered files in `specs.json`; construction records and conformance remain here; explanatory chapters link to the companion guide) |
 | `spec/body.md` | **partly generated** — the Requests Answered, Construction Records, Proving Systems and derived Privacy Considerations sections are rendered from `conformance/`; the stamp at the top names the source digest |
 | `conformance/` | the machine-readable half: construction records, requests, proving-system entries, the schema, the validator, and the test CI runs |
 | `.github/workflows/` | render-and-deploy (Spec-Up-T → GitHub Pages) and `validate-conformance` (records validate; generated text is current) |
@@ -30,7 +30,7 @@ Rendered specification: <https://trustoverip.github.io/dtgwg-zkp-spec/>
 
 | repository | holds | what leaves it |
 |---|---|---|
-| [trustoverip/dtgwg-zkp-tf](https://github.com/trustoverip/dtgwg-zkp-tf) | requirements, drafting rules, discussions, the working board thread | decisions and requests — a request becomes a construction record |
+| [trustoverip/dtgwg-zkp-tf](https://github.com/trustoverip/dtgwg-zkp-tf) | requirements, drafting rules, discussions, the working board thread, and the informative implementation guide | decisions and requests — a request becomes a construction record |
 | **this repository** | the specification and its `conformance/` apparatus | the rendered specification; record ids others may cite |
 | [mitchuski/dtgwg-zkp-mage](https://github.com/mitchuski/dtgwg-zkp-mage) | reference runtimes with measured costs, conformance fixtures, the verification registry of independent reproductions, the board where records are written and advanced, and the generator that renders records into this specification's text | data — records, fixtures, registry row ids — never a dependency |
 
@@ -60,3 +60,5 @@ Use protocol roles throughout specification prose and construction records: pres
 The implementation reading path starts in `spec/implementation-guide.md`. WG-01 through WG-09 mark proposed decisions, discussion points and evidence requests; they do not record ratification. The optional research-loop method is confined to the maintenance note at the end of the specification.
 
 Scope: ZKP implementation for decentralized trust graphs generally. Personhood/liveness requirements are a source for one use-case family, not the universal requirements baseline. WG-10 records the proposed general-scope clarification.
+
+The companion [Implementation Guide](https://github.com/trustoverip/dtgwg-zkp-tf/tree/main/guide) holds the walkthrough and cryptographic background. Merge and publish the guide before merging this extraction so the destinations resolve.

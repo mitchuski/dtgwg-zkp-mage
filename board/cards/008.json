@@ -37,7 +37,8 @@
     "unlinkability of presentations carrying the same visible commitment C; hiding plaintext alone does not prevent equality-based correlation",
     "that the trust task completed, or what was done in it — completion evidence is a framework artifact outside any credential (the artifact gap, cred-tf #39/#40)",
     "that the binder's plaintext is not held elsewhere — the framework holds it in the Trust Task documents; this record blinds only the copy the credential carries",
-    "durable-versus-task-dependent status of the claim (Outcome Interpretability is the credential layer's statement, not this proof's)"
+    "durable-versus-task-dependent status of the claim (Outcome Interpretability is the credential layer's statement, not this proof's)",
+    "unlinkability of the presentations in which a detached citation is shown (cred-spec #58): the citation is a stable (credential digest, taskContext) pair under the issuer's signature; shown to two verifiers it links those two presentations exactly as a visible C would — the holder's choice of when to show it is the whole privacy of the detached design, and this record does not add to it"
   ],
   "adversary": [
     {
@@ -78,7 +79,7 @@
   },
   "options": [
     {
-      "construction": "route 1 — proposed salted-commitment opening using available primitives; no record-specific measured implementation",
+      "construction": "route 1 — proposed salted-commitment opening using available primitives; no record-specific measured implementation — superseded at the credential layer by the detached citation (cred-spec #58, 2026-09-25); kept as the shape a profile that must carry a committed form in-credential would use",
       "cost": "unmeasured — one Poseidon opening, conjecture ≈ 250–300 constraints (~70%)",
       "measured": false,
       "source": "runtimes/canonical + runtimes/circom-gadget"
@@ -91,8 +92,8 @@
     }
   ],
   "issuance": [
-    "issuers carry a committed form of the exchange citation in place of the plaintext pair — under cred-spec PR #56 that pair is `taskContext` (the initiating document's `id`) and `taskDigestMultibase` (its task digest), both durable correlators of the credential across presentations; this is a change to cred-spec §The `taskContext` Property and §The `taskDigestMultibase` Property, and the one member this record asks the credential layer for. Filed against the credential specification as issue #58 on 2026-09-21 (the review asked that it be an issue the Credentials TF can schedule; PR #18 is parked and is not it)",
-    "C is digestMultibase-encoded (WD02 D-A) so both layers agree on the encoding",
+    "the credential carries no exchange citation at all — under the detached-citation proposal on cred-spec #58 (stormer78, the Trust Tasks editor, 2026-09-25; bmiller59 +1) `taskContext` and `taskDigestMultibase` leave the credential for a separate issuer-signed citation document (working name `credential-citation/0.1`: `credentialDigestMultibase` · `taskContext` · `taskDigestMultibase`; bearer; one per credential; `parentThreadId` MUST NOT be carried) that the holder shows only to a verifier that needs completion. That retires the committed-form ask this record filed as #58 on 2026-09-21 and meets the at-rest half of the statement with no proof: there is nothing in the credential to open. A proof that must reference the exchange (route 2) reads the citation as witness, never the credential. Context timing: the `v2` context at the Implementers Draft (#48 versioning plan)",
+    "should a profile ever carry a committed form inside a credential, C is digestMultibase-encoded (WD02 D-A) so both layers agree on the encoding",
     "the framework (Trust Tasks) commits to the taskContext in a form the proof can open — 'we can only blind what the framework gives us a committed form of' (ScottJeezey, cred-tf #39)",
     "Specify generation, distribution and retention of the secret blinding value; do not publish it beside a low-entropy plaintext-hiding commitment."
   ],
@@ -106,7 +107,10 @@
       "cred-spec PR #50 (2026-09-12) §The identity commitment: a per-application 32-byte salt carried inside the card to vetters and never to the community; every vetter recomputes the same commitment; a fresh salt per application leaves separate applications unrelated — this record's route 1 shape with the profile's own retention caveat (a vetter who keeps a card can recognise the commitment later)",
       "cred-spec PR #56 (albertoleon7794, 2026-09-17, open): `taskContext` becomes the initiating document's `id` (not the threadId) and gains `taskDigestMultibase`, the task digest of that document, taken with `proof` removed — a sixth digest-valued member, and a second plaintext correlator beside the first",
       "zkp-spec PR #8 review (geoffturk, 2026-09-16, the credential maintainer's reading of the interface): this record is scoped to the trust-task binder; the five digest-valued members of cred-spec #38 are record 022; the taskContext change is to be filed against the credential specification as an issue",
-      "cred-spec #58 (filed 2026-09-21): a committed form of the trust-task citation — what the credential layer decides (placement, member names, encoding, retention of the blinding value, pairing with outcome evidence) and what stays here"
+      "cred-spec #58 (filed 2026-09-21): a committed form of the trust-task citation — what the credential layer decides (placement, member names, encoding, retention of the blinding value, pairing with outcome evidence) and what stays here",
+      "cred-spec #58 (stormer78 2026-09-25, as Trust Tasks editor): resolve #58 by a detached citation — the credential stops carrying `taskContext` and `taskDigestMultibase`; the issuer signs a separate citation binding the credential's salted digest to the exchange; bearer, one per credential, no `parentThreadId`; a new Trust Task specification and a citation check in §Evidence That a Cited Exchange Completed; depends on #38's salt; fixes at-rest naming and the shared value, not repeat-presentation linkability ('that remains BBS or ZK work, record 008 route 2'); `v2` at the Implementers Draft. bmiller59 +1 (22:42 UTC); the credential maintainer's view awaited",
+      "cred-spec PR #56 MERGED 2026-09-22 (`taskContext` = initiating document `id` + `taskDigestMultibase`); PR #18 closed the same day; cred-spec 0.5.0 (`2f802ba`)",
+      "cred-spec #58 (geoffturk 2026-09-30, the credential maintainer): 'To be implemented as part of DTG Contexts v2' — the detached citation is the disposition; `taskContext` and `taskDigestMultibase` leave the credential at `v2` (the Implementers Draft), and until then a `v1` credential still carries the plaintext pair this record describes. cred-spec is at Working Draft 0.6.0 (`44d5084`)"
     ]
   },
   "revisions": [
@@ -129,6 +133,21 @@
       "date": "2026-09-21",
       "by": "mitchuski",
       "note": "Review of 2026-09-16: witness and issuance re-read against cred-spec PR #56 (initiating-document id + task digest); the #38 digest members moved to their own record, 022; the taskContext ask filed as a credential-specification issue. State unchanged."
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, gadget library): the clause as a definition, its soundness, the counter-deployments that show which hypotheses are necessary, and the negative space classified; no state change"
+    },
+    {
+      "date": "2026-09-27",
+      "by": "mitchuski",
+      "note": "cred-spec #58 answered from the framework side: a detached, issuer-signed citation replaces any citation member in the credential (stormer78 2026-09-25; bmiller59 +1). Route 1 is superseded at the credential layer — the at-rest half of the statement is met with no proof; what stays here is route 2 and the visibility of a shown citation (new does-not-establish line). Issuance line 1 rewritten; provenance; state unchanged. The record's name follows the #58 disposition when the credential maintainer rules."
+    },
+    {
+      "date": "2026-09-30",
+      "by": "mitchuski",
+      "note": "cred-spec #58 ruled by the credential maintainer (30 Sept): detached citation, in the `v2` context. Route 1 stays superseded at the credential layer from `v2`; under `v1` the plaintext pair is still what a credential carries. Route 2 is unchanged and is what this record now holds. Provenance only; state unchanged. Whether the record is renamed for what remains is a Round 2 question (008 or 011 as the home of route 2)."
     }
   ],
   "history": [
@@ -146,5 +165,28 @@
       "evidence": "specified from Scott's two routes + cred-spec §Trust Task Context Binding + the lab's descriptor-digest and nullifier shapes; costs labelled conjecture",
       "task": "board/specify"
     }
-  ]
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Gadgets/P008Binder.lean in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.Gadgets.BinderRel — the commitment C opens to the taskContext (route 1)",
+    "theorems": [
+      {
+        "name": "binder_opens_once",
+        "proves": "binder-mismatch: one commitment opens to one taskContext"
+      },
+      {
+        "name": "visible_value_links",
+        "proves": "does-not-establish 1 (the open design requirement): a shown value depending only on the credential is equal in every presentation, so equality correlates them — hiding the plaintext does not change that"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-com",
+        "carries": "the commitment binds (taskContext, salt) (modelled as injective)"
+      }
+    ],
+    "scope": "route 1 only; route 2 (context pseudonym) is proposed and unmodelled; completion, plaintext custody and outcome status (does-not-establish 2–4) are out of scope"
+  }
 }

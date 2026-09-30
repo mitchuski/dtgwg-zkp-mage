@@ -142,6 +142,11 @@
       "date": "2026-09-11",
       "by": "mitchuski",
       "note": "Door D17 — re-read against the merged VDC text (cred-spec main, 2026-09-06/10): depth restated as the per-ancestor bound; the issuer-equals-parent-subject clause added and bound to record 009 (hidden-value equality); `credentialStatus` corrected — conditional on every VDC, not only chained ones; issuance and provenance now cite the merged sections; three negative-space lines added (intended-party check, invocation demonstration, chain length). State unchanged."
+    },
+    {
+      "date": "2026-09-23",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, composed from the gadget library); no state change"
     }
   ],
   "history": [
@@ -159,5 +164,52 @@
       "evidence": "ScottJeezey accepted delegation-chain validity as a ZKP TF target (cred-tf #40, 2026-08-24); predicate shape + acceptance clause + core/profile split from stormer78’s note; issuance lines from cred-spec #31",
       "task": "board/specify"
     }
-  ]
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Chains/Records.lean (with Presentation.lean and Gadgets/ChainResolve.lean) in the evidence repository (uncommitted at this revision)",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.Chains.Statement with the root's own depth — the act conferred and unexpired at every hop, depth within the root, every issuer its parent's subject, the root's issuer a member, no hop revoked",
+    "theorems": [
+      {
+        "name": "Formal.Chains.r020_soundness",
+        "proves": "the local per-hop checks establish the global statement"
+      },
+      {
+        "name": "Formal.Chains.escalation_unsat",
+        "proves": "the rejection code scope-escalation: a hop that does not confer the act makes the chain unacceptable"
+      },
+      {
+        "name": "Formal.Chains.linked_of_constraint",
+        "proves": "clause 2: the in-circuit constraint issuer − subject = 0 is equality (record 009)"
+      },
+      {
+        "name": "Formal.Gadgets.leaf_act_all",
+        "proves": "clause 1: checking the act at the leaf gives it at every hop"
+      },
+      {
+        "name": "Formal.Gadgets.depth_within_every_ancestor",
+        "proves": "clause 1: no hop lies more than n steps below any ancestor bearing n"
+      },
+      {
+        "name": "Formal.Gadgets.no_decrement_unbounded",
+        "proves": "clause 1: without 'a child bears at most n − 1' a chain runs deeper than its root allows"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-sig",
+        "carries": "clause 3: each hop's countersignature verifies"
+      },
+      {
+        "name": "H-leaf, H-node, H-domain (record 001)",
+        "carries": "the membership tree's hashes are collision-free and leaves and nodes are hashed under separate domains"
+      },
+      {
+        "name": "H-sorted (record 006)",
+        "carries": "the revocation root is committed over strictly sorted handles"
+      }
+    ],
+    "scope": "clauses 1–4 and 6; the agent's key (5) and the transcript (7) are records 004 and 003; chain-length hiding is a profile property"
+  }
 }
