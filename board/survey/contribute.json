@@ -1,391 +1,486 @@
 {
- "checkedAt": "2026-09-21T17:25:00Z",
- "title": "Contribute here — 21 September, evening: the chair's Round 1 position answered (record 023 on PR #11); thirteen posts out; Round 1 closes tomorrow",
- "lead": "Evening: ScottJeezey filed his Round 1 position on PR #11 (15:27 UTC) — ratify · refine ×4 · build the two-vouch admission proof · scope the crypto-internal clauses to the cryptographers' sign-off. Mitch ruled: specify 023 now; WG-13 moves with the core/guide split after Round 1; tag + reviews part + positions table; draft then gate. Done: record 023 at `specified` (Berkeley's reference code named, unmeasured), `reviews` part, field mapping in the Introduction, Round 1 positions table, evidence tag `wd-0.1.0` pinned; PR #11 = 3 commits, checks green. Posted on the gate: AT (PR #11, by move) · AU (#23 mirror). albertoleon7794 folded AN into PR #56 (taskDigestMultibase = sixth digest member; #58 noted; WG-14 acknowledged) — nothing to do there. Earlier today: AI AJ AK AL(#58) AM · W AB X AN AO(#544) AA. Held: AQ AR AS Q. Ledger 58/59 served, unspoken.",
- "span": {
-  "watched": [
-   "dtgwg-zkp-spec",
-   "dtgwg-zkp-tf",
-   "dtgwg-cred-spec",
-   "dtgwg-cred-tf",
-   "dtgwg-rahp-tf (quiet since 10 August)"
+  "checkedAt": "2026-09-30T12:28:55Z",
+  "title": "Contribute here — the specific threads, checked 30 September; #38 and #58 assigned to Contexts v2, PR #12 fifth commit pushed, four replies posted, the Round 2 opener held",
+  "lead": "30 September: PR #12 took its fifth commit (1fe332e: the 023/024 review fold, the PCS source pinned, the v2 rulings carried). Posted on the gate: AY (cred-spec #9, close it), AX (the inline reply on PR #11, record 023), AV (#58), AW (#38). Held: AP, the Round 2 opener, until its date is set. cred-spec is at Working Draft 0.6.0. Still unanswered: TF PR #28, trust-tasks-tf #544. Earlier state follows. Nothing of ours moved upstream since 23 September: spec PR #11 (3 commits, Denys Popov's inline review of 007 recorded), PR #12 (4 commits, Round 2) and TF PR #28 (guide) are open, green and unreviewed. Beside us the week was loud: cred-spec decided its context IRI and froze `v1` (#48; registry PR #7 open), adopted `issuerScope` (#46), a REQUIRED `salt` = record 022 option 1 (#38, `v2` timing), and the Trust Tasks editor answered our #58 with a detached citation that supersedes record 008 route 1 (bmiller59 +1; geoffturk awaited). trust-tasks-tf shipped the five hidden-vetting tasks record 024 needs (#618/#620) and framework 0.7.0; OpenVTC opened a public `predicate-credential-system` repository (README only). vti-setup closed our two issues (links PR #42 merged; the guard PR #43 closed — they dropped the release flow instead); VTI #1651/#1652 were closed by the maintainer. Records 008, 022 and 024 are amended locally on the Round 2 branch (uncommitted). Ready: AV (#58). Refreshed: AP (Round 2 opener; date = Mitch). Held: AW (#38).",
+  "span": {
+    "watched": [
+      "dtgwg-zkp-spec",
+      "dtgwg-zkp-tf",
+      "dtgwg-cred-spec",
+      "dtgwg-cred-tf",
+      "dtgwg-rahp-tf (quiet since 10 August)"
+    ],
+    "added": [
+      "dtgwg-trust-tasks-tf (0.21.7→0.23.x release train 22–27 Sept; #618 four hidden-vetting tasks + #620 event-mode + #603 vetters/show; #600 extCritical; #637 proofPurpose check; git-ns family #621)",
+      "dtgwg-trust-tasks-spec (framework 0.7.0 released #21; #22 baseline cryptosuite; #23 ext critical; #24 proofPurpose)",
+      "dtgwg-vti-spec (#33 validity vs completion MERGED 22 Sept; #36 chapters + Appendix E normative; divergence register #35 #37–#45)",
+      "dtgwg-vds-spec (PR #11 Vetting Card — Scott: no concerns on shape, ZK members deferred to the cryptographers; open)",
+      "dtgwg-vsc-registry (NEW 24 Sept: predicate registry + context host; PR #7 `v1` context OPEN; issue #4)",
+      "dtgwg-general (#33 spec links merged; #31 Linux onboarding quiet since our AA)",
+      "dtgwg-htx-tf (quiet since 21 Sept)"
+    ],
+    "seen_not_added": [
+      "dtgwg-agent-names-tf / -spec (no discussion since March; spec repo template only)",
+      "dtgwg-rcards-tf, dtgwg-ux-tf, dtgwg-vds-tf (no activity since July)",
+      "tswg-trust-registry-protocol (no discussion since before August; relevant to WG-05 set roots — check monthly)",
+      "tswg-tsp-specification (no ZKP stake yet)"
+    ],
+    "mentions": "Threads mentioning @mitchuski or the ZKP task force since 22 September: cred-spec #58 (ours — stormer78's detached-citation proposal 25 Sept, bmiller59 +1); cred-spec #48 (geoffturk: \"#58 and #38 depend on the ZKP task force\" → stormer78: \"no longer\"); cred-spec #38 (\"matching record 022's preferred placement\"); zkp-spec PR #11 (DenisPopov15 inline on 007, 23 Sept). Nobody has replied on PR #12, PR #28 or #544."
+  },
+  "ready": [
+    {
+      "draft": "AY",
+      "ledger": 64,
+      "where": "cred-spec issue #9 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/9",
+      "why": "The editor asked whether to close. Short answer: close; records 007, 009, 020, 021 are the home; two small credential-side items ride the v2 batch.",
+      "records": "007 009 020 021",
+      "status": "POSTED 30 Sept — https://github.com/trustoverip/dtgwg-cred-spec/issues/9#issuecomment-5913719097",
+      "category": "post",
+      "line": "C",
+      "note": "Short form, no sigil."
+    },
+    {
+      "draft": "AX",
+      "ledger": 63,
+      "where": "zkp-spec PR #11 (inline reply, record 023)",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11",
+      "why": "The inline review of 023's options: one construction pointing to 024; the 007 bypass stated; the public PCS source pinned, figures constructor-reported.",
+      "records": "023 024",
+      "status": "POSTED 30 Sept — https://github.com/trustoverip/dtgwg-zkp-spec/pull/11#discussion_r4145962944",
+      "category": "post",
+      "line": "A",
+      "note": "Posted inside the review thread."
+    },
+    {
+      "draft": "AW",
+      "ledger": 61,
+      "where": "cred-spec #38 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/38",
+      "why": "The REQUIRED salt is record 022's option 1 as written; the v1 horizon stated.",
+      "records": "022",
+      "status": "POSTED 30 Sept — https://github.com/trustoverip/dtgwg-cred-spec/issues/38#issuecomment-5913720477",
+      "category": "post",
+      "line": "C",
+      "note": "Posted after the maintainer assigned #38 to Contexts v2."
+    },
+    {
+      "draft": "AV",
+      "ledger": 60,
+      "where": "cred-spec issue #58 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/58",
+      "why": "Our issue; the framework editor proposed a detached citation that does what route 1 asked for by other means. Accept from the proof side; say what stays (route 2, presentation linkage); two notes (a shown citation is a stable pair; proving possession is a signature-in-circuit); the #38 salt dependency. Record 008 amended in PR #12.",
+      "records": "008 022",
+      "status": "POSTED 30 Sept — https://github.com/trustoverip/dtgwg-cred-spec/issues/58#issuecomment-5913720092",
+      "category": "post",
+      "line": "C",
+      "note": "The one thread that asked something of us this week."
+    },
+    {
+      "draft": "AP",
+      "ledger": 62,
+      "where": "zkp-tf discussion #23 (reply) — Round 2 opener",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23",
+      "why": "Round 1 closed 22 Sept. Opens Round 2 on PR #12 (024, 023 amended, 013, formal parts, WG-13 → TF PR #28); what moved beside us (#48 #46 #38 #58, the hidden-vetting wire); four questions (WG-14 with Denys's methods; WG-16 023 vs 024; 008 after #58; merge order + reviews). [DATE] = Mitch.",
+      "records": "007 008 013 022 023 024",
+      "status": "HELD 30 Sept by Mitch — rewritten for the v2 rulings and cred-spec 0.6.0; date still open",
+      "category": "post",
+      "line": "A",
+      "note": "Proposed for 23 Sept; the week's decisions made it a better opener than it would have been."
+    },
+    {
+      "draft": "AI",
+      "ledger": 46,
+      "where": "zkp-spec PR #8 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/8#issuecomment-5759458991",
+      "why": "The review of 16 Sept answered by item, each mapped to where it landed in PR #11; the example-set finding stated.",
+      "records": "007 008 010 011 022",
+      "status": "POSTED 21 Sept ~11:00 UTC — https://github.com/trustoverip/dtgwg-zkp-spec/pull/8#issuecomment-5759458991",
+      "category": "post",
+      "line": "A",
+      "note": "Answers 1–8 in one place; PR #11 is the record."
+    },
+    {
+      "draft": "AJ",
+      "ledger": 47,
+      "where": "zkp-tf discussion #23 (reply)",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18538350",
+      "why": "Merged; Round 1 to 22 Sept; question 2 answered and the finding (Ed25519 did:key cannot carry the commitment → WG-14); reading path; the silence line.",
+      "records": "007 010 022",
+      "status": "POSTED 21 Sept ~11:00 UTC — https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18538350",
+      "category": "post",
+      "line": "A",
+      "note": "Supersedes T and V."
+    },
+    {
+      "draft": "AK",
+      "ledger": 48,
+      "where": "cred-spec issue #9 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/9#issuecomment-5759459495",
+      "why": "The four points of 10 Sept; what 011 answers (stated as the review asked); the two new asks answered — commitment home, MUST under a key profile.",
+      "records": "007 009 011 020 021",
+      "status": "POSTED 21 Sept ~11:00 UTC — https://github.com/trustoverip/dtgwg-cred-spec/issues/9#issuecomment-5759459495",
+      "category": "post",
+      "line": "A",
+      "note": "Supersedes U."
+    },
+    {
+      "draft": "AL",
+      "ledger": 49,
+      "where": "cred-spec issue #58 (new)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/58",
+      "why": "The taskContext change filed as its own issue, against PR #56's shape (initiating-document id + task digest): a committed form of the citation; what is theirs to decide, what stays here.",
+      "records": "008 022",
+      "status": "POSTED 21 Sept ~10:55 UTC — https://github.com/trustoverip/dtgwg-cred-spec/issues/58",
+      "category": "post",
+      "line": "C",
+      "note": "Review item 4. Created with gh issue create; receipt by hand."
+    },
+    {
+      "draft": "AM",
+      "ledger": 50,
+      "where": "cred-spec issue #38 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/38#issuecomment-5759459679",
+      "why": "Record 022 exists: the two reference kinds, three placements, the disposition left on #38.",
+      "records": "022 008",
+      "status": "POSTED 21 Sept ~11:00 UTC — https://github.com/trustoverip/dtgwg-cred-spec/issues/38#issuecomment-5759459679",
+      "category": "post",
+      "line": "C",
+      "note": "Review item 3."
+    },
+    {
+      "draft": "—",
+      "ledger": 45,
+      "where": "dtgwg-zkp-spec PR #11 (opened) · PR #8 description corrected",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11",
+      "why": "The review revision: 007 commitment home + key-profile MUST, 022, catalogue, Document Status pin, citations by title, DTG_CRED xrefs, conformance target 5, WG-14/15.",
+      "status": "DONE 21 Sept 10:47 UTC — PR #11 open, checks green; PR #8 body: Round 1 runs on #23 (the #27 link was a deleted duplicate)",
+      "category": "post"
+    },
+    {
+      "draft": "W",
+      "ledger": 37,
+      "where": "cred-spec PR #50 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/50#issuecomment-5761800422",
+      "why": "Vetting statement ≠ voucher linkage; PASS limits carry; the #531 sentence folded; two asks.",
+      "records": "010 008",
+      "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-cred-spec/pull/50#issuecomment-5761800422",
+      "category": "post",
+      "line": "B",
+      "note": "Gate 1."
+    },
+    {
+      "draft": "AB",
+      "ledger": 51,
+      "where": "vds-spec PR #11 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-vds-spec/pull/11#issuecomment-5761874954",
+      "why": "The received-bytes rule answers #50's question; the two stable values are the profile's correlators (022).",
+      "records": "022 008 003",
+      "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-vds-spec/pull/11#issuecomment-5761874954",
+      "category": "post",
+      "line": "B",
+      "note": "Gate 2 — revised: no ask repeated."
+    },
+    {
+      "draft": "X",
+      "ledger": 38,
+      "where": "cred-spec #52 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/52#issuecomment-5761892725",
+      "why": "Flat integer terms are immutable — right for 003; two things the request profile needs: byte-exact comparison; the accept-list revision as a public input.",
+      "records": "003",
+      "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-cred-spec/issues/52#issuecomment-5761892725",
+      "category": "post",
+      "line": "C",
+      "note": "Gate 3 — revised to the 15 Sept shape."
+    },
+    {
+      "draft": "AN",
+      "ledger": 52,
+      "where": "cred-spec PR #56 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/56#issuecomment-5761944769",
+      "why": "008's consumer: the citation pair is a durable correlator (#58); taskDigestMultibase is a sixth digest member (022); eddsa-jcs-2022 is fine with the commitment beside it (WG-14).",
+      "records": "008 022 010",
+      "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-cred-spec/pull/56#issuecomment-5761944769",
+      "category": "post",
+      "line": "C",
+      "note": "Gate 4."
+    },
+    {
+      "draft": "AO",
+      "ledger": 53,
+      "where": "trust-tasks-tf discussion #544 (NEW) — a key slot for the ZK-openable commitment in DID templates (WG-14)",
+      "url": "https://github.com/trustoverip/dtgwg-trust-tasks-tf/discussions/544",
+      "why": "A zkCommitment slot purpose in the did-template keys block; whether a did:peer template can carry the second verification method today (VTI mints did:peer).",
+      "records": "007 010 012",
+      "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-trust-tasks-tf/discussions/544",
+      "category": "post",
+      "line": "A",
+      "note": "Gate 5 — the first implementation's first task, put where templates are built."
+    },
+    {
+      "draft": "AA",
+      "ledger": 56,
+      "where": "general #31 (reply)",
+      "url": "https://github.com/trustoverip/dtgwg-general/discussions/31#discussioncomment-18541063",
+      "why": "The Phase 4 flow read as records (010 001 005 007 002; 006/WG-05; WG-04); the identifier decision the flow makes first (WG-14, #544).",
+      "records": "010 001 002 005 006 007",
+      "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-general/discussions/31#discussioncomment-18541063",
+      "category": "post",
+      "line": "B",
+      "note": "Gate 7."
+    },
+    {
+      "draft": "AT",
+      "ledger": 58,
+      "where": "zkp-spec PR #11 (comment) — reply to the chair's Round 1 position",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11#issuecomment-5764634686",
+      "why": "Answered by move: positions table; the mapping; WG-13 scheduled; ranges; tag pin; record 023; the reviews part. Asks back: the reference-code link; the sign-off.",
+      "records": "023 007 009 022",
+      "status": "POSTED 21 Sept 17:22 UTC — https://github.com/trustoverip/dtgwg-zkp-spec/pull/11#issuecomment-5764634686",
+      "category": "post",
+      "line": "B",
+      "note": "Third commit 315cf44."
+    },
+    {
+      "draft": "AU",
+      "ledger": 59,
+      "where": "zkp-tf #23 (reply) — the position, for the record",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18543089",
+      "why": "Six lines: the chair's position, the disposition, 023, positions welcome until the round closes; Round 2 opens with WG-14 and 023.",
+      "records": "023",
+      "status": "POSTED 21 Sept 17:22 UTC — https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18543089",
+      "category": "post",
+      "line": "B",
+      "note": "Mirror of AT."
+    }
   ],
-  "added": [
-   "dtgwg-trust-tasks-tf (0.21.2→0.21.7 release train 16–21 Sept; #508 did-template key algorithms; #526/#531 join-request supplement + vetting travels in the presentation; #533 persona lifecycle)",
-   "dtgwg-trust-tasks-spec (PR #15 outcome evidence for a cited exchange, open; PR #6 identifierScope merged 19 Sept)",
-   "dtgwg-vti-spec (PR #33 credential validity vs exchange completion, open)",
-   "dtgwg-vds-spec (PR #11 Vetting Card r-card profile, open)",
-   "dtgwg-general (working-group threads: Linux onboarding, agenthood, incapacitation, agent actuation)",
-   "dtgwg-htx-tf (#11 Persona Management UX — stormer78's context-first design note, 21 Sept)"
+  "held": [
+    {
+      "draft": "AQ",
+      "ledger": 54,
+      "where": "cred-spec #25 (comment)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/25",
+      "reason": "HELD 21 Sept (Mitch): thread quiet since geoffturk's 7 Sept proposal; the draft is current (013 on main). Post if the thread moves or a PR lands the two predicates.",
+      "category": "contribute",
+      "action": "post AQ when #25 moves — node tools/post-draft.mjs AQ",
+      "line": "D",
+      "note": "Two sentences: 013 carries the stronger form; step one stays the two published predicates."
+    },
+    {
+      "draft": "AR",
+      "ledger": 55,
+      "where": "cred-tf #40 (reply)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-tf/discussions/40",
+      "reason": "HELD 21 Sept (Mitch): quiet since Scott's 24 Aug reply; the draft is current (020/021 on main; #15; #58).",
+      "category": "contribute",
+      "action": "post AR when #40 moves — node tools/post-draft.mjs AR",
+      "line": "D",
+      "note": "Three sentences: the decomposition is 020 (+021); the unification is 001+006; the artifact gap has a home."
+    },
+    {
+      "draft": "AS",
+      "ledger": 57,
+      "where": "general #25 (reply) — agenthood",
+      "url": "https://github.com/trustoverip/dtgwg-general/discussions/25",
+      "reason": "HELD 21 Sept (Mitch): six weeks quiet, answered upthread. Q (the agents-only VTC standing update) stays held as its own new thread.",
+      "category": "discuss",
+      "action": "post AS when #25 moves — node tools/post-draft.mjs AS",
+      "line": "D",
+      "note": "A VMC to an agent node is membership, not agenthood; the six open properties are 020/021, one disclosure at a time."
+    },
+    {
+      "draft": "Q",
+      "ledger": null,
+      "where": "cred-spec (new discussion) — the agents-only VTC standing update",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/discussions",
+      "reason": "HELD: a standing update, its own thread; five vocabulary questions. Post when the twin is public or when the vocabulary threads settle.",
+      "category": "discuss",
+      "action": "your call — a new cred-spec discussion",
+      "line": "D",
+      "note": "Long form: mages_city/docs/NOTE_TOIP_2026-09-05.md."
+    },
+    {
+      "draft": "D",
+      "ledger": null,
+      "where": "zkp-tf #18 (board)",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/18",
+      "reason": "The Projects board has not appeared.",
+      "category": "maintain",
+      "action": "nothing further unless the Projects board appears",
+      "line": "D",
+      "note": "Nothing further unless the Projects board appears."
+    }
   ],
-  "seen_not_added": [
-   "dtgwg-agent-names-tf / -spec (no discussion since March; spec repo template only)",
-   "dtgwg-rcards-tf, dtgwg-ux-tf, dtgwg-vds-tf (no activity since July)",
-   "tswg-trust-registry-protocol (no discussion since before August; relevant to WG-05 set roots — check monthly)",
-   "tswg-tsp-specification (no ZKP stake yet)"
+  "candidates": [
+    {
+      "where": "dtgwg-vsc-registry PR #7 — the `v1` context (open; geoffturk asked for editor thumbs-up 25 Sept; stormer78 withdrew his hold)",
+      "url": "https://github.com/trustoverip/dtgwg-vsc-registry/pull/7",
+      "why": "`taskContext` is a plain string in `v1` and leaves in `v2`; `salt` is `v2`. Our records read `v2` shapes. Nothing to post; the [DTG-CRED] pin (0.4.0 minimum) still holds and 0.5.0 is current.",
+      "records": "008 022",
+      "suggest": "watch",
+      "category": "discuss",
+      "action": "watch the merge; when `v2` is minted, re-pin [DTG-CRED] and re-read 008/022 issuance lines",
+      "line": "C",
+      "note": "A context version is where our members land or leave; the digest pin is the thing to cite."
+    },
+    {
+      "where": "cred-spec #53 — `nodeType` (deferred to `v2`; talltree posting on `service` vs `agent` and VTI governance this weekend)",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/53",
+      "why": "A node kind under credentialSubject is a disclosed attribute a proof may need to hide or prove (a VMC that says `agent`); records 002/010 read the membership credential. Nothing until the value list settles.",
+      "records": "002 010",
+      "suggest": "watch",
+      "category": "discuss",
+      "action": "watch; one line if a value list lands that a proof would be asked to prove without disclosing",
+      "line": "B",
+      "note": "The assurance question (issuer-verified vs self-asserted) is what a verifier reads, not what a proof changes."
+    },
+    {
+      "where": "trust-tasks-tf #618/#620 — the five hidden-vetting tasks (merged 23 Sept, no review thread)",
+      "url": "https://github.com/trustoverip/dtgwg-trust-tasks-tf/pull/618",
+      "why": "Record 024's issuance lines now name them. The three \"decisions worth review\" (unconditional drip; attestation identifierScope any + MUST NOT record the deliverer; dates not timestamps) are privacy claims the proof relies on and does not establish — recorded as such. A fixture note (invalid-examples not included) was offered by the author.",
+      "records": "024 002 005",
+      "suggest": "watch",
+      "category": "discuss",
+      "action": "no post; if a review thread opens, one paragraph on what the proof reads as witness from each task",
+      "line": "B",
+      "note": "The framework's obligations behind clauses 2–5."
+    },
+    {
+      "where": "OpenVTC/predicate-credential-system — public repository opened 24 Sept (README only, `e6a7bd3`; governance PR #25 \"adding PCS\")",
+      "url": "https://github.com/OpenVTC/predicate-credential-system",
+      "why": "Record 024 option 1's constructor is getting a public home. When source lands: link it from option 1, record its figures with revision + workload, and the formal hypotheses (H-Σ, H-stable, H-applicant, H-fresh, H-tag) become checkable against public code. Until then, nothing source-derived enters the public records.",
+      "records": "024",
+      "suggest": "watch",
+      "category": "maintain",
+      "action": "watch for source; then fill option 1 (figures, proving system, link) and add a reviews row",
+      "line": "B",
+      "note": "Private material stays private until its authors publish it — that rule does not change because a repository exists."
+    },
+    {
+      "where": "dtgwg-vds-spec PR #11 — Vetting Card (Scott 22 Sept: defers ZK members to the cryptographers)",
+      "url": "https://github.com/trustoverip/dtgwg-vds-spec/pull/11",
+      "why": "AB is posted; the two proof-side notes stand. Nothing until a cryptographer speaks or the card digest rule changes.",
+      "records": "022 024",
+      "suggest": "watch",
+      "category": "discuss",
+      "action": "watch",
+      "line": "C",
+      "note": ""
+    },
+    {
+      "where": "trust-tasks-tf PR #531 (merged 21 Sept) — vetting travels in the presentation, so it is replaced with it",
+      "url": "https://github.com/trustoverip/dtgwg-trust-tasks-tf/pull/531",
+      "why": "Bears on W: the vetting card's digest is taken over what travels with the presentation; the byte-input question is sharper now.",
+      "records": "008 010",
+      "suggest": "fold into W",
+      "category": "contribute",
+      "action": "fold one sentence into W before posting it",
+      "line": "B",
+      "note": "No separate post."
+    },
+    {
+      "where": "cred-spec PR #55 (geoffturk, 16 Sept, open) — drop the informative credential categories; keep Edge Credentials as a class",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/55",
+      "why": "PR #11's Introduction says \"the annotation credentials VPC and VSC\"; once #55 merges that grouping is gone from the credential spec.",
+      "records": "—",
+      "suggest": "maintain",
+      "category": "maintain",
+      "action": "after #55 merges: drop \"annotation credentials\" from the Introduction's catalogue sentence; re-export",
+      "line": "C",
+      "note": "A one-line follow-up commit."
+    },
+    {
+      "where": "general #23 — death or incapacity (AE) · nodeType (AF)",
+      "url": "https://github.com/trustoverip/dtgwg-general/discussions/23",
+      "why": "AC RETIRED 21 Sept: trust-tasks-tf #8 was closed by dcondrey on 15 Sept (the process-attestation task merged as #430/#435/#437). AD retired (identifierScope merged 19 Sept). AE (general #23, quiet since 10 Aug) and AF (nodeType, ties to general #25) stay undrafted by Mitch's ruling.",
+      "records": "008 011 020 002",
+      "suggest": "AE AF when their threads move",
+      "category": "discuss",
+      "action": "draft AE or AF only if general #23 / #25 move",
+      "line": "E",
+      "note": "Nothing here moves the draft."
+    }
   ],
-  "mentions": "Threads mentioning @mitchuski or the ZKP task force since 15 September: zkp-spec PR #8 (geoffturk's review, 16 Sept — answered by AI + PR #11); cred-spec PR #56 (008's consumer, 17 Sept); cred-spec #58 (ours, 21 Sept). The chair merged PR #8 without a comment."
- },
- "ready": [
-  {
-   "draft": "AI",
-   "ledger": 46,
-   "where": "zkp-spec PR #8 (comment)",
-   "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/8#issuecomment-5759458991",
-   "why": "The review of 16 Sept answered by item, each mapped to where it landed in PR #11; the example-set finding stated.",
-   "records": "007 008 010 011 022",
-   "status": "POSTED 21 Sept ~11:00 UTC — https://github.com/trustoverip/dtgwg-zkp-spec/pull/8#issuecomment-5759458991",
-   "category": "post",
-   "line": "A",
-   "note": "Answers 1–8 in one place; PR #11 is the record."
-  },
-  {
-   "draft": "AJ",
-   "ledger": 47,
-   "where": "zkp-tf discussion #23 (reply)",
-   "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18538350",
-   "why": "Merged; Round 1 to 22 Sept; question 2 answered and the finding (Ed25519 did:key cannot carry the commitment → WG-14); reading path; the silence line.",
-   "records": "007 010 022",
-   "status": "POSTED 21 Sept ~11:00 UTC — https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18538350",
-   "category": "post",
-   "line": "A",
-   "note": "Supersedes T and V."
-  },
-  {
-   "draft": "AK",
-   "ledger": 48,
-   "where": "cred-spec issue #9 (comment)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/9#issuecomment-5759459495",
-   "why": "The four points of 10 Sept; what 011 answers (stated as the review asked); the two new asks answered — commitment home, MUST under a key profile.",
-   "records": "007 009 011 020 021",
-   "status": "POSTED 21 Sept ~11:00 UTC — https://github.com/trustoverip/dtgwg-cred-spec/issues/9#issuecomment-5759459495",
-   "category": "post",
-   "line": "A",
-   "note": "Supersedes U."
-  },
-  {
-   "draft": "AL",
-   "ledger": 49,
-   "where": "cred-spec issue #58 (new)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/58",
-   "why": "The taskContext change filed as its own issue, against PR #56's shape (initiating-document id + task digest): a committed form of the citation; what is theirs to decide, what stays here.",
-   "records": "008 022",
-   "status": "POSTED 21 Sept ~10:55 UTC — https://github.com/trustoverip/dtgwg-cred-spec/issues/58",
-   "category": "post",
-   "line": "C",
-   "note": "Review item 4. Created with gh issue create; receipt by hand."
-  },
-  {
-   "draft": "AM",
-   "ledger": 50,
-   "where": "cred-spec issue #38 (comment)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/38#issuecomment-5759459679",
-   "why": "Record 022 exists: the two reference kinds, three placements, the disposition left on #38.",
-   "records": "022 008",
-   "status": "POSTED 21 Sept ~11:00 UTC — https://github.com/trustoverip/dtgwg-cred-spec/issues/38#issuecomment-5759459679",
-   "category": "post",
-   "line": "C",
-   "note": "Review item 3."
-  },
-  {
-   "draft": "—",
-   "ledger": 45,
-   "where": "dtgwg-zkp-spec PR #11 (opened) · PR #8 description corrected",
-   "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11",
-   "why": "The review revision: 007 commitment home + key-profile MUST, 022, catalogue, Document Status pin, citations by title, DTG_CRED xrefs, conformance target 5, WG-14/15.",
-   "status": "DONE 21 Sept 10:47 UTC — PR #11 open, checks green; PR #8 body: Round 1 runs on #23 (the #27 link was a deleted duplicate)",
-   "category": "post"
-  },
-  {
-   "draft": "W",
-   "ledger": 37,
-   "where": "cred-spec PR #50 (comment)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/50#issuecomment-5761800422",
-   "why": "Vetting statement ≠ voucher linkage; PASS limits carry; the #531 sentence folded; two asks.",
-   "records": "010 008",
-   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-cred-spec/pull/50#issuecomment-5761800422",
-   "category": "post",
-   "line": "B",
-   "note": "Gate 1."
-  },
-  {
-   "draft": "AB",
-   "ledger": 51,
-   "where": "vds-spec PR #11 (comment)",
-   "url": "https://github.com/trustoverip/dtgwg-vds-spec/pull/11#issuecomment-5761874954",
-   "why": "The received-bytes rule answers #50's question; the two stable values are the profile's correlators (022).",
-   "records": "022 008 003",
-   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-vds-spec/pull/11#issuecomment-5761874954",
-   "category": "post",
-   "line": "B",
-   "note": "Gate 2 — revised: no ask repeated."
-  },
-  {
-   "draft": "X",
-   "ledger": 38,
-   "where": "cred-spec #52 (comment)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/52#issuecomment-5761892725",
-   "why": "Flat integer terms are immutable — right for 003; two things the request profile needs: byte-exact comparison; the accept-list revision as a public input.",
-   "records": "003",
-   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-cred-spec/issues/52#issuecomment-5761892725",
-   "category": "post",
-   "line": "C",
-   "note": "Gate 3 — revised to the 15 Sept shape."
-  },
-  {
-   "draft": "AN",
-   "ledger": 52,
-   "where": "cred-spec PR #56 (comment)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/56#issuecomment-5761944769",
-   "why": "008's consumer: the citation pair is a durable correlator (#58); taskDigestMultibase is a sixth digest member (022); eddsa-jcs-2022 is fine with the commitment beside it (WG-14).",
-   "records": "008 022 010",
-   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-cred-spec/pull/56#issuecomment-5761944769",
-   "category": "post",
-   "line": "C",
-   "note": "Gate 4."
-  },
-  {
-   "draft": "AO",
-   "ledger": 53,
-   "where": "trust-tasks-tf discussion #544 (NEW) — a key slot for the ZK-openable commitment in DID templates (WG-14)",
-   "url": "https://github.com/trustoverip/dtgwg-trust-tasks-tf/discussions/544",
-   "why": "A zkCommitment slot purpose in the did-template keys block; whether a did:peer template can carry the second verification method today (VTI mints did:peer).",
-   "records": "007 010 012",
-   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-trust-tasks-tf/discussions/544",
-   "category": "post",
-   "line": "A",
-   "note": "Gate 5 — the first implementation's first task, put where templates are built."
-  },
-  {
-   "draft": "AA",
-   "ledger": 56,
-   "where": "general #31 (reply)",
-   "url": "https://github.com/trustoverip/dtgwg-general/discussions/31#discussioncomment-18541063",
-   "why": "The Phase 4 flow read as records (010 001 005 007 002; 006/WG-05; WG-04); the identifier decision the flow makes first (WG-14, #544).",
-   "records": "010 001 002 005 006 007",
-   "status": "POSTED 21 Sept — https://github.com/trustoverip/dtgwg-general/discussions/31#discussioncomment-18541063",
-   "category": "post",
-   "line": "B",
-   "note": "Gate 7."
-  },
-  {
-   "draft": "AT",
-   "ledger": 58,
-   "where": "zkp-spec PR #11 (comment) — reply to the chair's Round 1 position",
-   "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11#issuecomment-5764634686",
-   "why": "Answered by move: positions table; the mapping; WG-13 scheduled; ranges; tag pin; record 023; the reviews part. Asks back: the reference-code link; the sign-off.",
-   "records": "023 007 009 022",
-   "status": "POSTED 21 Sept 17:22 UTC — https://github.com/trustoverip/dtgwg-zkp-spec/pull/11#issuecomment-5764634686",
-   "category": "post",
-   "line": "B",
-   "note": "Third commit 315cf44."
-  },
-  {
-   "draft": "AU",
-   "ledger": 59,
-   "where": "zkp-tf #23 (reply) — the position, for the record",
-   "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18543089",
-   "why": "Six lines: the chair's position, the disposition, 023, positions welcome until the round closes; Round 2 opens with WG-14 and 023.",
-   "records": "023",
-   "status": "POSTED 21 Sept 17:22 UTC — https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23#discussioncomment-18543089",
-   "category": "post",
-   "line": "B",
-   "note": "Mirror of AT."
-  }
- ],
- "held": [
-  {
-   "draft": "AQ",
-   "ledger": 54,
-   "where": "cred-spec #25 (comment)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/issues/25",
-   "reason": "HELD 21 Sept (Mitch): thread quiet since geoffturk's 7 Sept proposal; the draft is current (013 on main). Post if the thread moves or a PR lands the two predicates.",
-   "category": "contribute",
-   "action": "post AQ when #25 moves — node tools/post-draft.mjs AQ",
-   "line": "D",
-   "note": "Two sentences: 013 carries the stronger form; step one stays the two published predicates."
-  },
-  {
-   "draft": "AR",
-   "ledger": 55,
-   "where": "cred-tf #40 (reply)",
-   "url": "https://github.com/trustoverip/dtgwg-cred-tf/discussions/40",
-   "reason": "HELD 21 Sept (Mitch): quiet since Scott's 24 Aug reply; the draft is current (020/021 on main; #15; #58).",
-   "category": "contribute",
-   "action": "post AR when #40 moves — node tools/post-draft.mjs AR",
-   "line": "D",
-   "note": "Three sentences: the decomposition is 020 (+021); the unification is 001+006; the artifact gap has a home."
-  },
-  {
-   "draft": "AS",
-   "ledger": 57,
-   "where": "general #25 (reply) — agenthood",
-   "url": "https://github.com/trustoverip/dtgwg-general/discussions/25",
-   "reason": "HELD 21 Sept (Mitch): six weeks quiet, answered upthread. Q (the agents-only VTC standing update) stays held as its own new thread.",
-   "category": "discuss",
-   "action": "post AS when #25 moves — node tools/post-draft.mjs AS",
-   "line": "D",
-   "note": "A VMC to an agent node is membership, not agenthood; the six open properties are 020/021, one disclosure at a time."
-  },
-  {
-   "draft": "Q",
-   "ledger": null,
-   "where": "cred-spec (new discussion) — the agents-only VTC standing update",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/discussions",
-   "reason": "HELD: a standing update, its own thread; five vocabulary questions. Post when the twin is public or when the vocabulary threads settle.",
-   "category": "discuss",
-   "action": "your call — a new cred-spec discussion",
-   "line": "D",
-   "note": "Long form: mages_city/docs/NOTE_TOIP_2026-09-05.md."
-  },
-  {
-   "draft": "D",
-   "ledger": null,
-   "where": "zkp-tf #18 (board)",
-   "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/18",
-   "reason": "The Projects board has not appeared.",
-   "category": "maintain",
-   "action": "nothing further unless the Projects board appears",
-   "line": "D",
-   "note": "Nothing further unless the Projects board appears."
-  }
- ],
- "candidates": [
-  {
-   "where": "htx-tf #11 — Persona Management UX; stormer78's context-first design note (21 Sept): faces as projections per context, \"flip it\" — author from the context",
-   "url": "https://github.com/trustoverip/dtgwg-htx-tf/discussions/11",
-   "why": "A face per context is a directed identifier per context — record 011's shape; the note's lifecycle questions (rename, retire vs delete a face) are 007/012 questions when two faces must later be co-proven.",
-   "records": "011 007 012",
-   "suggest": "watch",
-   "category": "discuss",
-   "action": "watch; one paragraph if the note asks what the proof layer needs of a face (a commitment per face, WG-14)",
-   "line": "A",
-   "note": "The scope declaration UX is where 011 gets decided; do not add to the thread unasked."
-  },
-  {
-   "where": "trust-tasks-spec PR #15 (outcome evidence for a cited exchange) · vti-spec PR #33 (validity vs completion) — the #18 split, 17 Sept",
-   "url": "https://github.com/trustoverip/dtgwg-trust-tasks-spec/pull/15",
-   "why": "Record 008's does-not-establish line (\"completion evidence is a framework artifact outside any credential\") now has a home; if the evidence carries a digest of the exchange, 022 reaches it.",
-   "records": "008 022",
-   "suggest": "watch",
-   "category": "discuss",
-   "action": "watch; no comment unless the evidence document is digest-referenced from a credential",
-   "line": "C",
-   "note": "The three PRs merge in order (#15 first); read the merged text, not the drafts."
-  },
-  {
-   "where": "trust-tasks-tf PR #531 (merged 21 Sept) — vetting travels in the presentation, so it is replaced with it",
-   "url": "https://github.com/trustoverip/dtgwg-trust-tasks-tf/pull/531",
-   "why": "Bears on W: the vetting card's digest is taken over what travels with the presentation; the byte-input question is sharper now.",
-   "records": "008 010",
-   "suggest": "fold into W",
-   "category": "contribute",
-   "action": "fold one sentence into W before posting it",
-   "line": "B",
-   "note": "No separate post."
-  },
-  {
-   "where": "cred-spec PR #55 (geoffturk, 16 Sept, open) — drop the informative credential categories; keep Edge Credentials as a class",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/55",
-   "why": "PR #11's Introduction says \"the annotation credentials VPC and VSC\"; once #55 merges that grouping is gone from the credential spec.",
-   "records": "—",
-   "suggest": "maintain",
-   "category": "maintain",
-   "action": "after #55 merges: drop \"annotation credentials\" from the Introduction's catalogue sentence; re-export",
-   "line": "C",
-   "note": "A one-line follow-up commit."
-  },
-  {
-   "where": "general #23 — death or incapacity (AE) · nodeType (AF)",
-   "url": "https://github.com/trustoverip/dtgwg-general/discussions/23",
-   "why": "AC RETIRED 21 Sept: trust-tasks-tf #8 was closed by dcondrey on 15 Sept (the process-attestation task merged as #430/#435/#437). AD retired (identifierScope merged 19 Sept). AE (general #23, quiet since 10 Aug) and AF (nodeType, ties to general #25) stay undrafted by Mitch's ruling.",
-   "records": "008 011 020 002",
-   "suggest": "AE AF when their threads move",
-   "category": "discuss",
-   "action": "draft AE or AF only if general #23 / #25 move",
-   "line": "E",
-   "note": "Nothing here moves the draft."
-  }
- ],
- "nothing_to_do": [
-  "cred-spec PR #47 (VSC, merged 15 Sept) and PR #54 (semver, merged 15 Sept) — no ask; PR #11 follows both (0.4.0 pin; Working Draft 0.1.0)",
-  "cred-spec #45/#28 → PR #55 (categories) — watch only; one wording line after merge (candidates)",
-  "cred-tf #39 (K posted; Berkeley call done)",
-  "zkp-tf #17/#18 (L, G, D, AG posted; the chair replied 15 Sept; board still absent)",
-  "cred-spec #46/#48 (dependencies noted in the public inputs; no ask)",
-  "trust-tasks-tf release PRs #507–#537 (0.21.2 → 0.21.7, Go 0.1.6 → 0.1.11, npm 0.19.9 → 0.19.13, Dart 0.1.3 → 0.1.9) — release noise; nothing for the proof layer",
-  "dtgwg-rahp-tf — quiet since 10 August"
- ],
- "maintain": [
-  {
-   "where": "dtgwg-zkp-spec PR #11 — the review revision (3 commits; record 023 in)",
-   "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11",
-   "why": "Chair's Round 1 position answered (AT). Waiting: Denys + Berkeley sign-off on 007/009/022 (→ `reviews` part), the reference-code link for 023 (→ option 1 figures; toward `constructed`). Merge = the chair.",
-   "action": "answer reviews as they land; when the Berkeley link comes, fill 023 option 1 and add a reviews row"
-  },
-  {
-   "where": "zkp-tf #23 — Round 1 closes 22 September",
-   "url": "https://github.com/trustoverip/dtgwg-zkp-tf/discussions/23",
-   "why": "AJ + AU carry the merge, the chair's position and the silence line. On 23 Sept the Round 2 opener goes here: WG-14 and the example-set finding first, then 023, then 022/WG-15; WG-13 (the split) scheduled.",
-   "action": "draft AP on 23 Sept: the Round 2 opener"
-  },
-  {
-   "where": "proverb ledger — 34–59",
-   "url": "https://github.com/mitchuski/dtgwg-zkp-mage",
-   "why": "Spoken: 37 41 42 44–53 56. Retired: 34 35 36 40 43. Served, unspoken: 54 (AQ) 55 (AR) 57 (AS) held; 58 (AT) 59 (AU) posted.",
-   "action": "speak 58 59 now; 54/55/57 when their drafts post"
-  },
-  {
-   "where": "mitchuski/dtgwg-zkp-mage PR #3 (publication-review-2026-09-08 → main)",
-   "url": "https://github.com/mitchuski/dtgwg-zkp-mage/pull/3",
-   "why": "Carries the whole 8–21 September build (records incl. 022, zkbook, readers, tools, drafts). Appendix B of the spec pins 29bcb69 from this branch. Your merge.",
-   "action": "merge when you are happy with the branch"
-  },
-  {
-   "where": "cred-spec PR #56 → records 008 and 022",
-   "url": "https://github.com/trustoverip/dtgwg-cred-spec/pull/56",
-   "why": "Both records say \"once PR #56 merges\" (taskDigestMultibase as a sixth member; 008's witness line).",
-   "action": "after #56 merges: tighten the two lines; re-export; one-line commit"
-  },
-  {
-   "where": "WG-14 — the first implementation's first task has no owner",
-   "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11",
-   "why": "AO opened trust-tasks-tf #544 (21 Sept) asking for a zkCommitment slot purpose and whether a did:peer template can carry the second verification method today. Watch for stormer78's answer; it decides the first profile.",
-   "action": "watch #544; carry the answer into WG-14's disposition and Round 2 (AP)"
-  }
- ],
- "weave": "board/review-notes/CONTRIBUTIONS-2026-09-21.md — the five through-lines re-woven after the merge and the review, with the repository map and what each thread can still change",
- "lines": [
-  {
-   "id": "A",
-   "title": "One controller, many identifiers",
-   "claim": "Linkage is proven, never read out of a field; equality of hidden values is a different relation from common control.",
-   "records": "007 009 011 012"
-  },
-  {
-   "id": "B",
-   "title": "Evidence is not a decision",
-   "claim": "An authenticated statement about a procedure is not the relation a proof establishes, and neither is the admission decision.",
-   "records": "008 · 010 negative space · Implementation Guide step 5"
-  },
-  {
-   "id": "C",
-   "title": "Bind exactly what you mean",
-   "claim": "A transcript binds a byte-exact predicate identifier and a pinned accept-list revision; nothing is substituted afterwards.",
-   "records": "003 · Implementation Guide step 4 022"
-  },
-  {
-   "id": "D",
-   "title": "Authority is a chain, delegation is a chain, and they are not the same chain",
-   "claim": "act ∈ scope_n ⊆ … ⊆ scope_root with bounded depth and per-link status; attenuation is the authority-side sibling.",
-   "records": "020 021"
-  },
-  {
-   "id": "E",
-   "title": "Continuity survives a key",
-   "claim": "A relationship proof outlives the key that first bound it, through an attested rotation, without the counterparty re-vouching.",
-   "records": "004 · exploration X9 · runtimes/guardian-recovery"
-  }
- ],
- "order": "Round 1 closes tomorrow. Watch: PR #11 (sign-off + the Berkeley link), #544 (the template slot), #58, PR #56/#17. Held for movement: AQ AR AS Q. On 23 Sept: AP."
+  "nothing_to_do": [
+    "vti-setup #40 + #41 CLOSED 23 Sept: our links+lint PR #42 MERGED (718ff79); the guard PR #43 CLOSED — geoffturk dropped the release flow instead (PR #45 fetches the setup script from main). Lane done; no follow-up owed.",
+    "OpenVTC VTI #1652 CLOSED 22 Sept (stormer78 PR #1774: TSPTransport in the push-gateway template) and #1651 CLOSED 23 Sept (trust-tasks-tf #603 vetters/show is the spec half). Both doors closed by the maintainer; nothing to send.",
+    "cred-spec PR #56 MERGED 22 Sept (AN folded: taskDigestMultibase 6th digest member; #58 editor's note); PR #18 CLOSED. Record 008/022 provenance updated.",
+    "cred-spec PR #55 (categories dropped) + PR #50 (identity vetting predicate as a worked profile) + PR #59–#63 (0.5.0, title, editors) — no ask; our Introduction catalogue still resolves.",
+    "cred-spec #46 `issuerScope` decided (+1 ×2) — a disclosed declaration, not a proof member; record 007/011 unaffected.",
+    "trust-tasks-spec 0.7.0 + proofPurpose checks (#22 #23 #24; tf #637 #642) — transport/proof hygiene; no proof-layer stake.",
+    "dtgwg-general #33 (talltree spec links) — housekeeping.",
+    "zkp-spec PR #10 dependabot (dotenv 18) — the chair's."
+  ],
+  "maintain": [
+    {
+      "where": "dtgwg-zkp-spec PR #11 (3 commits) → PR #12 (4 commits) → TF PR #28 — all open, green, no reviews since 23 Sept",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/12",
+      "why": "Merge order #28 → #11 → #12 (the chair). Denys's 007 review is in the record; Berkeley/PCS sign-off and the 023 reference-code link still owed. PR #28's guide render workflow has not run (maintainer approval).",
+      "action": "when AP is posted, ask for the round's reviewers on PR #12; answer reviews as they land"
+    },
+    {
+      "where": "Records 008 · 022 · 024 amended locally 27 Sept (board/cards → exported to the Round 2 worktree; uncommitted)",
+      "url": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/12",
+      "why": "#58 detached citation (008 route 1 superseded), #38 salt = 022 option 1, the five hidden-vetting Trust Tasks + PCS repo (024). No state changes.",
+      "action": "commit to round-2-2026-09-23 as a 5th commit after Mitch reads the diff; push = Mitch"
+    },
+    {
+      "where": "Evidence repository — 72 uncommitted paths (formal/, records, review notes, runtimes/vetting) since 23 Sept; integration plan I5 (commit + tag) still owed",
+      "url": "https://github.com/mitchuski/dtgwg-zkp-mage",
+      "why": "The records say \"uncommitted at this revision\". Publication/provenance review first (LOCAL-CLOSEOUT-2026-09-23 §1), then a public-safe commit + tag, then replace the placeholder in 18 formal blocks.",
+      "action": "Mitch: rule on the public-safe subset; then commit + tag wd-0.2.0"
+    },
+    {
+      "where": "SIROS reading + review pack — dated 29 September (board/review-notes/SIROS-REVIEW-PACK-2026-09-29.md)",
+      "url": "https://github.com/sirosfoundation/go-zk-circuits",
+      "why": "Prepared after the 22 Sept call; \"confirm the session and participants with the chairs before sending\". Two days out.",
+      "action": "Mitch: confirm whether the session is happening; if so the pack goes as is (023 links pin 315cf44; re-pin to PR #12 head if it is merged by then)"
+    },
+    {
+      "where": "[DTG-CRED] pin — Working Draft 0.4.0 at 994a3d6 (minimum compatible); current 0.5.0 at 2f802ba, title \"DTG Credentials Core Specification\"",
+      "url": "https://github.com/trustoverip/dtgwg-cred-spec",
+      "why": "The pin is a minimum and still true. When `v2` is minted (salt in, citation out) the constructions read `v2` shapes and the pin moves.",
+      "action": "no change now; re-pin at `v2`"
+    },
+    {
+      "where": "trust-tasks-tf #544 (ours, 21 Sept) — zkCommitment slot in DID templates; no replies",
+      "url": "https://github.com/trustoverip/dtgwg-trust-tasks-tf/discussions/544",
+      "why": "WG-14's landing place. Denys named the methods on PR #11; the template question is still open.",
+      "action": "leave; AP question 1 points at it"
+    }
+  ],
+  "order": "Gate AV (our issue; the framework editor answered). Set the Round 2 date and gate AP. Read the 008/022/024 diff on the Round 2 worktree and say whether it becomes PR #12's fifth commit. Rule on the SIROS session (29 Sept) and on the evidence repo's public-safe commit (I5). Hold AW, AQ, AR, AS, Q.",
+  "lines": [
+    {
+      "id": "A",
+      "title": "One controller, many identifiers",
+      "claim": "Linkage is proven, never read out of a field; equality of hidden values is a different relation from common control.",
+      "records": "007 009 011 012"
+    },
+    {
+      "id": "B",
+      "title": "Evidence is not a decision",
+      "claim": "An authenticated statement about a procedure is not the relation a proof establishes, and neither is the admission decision.",
+      "records": "008 · 010 negative space · Implementation Guide step 5"
+    },
+    {
+      "id": "C",
+      "title": "Bind exactly what you mean",
+      "claim": "A transcript binds a byte-exact predicate identifier and a pinned accept-list revision; nothing is substituted afterwards.",
+      "records": "003 · Implementation Guide step 4 022"
+    },
+    {
+      "id": "D",
+      "title": "Authority is a chain, delegation is a chain, and they are not the same chain",
+      "claim": "act ∈ scope_n ⊆ … ⊆ scope_root with bounded depth and per-link status; attenuation is the authority-side sibling.",
+      "records": "020 021"
+    },
+    {
+      "id": "E",
+      "title": "Continuity survives a key",
+      "claim": "A relationship proof outlives the key that first bound it, through an attested rotation, without the counterparty re-vouching.",
+      "records": "004 · exploration X9 · runtimes/guardian-recovery"
+    }
+  ],
+  "weave": "board/review-notes/CONTRIBUTIONS-2026-09-27.md — the week beside us (four credential decisions, the hidden-vetting wire, two OpenVTC doors closed) and what each changes in the records"
 }

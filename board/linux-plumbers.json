@@ -1,0 +1,47 @@
+{
+  "title": "Linux Plumbers — where the admission proof stands and how it can play out",
+  "checkedAt": "2026-09-29",
+  "context": [
+    "OpenVTC's first target community is an open-source (kernel) community. general #31 (stormer78, 26 Aug) is the baseline Linux Community Onboarding flow mapped onto the VTI model; its Phase 4 join is invite, vouches, identity check.",
+    "The chair's Round 1 position on zkp-spec PR #11 (21 Sept): build the admission proof — a non-member proves vouches or attestations from distinct members to the issuer, a different statement from record 010. Berkeley builds, Glenn integrates for Linux Plumbers. The lane's 23 Sept comparison note recorded the target as LPC, October 2026; the date is not confirmed in any thread and should be.",
+    "The construction Berkeley built is the Predicate Credential System (PCS). Its source became public on 28 Sept (OpenVTC/predicate-credential-system 4f4edf5, MIT, research artifact, not audited), its five Trust Tasks are merged (pcs-root, pcs-tokens, vetting/attestation, pcs-challenge, event-mode), and VTI carries a public zkp-pcs branch with a vti-vetting-pcs crate."
+  ],
+  "have": [
+    { "item": "Record 024 — hidden-vetting admission", "state": "constructed · unmeasured", "detail": "The statement Berkeley's code proves, as a record: k distinct eligible vetters attested, the community never learns which. Option 1 = PCS pinned to 4f4edf5 with constructor-reported sizes (proof 1,392 B at k = 5). Option 2 = our Groth16 lab route, built locally: per-vetter leg 5,677 constraints + applicant bind 238; k = 5 wire 1,376 B; leg prove ~813 ms (snarkjs), community verify ~110 ms; per-vetter revocation by root and an in-circuit per-vetter cap the PCS lacks; k + 1 proofs where PCS needs one; clause 4 unbuilt. Ten rejection codes; formal part (Lean model, local)." },
+    { "item": "Record 023 — vouch admission", "state": "specified · unmeasured", "detail": "k distinct current members issued relationship credentials to the applicant. Options: blind-signature route (points to 024), Groth16 composition of 010's clauses, vouchers disclosed. No 'not already a member' clause — one line if the Linux policy needs it. Both blind-signature rows folded today after Denys's review; 007 bypass stated." },
+    { "item": "WG-16 — which statement is the Linux Plumbers proof", "state": "open", "detail": "023 (vouches from members) and 024 (hidden vetters) differ in what they disclose. What is being built is 024; the open question is whether 023 stays beside it for communities whose policy requires member vouches." },
+    { "item": "The framework wire", "state": "merged upstream", "detail": "trust-tasks-tf #618/#620/#603: the four vetter-side tasks, event mode, vetters/show; vtc/join-requests/manifest 0.2 carries VettingRequirements (minStatements, minByMethod, independence) and the org.openvtc.hidden-vetting extCritical namespace; ceremonies vtc/member-onboarding and vetting/identity-vetting exist. Record 024's issuance lines read all of it." },
+    { "item": "Review state", "state": "in motion", "detail": "Denys (28–29 Sept): options 0 and 3 of 023 are one construction; 007 bypassed; a local run of a reference flow (11 steps, fresh signatures) confirmed on a commit not on any public branch. Draft AX answers." },
+    { "item": "SIROS route", "state": "session today", "detail": "The existing-credential route: pick one catalogue artifact by manifest identifier and digest, compare 010 with 023 clause by clause, return the comparison packet with rejection cases, record unsupported clauses. Outcome sought: artifact, owner, reviewer, date — kept separate from any recommendation." },
+    { "item": "Guide", "state": "drafted, local", "detail": "Implementation guide entry 'Hidden vetting at admission' and the trust-graph reading 'Admission: vouches or hidden vetting' in the untracked guide WIP; PR #28 (guide as navigation companion) open and unreviewed." }
+  ],
+  "scenarios": [
+    { "name": "A · PCS ships for Linux Plumbers (the likely path)", "when": "Glenn integrates the public crate through vti-vetting-pcs and the merged Trust Tasks; the community policy is expressed as VettingRequirements.", "ourPart": "Record 024 is the specification home. The evidence step is a run of the public crate's benches and the pcs-vetting-prototype tests on hardware the constructor does not control — a runner who is not the constructor, per the board's S6 rule — which moves 024 to `run` with real figures. The record's negative space becomes the policy text's caveats. WG-16 resolves to 024 with 023 kept beside it.", "risk": "The figures stay constructor-reported until someone runs them; the record cannot move on the authors' word." },
+    { "name": "B · The policy also wants member vouches", "when": "The Linux onboarding Phase 4 keeps 'vouches' as a separate criterion from the identity check.", "ourPart": "Record 023's Groth16 composition of 010's clauses is the vouch statement with the lab gadgets already built (001–007, 010 option 1); cost is roughly k times the voucher-side share of 010 plus one shared binding, unmeasured. Alternatively PCS-as-vouch, with members as attesters, which is 024 again with a different eligibility root. Either way the 'not already a member' line is added if the policy needs it.", "risk": "Two statements in one admission means two disclosure sets; the composition's disclosure is written fresh, never inherited." },
+    { "name": "C · An existing-credential route wins", "when": "The community prefers a catalogue circuit over a new credential system, or needs a route that composes with credentials it already issues.", "ourPart": "Today's SIROS session sets the artifact, owner, reviewer and date; the comparison packet is the evidence; unsupported 023 clauses are recorded, not argued.", "risk": "Holder binding with non-exportable keys and private linkage of two independently signed credentials are exactly the questions the pack asks; if unanswered, the route cannot claim the statement." },
+    { "name": "D · The identifier commitment is required", "when": "The task force decides admission must satisfy component 007 (a ZK-openable commitment in the applicant's DID document, WG-14) rather than accept credential-bound linkage.", "ourPart": "New work: a profile that binds the PCS user secret to the DID verification-method commitment, or an issuance-time attestation route for secure-element keys. Filed as the Round 2 question in AX; nothing built.", "risk": "This is the one scenario that adds a construction rather than a run; it should be decided before the demo policy is written, not after." }
+  ],
+  "carry": [
+    "distinct tags are distinct vetter secrets, not distinct people; a vetter who hands its secret to another lets one person attest under two tags",
+    "tokens are shareable by colluding vetters unless a profile binds spends to a stable enrolled secret and bounds slots",
+    "event mode narrows the anonymity set to 'some vetter at this event'",
+    "no third party can audit that an admission followed the criterion; the community verifies alone",
+    "proof acceptance is not admission: verifying, counting under policy and issuing the grant are three acts (WG-04)",
+    "component 007 is bypassed: nothing ties the proof to the applicant's DID beyond what the PCS credential binds",
+    "the PCS is a research artifact, not audited, and not post-quantum"
+  ],
+  "decisions": [
+    "the demo date and the policy's k, minByMethod and independence values (vtc/join-requests/manifest 0.2)",
+    "WG-16: 024 alone, or 023 beside it",
+    "whether 007 must hold on the admission path (scenario D) — a Round 2 question",
+    "who runs the independent reproduction, on what hardware, and whether record 024's rejection register becomes the demo's negative test vectors",
+    "whether the Groth16 lab route is offered as a second implementation of the same statement for cross-checking"
+  ],
+  "next": [
+    "run the public crate and the demo tests locally when Mitch says (door D30); record hardware, toolchain, cold and warm figures",
+    "map the demo's four end-to-end claims onto 024's fixture families and rejection codes; offer them as test vectors on the OpenVTC side",
+    "post AX and AY; the 007 question lands on Round 2 (AP)",
+    "confirm the Linux Plumbers date and the policy values with Glenn on general #31",
+    "nothing derived from unpublished source enters a public record"
+  ]
+}

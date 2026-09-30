@@ -45,3 +45,8 @@ reflection.
 
 Reflections land here only after the maintainer has read (and for load-bearing entries, signed)
 the master — the same acceptance-before-publication separation the registry itself uses.
+
+## Local draft: the request becomes a benchmark
+
+[22 September: The request becomes a benchmark](2026-09-22_the-request-becomes-a-benchmark.md) records the new [Clean room](../clean-room/README.md), record023's request, the first component experiments and a dual-agent resume trail. Unsigned and unpublished; excluded from KB projection until a deliberate manifest review.
+

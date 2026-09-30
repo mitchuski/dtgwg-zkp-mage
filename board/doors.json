@@ -330,5 +330,47 @@
       "010"
     ],
     "actor": "watch; Mitch decides whether the ZKP header adopts 0.x.y now"
+  },
+  {
+    "id": "D28",
+    "title": "zkp-spec PR #11 inline review on 023 (DenisPopov15 28 Sept) — options folded to 024, 007 bypass stated, figures held",
+    "where": "https://github.com/trustoverip/dtgwg-zkp-spec/pull/11",
+    "what": "Three points: options[0]/[3] are one blind-signature construction (the PCS) — now one option pointing to record 024; the route bypasses component 007 (no DID VM commitment) — new does-not-establish lines on 023 and 024; measured figures held until the PCS source is public — already how the records read.",
+    "status": "open",
+    "draft": "AX",
+    "cards": [
+      "023",
+      "024"
+    ],
+    "actor": "post AX = Mitch; record edits ride PR #12 fifth commit (commit/push = Mitch)"
+  },
+  {
+    "id": "D29",
+    "title": "cred-spec #9 — geoffturk asks Mitch (29 Sept 14:11): follow up or close?",
+    "where": "https://github.com/trustoverip/dtgwg-cred-spec/issues/9",
+    "what": "Close: the requirement lives as records 007/009/020/021 (+010 statement 3) on the published draft; the two credential-side leftovers of 10 Sept (the VRC MAY; dtgwg-zkp-spec in specs.json external_specs + re-pointing the editor's note) can close with it or take one tracking issue; WG-14 stays on the ZKP side.",
+    "status": "open",
+    "draft": "AY",
+    "cards": [
+      "007",
+      "009",
+      "010",
+      "020",
+      "021"
+    ],
+    "actor": "post AY = Mitch (a direct ask; the editor is waiting)"
+  },
+  {
+    "id": "D30",
+    "title": "PCS source PUBLIC — OpenVTC/predicate-credential-system 4f4edf5 (28 Sept) + VTI branch zkp-pcs (vti-vetting-pcs crate) visible on the public repo",
+    "where": "https://github.com/OpenVTC/predicate-credential-system",
+    "what": "Record 024 option 1 pinned to the public revision with README sizes as constructor-reported (proof 1,392 B at k=5); running times not recorded; state stays constructed. Denys (PR #11, 29 Sept 13:44) confirmed a local run of a reference flow on commit 108c496 — not on any public branch, so not cited. Next evidence step = run the crate's benches and the pcs-vetting-prototype tests on independent hardware → 024 to run.",
+    "status": "open",
+    "draft": "AX",
+    "cards": [
+      "023",
+      "024"
+    ],
+    "actor": "lane can run the public code locally when Mitch says"
   }
 ]
