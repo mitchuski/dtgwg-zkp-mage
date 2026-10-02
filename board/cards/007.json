@@ -55,7 +55,7 @@
     }
   ],
   "horizon": [
-    "the shorter of the two identifiers' key-validity periods — after a rotation the old key no longer opens to s under the recorded path and the clause must be re-proven against the rotated material",
+    "under a derived-key profile, the shorter of the two identifiers' key-validity periods — after a rotation the old key no longer opens to s under the recorded path and the clause must be re-proven against the rotated material; under the commitment-verification-method profile, a signing-key rotation leaves the commitment, and this clause, untouched — only a change of the secret behind the commitment restarts it (Integration §Rotation under the identifier commitment profile; record 025)",
     "the hash/commitment cryptoperiod of the derivation"
   ],
   "fixtures": {
@@ -125,6 +125,11 @@
       "date": "2026-09-23",
       "by": "mitchuski",
       "note": "formal model built (Lean, gadget library): the clause as a definition, its soundness, the counter-deployments that show which hypotheses are necessary, and the negative space classified; no state change"
+    },
+    {
+      "date": "2026-10-02",
+      "by": "mitchuski",
+      "note": "horizon split by key profile in answer to the task-force discussion of 2 October (a DID as the starting point; rotation): signing-key rotation does not restart the clause where the commitment is its own verification method; a secret rotation does, and record 025 carries an enrolment across it. State unchanged."
     }
   ],
   "history": [

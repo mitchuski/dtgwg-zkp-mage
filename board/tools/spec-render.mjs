@@ -153,7 +153,7 @@ This section is generated from the machine-readable records in \`conformance/rec
 
 ### Index of constructions
 
-Identifiers are stable handles, not a type taxonomy or contiguous sequence. The kind column identifies primitives and compositions. Records 020 and 021 concern chains, 022 is a digest-reference primitive, and 023 and 024 concern admission; unassigned numbers are not missing records.
+Identifiers are stable handles, not a type taxonomy or contiguous sequence. The kind column identifies primitives and compositions. Records 020 and 021 concern chains, 022 is a digest-reference primitive, 023 and 024 concern admission, and 025 carries an enrolment across a secret rotation; unassigned numbers are not missing records.
 
 **Primitive constructions** — one gadget each.
 

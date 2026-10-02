@@ -1,0 +1,163 @@
+{
+  "id": "025",
+  "name": "Secret rotation with enrolment continuity — a member replaces the secret behind its enrolment with the one it pre-committed, retiring the old enrolment without disclosing which it was",
+  "kind": "composed",
+  "state": "specified",
+  "priority": "P2",
+  "owner": "mitchuski",
+  "components": [
+    "001",
+    "002",
+    "003",
+    "006"
+  ],
+  "request": {
+    "issue": "the chair's question on the admission proof and DIDs (task-force discussion, 2026-10-02): whether the admission proof starts from a DID, and what a DID as the starting point would need — DIDs let a controller keep several identifiers and rotate keys over time, while the proofs are rooted in a holder secret · record 007's horizon (a rotation restarts the co-control clause) · zkp-spec PR #11 inline review on record 023 (DenisPopov15, 2026-09-28): the PCS secret is set at enrolment and no DID verification-method commitment is involved",
+    "by": "ScottJeezey (chair, task-force discussion, 2026-10-02) — specified by the ZKP TF co-chair",
+    "need": "an enrolment rooted in a holder secret must outlive the loss or compromise of that secret, as a DID outlives a key rotation: the member keeps its standing, the old secret stops presenting, and — where the community must not know which enrolment is whose — the community learns neither which enrolment rotated nor a link between the old leaf and the new one"
+  },
+  "statement": "The issuing community learns that the presenter holds the secret behind an unrevoked enrolment leaf under its current membership root, that this leaf pre-committed to the replacement leaf now presented, and the rotation tag of that secret — so the community can retire the old secret by its tag and admit the replacement leaf, without learning which leaf rotated or linking the replacement to it.",
+  "witness": [
+    "the current secret s and the enrolment leaf L = Com(s, N; r) it opens, where N = H(L′) is the pre-rotation digest committed when L was minted",
+    "the Merkle path of L to root_C",
+    "the non-revocation witness of L's membership handle under rl_root at the epoch"
+  ],
+  "publicInputs": [
+    "root_C and rl_root at a stated epoch — the community's membership and revocation roots",
+    "the replacement leaf L′ = Com(s′, N′; r′), as the holder minted it — the next secret s′ and the next pre-rotation digest N′ stay inside it",
+    "the rotation tag t, compared by the community against its spent-tag set in the clear",
+    "transcriptDigest — the rotation request this proof is bound to"
+  ],
+  "relation": [
+    {
+      "clause": "L opens to (s, N; r) and is a leaf under root_C",
+      "gadget": "set-membership",
+      "component": "001"
+    },
+    {
+      "clause": "L's membership handle is not revoked under rl_root at the epoch — a member removed by the community cannot rotate into a fresh leaf",
+      "gadget": "non-revocation",
+      "component": "006"
+    },
+    {
+      "clause": "H(L′) = N: the replacement presented is the one L pre-committed — any other replacement is unsatisfiable, so a party holding a stolen s can move the enrolment only to the leaf the member chose, whose secret it does not hold",
+      "gadget": "commitment-open"
+    },
+    {
+      "clause": "t = PRF(s; rotation context ‖ community): one tag per secret per community, so a second rotation from the same secret repeats t and is refused",
+      "gadget": "nullifier",
+      "component": "002"
+    },
+    {
+      "clause": "the proof is bound to this rotation request's transcriptDigest",
+      "gadget": "transcript-bind",
+      "component": "003"
+    }
+  ],
+  "disclosureSet": [
+    "the outcome (rotation admitted / not shown)",
+    "the rotation tag t — added to the community's spent-tag set",
+    "the replacement leaf L′ — appended at the next root",
+    "root_C, rl_root and the epoch",
+    "transcriptDigest"
+  ],
+  "doesNotEstablish": [
+    "that the presenter is the member who enrolled: anyone holding s can rotate. Pre-rotation limits a thief to moving the enrolment to the replacement the member committed, which the thief cannot open; it does not stop the thief presenting under s until the rotation lands",
+    "that the holder can open L′ — the replacement is accepted as committed; a member who loses s′ as well has no route but re-enrolment",
+    "that the old secret stops presenting: that holds only where the enclosing presentation records prove the leaf's rotation tag absent from the community's spent-tag set (issuance)",
+    "uniqueness within one context across the rotation: per-context nullifiers (record 002) derive from the secret, so a context whose epoch spans the rotation can see one nullifier from s and one from s′. The default closes this by making a rotation take effect from the next context epoch (issuance); nullifiers derived from a value the leaf carries forward are the alternative left to WG-17",
+    "unlinkability against timing and counts: the spent-tag set shows how many rotations a community has admitted, and a rotation admitted alone in its epoch is identifiable by its timing. The old leaf is hidden among the leaves under root_C, and a replacement among the replacements admitted in the same batch — the anonymity set is that batch (issuance)",
+    "any relationship to a DID — the leaf may be bound to a DID's commitment verification method at enrolment or to none; this record reads the leaf only",
+    "rotation of a public identifier: where the community may know which DID is enrolled, rotation is the DID method's (a pre-rotation digest in a did:webvh log or a KERI event log) and needs no proof (option 3)",
+    "unlinkability of a DID-bound enrolment's rotation, read across the layers together: where the leaf's secret is bound to the commitment verification method of a public DID, a secret rotation also changes that commitment in the public DID log. A community that saw the DID at enrolment can match the log entry to the rotation and link L, L′ and the DID. The claim against the registry operator above does not hold for such an enrolment unless the two updates are decorrelated — the DID log change and the leaf rotation published in different epochs, the leaf rotation inside a batch — or the rotation is accepted as public (option 3)",
+    "unlinkability across communities that hold one binding: an enrolment bound to the same DID commitment in several communities lets those communities link the memberships through that commitment. Binding to an identifier used with one community only, or to a community-scoped commitment Com(PRF(s, community)), keeps each binding to its community (Integration §Rotation under the identifier commitment profile)"
+  ],
+  "adversary": [
+    {
+      "claim": "for an enrolment not bound to a public DID, the community operating the roots learns which secret rotated only as its tag t — not which leaf under root_C, and not a link from L′ to L beyond the batch the rotation was admitted in",
+      "against": [
+        "registry-operator",
+        "verifier"
+      ]
+    },
+    {
+      "claim": "verifiers comparing per-context nullifiers from before and after a rotation learn no link between them: t is scoped to the rotation context, which no presentation context shares",
+      "against": [
+        "verifiers-colluding"
+      ]
+    }
+  ],
+  "horizon": [
+    "one rotation per pre-rotation digest — L′ carries N′, which the next rotation spends",
+    "the root epoch: the replacement leaf presents once the community publishes a root containing it, and the old secret stops presenting once the spent-tag set the enclosing records read contains t",
+    "the commitment, hash and PRF cryptoperiod"
+  ],
+  "fixtures": {
+    "families": [
+      "accepts",
+      "rejects-unsat",
+      "rejects-verify",
+      "unlinkable"
+    ],
+    "rejectionCodes": [
+      "replacement-not-precommitted (unsat: H(L′) ≠ N)",
+      "leaf-revoked (unsat: the enrolment's membership handle is revoked under rl_root)",
+      "rotation-tag-spent (verify-fail: t is already in the community's spent-tag set — a second rotation from one secret)"
+    ]
+  },
+  "options": [
+    {
+      "construction": "Poseidon commitments and a Poseidon PRF inside the membership circuit — the lab's set-membership and scoped-nullifier gadgets (records 001, 002) with one added hash opening for N",
+      "cost": "a membership proof plus one hash and one PRF evaluation — of the order of the lab's runtime 01–03 membership circuit (conjecture for this record, not measured)",
+      "measured": false,
+      "source": "evidence repository runtimes 01–03 (Poseidon-Merkle membership, scoped nullifier)"
+    },
+    {
+      "construction": "pre-rotation as KERI specifies it for key event logs — an inception or rotation event commits the digest of the next key set, which only a later rotation reveals — applied to the enrolment leaf, so the same discipline holds for an enrolment the community must not identify",
+      "cost": "as option 1; this option names the discipline, not a separate circuit",
+      "measured": false,
+      "source": "Trust over IP KERI specification (pre-rotation); did:webvh specification (`nextKeyHashes`)"
+    },
+    {
+      "construction": "no proof — public identifiers: the DID method's own rotation (a did:webvh log entry honouring `nextKeyHashes`, or a KERI rotation event) carries the commitment verification method forward or replaces it, and the community re-reads the DID document. Usable where the community may know which DID is enrolled — the vetters of record 024, a public organisation",
+      "cost": "zero constraints; the cost is the identifier's public enrolment",
+      "measured": false,
+      "source": "did:webvh specification; Integration §Rotation under the identifier commitment profile"
+    }
+  ],
+  "issuance": [
+    "under a rotation-capable profile every enrolment leaf carries a pre-rotation digest N; a leaf minted without one cannot rotate under this record, and its member re-enrols",
+    "the presentation and admission records that read an enrolment leaf (010, 023, 024) gain one non-revocation clause under a rotation-capable profile: the leaf's rotation tag is absent from the community's spent-tag set at the epoch. Without it a rotated-away secret still presents",
+    "the rotation context string is fixed by the profile and differs from every presentation context, so a rotation tag never equals a presentation nullifier",
+    "where the leaf is bound to a DID, the binding is made once, at enrolment: the applicant proves that the leaf's secret s is the secret behind the commitment verification method of its DID document (record 007's relation, run against that DID document version). Signing-key rotations of the DID then leave the leaf untouched; only a change of the secret runs this record (Integration §Rotation under the identifier commitment profile)",
+    "rotations are admitted in batches at the root epoch: the community collects rotation requests, appends their replacement leaves together and publishes the spent tags together, and states the batch size it waits for; a rotation is not admitted alone unless the member accepts the timing linkage",
+    "default for per-context nullifiers: a rotation admitted at an epoch takes effect in each presentation context from that context's next epoch — presentations under s′ in a context are accepted only after the context epoch in which s was last usable has closed (WG-17 may replace this with nullifiers carried forward by the leaf)"
+  ],
+  "provenance": {
+    "spec": [
+      "task-force discussion of the admission proof (2026-10-02): the chair's question whether the admission proof starts from a DID, and key rotation over time as what DIDs give that secret-rooted proofs lack",
+      "Integration §Identifier commitment profile and WG-14: the commitment lives in the DID document as a verification method",
+      "record 007 horizon: a rotation restarts the co-control clause under a derived-key profile",
+      "zkp-spec PR #11 inline review on record 023 (DenisPopov15, 2026-09-28): the PCS secret is set at enrolment, with no DID verification-method commitment",
+      "Trust over IP KERI specification — pre-rotation of the next key-set digest",
+      "did:webvh specification — `nextKeyHashes` pre-rotation in the DID log"
+    ],
+    "commit": "github.com/mitchuski/dtgwg-zkp-mage"
+  },
+  "history": [
+    {
+      "to": "requested",
+      "by": "ScottJeezey (chair, task-force discussion)",
+      "date": "2026-10-02",
+      "evidence": "the chair's question on a DID as the starting point of the admission proof: DIDs carry several identifiers and key rotation; the proofs are rooted in a holder secret",
+      "task": "board/request"
+    },
+    {
+      "to": "specified",
+      "by": "mitchuski",
+      "date": "2026-10-02",
+      "evidence": "statement, witness, public inputs and five clauses bound to the lab gadget set (membership, non-revocation, a pre-rotation opening, a rotation tag, transcript binding); three options including the no-proof DID-method route for public identifiers; the enclosing records' spent-tag clause stated as an issuance line; the cross-rotation nullifier question left open as WG-17; privacy read across the DID log, the enrolment root and the presentations together: the registry-operator claim scoped to enrolments not bound to a public DID, batching and the next-epoch nullifier default stated as issuance lines, cross-community binding named",
+      "task": "board/specify"
+    }
+  ]
+}
