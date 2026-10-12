@@ -93,6 +93,15 @@
     "the shortest validUntil in the chain",
     "status freshness"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "clause 3 (every hop's countersignature verifies) under a curve suite falls: a forged acceptance satisfies the chain; the committed-hop form — each hop a commitment in a post-quantum-signed registry — is the replacement, and it is a credential-specification change",
+      "a recursive or folding proof per hop built on a pairing-based verifier falls; a hash-based recursion does not"
+    ],
+    "confidentiality": [
+      "none — the undisclosed chain stays hidden"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

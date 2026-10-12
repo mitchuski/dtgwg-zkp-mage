@@ -65,6 +65,14 @@
     "route 2: the context descriptor's epoch; the pseudonym rotates with it",
     "the commitment's hash cryptoperiod"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation: route 1 opens a hash commitment, route 2 a PRF image; the binder's own authenticity is the issuer signature's (X3)"
+    ],
+    "confidentiality": [
+      "none from the proof; a visible unsalted binder is enumerable today and Grover halves the enumeration cost (record 022)"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

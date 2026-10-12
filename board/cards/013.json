@@ -81,6 +81,14 @@
     "earliest of: each community's policy root version, the prover's membership root epoch, and the exchange challenge",
     "the exchange itself: an unanswered exchange expires with its challenge; a new exchange needs new commitments"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation: hash membership against policy and membership roots and a hash opening; each root's authenticity is its community's signature, outside the proof"
+    ],
+    "confidentiality": [
+      "none — the two predicates' commitments hide information-theoretically; the exchange reveals only what step one publishes"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

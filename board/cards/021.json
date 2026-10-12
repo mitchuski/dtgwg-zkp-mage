@@ -113,6 +113,15 @@
     "status freshness for links that carry `credentialStatus` (the governing party's freshness window)",
     "root_G cryptoperiod"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "clause 3 (every link verifies as signed by its issuer) under a curve suite falls; the committed-link form in a post-quantum-signed registry is the replacement",
+      "a recursive or folding proof per link built on a pairing-based verifier falls; a hash-based recursion does not"
+    ],
+    "confidentiality": [
+      "none — the undisclosed chain stays hidden"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

@@ -112,7 +112,12 @@ ${adv}
 
 #### Horizon
 
-${li(record.horizon)}
+${li(record.horizon)}${record.quantumHorizon ? `
+
+*Quantum horizon* — read against Security Considerations item 8:
+
+- forgery: ${record.quantumHorizon.forgery.join('; ')}
+- confidentiality: ${record.quantumHorizon.confidentiality.join('; ')}` : ''}
 
 #### Conformance fixtures
 
@@ -284,7 +289,9 @@ export function renderStack(s) {
 | proof system | ${s.proofSystem} |
 | field | ${s.field || '—'} |
 | setup | ${s.setup} |
-| post-quantum | ${s.postQuantum || '—'} |
+| post-quantum | ${s.postQuantum || '—'} |${s.postQuantumSoundness ? `
+| post-quantum soundness | ${s.postQuantumSoundness} |` : ''}${s.postQuantumZeroKnowledge ? `
+| post-quantum zero-knowledge | ${s.postQuantumZeroKnowledge} |` : ''}
 | credential model | ${s.credentialModel || '—'} |
 | platforms | ${(s.platforms || []).join(' · ') || '—'} |
 | verifier | ${(s.verifier || []).join(' · ') || '—'} |

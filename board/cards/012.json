@@ -74,6 +74,14 @@
   "horizon": [
     "earliest of: any shown credential's validity · epoch rollover · the shortest identifier key-validity among the k (record 007)"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation beyond record 007's: hash openings hold; the enclosing records' signature clauses are where the exposure sits"
+    ],
+    "confidentiality": [
+      "none — a proof of common control discloses one bit to one verifier and, information-theoretically, nothing more"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

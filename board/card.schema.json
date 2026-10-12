@@ -394,6 +394,30 @@
           }
         }
       }
+    },
+    "quantumHorizon": {
+      "type": "object",
+      "required": [
+        "forgery",
+        "confidentiality"
+      ],
+      "properties": {
+        "forgery": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "confidentiality": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "description": "Post-quantum reading of the record: which clauses or options fall to forgery under a cryptographically relevant quantum computer, and which (if any) lose confidentiality. Soundness and zero-knowledge are read separately (Security Considerations item 8)."
     }
   }
 }

@@ -53,6 +53,14 @@
     "epoch rollover",
     "enrolment-root cryptoperiod"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation: a Poseidon or standard-hash PRF keeps pseudorandomness; the paper's PRF_K route likewise"
+    ],
+    "confidentiality": [
+      "none from the nullifier itself; a holder secret of fewer than 256 bits of entropy loses half its bits to Grover"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

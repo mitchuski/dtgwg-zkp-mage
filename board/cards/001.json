@@ -55,6 +55,15 @@
     "root cryptoperiod (root rotation)",
     "VMC validity"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation: hash membership holds under Grover at 256-bit output; the root's authenticity is the registry signature's, checked outside the proof — a curve-signed root is forgeable, a post-quantum-signed root is not",
+      "the KZG accumulator option: pairing-based binding falls"
+    ],
+    "confidentiality": [
+      "none — a leaf commitment and a proof hide the path and the secret information-theoretically under the hash-based options; the Groth16 lab proof is perfectly zero-knowledge"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

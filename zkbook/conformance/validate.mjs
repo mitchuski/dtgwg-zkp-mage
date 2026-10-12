@@ -46,6 +46,7 @@ export function validateRecord(record, all) {
     else a.against.forEach(x => { if (!ADVERSARIES.includes(x)) r.push(`record-adversary-unknown:${x}`); });
   });
   if (!nonEmpty('horizon')) r.push('record-no-horizon');
+  if (record.quantumHorizon !== undefined && !(Array.isArray(record.quantumHorizon.forgery) && record.quantumHorizon.forgery.length && Array.isArray(record.quantumHorizon.confidentiality) && record.quantumHorizon.confidentiality.length)) r.push('record-bad-quantum-horizon');
   if (!record.fixtures || !Array.isArray(record.fixtures.families) || !record.fixtures.families.length) r.push('record-no-fixtures');
   else record.fixtures.families.forEach(f => { if (!FAMILIES.includes(f)) r.push(`record-fixture-family-unknown:${f}`); });
   if (!nonEmpty('options')) r.push('record-no-options');

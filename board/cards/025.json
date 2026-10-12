@@ -92,6 +92,14 @@
     "the root epoch: the replacement leaf presents once the community publishes a root containing it, and the old secret stops presenting once the spent-tag set the enclosing records read contains t",
     "the commitment, hash and PRF cryptoperiod"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation: Poseidon commitments, a Poseidon PRF and hash membership hold; the DID method's own rotation (option 3) is as strong as its signature suite; a pre-rotation digest is a hash and holds"
+    ],
+    "confidentiality": [
+      "none"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

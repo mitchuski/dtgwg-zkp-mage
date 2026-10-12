@@ -58,6 +58,14 @@
     "under a derived-key profile, the shorter of the two identifiers' key-validity periods — after a rotation the old key no longer opens to s under the recorded path and the clause must be re-proven against the rotated material; under the commitment-verification-method profile, a signing-key rotation leaves the commitment, and this clause, untouched — only a change of the secret behind the commitment restarts it (Integration §Rotation under the identifier commitment profile; record 025)",
     "the hash/commitment cryptoperiod of the derivation"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation: two hash openings sharing a secret hold; a Pedersen or KZG commitment in place of the hash opening falls (binding), as does a BabyJubJub or BLS12-381 SNARK-native key as the identifier's own key — the hash-commitment form of the identifier commitment profile is the post-quantum form"
+    ],
+    "confidentiality": [
+      "none — hiding is information-theoretic in every option"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

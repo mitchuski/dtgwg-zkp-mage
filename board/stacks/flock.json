@@ -8,6 +8,8 @@
   "field": "binary fields (GF(2^k) towers) — no prime-field arithmetic, no elliptic curve in the prover",
   "setup": "transparent — no trusted setup, no toxic waste",
   "postQuantum": "plausibly post-quantum: security rests on hash functions; designed for the hash-based signature schemes (Lamport, Winternitz, XMSS) Ethereum's post-quantum transition targets",
+  "postQuantumSoundness": "plausible — hash and random-oracle assumptions over binary fields; the family most exposed to the 2025–26 proximity-gap results, so a cost row states the bound its parameters assume",
+  "postQuantumZeroKnowledge": "plausible — as stated by the authors; a zero-knowledge variant's parameters are part of the measurement contract",
   "credentialModel": "Candidate backend for batched standard-hash computation. Author-reported hash benchmarks are not end-to-end measurements of DTG membership, revocation, transcript or signature verification; compatibility depends on the selected registry and credential profile.",
   "platforms": [
     "rust",

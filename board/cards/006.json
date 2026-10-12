@@ -48,6 +48,15 @@
     "status freshness (C4 bound)",
     "epoch rollover"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation; the status root's authenticity is the registry signature's, outside the proof — the set-root primitive's signed root must carry a post-quantum suite",
+      "the RL-membership-inside-f route inherits the enclosing proof system's soundness"
+    ],
+    "confidentiality": [
+      "none"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

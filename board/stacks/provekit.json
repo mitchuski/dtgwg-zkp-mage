@@ -8,6 +8,8 @@
   "field": "BN254 scalar field",
   "setup": "transparent for the WHIR proof; the Groth16 wrapper reintroduces a trusted setup",
   "postQuantum": "hash-based core — migration path plausible; the pairing-based wrapper is not",
+  "postQuantumSoundness": "plausible for the Spartan + WHIR core (hash and random-oracle assumptions; the proximity-gap bound the parameters assume is to be stated); falls at the Groth16 wrapper — a verifier that sees only the wrapper holds a non-post-quantum proof",
+  "postQuantumZeroKnowledge": "holds for the core and for the wrapper (Groth16 is perfectly zero-knowledge)",
   "credentialModel": "issuer-agnostic: any statement Noir expresses; shipped statements prove over existing credentials (passport, WebAuthn) as signed",
   "platforms": [
     "rust",

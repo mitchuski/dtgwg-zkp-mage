@@ -45,6 +45,14 @@
   "horizon": [
     "root cryptoperiod"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation: distinctness over hash leaves or tags holds"
+    ],
+    "confidentiality": [
+      "none"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

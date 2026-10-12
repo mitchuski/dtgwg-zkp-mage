@@ -128,6 +128,16 @@
   "horizon": [
     "earliest of: VRC validity · either VMC validity · epoch rollover · status freshness (C4 bound) · root_C cryptoperiod"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "clause 1 (signature-verify) under any curve suite — eddsa-jcs-2022, SPS on BLS12-381, EdDSA on Baby Jubjub — falls: forged VRCs satisfy the clause; the published-commitment branch of X3 with a post-quantum-signed root replaces it",
+      "the blackbox option (Gro15 SPS, hiding KZG, Groth–Sahai) falls entirely; the legacy-rails option inherits ECDSA / Ed25519; the blind-signature vouch option inherits its signature scheme",
+      "the Groth16 composition's soundness falls; the post-quantum route (Flock-class over standard hashes) does not, on its hash side"
+    ],
+    "confidentiality": [
+      "none — hidden membership paths, secrets and voucher identities stay hidden under every option; the proof is zero-knowledge information-theoretically in the Groth16 and hash-based options"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

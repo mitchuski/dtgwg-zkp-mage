@@ -112,6 +112,14 @@
     "earliest of: each VRC's validity · each voucher's membership validity · epoch rollover · status freshness (the community's published bound) · root_C cryptoperiod",
     "the join request's own validity — a proof bound to a withdrawn or decided request (Trust Tasks `vtc/join-requests/withdraw`, `decide`) is not replayable to the next one"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "clause 1 (each VRC verifies) under a curve suite falls; the blind-signature admission option (PCS, Σ-PS over BLS12-381) falls entirely — credential, Schnorr proofs and tag injectivity; the Groth16 composition falls with its proof system; vouchers-disclosed is a signature check in the clear and falls with the signature"
+    ],
+    "confidentiality": [
+      "under option 1 the Tag_DDH pseudonym stream becomes linkable once DDH falls — with record 024 option 1, the one confidentiality exposure in this catalogue; under the hash-based options, none"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

@@ -22,6 +22,8 @@ A proving-system entry records facts a reader can check — proof system, field,
 | field | as required by the signed document's curve (P-256) |
 | setup | per artifact — the catalog pins downloaded artifacts by sha256, not builds |
 | post-quantum | no (ECDSA rails) |
+| post-quantum soundness | plausible for the Ligero-class argument (SHA-256 only); the statement proven is an ECDSA signature, so credential soundness falls with ECDSA |
+| post-quantum zero-knowledge | holds |
 | credential model | as-signed: proves statements over credentials exactly as issuers already issue them — no issuer change, no commitment choice; this is substrate for the legacy-rails route, not a DTG construction route |
 | platforms | as published per artifact |
 | verifier | per system |
@@ -69,6 +71,8 @@ A proving-system entry records facts a reader can check — proof system, field,
 | field | binary fields (GF(2^k) towers) — no prime-field arithmetic, no elliptic curve in the prover |
 | setup | transparent — no trusted setup, no toxic waste |
 | post-quantum | plausibly post-quantum: security rests on hash functions; designed for the hash-based signature schemes (Lamport, Winternitz, XMSS) Ethereum's post-quantum transition targets |
+| post-quantum soundness | plausible — hash and random-oracle assumptions over binary fields; the family most exposed to the 2025–26 proximity-gap results, so a cost row states the bound its parameters assume |
+| post-quantum zero-knowledge | plausible — as stated by the authors; a zero-knowledge variant's parameters are part of the measurement contract |
 | credential model | Candidate backend for batched standard-hash computation. Author-reported hash benchmarks are not end-to-end measurements of DTG membership, revocation, transcript or signature verification; compatibility depends on the selected registry and credential profile. |
 | platforms | rust · x86_64 · apple-silicon |
 | verifier | local · server |
@@ -125,6 +129,8 @@ A proving-system entry records facts a reader can check — proof system, field,
 | field | BN254 scalar field |
 | setup | transparent for the WHIR proof; the Groth16 wrapper reintroduces a trusted setup |
 | post-quantum | hash-based core — migration path plausible; the pairing-based wrapper is not |
+| post-quantum soundness | plausible for the Spartan + WHIR core (hash and random-oracle assumptions; the proximity-gap bound the parameters assume is to be stated); falls at the Groth16 wrapper — a verifier that sees only the wrapper holds a non-post-quantum proof |
+| post-quantum zero-knowledge | holds for the core and for the wrapper (Groth16 is perfectly zero-knowledge) |
 | credential model | issuer-agnostic: any statement Noir expresses; shipped statements prove over existing credentials (passport, WebAuthn) as signed |
 | platforms | rust · javascript-wasm (~340 KB) · swift (iOS) · kotlin (Android) · python · c-ffi |
 | verifier | local · server · browser · on-chain (Groth16 wrapper) |
@@ -177,6 +183,8 @@ A proving-system entry records facts a reader can check — proof system, field,
 | field | BN254 scalar field; Baby Jubjub for in-circuit keys (planned) |
 | setup | trusted setup per circuit — lab-only fixed-entropy setup, unusable for production, reproducible from a clean clone; production ceremony = an open item |
 | post-quantum | no — pairing-based; migration path is a different stack (LIV-ALG-07) |
+| post-quantum soundness | falls — knowledge soundness rests on pairing-group assumptions; a cryptographically relevant quantum computer recovers the setup trapdoor and forges proofs |
+| post-quantum zero-knowledge | holds — perfect zero-knowledge; a harvested proof discloses nothing to a quantum adversary |
 | credential model | issuer-chosen commitments: Poseidon leaf commitments; ZK-friendly signatures or an additional Poseidon/KZG commitment beside the credential signature (X3) |
 | platforms | node · browser-wasm (snarkjs) · x86_64 · darwin-arm64 |
 | verifier | local · server · browser · on-chain (Solidity verifier) |

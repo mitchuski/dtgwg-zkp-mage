@@ -114,6 +114,14 @@
     "the challenge — single use: spent when the proof is counted, so an applicant answering `requestMore` obtains a fresh challenge",
     "under an event label, the event's expiry — tokens live and die with their label, so an event's stockpile cannot be spent under the monthly key (trust-tasks-tf PR #620)"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "option 1 (PCS: Σ-PS credential base, Tag_DDH, Schnorr proofs over BLS12-381) falls entirely — a quantum vetter forges credentials and opens its tag to any value, so once-per-tick counting stops holding; option 3 (the lab's hash-based vetting_attest and vetting_bind) holds on the hash side and falls only with Groth16's soundness, which a hash-based prover removes; option 2 (vetters named) falls with the vetters' signatures"
+    ],
+    "confidentiality": [
+      "option 1: harvested tags become linkable to vetter keys once DDH falls; options 2 and 3: none"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

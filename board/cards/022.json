@@ -58,6 +58,14 @@
     "the digest function: opening a SHA-256 digest in-circuit is the cost horizon of route 2; a profile that permits another Multihash algorithm changes the gadget, not the record",
     "the validity horizon of the enclosing record — this record adds none of its own"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation: a salted hash opening holds; the SNARK-native Pedersen commitment option falls (binding) and the Poseidon one does not"
+    ],
+    "confidentiality": [
+      "none from the proof; a salt shorter than 256 bits loses half its bits to Grover — ETSI's guidance for salted-hash credentials is to double the salt"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

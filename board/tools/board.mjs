@@ -73,6 +73,7 @@ export function validateCard(card, all = null) {
     else a.against.forEach(x => { if (!ADVERSARIES.includes(x)) r.push(`record-adversary-unknown:${x}`); });
   });
   if (!nonEmpty('horizon')) r.push('record-no-horizon');
+  if (card.quantumHorizon !== undefined && !(Array.isArray(card.quantumHorizon.forgery) && card.quantumHorizon.forgery.length && Array.isArray(card.quantumHorizon.confidentiality) && card.quantumHorizon.confidentiality.length)) r.push('record-bad-quantum-horizon');
   if (!card.fixtures || !Array.isArray(card.fixtures.families) || !card.fixtures.families.length) r.push('record-no-fixtures');
   else card.fixtures.families.forEach(f => { if (!FAMILIES.includes(f)) r.push(`record-fixture-family-unknown:${f}`); });
   if (!nonEmpty('options')) r.push('record-no-options');

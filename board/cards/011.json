@@ -77,6 +77,14 @@
     "VRC validity",
     "status freshness"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "clause 1 (signature-verify) under a curve suite falls; the Groth16 composition with an in-circuit signature check falls with both the signature and the proof system; the paper's Construction II show inherits its pairing-based credential"
+    ],
+    "confidentiality": [
+      "none"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

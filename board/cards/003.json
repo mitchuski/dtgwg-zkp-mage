@@ -48,6 +48,14 @@
   "horizon": [
     "the transcript's own validity window"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none: the digest is collision-resistant under Grover; binding a Groth16 public signal falls with Groth16 soundness, a hash-based prover's binding does not"
+    ],
+    "confidentiality": [
+      "none — the transcript is public by design"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

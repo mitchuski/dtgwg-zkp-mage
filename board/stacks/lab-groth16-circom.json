@@ -8,6 +8,8 @@
   "field": "BN254 scalar field; Baby Jubjub for in-circuit keys (planned)",
   "setup": "trusted setup per circuit — lab-only fixed-entropy setup, unusable for production, reproducible from a clean clone; production ceremony = an open item",
   "postQuantum": "no — pairing-based; migration path is a different stack (LIV-ALG-07)",
+  "postQuantumSoundness": "falls — knowledge soundness rests on pairing-group assumptions; a cryptographically relevant quantum computer recovers the setup trapdoor and forges proofs",
+  "postQuantumZeroKnowledge": "holds — perfect zero-knowledge; a harvested proof discloses nothing to a quantum adversary",
   "credentialModel": "issuer-chosen commitments: Poseidon leaf commitments; ZK-friendly signatures or an additional Poseidon/KZG commitment beside the credential signature (X3)",
   "platforms": [
     "node",

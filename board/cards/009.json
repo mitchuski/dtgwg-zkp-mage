@@ -55,6 +55,14 @@
     "the shorter of the two credentials' validity periods — the equality is a statement about two credentials as issued, and a re-issued credential must be re-compared",
     "the hash/commitment cryptoperiod of the leaf or field commitments the openings are made against"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "none inside the relation under the Poseidon-openings option; the as-signed option inherits ECDSA / Ed25519 — the compared fields are authenticated by signatures that become forgeable"
+    ],
+    "confidentiality": [
+      "none"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

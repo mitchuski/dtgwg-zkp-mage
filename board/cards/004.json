@@ -48,6 +48,15 @@
     "key cryptoperiod",
     "credential validity"
   ],
+  "quantumHorizon": {
+    "forgery": [
+      "the EdDSA / Baby-Jubjub in-circuit option: a discrete-log key, falls; the PRF-image form of the relation does not",
+      "the paper's Schnorr proof of PRF-key ownership falls as a Schnorr proof over a group; the statement survives under a hash-based proof"
+    ],
+    "confidentiality": [
+      "none — the presentation key is a PRF image and the secret is hidden information-theoretically"
+    ]
+  },
   "fixtures": {
     "families": [
       "accepts",

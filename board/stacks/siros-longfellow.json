@@ -8,6 +8,8 @@
   "field": "as required by the signed document's curve (P-256)",
   "setup": "per artifact — the catalog pins downloaded artifacts by sha256, not builds",
   "postQuantum": "no (ECDSA rails)",
+  "postQuantumSoundness": "plausible for the Ligero-class argument (SHA-256 only); the statement proven is an ECDSA signature, so credential soundness falls with ECDSA",
+  "postQuantumZeroKnowledge": "holds",
   "credentialModel": "as-signed: proves statements over credentials exactly as issuers already issue them — no issuer change, no commitment choice; this is substrate for the legacy-rails route, not a DTG construction route",
   "platforms": [
     "as published per artifact"

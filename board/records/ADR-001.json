@@ -205,7 +205,7 @@
       "text": "a proof fits the transports DTG credentials already travel over",
       "boundTo": "stacks layer: proof size column (721 B Groth16 vs ~716 KB WHIR)",
       "status": "open",
-      "refinement": "a profile decision; the options table shows both numbers"
+      "refinement": "a profile decision; the options table shows both numbers. Proposed resolution (WG-18, 2026-10-12): D3 is met for a profile whose transport carries task payloads of a megabyte or more, as Trust Tasks does; a proof of a few hundred kilobytes from a hash-based prover is within budget, and a sub-kilobyte proof is not a V1 requirement"
     },
     {
       "id": "X1",
