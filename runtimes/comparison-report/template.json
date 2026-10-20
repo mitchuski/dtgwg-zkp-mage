@@ -1,0 +1,134 @@
+{
+  "pinned": {
+    "formatVersion": "lab-comparison-report/v0",
+    "configuration": "synthetic-cohort-1",
+    "statement": "Synthetic arithmetic illustration; no credential or cryptographic statement is implemented.",
+    "workload": "One synthetic producer and ten readers; no experiment ran.",
+    "inputs": "Synthetic labels only; replace with public input artifact digests for a measured report.",
+    "acceptedOutputs": "Synthetic labels only; replace with accepted output and verification evidence references.",
+    "disclosure": "Synthetic equal-disclosure assumption, not a privacy result.",
+    "adversary": "Synthetic verifier; issuer collusion is not evaluated.",
+    "horizon": "One synthetic presentation; retention and repeated presentations are not evaluated.",
+    "security": "No security parameters or primitive are evaluated by this fixture.",
+    "sourceBuilds": "Synthetic only. For measurements identify each route source revision, build flags and required security configuration.",
+    "artifactReports": [
+      "synthetic-only; for real circuit identity reference build/report.<circuit>.json pinned artifacts and source revision"
+    ],
+    "doesNotEstablish": [
+      "Soundness, zero knowledge, composed privacy, correct credential issuance, reproducibility or construction selection."
+    ],
+    "comparator": "privacy-matched"
+  },
+  "informative": {
+    "evidenceKind": "synthetic",
+    "platform": "Synthetic; no device or hardware was measured.",
+    "tools": "Python standard-library arithmetic only; no prover ran.",
+    "conditions": "Synthetic integer inputs, not CPU timers or cold/warm observations.",
+    "order": "Synthetic example; real reports describe paired run order and failed-run exclusions.",
+    "uncertainty": "Point intervals for arithmetic only. Input ranges are not confidence intervals; no coverage is inferred.",
+    "exclusions": "No components omitted in this synthetic arithmetic assumption. Real exclusions must also appear in each cost row.",
+    "amortization": "None. Real reports explain legitimate reuse and which delivered workloads pay each setup cost.",
+    "role": "AI-assisted draft for human review; synthetic fixture, not an independent verification run."
+  },
+  "readers": 10,
+  "proofs": {
+    "binding": "reusable",
+    "count": 1,
+    "producerAccounting": "additional-to-G-per-proof",
+    "reuseBasis": "Synthetic assumption only; real reuse requires compatible audience, freshness, request binding and privacy policy."
+  },
+  "costs": {
+    "G": {
+      "cpuNs": [
+        100,
+        100
+      ],
+      "elapsedNs": [
+        100,
+        100
+      ],
+      "configuration": "synthetic-cohort-1",
+      "cpuScope": "all-threads-and-processes",
+      "included": [
+        "shared-producer"
+      ],
+      "excluded": {}
+    },
+    "P": {
+      "cpuNs": [
+        900,
+        900
+      ],
+      "elapsedNs": [
+        900,
+        900
+      ],
+      "configuration": "synthetic-cohort-1",
+      "cpuScope": "all-threads-and-processes",
+      "included": [
+        "setup",
+        "preprocessing",
+        "witness",
+        "proof-construction",
+        "export-verification",
+        "serialization",
+        "parsing",
+        "credential-status-request-checks"
+      ],
+      "excluded": {}
+    },
+    "R": {
+      "cpuNs": [
+        100,
+        100
+      ],
+      "elapsedNs": [
+        100,
+        100
+      ],
+      "configuration": "synthetic-cohort-1",
+      "cpuScope": "all-threads-and-processes",
+      "included": [
+        "setup",
+        "parsing",
+        "recomputation",
+        "credential-status-request-checks"
+      ],
+      "excluded": {}
+    },
+    "V": {
+      "cpuNs": [
+        5,
+        5
+      ],
+      "elapsedNs": [
+        5,
+        5
+      ],
+      "configuration": "synthetic-cohort-1",
+      "cpuScope": "all-threads-and-processes",
+      "included": [
+        "setup",
+        "proof-parsing",
+        "final-verifier-or-decider",
+        "credential-status-request-checks"
+      ],
+      "excluded": {}
+    }
+  },
+  "resources": [
+    {
+      "metric": "peak-resident",
+      "bytes": 128,
+      "scope": "synthetic producer process",
+      "concurrency": 1,
+      "configuration": "synthetic-cohort-1",
+      "covers": [
+        "synthetic witnesses, tables, caches and scratch"
+      ],
+      "scopeComplete": true,
+      "limitBytes": 256,
+      "limitKind": "observed"
+    }
+  ]
+}
