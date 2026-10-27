@@ -158,7 +158,7 @@
   ],
   "formal": {
     "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
-    "location": "formal/Formal/Gadgets/P007CommonControl.lean in the evidence repository (uncommitted at this revision)",
+    "location": "formal/Formal/Gadgets/P007CommonControl.lean in the evidence repository, at the evidence revision Appendix B pins",
     "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
     "statement": "Formal.Gadgets.CommonControl — one secret behind both identifiers under the derivation",
     "theorems": [

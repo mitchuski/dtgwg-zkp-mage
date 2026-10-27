@@ -1,0 +1,120 @@
+[
+  {
+    "record": "023",
+    "status": "model-built-finding-folded-coverage-pending",
+    "roots": [
+      "Formal.R023.soundness",
+      "Formal.R023.no_vrc_no_statement",
+      "Formal.R023.selfVouch_accepts",
+      "Formal.R023.self_vouch_counted"
+    ],
+    "sources": [
+      "formal/Formal/R023/Model.lean",
+      "formal/Formal/R023/Soundness.lean",
+      "formal/Formal/R023/NegativeSpace.lean"
+    ],
+    "obligation": "The self-vouch negative-space finding is folded into record 023. Review theorem-to-clause correspondence and external admission identity scope; no complete implementation verification or evidence-state promotion is implied."
+  },
+  {
+    "record": "020",
+    "status": "model-built-semantic-review-pending",
+    "roots": [
+      "Formal.Gadgets.scope_within_every_ancestor",
+      "Formal.Gadgets.validity_within_every_ancestor",
+      "Formal.Gadgets.depth_below",
+      "Formal.Gadgets.depth_within_every_ancestor",
+      "Formal.Gadgets.no_decrement_unbounded",
+      "Formal.Gadgets.leaf_act_all",
+      "Formal.Gadgets.leaf_valid_all",
+      "Formal.Chains.linked_of_constraint",
+      "Formal.Chains.soundness",
+      "Formal.Chains.r020_soundness",
+      "Formal.Chains.escalation_unsat"
+    ],
+    "sources": [
+      "formal/Formal/Gadgets/ChainResolve.lean",
+      "formal/Formal/Chains/Presentation.lean",
+      "formal/Formal/Chains/Records.lean"
+    ],
+    "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+  },
+  {
+    "record": "021",
+    "status": "model-built-semantic-review-pending",
+    "roots": [
+      "Formal.Gadgets.scope_within_every_ancestor",
+      "Formal.Gadgets.validity_within_every_ancestor",
+      "Formal.Gadgets.depth_below",
+      "Formal.Gadgets.depth_within_every_ancestor",
+      "Formal.Gadgets.no_decrement_unbounded",
+      "Formal.Gadgets.leaf_act_all",
+      "Formal.Gadgets.leaf_valid_all",
+      "Formal.Chains.linked_of_constraint",
+      "Formal.Chains.soundness",
+      "Formal.Chains.escalation_unsat",
+      "Formal.Chains.r021_ceiling_unsat",
+      "Formal.Chains.r021_soundness"
+    ],
+    "sources": [
+      "formal/Formal/Gadgets/ChainResolve.lean",
+      "formal/Formal/Chains/Presentation.lean",
+      "formal/Formal/Chains/Records.lean"
+    ],
+    "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+  },
+  {
+    "record": "012",
+    "status": "model-built-semantic-review-pending",
+    "roots": [
+      "Formal.R012.star_to_clique",
+      "Formal.R012.star_without_binding_not_clique"
+    ],
+    "sources": [
+      "formal/Formal/Composed/R012.lean"
+    ],
+    "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+  },
+  {
+    "record": "011",
+    "status": "model-built-semantic-review-pending",
+    "roots": [
+      "Formal.R011.key_behind_persona",
+      "Formal.R011.persona_linkage_needed"
+    ],
+    "sources": [
+      "formal/Formal/Composed/R011.lean"
+    ],
+    "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+  },
+  {
+    "record": "010",
+    "status": "model-built-semantic-review-pending",
+    "roots": [
+      "Formal.R010.soundness",
+      "Formal.R010.self_vouch_unsat"
+    ],
+    "sources": [
+      "formal/Formal/Composed/R010.lean"
+    ],
+    "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+  },
+  {
+    "record": "025",
+    "status": "model-built-semantic-review-pending",
+    "roots": [
+      "Formal.R025.soundness",
+      "Formal.R025.replacement_fixed",
+      "Formal.R025.colliding_predigest_two_replacements",
+      "Formal.R025.second_rotation_refused",
+      "Formal.R025.rotated_leaf_still_member",
+      "Formal.R025.rotated_secret_retired",
+      "Formal.R025.tag_not_nullifier",
+      "Formal.R025.straddling_epoch_two_nullifiers",
+      "Formal.R025.next_epoch_one_nullifier"
+    ],
+    "sources": [
+      "formal/Formal/Composed/R025.lean"
+    ],
+    "obligation": "Run 2 (2026-10-27) composition of records 001, 006 and 002 with the pre-rotation opening, folded into record 025 as its formal block; review clause correspondence and the retained commitment-binding, pre-rotation-hash, PRF and sorted-revocation assumptions. Transcript (clause 5), batch unlinkability, runtime correspondence and the tag-absence clause inside records 010, 023 and 024 remain open."
+  }
+]

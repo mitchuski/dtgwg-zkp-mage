@@ -1,0 +1,1779 @@
+{
+  "schemaVersion": 2,
+  "pendingModels": [
+    {
+      "record": "023",
+      "status": "model-built-finding-folded-coverage-pending",
+      "roots": [
+        "Formal.R023.soundness",
+        "Formal.R023.no_vrc_no_statement",
+        "Formal.R023.selfVouch_accepts",
+        "Formal.R023.self_vouch_counted"
+      ],
+      "sources": [
+        {
+          "path": "formal/Formal/R023/Model.lean",
+          "sha256": "bdfdffa4b699631f00828034c43e472257223967df4917bf7987a59ac35f7330"
+        },
+        {
+          "path": "formal/Formal/R023/Soundness.lean",
+          "sha256": "a43bd3e2da2c078c6681f551f9dd3aa47418d7898ce7a6c1360d77801c270af4"
+        },
+        {
+          "path": "formal/Formal/R023/NegativeSpace.lean",
+          "sha256": "0182fc67cc1e72de2557bdc88d59c7126b5545729371b34604772c3a8c90b76f"
+        }
+      ],
+      "obligation": "The self-vouch negative-space finding is folded into record 023. Review theorem-to-clause correspondence and external admission identity scope; no complete implementation verification or evidence-state promotion is implied."
+    },
+    {
+      "record": "020",
+      "status": "model-built-semantic-review-pending",
+      "roots": [
+        "Formal.Gadgets.scope_within_every_ancestor",
+        "Formal.Gadgets.validity_within_every_ancestor",
+        "Formal.Gadgets.depth_below",
+        "Formal.Gadgets.depth_within_every_ancestor",
+        "Formal.Gadgets.no_decrement_unbounded",
+        "Formal.Gadgets.leaf_act_all",
+        "Formal.Gadgets.leaf_valid_all",
+        "Formal.Chains.linked_of_constraint",
+        "Formal.Chains.soundness",
+        "Formal.Chains.r020_soundness",
+        "Formal.Chains.escalation_unsat"
+      ],
+      "sources": [
+        {
+          "path": "formal/Formal/Gadgets/ChainResolve.lean",
+          "sha256": "6764031b7cd4c99eb66440c2ef160f448d8a20e4cf46b84037476efef01f53d6"
+        },
+        {
+          "path": "formal/Formal/Chains/Presentation.lean",
+          "sha256": "8ecf3d1b3f34f9db18c282e06bb61bb4733b6fe2756d2d5fb2e40576eb7a8c8a"
+        },
+        {
+          "path": "formal/Formal/Chains/Records.lean",
+          "sha256": "3f9d6da77ebdc595a70b3cc3f30274030fd2cabe567789a2ac6b792d5370d871"
+        }
+      ],
+      "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+    },
+    {
+      "record": "021",
+      "status": "model-built-semantic-review-pending",
+      "roots": [
+        "Formal.Gadgets.scope_within_every_ancestor",
+        "Formal.Gadgets.validity_within_every_ancestor",
+        "Formal.Gadgets.depth_below",
+        "Formal.Gadgets.depth_within_every_ancestor",
+        "Formal.Gadgets.no_decrement_unbounded",
+        "Formal.Gadgets.leaf_act_all",
+        "Formal.Gadgets.leaf_valid_all",
+        "Formal.Chains.linked_of_constraint",
+        "Formal.Chains.soundness",
+        "Formal.Chains.escalation_unsat",
+        "Formal.Chains.r021_ceiling_unsat",
+        "Formal.Chains.r021_soundness"
+      ],
+      "sources": [
+        {
+          "path": "formal/Formal/Gadgets/ChainResolve.lean",
+          "sha256": "6764031b7cd4c99eb66440c2ef160f448d8a20e4cf46b84037476efef01f53d6"
+        },
+        {
+          "path": "formal/Formal/Chains/Presentation.lean",
+          "sha256": "8ecf3d1b3f34f9db18c282e06bb61bb4733b6fe2756d2d5fb2e40576eb7a8c8a"
+        },
+        {
+          "path": "formal/Formal/Chains/Records.lean",
+          "sha256": "3f9d6da77ebdc595a70b3cc3f30274030fd2cabe567789a2ac6b792d5370d871"
+        }
+      ],
+      "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+    },
+    {
+      "record": "012",
+      "status": "model-built-semantic-review-pending",
+      "roots": [
+        "Formal.R012.star_to_clique",
+        "Formal.R012.star_without_binding_not_clique"
+      ],
+      "sources": [
+        {
+          "path": "formal/Formal/Composed/R012.lean",
+          "sha256": "089288bb8c35c9801054f44e4e908d7ca3dac6f6ea6416a13fcc2a9fec64824a"
+        }
+      ],
+      "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+    },
+    {
+      "record": "011",
+      "status": "model-built-semantic-review-pending",
+      "roots": [
+        "Formal.R011.key_behind_persona",
+        "Formal.R011.persona_linkage_needed"
+      ],
+      "sources": [
+        {
+          "path": "formal/Formal/Composed/R011.lean",
+          "sha256": "1b174bd860e87bd378d2a69c0aab89a5ab87830ba3f252ff2cfc02ae0c91b524"
+        }
+      ],
+      "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+    },
+    {
+      "record": "010",
+      "status": "model-built-semantic-review-pending",
+      "roots": [
+        "Formal.R010.soundness",
+        "Formal.R010.self_vouch_unsat"
+      ],
+      "sources": [
+        {
+          "path": "formal/Formal/Composed/R010.lean",
+          "sha256": "167c2bb44491cabdc57a0164db734ebea85109d502d0c7646670d18d1d4ebed9"
+        }
+      ],
+      "obligation": "G6 abstract composition built; review clause correspondence and retained signature, commitment, membership and revocation assumptions. Runtime correspondence and out-of-model clauses remain open; record 013 is excluded."
+    },
+    {
+      "record": "025",
+      "status": "model-built-semantic-review-pending",
+      "roots": [
+        "Formal.R025.soundness",
+        "Formal.R025.replacement_fixed",
+        "Formal.R025.colliding_predigest_two_replacements",
+        "Formal.R025.second_rotation_refused",
+        "Formal.R025.rotated_leaf_still_member",
+        "Formal.R025.rotated_secret_retired",
+        "Formal.R025.tag_not_nullifier",
+        "Formal.R025.straddling_epoch_two_nullifiers",
+        "Formal.R025.next_epoch_one_nullifier"
+      ],
+      "sources": [
+        {
+          "path": "formal/Formal/Composed/R025.lean",
+          "sha256": "b997f06f2d209793411d24724bd105bfb0b272b8d92efb7785b6f2ec1b64a218"
+        }
+      ],
+      "obligation": "Run 2 (2026-10-27) composition of records 001, 006 and 002 with the pre-rotation opening, folded into record 025 as its formal block; review clause correspondence and the retained commitment-binding, pre-rotation-hash, PRF and sorted-revocation assumptions. Transcript (clause 5), batch unlinkability, runtime correspondence and the tag-absence clause inside records 010, 023 and 024 remain open."
+    }
+  ],
+  "auditRoots": [
+    "Formal.Gadgets.replay_refused",
+    "Formal.Gadgets.run_once",
+    "Formal.Gadgets.path_sound",
+    "Formal.Gadgets.path_complete",
+    "Formal.Gadgets.path_sound_fixed_depth",
+    "Formal.Gadgets.no_domain_second_preimage",
+    "Formal.Gadgets.one_leaf_one_nullifier",
+    "Formal.Gadgets.reuse_refused",
+    "Formal.Gadgets.unbound_nullifier_unsound",
+    "Formal.Gadgets.cross_context_not_detected",
+    "Formal.Gadgets.one_person_two_nullifiers",
+    "Formal.Gadgets.swap_fails",
+    "Formal.Gadgets.digest_reduction_collides",
+    "Formal.Gadgets.key_from_credential_secret",
+    "Formal.Gadgets.unbound_key_unsound",
+    "Formal.Gadgets.inverse_unsat_on_equal",
+    "Formal.Gadgets.FinOps",
+    "Formal.Gadgets.owners_distinct",
+    "Formal.Gadgets.distinct_leaves_not_distinct_persons",
+    "Formal.Gadgets.neighbours_sound",
+    "Formal.Gadgets.unsorted_neighbours_unsound",
+    "Formal.Gadgets.stale_root_passes",
+    "Formal.Gadgets.distinct_secrets_unsat",
+    "Formal.Gadgets.common_control_complete",
+    "Formal.Gadgets.binder_opens_once",
+    "Formal.Gadgets.visible_value_links",
+    "Formal.Gadgets.sub_zero_iff_eq",
+    "Formal.Gadgets.reference_opens_once",
+    "Formal.Gadgets.two_credential_gap",
+    "Formal.Gadgets.chain_sound_unsalted",
+    "Formal.R024.soundness",
+    "Formal.R024.completeness",
+    "Formal.R024.members_of_tags",
+    "Formal.R024.not_minted_refused",
+    "Formal.R024.batch_over_cap_refused",
+    "Formal.R024.tick_repeated_refused",
+    "Formal.R024.distinct_members_not_distinct_people",
+    "Formal.R024.people_of_members",
+    "Formal.R024.live_label_not_current_role",
+    "Formal.R024.rekey_counts_twice",
+    "Formal.R023.soundness",
+    "Formal.R023.no_vrc_no_statement",
+    "Formal.R023.selfVouch_accepts",
+    "Formal.R023.self_vouch_counted",
+    "Formal.Gadgets.scope_within_every_ancestor",
+    "Formal.Gadgets.validity_within_every_ancestor",
+    "Formal.Gadgets.depth_below",
+    "Formal.Gadgets.depth_within_every_ancestor",
+    "Formal.Gadgets.no_decrement_unbounded",
+    "Formal.Gadgets.leaf_act_all",
+    "Formal.Gadgets.leaf_valid_all",
+    "Formal.Chains.linked_of_constraint",
+    "Formal.Chains.soundness",
+    "Formal.Chains.r020_soundness",
+    "Formal.Chains.escalation_unsat",
+    "Formal.Chains.r021_ceiling_unsat",
+    "Formal.Chains.r021_soundness",
+    "Formal.R012.star_to_clique",
+    "Formal.R012.star_without_binding_not_clique",
+    "Formal.R011.key_behind_persona",
+    "Formal.R011.persona_linkage_needed",
+    "Formal.R010.soundness",
+    "Formal.R010.self_vouch_unsat",
+    "Formal.R013.soundness",
+    "Formal.R013.exchange_safe",
+    "Formal.R013.commit_frozen",
+    "Formal.R013.no_fairness",
+    "Formal.R025.soundness",
+    "Formal.R025.replacement_fixed",
+    "Formal.R025.colliding_predigest_two_replacements",
+    "Formal.R025.second_rotation_refused",
+    "Formal.R025.rotated_leaf_still_member",
+    "Formal.R025.rotated_secret_retired",
+    "Formal.R025.tag_not_nullifier",
+    "Formal.R025.straddling_epoch_two_nullifiers",
+    "Formal.R025.next_epoch_one_nullifier"
+  ],
+  "scope": "Public-bound inventory; no semantic or cryptographic certification.",
+  "auditSha256": "84f224b395884fcf22492ae8f966c2b952a3e261e42a99137d44a0712715d6f0",
+  "records": [
+    {
+      "id": "001",
+      "recordSha256": "95335864439d5ed32e5cfb6b7d3c146193e74e3aaaa7519b0782842674f2e43c",
+      "formalRoots": [
+        "Formal.Gadgets.path_sound",
+        "Formal.Gadgets.path_complete",
+        "Formal.Gadgets.path_sound_fixed_depth",
+        "Formal.Gadgets.no_domain_second_preimage"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-leaf, H-node",
+          "carries": "the leaf and node hashes are collision-free (modelled as injective)"
+        },
+        {
+          "name": "H-domain or fixed depth",
+          "carries": "no leaf hash equals a node hash, or every path has the tree's fixed depth — one of the two must hold of the circuit (to discharge at the circuit gate)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P001Membership.lean",
+          "sha256": "17483cefe7b66e0e8bacc70dcbf34d68c0689c184ccbd7f24bc3656ee6d49827"
+        },
+        {
+          "path": "runtimes/circom-gadget/circuits/nullifier_membership.circom",
+          "sha256": "f4ec172b02d49cd2bfff7c1145e651f7070095203059303e605919de393421ee"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "the committed leaf is in the tree at `root`",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.path_sound",
+            "Formal.Gadgets.path_complete",
+            "Formal.Gadgets.path_sound_fixed_depth",
+            "Formal.Gadgets.no_domain_second_preimage"
+          ],
+          "implementation": "runtimes/circom-gadget/circuits/nullifier_membership.circom",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        }
+      ]
+    },
+    {
+      "id": "002",
+      "recordSha256": "a8cb531ee7ea48ff14c70787e5a7bbf3fa71d4ac98ccd99134cf182b7e9707a2",
+      "formalRoots": [
+        "Formal.Gadgets.one_leaf_one_nullifier",
+        "Formal.Gadgets.reuse_refused",
+        "Formal.Gadgets.unbound_nullifier_unsound",
+        "Formal.Gadgets.cross_context_not_detected",
+        "Formal.Gadgets.one_person_two_nullifiers"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-leaf",
+          "carries": "the leaf commitment binds its secret (modelled as injective) — carries the same-secret clause"
+        },
+        {
+          "name": "spent set",
+          "carries": "the verifier keeps the context's spent nullifiers (Formal.Gadgets.Spent)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P002Nullifier.lean",
+          "sha256": "97996f6f5b3bac41eadff4a297469406d6db4ad30bd22e65eb57cf9102d3b1a6"
+        },
+        {
+          "path": "runtimes/circom-gadget/circuits/nullifier_membership.circom",
+          "sha256": "f4ec172b02d49cd2bfff7c1145e651f7070095203059303e605919de393421ee"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "nullifier = H(secret, root, scope, purpose, epoch) computed in-circuit from the same secret as the membership leaf",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.one_leaf_one_nullifier",
+            "Formal.Gadgets.reuse_refused",
+            "Formal.Gadgets.unbound_nullifier_unsound",
+            "Formal.Gadgets.cross_context_not_detected",
+            "Formal.Gadgets.one_person_two_nullifiers"
+          ],
+          "implementation": "runtimes/circom-gadget/circuits/nullifier_membership.circom",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        }
+      ]
+    },
+    {
+      "id": "003",
+      "recordSha256": "5eebd7743d862565bbdcc774a5184b05160e6488b820f3e4ca5cc673f5377441",
+      "formalRoots": [
+        "Formal.Gadgets.swap_fails",
+        "Formal.Gadgets.digest_reduction_collides"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-bind",
+          "carries": "soundness of the proof system with the transcript scalar as a public input"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P003Transcript.lean",
+          "sha256": "ecf0d5f14dc9b4e469d7263059b917e92d6eeb944e0f8814d9cc912c688ce5ec"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "the proof's public signals include transcriptDigest and the circuit constrains it (cannot be swapped post hoc)",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.swap_fails",
+            "Formal.Gadgets.digest_reduction_collides"
+          ],
+          "implementation": "runtimes/canonical + runtimes/circom-gadget (public signal 4)",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        }
+      ]
+    },
+    {
+      "id": "004",
+      "recordSha256": "547628f2110ae68e0122dbf6886650d87d6f72c842c6f64bebac28251c935de3",
+      "formalRoots": [
+        "Formal.Gadgets.key_from_credential_secret",
+        "Formal.Gadgets.unbound_key_unsound"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-com",
+          "carries": "the credential commitment is binding (modelled as injective in (secret, randomness))"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P004HolderBinding.lean",
+          "sha256": "c3a3d8a83542ed6e2009424af739b328160ac1fa9a023ca4a9df5fb32b534917"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "pk_presentation = PRF(secret, context) and the credential commitment opens to the same secret",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.key_from_credential_secret",
+            "Formal.Gadgets.unbound_key_unsound"
+          ],
+          "implementation": "",
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "005",
+      "recordSha256": "448e3a0aa68481d26679843cf33e4aafeaa93270abb5e3c4af35a50944326aef",
+      "formalRoots": [
+        "Formal.Gadgets.inverse_unsat_on_equal",
+        "Formal.Gadgets.FinOps",
+        "Formal.Gadgets.owners_distinct",
+        "Formal.Gadgets.distinct_leaves_not_distinct_persons"
+      ],
+      "hypotheses": [
+        {
+          "name": "one value per owner",
+          "carries": "the issuer's enrolment gives each member one leaf — carries owners_distinct"
+        },
+        {
+          "name": "inverse exists when a ≠ b",
+          "carries": "completeness of the constraint needs n prime; not proved here (circuit gate)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P005Distinct.lean",
+          "sha256": "1dd123f110c82157f9746c27238492ef43ed448e2f7819e31ee8a4da42cd8e52"
+        },
+        {
+          "path": "runtimes/circom-gadget/circuits/dual_issuer.circom",
+          "sha256": "046765b49d19f2cd4d6afae137a9cb6f58c6d2fe283c83c2d7ce84759aaf7fd5"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "leaf_a ≠ leaf_b (or issuer_a ≠ issuer_b) enforced as a non-zero inverse constraint — no witness exists for equality",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.inverse_unsat_on_equal",
+            "Formal.Gadgets.FinOps",
+            "Formal.Gadgets.owners_distinct",
+            "Formal.Gadgets.distinct_leaves_not_distinct_persons"
+          ],
+          "implementation": "runtimes/circom-gadget/circuits/dual_issuer.circom",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        }
+      ]
+    },
+    {
+      "id": "006",
+      "recordSha256": "babc312b4788b0f8ae6ecfeb321d2d2d875f8ff7093753f736e49b17b192f2c9",
+      "formalRoots": [
+        "Formal.Gadgets.neighbours_sound",
+        "Formal.Gadgets.unsorted_neighbours_unsound",
+        "Formal.Gadgets.stale_root_passes"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-sorted",
+          "carries": "the registry commits rl_root over strictly sorted leaves — a registry obligation, not a proof property"
+        },
+        {
+          "name": "neighbour membership",
+          "carries": "the two neighbours are leaves under rl_root: record 001's clause, applied twice"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P006NonRevocation.lean",
+          "sha256": "d368809abdc07882a524be8a6e7b755c3c0a9b9ac1c9a9038689aaf82b648f87"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "non-membership of the handle in the set committed by rl_root (sorted-leaf neighbours or accumulator non-witness)",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.neighbours_sound",
+            "Formal.Gadgets.unsorted_neighbours_unsound",
+            "Formal.Gadgets.stale_root_passes"
+          ],
+          "implementation": "",
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "007",
+      "recordSha256": "e5088a47cdfa6ec1b88efad2c10431581ca0f2cf2804a6886a7aea0d698d890b",
+      "formalRoots": [
+        "Formal.Gadgets.distinct_secrets_unsat",
+        "Formal.Gadgets.common_control_complete"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-com",
+          "carries": "the derivation binds (secret, salt) (modelled as injective)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P007CommonControl.lean",
+          "sha256": "13c12a39ca373767e17cca75576f7510b5b56266516b375004fb8474cc9b4cf7"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "identifier A's public key or commitment opens to (s, salt_A) and identifier B's opens to (s, salt_B) for one and the same s — a different secret behind either identifier is unsatisfiable",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.distinct_secrets_unsat",
+            "Formal.Gadgets.common_control_complete"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "008",
+      "recordSha256": "c1fa6beba683e184031955d28fea87c057194a38c8873f0930ced8ff1e0af934",
+      "formalRoots": [
+        "Formal.Gadgets.binder_opens_once",
+        "Formal.Gadgets.visible_value_links"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-com",
+          "carries": "the commitment binds (taskContext, salt) (modelled as injective)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P008Binder.lean",
+          "sha256": "ff2ca7dd89dae7d3c15fff72dbd7349651e184415a2a52b53b7023a5a0a51315"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "Route 1: prove that C opens to (taskContext, secret blinding value) for the expected exchange. Route 2 (proposed): the holder proves correct derivation of a context pseudonym from its secret key and context descriptor; the verifier checks that proof without learning or recomputing with the holder secret. Both routes still require binding to the issuer-authenticated credential.",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.binder_opens_once",
+            "Formal.Gadgets.visible_value_links"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "009",
+      "recordSha256": "985e5d2e7c3e4b876be1da58983d8a6ca7dc764eecdbd69eb850bba2582fb3d7",
+      "formalRoots": [
+        "Formal.Gadgets.sub_zero_iff_eq"
+      ],
+      "hypotheses": [
+        {
+          "name": "authenticated openings",
+          "carries": "the compared fields are the openings the enclosing record's signature-verify or membership clauses bind — carried by the enclosing record"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P009HiddenEquality.lean",
+          "sha256": "ed2da233af25faa39f500072edfbe54c494c0f56a669b3875395a08fe198146b"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "field_a (opened from credential A's authenticated content) equals field_b (opened from credential B's authenticated content): field_a − field_b = 0 — a differing pair is unsatisfiable, and neither value is a public signal",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.sub_zero_iff_eq"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "010",
+      "recordSha256": "dfb219afbf6e034245e2cced97c1a8097977250e5895dc79bf653706551ede82",
+      "formalRoots": [
+        "Formal.R010.soundness",
+        "Formal.R010.self_vouch_unsat"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-sig",
+          "carries": "clause 1: a verifying VRC is one the voucher issued over the presenter's key"
+        },
+        {
+          "name": "H-leaf, H-node, H-domain (record 001)",
+          "carries": "the membership tree's hashes are collision-free and leaves and nodes are hashed under separate domains"
+        },
+        {
+          "name": "H-sorted (record 006)",
+          "carries": "the revocation root is committed over strictly sorted handles"
+        },
+        {
+          "name": "H-com (record 007)",
+          "carries": "the identifier derivation binds (secret, salt)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Composed/R010.lean",
+          "sha256": "167c2bb44491cabdc57a0164db734ebea85109d502d0c7646670d18d1d4ebed9"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "ADR clause 1 — the VRC verifies as a vouch made by the holder of the voucher's credential over the presenter's key",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 2,
+          "statement": "ADR clause 2 — the presenter's VMC grant is a leaf of root_C",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 3,
+          "statement": "ADR clause 3 — the VRC issuer's VMC grant is a leaf of root_C (offline: proven from the root, not from the voucher)",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 4,
+          "statement": "S7 (WD02 §Community-Anchored Zero-Knowledge Proof) — the identifier the presenter used in the VRC and the identifier the presenter’s VMC grant names are controlled by one secret; likewise the voucher's VRC-issuing identifier and the voucher’s VMC-grant identifier (from the voucher’s linkage artifact, or trivially if the voucher used one `directed` identifier) — otherwise clauses 1–3 are about four unrelated identifiers",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 5,
+          "statement": "S6 — the two authenticated member leaves are distinct; this rejects reuse of one leaf, but does not by itself reject one controller with multiple memberships",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 6,
+          "statement": "S4 — the presenter's presentation key derives from the secret the presenter’s VMC/VRC bind to",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 7,
+          "statement": "C1–C3 — neither VMC handle nor the VRC handle is in the set under rl_root at epoch",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 8,
+          "statement": "P4 (parameterised) — if the context declares reuse detection, emit the scoped nullifier; else emit none",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 9,
+          "statement": "S5 — the whole show is bound to transcriptDigest",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 10,
+          "statement": "under a rotation-capable profile (record 025), neither member leaf's rotation tag is in the community's spent-tag set at the epoch — a secret rotated away no longer presents",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "011",
+      "recordSha256": "97e39f3f37e30cf7a0fc694af5c3dbd6065d8c75d43aabdae7777ccdc808d800",
+      "formalRoots": [
+        "Formal.R011.key_behind_persona",
+        "Formal.R011.persona_linkage_needed"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-com (record 007)",
+          "carries": "the identifier derivation binds (secret, salt)"
+        },
+        {
+          "name": "H-sig",
+          "carries": "clause 1: the VRC verifies under the issuing pairwise identifier's key (not modelled here)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Composed/R011.lean",
+          "sha256": "1b174bd860e87bd378d2a69c0aab89a5ab87830ba3f252ff2cfc02ae0c91b524"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "the VRC verifies under the issuing pairwise identifier’s key",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R011.key_behind_persona",
+            "Formal.R011.persona_linkage_needed"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 2,
+          "statement": "each disclosed persona identifier is co-controlled with its hidden pairwise identifier (record 007) — the presenter’s from their own secret, the counterparty’s from the counterparty’s attestation",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R011.key_behind_persona",
+            "Formal.R011.persona_linkage_needed"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 3,
+          "statement": "the presenter’s presentation key derives from the secret behind their pairwise identifier",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R011.key_behind_persona",
+            "Formal.R011.persona_linkage_needed"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 4,
+          "statement": "the VRC handle is not revoked at epoch",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R011.key_behind_persona",
+            "Formal.R011.persona_linkage_needed"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 5,
+          "statement": "bound to one transcript",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R011.key_behind_persona",
+            "Formal.R011.persona_linkage_needed"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "012",
+      "recordSha256": "df2353de4ef8195c84c3b81afcf959c975904c4cea2ce3d0eac87c04c5b9585d",
+      "formalRoots": [
+        "Formal.R012.star_to_clique",
+        "Formal.R012.star_without_binding_not_clique"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-com (record 007)",
+          "carries": "the identifier derivation binds (secret, salt)"
+        },
+        {
+          "name": "k ≥ 2",
+          "carries": "at k = 1 there is no clause and nothing establishes a secret behind identifier_1"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Composed/R012.lean",
+          "sha256": "089288bb8c35c9801054f44e4e908d7ca3dac6f6ea6416a13fcc2a9fec64824a"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "for each pair (identifier_1, identifier_i), i = 2..k: both open to the same s — k−1 common-control clauses sharing one witness",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R012.star_to_clique",
+            "Formal.R012.star_without_binding_not_clique"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 2,
+          "statement": "no credential handle is in the set under rl_root at epoch",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R012.star_to_clique",
+            "Formal.R012.star_without_binding_not_clique"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 3,
+          "statement": "the whole show is bound to transcriptDigest",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R012.star_to_clique",
+            "Formal.R012.star_without_binding_not_clique"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "013",
+      "recordSha256": "8c950d2ca74c7fb63c9cd78540b5a0e001ff500e08c40e72430782fc9fb1c5af",
+      "formalRoots": [
+        "Formal.R013.soundness",
+        "Formal.R013.exchange_safe",
+        "Formal.R013.commit_frozen",
+        "Formal.R013.no_fairness"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-digest (record 022)",
+          "carries": "clause 1: the commitment is collision-free over (bytes, salt)"
+        },
+        {
+          "name": "H-leaf, H-node, H-domain (record 001)",
+          "carries": "clauses 2 and 3: both trees' hashes are collision-free, leaves and nodes under separate domains"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Composed/R013.lean",
+          "sha256": "47ce3357c55082f079ff9b5bd49165407b2e5be7f618e501b10abb37a37af381"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "C opens to the canonical bytes of the proposed half under the salt u — the half is fixed before either party answers, and the half later revealed is the one the proof was about",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R013.soundness",
+            "Formal.R013.exchange_safe",
+            "Formal.R013.commit_frozen",
+            "Formal.R013.no_fairness"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 2,
+          "statement": "the half's form (the subject's correlation scope, membership claimed or not) is a leaf of the counterparty community's policy root",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R013.soundness",
+            "Formal.R013.exchange_safe",
+            "Formal.R013.commit_frozen",
+            "Formal.R013.no_fairness"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 3,
+          "statement": "where the form claims membership, the subject's grant is a leaf of the prover's own community root at the stated epoch — a claimed membership is real, never merely declared",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R013.soundness",
+            "Formal.R013.exchange_safe",
+            "Formal.R013.commit_frozen",
+            "Formal.R013.no_fairness"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 4,
+          "statement": "the proof is bound to transcriptDigest over both commitments and the exchange's challenge, so an admissibility answer cannot be replayed against a different half or a different exchange",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R013.soundness",
+            "Formal.R013.exchange_safe",
+            "Formal.R013.commit_frozen",
+            "Formal.R013.no_fairness"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "020",
+      "recordSha256": "fdd3de0fb10545e47355bd0ac22df3d46210cca71ef892d97bb2b0537f745a22",
+      "formalRoots": [
+        "Formal.Chains.r020_soundness",
+        "Formal.Chains.escalation_unsat",
+        "Formal.Chains.linked_of_constraint",
+        "Formal.Gadgets.leaf_act_all",
+        "Formal.Gadgets.depth_within_every_ancestor",
+        "Formal.Gadgets.no_decrement_unbounded"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-sig",
+          "carries": "clause 3: each hop's countersignature verifies"
+        },
+        {
+          "name": "H-leaf, H-node, H-domain (record 001)",
+          "carries": "the membership tree's hashes are collision-free and leaves and nodes are hashed under separate domains"
+        },
+        {
+          "name": "H-sorted (record 006)",
+          "carries": "the revocation root is committed over strictly sorted handles"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Chains/Records.lean",
+          "sha256": "3f9d6da77ebdc595a70b3cc3f30274030fd2cabe567789a2ac6b792d5370d871"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "act ∈ scope_n ⊆ … ⊆ scope_root (set inclusion over exact matches), validUntil monotone along the chain, and depth bounded by every ancestor: a hop below a parent bearing `maxDepth` n bears at most n − 1, no hop lies more than n steps below an ancestor bearing n, and no hop exists below a parent that omits `maxDepth` or sets it to 0; the chain terminates in a root delegation issued by the principal (cred-spec §Delegation Chains, WD02, checks 2–5)",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r020_soundness",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.leaf_act_all",
+            "Formal.Gadgets.depth_within_every_ancestor",
+            "Formal.Gadgets.no_decrement_unbounded"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 2,
+          "statement": "each hop's `issuer` equals its parent's `credentialSubject.id` — hidden-value equality across credentials signed by different parties, with no holder secret in the relation (cred-spec §Delegation Edges; #9 2026-09-10)",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r020_soundness",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.leaf_act_all",
+            "Formal.Gadgets.depth_within_every_ancestor",
+            "Formal.Gadgets.no_decrement_unbounded"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 3,
+          "statement": "each hop’s delegate countersigned the grant: `accepts` matches the grant digest (digestMultibase, WD02 D-A) and verifies under the delegate’s key",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r020_soundness",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.leaf_act_all",
+            "Formal.Gadgets.depth_within_every_ancestor",
+            "Formal.Gadgets.no_decrement_unbounded"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 4,
+          "statement": "principal is a leaf of root_C",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r020_soundness",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.leaf_act_all",
+            "Formal.Gadgets.depth_within_every_ancestor",
+            "Formal.Gadgets.no_decrement_unbounded"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 5,
+          "statement": "the agent's presentation key derives from the leaf-hop delegate secret",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r020_soundness",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.leaf_act_all",
+            "Formal.Gadgets.depth_within_every_ancestor",
+            "Formal.Gadgets.no_decrement_unbounded"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 6,
+          "statement": "no hop revoked at epoch",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r020_soundness",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.leaf_act_all",
+            "Formal.Gadgets.depth_within_every_ancestor",
+            "Formal.Gadgets.no_decrement_unbounded"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 7,
+          "statement": "bound to one transcript",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r020_soundness",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.leaf_act_all",
+            "Formal.Gadgets.depth_within_every_ancestor",
+            "Formal.Gadgets.no_decrement_unbounded"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "021",
+      "recordSha256": "21090e4588af949232c468b0d2be432dae547c3733917f1589504b178bee0d0e",
+      "formalRoots": [
+        "Formal.Chains.r021_soundness",
+        "Formal.Chains.r021_ceiling_unsat",
+        "Formal.Chains.escalation_unsat",
+        "Formal.Chains.linked_of_constraint",
+        "Formal.Gadgets.scope_within_every_ancestor"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-sig",
+          "carries": "clause 3: every link's signature verifies over the content the chain clauses read"
+        },
+        {
+          "name": "H-leaf, H-node, H-domain (record 001)",
+          "carries": "the membership tree's hashes are collision-free and leaves and nodes are hashed under separate domains"
+        },
+        {
+          "name": "H-sorted (record 006)",
+          "carries": "the revocation root is committed over strictly sorted handles"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Chains/Records.lean",
+          "sha256": "3f9d6da77ebdc595a70b3cc3f30274030fd2cabe567789a2ac6b792d5370d871"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "X ∈ actions_leaf ⊆ … ⊆ actions_root, scope never widened, validUntil monotone, depth ≤ 8 and within every `maxAttenuation` any link sets (a link below a parent bearing n bears at most n − 1; none exists below a parent bearing 0); the root is a VAC issued directly by the governing party (`authority.parent` absent) — cred-spec §Attenuation",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r021_soundness",
+            "Formal.Chains.r021_ceiling_unsat",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.scope_within_every_ancestor"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 2,
+          "statement": "each link's `issuer` equals its parent's `credentialSubject.id`, and each link's `authority.parent` equals the digest of its parent — hidden-value equality across differently-signed credentials",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r021_soundness",
+            "Formal.Chains.r021_ceiling_unsat",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.scope_within_every_ancestor"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 3,
+          "statement": "every link verifies as signed by its issuer over the hidden content the chain clauses read",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r021_soundness",
+            "Formal.Chains.r021_ceiling_unsat",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.scope_within_every_ancestor"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 4,
+          "statement": "the governing party of S is a leaf of root_G — proven from the root, not disclosed",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r021_soundness",
+            "Formal.Chains.r021_ceiling_unsat",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.scope_within_every_ancestor"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 5,
+          "statement": "the presenter's key derives from the leaf subject's secret — the VAC is not a bearer credential (§Invocation)",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r021_soundness",
+            "Formal.Chains.r021_ceiling_unsat",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.scope_within_every_ancestor"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 6,
+          "statement": "no link carrying `credentialStatus` is in the set under rl_root at epoch — revocation of an ancestor cascades, so the check runs on every link that carries status (§Withdrawal)",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r021_soundness",
+            "Formal.Chains.r021_ceiling_unsat",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.scope_within_every_ancestor"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 7,
+          "statement": "where the governing party requires it, the leaf subject is also a leaf of the scope's membership root — authority and membership stay separate credentials, and when both are proven with the subject withheld the presentation includes a shared-subject proof: record 009 where one identifier is used in both, record 007 where the two identifiers differ (§Authority and membership are separate credentials)",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r021_soundness",
+            "Formal.Chains.r021_ceiling_unsat",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.scope_within_every_ancestor"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 8,
+          "statement": "the whole show is bound to transcriptDigest",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Chains.r021_soundness",
+            "Formal.Chains.r021_ceiling_unsat",
+            "Formal.Chains.escalation_unsat",
+            "Formal.Chains.linked_of_constraint",
+            "Formal.Gadgets.scope_within_every_ancestor"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "022",
+      "recordSha256": "d9b8f33b00e1b14c015d3fcd0b8cf91d730eddd892473e62568925187bce1e13",
+      "formalRoots": [
+        "Formal.Gadgets.reference_opens_once",
+        "Formal.Gadgets.two_credential_gap",
+        "Formal.Gadgets.chain_sound_unsalted"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-digest",
+          "carries": "the declared digest is collision-free over (bytes, salt) (modelled as injective)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Gadgets/P022DigestRef.lean",
+          "sha256": "8326492cd7c73a5513f73f80ef42f257b48f54cd07d6d89587cba7acd0704276"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "the reference opens to (canonical bytes of the referenced credential, u) under the declared digest function: reference = Multibase(Multihash(H(bytes ∥ u))) — a different credential or a different salt is unsatisfiable; and when the enclosing record reads the referenced credential (the grant's fields in record 010, the parent's fields in records 020 and 021, the object in a VSC-based record) the bytes opened here are the bytes those clauses read — one credential, not one for the digest and another for the predicate",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.Gadgets.reference_opens_once",
+            "Formal.Gadgets.two_credential_gap",
+            "Formal.Gadgets.chain_sound_unsalted"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "023",
+      "recordSha256": "eb28c282facd94df7127983bb83afe012411e8365ade8954c1a7b6b701a11477",
+      "formalRoots": [
+        "Formal.R023.soundness",
+        "Formal.R023.no_vrc_no_statement",
+        "Formal.R023.self_vouch_counted"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-sig",
+          "carries": "clause 1: a verifying VRC is one a member issued"
+        },
+        {
+          "name": "H-leaf, H-node, H-domain (record 001)",
+          "carries": "the membership tree's hashes are collision-free and leaves and nodes are hashed under separate domains"
+        },
+        {
+          "name": "H-sorted (record 006)",
+          "carries": "the revocation root is committed over strictly sorted handles"
+        },
+        {
+          "name": "H-com (record 007)",
+          "carries": "the identifier derivation binds (secret, salt)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/R023/Soundness.lean",
+          "sha256": "a43bd3e2da2c078c6681f551f9dd3aa47418d7898ce7a6c1360d77801c270af4"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "each of the k VRCs verifies as issued by its voucher's VRC-side identifier over a subject equal to the applicant's admission identifier, or to an identifier the applicant proves co-controlled with it (clause 5)",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R023.soundness",
+            "Formal.R023.no_vrc_no_statement",
+            "Formal.R023.self_vouch_counted"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 2,
+          "statement": "each voucher's community-issued VMC grant is a leaf of root_C — the voucher is a current member, proven from the root while the voucher is offline",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R023.soundness",
+            "Formal.R023.no_vrc_no_statement",
+            "Formal.R023.self_vouch_counted"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 3,
+          "statement": "for each voucher, the identifier that issued the VRC and the identifier the voucher's grant names are one controller's — reused `directed` identifier, or the voucher's issuance-time attestation opened here",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R023.soundness",
+            "Formal.R023.no_vrc_no_statement",
+            "Formal.R023.self_vouch_counted"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 4,
+          "statement": "the k authenticated member leaves are pairwise distinct — the same member cannot be counted twice under two identifiers or two credentials",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R023.soundness",
+            "Formal.R023.no_vrc_no_statement",
+            "Formal.R023.self_vouch_counted"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 5,
+          "statement": "the applicant's presentation key derives from the secret the VRCs' subject identifier(s) bind to; where the VRCs name different `pairwise` identifiers of the applicant, those identifiers open to the same secret",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R023.soundness",
+            "Formal.R023.no_vrc_no_statement",
+            "Formal.R023.self_vouch_counted"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 6,
+          "statement": "no voucher's membership handle is in the set under rl_root at the epoch — a vouch from a revoked member does not count",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R023.soundness",
+            "Formal.R023.no_vrc_no_statement",
+            "Formal.R023.self_vouch_counted"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 7,
+          "statement": "the whole show is bound to transcriptDigest and to the context descriptor of this community and this join request",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R023.soundness",
+            "Formal.R023.no_vrc_no_statement",
+            "Formal.R023.self_vouch_counted"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 8,
+          "statement": "under a rotation-capable profile (record 025), no voucher's leaf has its rotation tag in the community's spent-tag set at the epoch — a vouch under a secret rotated away does not count",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R023.soundness",
+            "Formal.R023.no_vrc_no_statement",
+            "Formal.R023.self_vouch_counted"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "024",
+      "recordSha256": "0460e4bf9426a00732979ca45d94e35727066f154e74b2b593d2a6087e8efa21",
+      "formalRoots": [
+        "Formal.R024.soundness",
+        "Formal.R024.completeness",
+        "Formal.Gadgets.run_once",
+        "Formal.R024.not_minted_refused",
+        "Formal.R024.batch_over_cap_refused",
+        "Formal.R024.distinct_members_not_distinct_people",
+        "Formal.R024.rekey_counts_twice"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-Σ (Extractable)",
+          "carries": "clauses 1, 2 and 7: soundness of the construction's proof — every accepted tag comes from a credential issued under a live label, not under the applicant's key"
+        },
+        {
+          "name": "H-stable (SecretStable)",
+          "carries": "a vetter's secret is one across periods, where a proof mixes them"
+        },
+        {
+          "name": "H-applicant (ApplicantSecret)",
+          "carries": "an applicant holding a credential holds it over its own key; vacuous for one holding none"
+        },
+        {
+          "name": "H-fresh, H-tag",
+          "carries": "completeness only: two members never share a secret; tags do not collide for one applicant"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/R024/Soundness.lean",
+          "sha256": "246b2f3a7c03a1cbd72ed873c0ca0c7abbefcb08ead3f31dc0540c66bddeba56"
+        },
+        {
+          "path": "runtimes/circom-gadget/circuits/vetting_attest.circom",
+          "sha256": "36fa26d71f4c9ae52c56b8b5b30ac343164c013cf7e4f4ba105b5e7d1f6fa5ee"
+        },
+        {
+          "path": "runtimes/circom-gadget/harness-vetting.mjs",
+          "sha256": "2becf3faface22d4e708f8dba189b56a2019e6ff500e5b7ce4c8eb31794dbf9a"
+        },
+        {
+          "path": "runtimes/circom-gadget/circuits/vetting_bind.circom",
+          "sha256": "8318b979aa85f3830bea9b0995de7ea879b90e0a0857d904288dfc4e88f66961"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "each attester is an eligible vetter of the live period, proven without its identifier",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R024.soundness",
+            "Formal.R024.completeness",
+            "Formal.Gadgets.run_once",
+            "Formal.R024.not_minted_refused",
+            "Formal.R024.batch_over_cap_refused",
+            "Formal.R024.distinct_members_not_distinct_people",
+            "Formal.R024.rekey_counts_twice"
+          ],
+          "implementation": "runtimes/circom-gadget/circuits/vetting_attest.circom",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        },
+        {
+          "number": 2,
+          "statement": "each attestation carries a tag derived from its vetter's secret and the applicant's identifier — deterministic for one vetter and one applicant, unlinkable across applicants, and not recomputable from anything public",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R024.soundness",
+            "Formal.R024.completeness",
+            "Formal.Gadgets.run_once",
+            "Formal.R024.not_minted_refused",
+            "Formal.R024.batch_over_cap_refused",
+            "Formal.R024.distinct_members_not_distinct_people",
+            "Formal.R024.rekey_counts_twice"
+          ],
+          "implementation": "runtimes/circom-gadget/circuits/vetting_attest.circom",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        },
+        {
+          "number": 3,
+          "statement": "the k tags are pairwise distinct, so one vetter attesting twice counts once",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R024.soundness",
+            "Formal.R024.completeness",
+            "Formal.Gadgets.run_once",
+            "Formal.R024.not_minted_refused",
+            "Formal.R024.batch_over_cap_refused",
+            "Formal.R024.distinct_members_not_distinct_people",
+            "Formal.R024.rekey_counts_twice"
+          ],
+          "implementation": "runtimes/circom-gadget/harness-vetting.mjs",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        },
+        {
+          "number": 4,
+          "statement": "each attestation consumes an authorized serial in the declared community, profile and accounting interval; the same spend cannot increase the count twice. A profile may derive serials from a stable vetter secret with bounded slots, or use blind-issued transferable tokens under an aggregate issuance budget. A conflicting reuse is refused; a profile may acknowledge an identical resubmission without adding a counted attestation",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R024.soundness",
+            "Formal.R024.completeness",
+            "Formal.Gadgets.run_once",
+            "Formal.R024.not_minted_refused",
+            "Formal.R024.batch_over_cap_refused",
+            "Formal.R024.distinct_members_not_distinct_people",
+            "Formal.R024.rekey_counts_twice"
+          ],
+          "implementation": "runtimes/circom-gadget/circuits/vetting_attest.circom",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        },
+        {
+          "number": 5,
+          "statement": "the attested identifier derives from the applicant's per-application secret, which the applicant holds",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R024.soundness",
+            "Formal.R024.completeness",
+            "Formal.Gadgets.run_once",
+            "Formal.R024.not_minted_refused",
+            "Formal.R024.batch_over_cap_refused",
+            "Formal.R024.distinct_members_not_distinct_people",
+            "Formal.R024.rekey_counts_twice"
+          ],
+          "implementation": "runtimes/circom-gadget/circuits/vetting_bind.circom",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        },
+        {
+          "number": 6,
+          "statement": "the submission is bound to transcriptDigest — the community's challenge, the requirements digest, the join DID and every attestation's public values",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R024.soundness",
+            "Formal.R024.completeness",
+            "Formal.Gadgets.run_once",
+            "Formal.R024.not_minted_refused",
+            "Formal.R024.batch_over_cap_refused",
+            "Formal.R024.distinct_members_not_distinct_people",
+            "Formal.R024.rekey_counts_twice"
+          ],
+          "implementation": "runtimes/circom-gadget/circuits/vetting_bind.circom",
+          "tests": [],
+          "obligation": "Review implementation and test correspondence; a source path is not a proof."
+        },
+        {
+          "number": 7,
+          "statement": "no attester is the applicant",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R024.soundness",
+            "Formal.R024.completeness",
+            "Formal.Gadgets.run_once",
+            "Formal.R024.not_minted_refused",
+            "Formal.R024.batch_over_cap_refused",
+            "Formal.R024.distinct_members_not_distinct_people",
+            "Formal.R024.rekey_counts_twice"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 8,
+          "statement": "under a rotation-capable profile (record 025), no attester's enrolment leaf has its rotation tag in the community's spent-tag set at the epoch — an attestation under a secret rotated away does not count",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R024.soundness",
+            "Formal.R024.completeness",
+            "Formal.Gadgets.run_once",
+            "Formal.R024.not_minted_refused",
+            "Formal.R024.batch_over_cap_refused",
+            "Formal.R024.distinct_members_not_distinct_people",
+            "Formal.R024.rekey_counts_twice"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    },
+    {
+      "id": "025",
+      "recordSha256": "d192aaa3b4122be70f81d0c14cf40da22e3091ac704f3deef4db351911b753e5",
+      "formalRoots": [
+        "Formal.R025.soundness",
+        "Formal.R025.replacement_fixed",
+        "Formal.R025.colliding_predigest_two_replacements",
+        "Formal.R025.second_rotation_refused",
+        "Formal.R025.rotated_leaf_still_member",
+        "Formal.R025.rotated_secret_retired",
+        "Formal.R025.tag_not_nullifier",
+        "Formal.R025.straddling_epoch_two_nullifiers",
+        "Formal.R025.next_epoch_one_nullifier"
+      ],
+      "hypotheses": [
+        {
+          "name": "H-leaf, H-node, H-domain (record 001)",
+          "carries": "clause 1: the tree's hashes are collision-free, leaves and nodes under separate domains"
+        },
+        {
+          "name": "H-sorted (record 006)",
+          "carries": "clause 2: rl_root commits a strictly sorted handle list"
+        },
+        {
+          "name": "H-com",
+          "carries": "clause 3: the leaf commitment is binding over (s, N, r)"
+        },
+        {
+          "name": "H-pre",
+          "carries": "clause 3: the pre-rotation hash is collision-free"
+        },
+        {
+          "name": "H-prf",
+          "carries": "issuance 3: the PRF is collision-free over (secret, context)"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "formal/Formal/Composed/R025.lean",
+          "sha256": "b997f06f2d209793411d24724bd105bfb0b272b8d92efb7785b6f2ec1b64a218"
+        }
+      ],
+      "clauses": [
+        {
+          "number": 1,
+          "statement": "L opens to (s, N; r) and is a leaf under root_C",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R025.soundness",
+            "Formal.R025.replacement_fixed",
+            "Formal.R025.colliding_predigest_two_replacements",
+            "Formal.R025.second_rotation_refused",
+            "Formal.R025.rotated_leaf_still_member",
+            "Formal.R025.rotated_secret_retired",
+            "Formal.R025.tag_not_nullifier",
+            "Formal.R025.straddling_epoch_two_nullifiers",
+            "Formal.R025.next_epoch_one_nullifier"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 2,
+          "statement": "L's membership handle is not revoked under rl_root at the epoch — a member removed by the community cannot rotate into a fresh leaf",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R025.soundness",
+            "Formal.R025.replacement_fixed",
+            "Formal.R025.colliding_predigest_two_replacements",
+            "Formal.R025.second_rotation_refused",
+            "Formal.R025.rotated_leaf_still_member",
+            "Formal.R025.rotated_secret_retired",
+            "Formal.R025.tag_not_nullifier",
+            "Formal.R025.straddling_epoch_two_nullifiers",
+            "Formal.R025.next_epoch_one_nullifier"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 3,
+          "statement": "H(L′) = N: the replacement presented is the one L pre-committed — any other replacement is unsatisfiable, so a party holding a stolen s can move the enrolment only to the leaf the member chose, whose secret it does not hold",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R025.soundness",
+            "Formal.R025.replacement_fixed",
+            "Formal.R025.colliding_predigest_two_replacements",
+            "Formal.R025.second_rotation_refused",
+            "Formal.R025.rotated_leaf_still_member",
+            "Formal.R025.rotated_secret_retired",
+            "Formal.R025.tag_not_nullifier",
+            "Formal.R025.straddling_epoch_two_nullifiers",
+            "Formal.R025.next_epoch_one_nullifier"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 4,
+          "statement": "t = PRF(s; rotation context ‖ community): one tag per secret per community, so a second rotation from the same secret repeats t and is refused",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R025.soundness",
+            "Formal.R025.replacement_fixed",
+            "Formal.R025.colliding_predigest_two_replacements",
+            "Formal.R025.second_rotation_refused",
+            "Formal.R025.rotated_leaf_still_member",
+            "Formal.R025.rotated_secret_retired",
+            "Formal.R025.tag_not_nullifier",
+            "Formal.R025.straddling_epoch_two_nullifiers",
+            "Formal.R025.next_epoch_one_nullifier"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        },
+        {
+          "number": 5,
+          "statement": "the proof is bound to this rotation request's transcriptDigest",
+          "status": "pending-semantic-review",
+          "candidateFormalRoots": [
+            "Formal.R025.soundness",
+            "Formal.R025.replacement_fixed",
+            "Formal.R025.colliding_predigest_two_replacements",
+            "Formal.R025.second_rotation_refused",
+            "Formal.R025.rotated_leaf_still_member",
+            "Formal.R025.rotated_secret_retired",
+            "Formal.R025.tag_not_nullifier",
+            "Formal.R025.straddling_epoch_two_nullifiers",
+            "Formal.R025.next_epoch_one_nullifier"
+          ],
+          "implementation": null,
+          "tests": [],
+          "obligation": "No clause-level implementation reference supplied; establish coverage or record an explicit deferral."
+        }
+      ]
+    }
+  ]
+}

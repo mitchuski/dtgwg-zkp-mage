@@ -156,7 +156,7 @@
   ],
   "formal": {
     "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
-    "location": "formal/Formal/Composed/R011.lean in the evidence repository (uncommitted at this revision)",
+    "location": "formal/Formal/Composed/R011.lean in the evidence repository, at the evidence revision Appendix B pins",
     "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
     "statement": "clauses 2 and 3 composed: the presenter's key (record 004) and the persona ↔ pairwise linkage (record 007)",
     "theorems": [

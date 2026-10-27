@@ -79,6 +79,11 @@
       "clause": "S5 — the whole show is bound to transcriptDigest",
       "gadget": "transcript-bind",
       "component": "003"
+    },
+    {
+      "clause": "under a rotation-capable profile (record 025), neither member leaf's rotation tag is in the community's spent-tag set at the epoch — a secret rotated away no longer presents",
+      "gadget": "non-revocation",
+      "component": "025"
     }
   ],
   "disclosureSet": [
@@ -237,6 +242,11 @@
       "date": "2026-09-23",
       "by": "mitchuski",
       "note": "formal model built (Lean, composed from the gadget library); no state change"
+    },
+    {
+      "date": "2026-10-27",
+      "by": "mitchuski",
+      "note": "formal review run 2: scope narrowed to the encoded relation (F3); clause 10 added from record 025's issuance — the rotation-tag check under a rotation-capable profile (F8); no state change"
     }
   ],
   "history": [
@@ -257,13 +267,13 @@
   ],
   "formal": {
     "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
-    "location": "formal/Formal/Composed/R010.lean in the evidence repository (uncommitted at this revision)",
+    "location": "formal/Formal/Composed/R010.lean in the evidence repository, at the evidence revision Appendix B pins",
     "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
     "statement": "Formal.R010.Accepts and soundness — two distinct members, both grants under the membership root, every handle unrevoked, a VRC from the voucher over the presenter's key",
     "theorems": [
       {
         "name": "Formal.R010.soundness",
-        "proves": "clauses 1–5 and 7 as gadget relations establish two distinct current members related by a VRC (record 001 twice, record 006 per handle)"
+        "proves": "clauses 2, 3, 5 and 7 as gadget relations over supplied member leaves, VRC endpoints and handles (record 001 twice, record 006 per supplied handle); clauses 1 and 4 enter as supplied relations without extraction bindings"
       },
       {
         "name": "Formal.R010.self_vouch_unsat",
@@ -288,6 +298,6 @@
         "carries": "the identifier derivation binds (secret, salt)"
       }
     ],
-    "scope": "clauses 1–5 and 7; the presentation key (clause 6), the nullifier (clause 8) and the transcript (clause 9) are records 004, 002 and 003; distinct controllers from unequal leaves (does-not-establish 9) is record 005's negative space"
+    "scope": "clauses 2, 3, 5 and 7 over supplied leaves and handles; clauses 1 and 4 as supplied relations — voucher-side common control and the binding of leaves, VRC endpoints and identifiers to the presented credentials are open obligations, and the handle list is not required to contain the three credential handles (formal review run 1, finding F3); the presentation key (clause 6), the nullifier (clause 8) and the transcript (clause 9) are records 004, 002 and 003; clause 10 is covered generically by record 025's model, not by this one; distinct controllers from unequal leaves (does-not-establish 9) is record 005's negative space"
   }
 }

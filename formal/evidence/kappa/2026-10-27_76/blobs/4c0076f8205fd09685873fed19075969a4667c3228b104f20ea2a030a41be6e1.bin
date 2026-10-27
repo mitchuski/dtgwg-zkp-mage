@@ -1,0 +1,76 @@
+'Formal.Gadgets.replay_refused' depends on axioms: [propext]
+'Formal.Gadgets.run_once' depends on axioms: [propext, Quot.sound]
+'Formal.Gadgets.path_sound' depends on axioms: [propext]
+'Formal.Gadgets.path_complete' depends on axioms: [propext]
+'Formal.Gadgets.path_sound_fixed_depth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Formal.Gadgets.no_domain_second_preimage' depends on axioms: [propext]
+'Formal.Gadgets.one_leaf_one_nullifier' does not depend on any axioms
+'Formal.Gadgets.reuse_refused' depends on axioms: [propext]
+'Formal.Gadgets.unbound_nullifier_unsound' does not depend on any axioms
+'Formal.Gadgets.cross_context_not_detected' does not depend on any axioms
+'Formal.Gadgets.one_person_two_nullifiers' does not depend on any axioms
+'Formal.Gadgets.swap_fails' does not depend on any axioms
+'Formal.Gadgets.digest_reduction_collides' depends on axioms: [propext]
+'Formal.Gadgets.key_from_credential_secret' does not depend on any axioms
+'Formal.Gadgets.unbound_key_unsound' does not depend on any axioms
+'Formal.Gadgets.inverse_unsat_on_equal' does not depend on any axioms
+'Formal.Gadgets.FinOps' depends on axioms: [propext]
+'Formal.Gadgets.owners_distinct' depends on axioms: [propext, Quot.sound]
+'Formal.Gadgets.distinct_leaves_not_distinct_persons' does not depend on any axioms
+'Formal.Gadgets.neighbours_sound' depends on axioms: [propext, Quot.sound]
+'Formal.Gadgets.unsorted_neighbours_unsound' depends on axioms: [propext, Quot.sound]
+'Formal.Gadgets.stale_root_passes' depends on axioms: [propext, Quot.sound]
+'Formal.Gadgets.distinct_secrets_unsat' does not depend on any axioms
+'Formal.Gadgets.common_control_complete' does not depend on any axioms
+'Formal.Gadgets.binder_opens_once' does not depend on any axioms
+'Formal.Gadgets.visible_value_links' does not depend on any axioms
+'Formal.Gadgets.sub_zero_iff_eq' depends on axioms: [propext, Quot.sound]
+'Formal.Gadgets.reference_opens_once' does not depend on any axioms
+'Formal.Gadgets.two_credential_gap' does not depend on any axioms
+'Formal.Gadgets.chain_sound_unsalted' does not depend on any axioms
+'Formal.R024.soundness' depends on axioms: [propext, Quot.sound]
+'Formal.R024.completeness' depends on axioms: [propext, Quot.sound]
+'Formal.R024.members_of_tags' depends on axioms: [propext, Quot.sound]
+'Formal.R024.not_minted_refused' depends on axioms: [propext]
+'Formal.R024.batch_over_cap_refused' depends on axioms: [propext, Quot.sound]
+'Formal.R024.tick_repeated_refused' depends on axioms: [propext]
+'Formal.R024.distinct_members_not_distinct_people' depends on axioms: [propext, Quot.sound]
+'Formal.R024.people_of_members' depends on axioms: [propext, Quot.sound]
+'Formal.R024.live_label_not_current_role' depends on axioms: [propext, Quot.sound]
+'Formal.R024.rekey_counts_twice' depends on axioms: [propext, Quot.sound]
+'Formal.R023.soundness' depends on axioms: [propext, Quot.sound]
+'Formal.R023.no_vrc_no_statement' depends on axioms: [propext, Quot.sound]
+'Formal.R023.selfVouch_accepts' depends on axioms: [propext, Quot.sound]
+'Formal.R023.self_vouch_counted' depends on axioms: [propext, Quot.sound]
+'Formal.Gadgets.scope_within_every_ancestor' depends on axioms: [propext]
+'Formal.Gadgets.validity_within_every_ancestor' depends on axioms: [propext]
+'Formal.Gadgets.depth_below' depends on axioms: [propext, Quot.sound]
+'Formal.Gadgets.depth_within_every_ancestor' depends on axioms: [propext, Quot.sound]
+'Formal.Gadgets.no_decrement_unbounded' depends on axioms: [propext]
+'Formal.Gadgets.leaf_act_all' depends on axioms: [propext]
+'Formal.Gadgets.leaf_valid_all' depends on axioms: [propext]
+'Formal.Chains.linked_of_constraint' depends on axioms: [propext, Quot.sound]
+'Formal.Chains.soundness' depends on axioms: [propext, Quot.sound]
+'Formal.Chains.r020_soundness' depends on axioms: [propext, Quot.sound]
+'Formal.Chains.escalation_unsat' depends on axioms: [propext, Quot.sound]
+'Formal.Chains.r021_ceiling_unsat' depends on axioms: [propext, Quot.sound]
+'Formal.Chains.r021_soundness' depends on axioms: [propext, Quot.sound]
+'Formal.R012.star_to_clique' depends on axioms: [propext]
+'Formal.R012.star_without_binding_not_clique' depends on axioms: [propext, Quot.sound]
+'Formal.R011.key_behind_persona' does not depend on any axioms
+'Formal.R011.persona_linkage_needed' depends on axioms: [propext, Quot.sound]
+'Formal.R010.soundness' depends on axioms: [propext, Quot.sound]
+'Formal.R010.self_vouch_unsat' does not depend on any axioms
+'Formal.R013.soundness' depends on axioms: [propext]
+'Formal.R013.exchange_safe' depends on axioms: [propext]
+'Formal.R013.commit_frozen' depends on axioms: [propext]
+'Formal.R013.no_fairness' depends on axioms: [propext]
+'Formal.R025.soundness' depends on axioms: [propext, Quot.sound]
+'Formal.R025.replacement_fixed' does not depend on any axioms
+'Formal.R025.colliding_predigest_two_replacements' does not depend on any axioms
+'Formal.R025.second_rotation_refused' depends on axioms: [propext]
+'Formal.R025.rotated_leaf_still_member' depends on axioms: [propext]
+'Formal.R025.rotated_secret_retired' does not depend on any axioms
+'Formal.R025.tag_not_nullifier' does not depend on any axioms
+'Formal.R025.straddling_epoch_two_nullifiers' does not depend on any axioms
+'Formal.R025.next_epoch_one_nullifier' depends on axioms: [propext, Quot.sound]

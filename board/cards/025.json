@@ -167,5 +167,79 @@
       "evidence": "statement, witness, public inputs and five clauses bound to the lab gadget set (membership, non-revocation, a pre-rotation opening, a rotation tag, transcript binding); three options including the no-proof DID-method route for public identifiers; the enclosing records' spent-tag clause stated as an issuance line; the cross-rotation nullifier question left open as WG-17; privacy read across the DID log, the enrolment root and the presentations together: the registry-operator claim scoped to enrolments not bound to a public DID, batching and the next-epoch nullifier default stated as issuance lines, cross-community binding named",
       "task": "board/specify"
     }
+  ],
+  "formal": {
+    "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
+    "location": "formal/Formal/Composed/R025.lean in the evidence repository, at the evidence revision Appendix B pins",
+    "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
+    "statement": "Formal.R025.Rotates — the leaf L = com s N r is under root_C, its handle lies between sorted revocation neighbours, its pre-rotation digest N is the hash of the replacement presented, and the tag is the PRF of s; all four read from the one opening",
+    "theorems": [
+      {
+        "name": "Formal.R025.soundness",
+        "proves": "clauses 1–4: the presenter's leaf is enrolled, its handle is not revoked at the epoch, its pre-rotation digest names the replacement presented, and the tag is its secret's (records 001, 006 and 002's shape)"
+      },
+      {
+        "name": "Formal.R025.replacement_fixed",
+        "proves": "clause 3: one enrolment leaf admits one replacement and one tag — a party holding a stolen s moves the enrolment only to the leaf the member chose"
+      },
+      {
+        "name": "Formal.R025.colliding_predigest_two_replacements",
+        "proves": "H-pre is necessary: with a colliding pre-rotation hash one digest names two replacements"
+      },
+      {
+        "name": "Formal.R025.second_rotation_refused",
+        "proves": "clause 4: a second rotation from the same secret repeats the tag and is refused by the spent-tag set, whichever leaf it opens"
+      },
+      {
+        "name": "Formal.R025.rotated_leaf_still_member",
+        "proves": "does-not-establish 3: the membership tree is append-only, so membership alone still accepts a rotated-away leaf"
+      },
+      {
+        "name": "Formal.R025.rotated_secret_retired",
+        "proves": "issuance 2: the tag-absence clause carried by records 010, 023 and 024 is what retires the old secret"
+      },
+      {
+        "name": "Formal.R025.tag_not_nullifier",
+        "proves": "issuance 3: with the rotation context outside every presentation context, a rotation tag never equals a presentation nullifier"
+      },
+      {
+        "name": "Formal.R025.straddling_epoch_two_nullifiers",
+        "proves": "does-not-establish 4: a context epoch spanning the rotation sees two nullifiers"
+      },
+      {
+        "name": "Formal.R025.next_epoch_one_nullifier",
+        "proves": "issuance 6: the next-epoch default leaves one live secret, and so one nullifier, per context epoch"
+      }
+    ],
+    "hypotheses": [
+      {
+        "name": "H-leaf, H-node, H-domain (record 001)",
+        "carries": "clause 1: the tree's hashes are collision-free, leaves and nodes under separate domains"
+      },
+      {
+        "name": "H-sorted (record 006)",
+        "carries": "clause 2: rl_root commits a strictly sorted handle list"
+      },
+      {
+        "name": "H-com",
+        "carries": "clause 3: the leaf commitment is binding over (s, N, r)"
+      },
+      {
+        "name": "H-pre",
+        "carries": "clause 3: the pre-rotation hash is collision-free"
+      },
+      {
+        "name": "H-prf",
+        "carries": "issuance 3: the PRF is collision-free over (secret, context)"
+      }
+    ],
+    "scope": "clauses 1–4 and issuance lines 2, 3 and 6 as a model; clause 5 (transcript) is record 003's; that the holder can open L′, batch unlinkability, timing and the PRF's pseudorandomness are outside the model"
+  },
+  "revisions": [
+    {
+      "date": "2026-10-27",
+      "by": "mitchuski",
+      "note": "formal model built (Lean, composed from records 001, 006 and 002): the relation as a definition, its soundness, the counter-deployment showing H-pre necessary, and does-not-establish 3 and 4 classified (formal review run 2); no state change"
+    }
   ]
 }

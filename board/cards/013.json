@@ -151,17 +151,17 @@
   ],
   "formal": {
     "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
-    "location": "formal/Formal/Composed/R013.lean in the evidence repository (uncommitted at this revision)",
+    "location": "formal/Formal/Composed/R013.lean in the evidence repository, at the evidence revision Appendix B pins",
     "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
     "statement": "Formal.R013.Accepts for one direction; the exchange as a state machine (Formal.R013.step, Safe)",
     "theorems": [
       {
         "name": "Formal.R013.soundness",
-        "proves": "clauses 1–3: the committed half is the one whose form was proven, the form is a leaf of the counterparty's policy tree, and a claimed membership is a leaf of the prover's tree (records 022 and 001 twice)"
+        "proves": "opening uniqueness of the committed bytes, membership of a separately supplied policy form in the counterparty's policy tree, and conditional membership of a separately supplied subject leaf in the prover's tree (records 022 and 001 twice); that the form and subject are the committed half's is not established"
       },
       {
         "name": "Formal.R013.exchange_safe",
-        "proves": "over any sequence of events, a half is revealed only after both answers are yes, and no answer exists before both commitments"
+        "proves": "over any sequence of events with supplied answers, a half is revealed only after both answers are yes, and no answer exists before both commitments"
       },
       {
         "name": "Formal.R013.commit_frozen",
@@ -182,6 +182,13 @@
         "carries": "clauses 2 and 3: both trees' hashes are collision-free, leaves and nodes under separate domains"
       }
     ],
-    "scope": "clauses 1–3 as a model and the exchange ordering; clause 4 (transcript) is record 003's; the commitment's hiding and the policy's privacy are outside the model"
-  }
+    "scope": "clause 1 (opening uniqueness) and clauses 2–3 over a separately supplied form and subject leaf: their binding to the committed half is an open obligation (formal review run 1, finding F1); the exchange ordering over supplied Boolean answers, not answers derived from verified proofs (F2); clause 4 (transcript) is record 003's; the commitment's hiding and the policy's privacy are outside the model"
+  },
+  "revisions": [
+    {
+      "date": "2026-10-27",
+      "by": "mitchuski",
+      "note": "formal review run 2: scope narrowed to what the model encodes — the half's form and subject are supplied separately (F1) and the exchange answers are supplied Booleans (F2); no state change"
+    }
+  ]
 }

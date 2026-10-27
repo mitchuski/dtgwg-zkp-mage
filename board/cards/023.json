@@ -67,6 +67,11 @@
       "clause": "the whole show is bound to transcriptDigest and to the context descriptor of this community and this join request",
       "gadget": "transcript-bind",
       "component": "003"
+    },
+    {
+      "clause": "under a rotation-capable profile (record 025), no voucher's leaf has its rotation tag in the community's spent-tag set at the epoch — a vouch under a secret rotated away does not count",
+      "gadget": "non-revocation",
+      "component": "025"
     }
   ],
   "disclosureSet": [
@@ -213,17 +218,22 @@
       "date": "2026-09-29",
       "by": "mitchuski",
       "note": "PR #11 inline review (DenisPopov15, 28 Sept): options 0 and 3 folded into one blind-signature option that points to record 024; new does-not-establish line for the 007 bypass under that route; figures unchanged (none recorded). State unchanged."
+    },
+    {
+      "date": "2026-10-27",
+      "by": "mitchuski",
+      "note": "formal review run 2: scope narrowed — clause 5's key derivation is not in the model (F4); clause 8 added from record 025's issuance — the rotation-tag check under a rotation-capable profile (F8); no state change"
     }
   ],
   "formal": {
     "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
-    "location": "formal/Formal/R023/Soundness.lean (with Model.lean, NegativeSpace.lean) in the evidence repository (uncommitted at this revision)",
+    "location": "formal/Formal/R023/Soundness.lean (with Model.lean, NegativeSpace.lean) in the evidence repository, at the evidence revision Appendix B pins",
     "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
     "statement": "Formal.R023.Statement — at least k pairwise-distinct members, each with its grant leaf in the membership tree and its handle unrevoked, each linked through one controller to a VRC whose subject is the applicant's admission identifier or opens to it",
     "theorems": [
       {
         "name": "Formal.R023.soundness",
-        "proves": "the verifier's relation (clauses 1–6 as gadget relations) establishes the statement, through record 001's path_sound, record 005's distinct-leaves lemma and record 006's neighbours_sound"
+        "proves": "the verifier's relation (clauses 1–4 and 6 as gadget relations, and clause 5's identifier relation) establishes the statement, through record 001's path_sound, record 005's distinct-leaves lemma and record 006's neighbours_sound"
       },
       {
         "name": "Formal.R023.no_vrc_no_statement",
@@ -252,6 +262,6 @@
         "carries": "the identifier derivation binds (secret, salt)"
       }
     ],
-    "scope": "clauses 1–6 as a counting model; clause 7 (transcript) is record 003's; consent, invitation, identity check and admission are outside any clause"
+    "scope": "clauses 1–4 and 6 as a counting model; clause 5 only as an identifier relation (`subj = adm` or common control) — its presentation-key derivation is not modelled (formal review run 1, finding F4); clause 7 (transcript) is record 003's; clause 8 is covered generically by record 025's model, not by this one; consent, invitation, identity check and admission are outside any clause"
   }
 }

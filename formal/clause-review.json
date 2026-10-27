@@ -1,0 +1,737 @@
+{
+  "version": 1,
+  "scope": "Local source review, not independent cryptographic review. Circuit correspondence deferred (G8).",
+  "records": [
+    {
+      "id": "001",
+      "recordSha256": "95335864439d5ed32e5cfb6b7d3c146193e74e3aaaa7519b0782842674f2e43c",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.path_sound",
+            "Formal.Gadgets.path_complete",
+            "Formal.Gadgets.path_sound_fixed_depth"
+          ],
+          "finding": "Abstract Merkle relation under hash hypotheses; root trust and concrete hash/circuit correctness external."
+        }
+      ],
+      "reboundFrom": "5972ab42a057492c4ae8455eb20f650c59a072b229dc772a6a78768a1111d916",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "002",
+      "recordSha256": "a8cb531ee7ea48ff14c70787e5a7bbf3fa71d4ac98ccd99134cf182b7e9707a2",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.one_leaf_one_nullifier",
+            "Formal.Gadgets.unbound_nullifier_unsound"
+          ],
+          "finding": "Shared-secret relation and determinism; actual circuit wiring and reuse ledger not certified."
+        }
+      ],
+      "reboundFrom": "70029ff130c025e9f9f4b8e6634cf6f3cbe91f6023016323784cb950e9db8af4",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "003",
+      "recordSha256": "5eebd7743d862565bbdcc774a5184b05160e6488b820f3e4ca5cc673f5377441",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.swap_fails",
+            "Formal.Gadgets.digest_reduction_collides"
+          ],
+          "finding": "Binding assumed by hBind, not derived from the proof system. Scalar reduction is not injective."
+        }
+      ],
+      "reboundFrom": "29f3aeeda37787e5f0880ea84c1fc5d6a0938c2129bcf0414c8f11ce2f86bf05",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "004",
+      "recordSha256": "547628f2110ae68e0122dbf6886650d87d6f72c842c6f64bebac28251c935de3",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.key_from_credential_secret",
+            "Formal.Gadgets.unbound_key_unsound"
+          ],
+          "finding": "Abstract shared-secret opening relation under commitment binding; authenticated credential correspondence remains."
+        }
+      ],
+      "reboundFrom": "a3aaaa2b170f66769abde68fb61f3d3e048a79409c550c7d362452296f54316f",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "005",
+      "recordSha256": "448e3a0aa68481d26679843cf33e4aafeaa93270abb5e3c4af35a50944326aef",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.inverse_unsat_on_equal"
+          ],
+          "finding": "Duplicate unsatisfiability proved; inverse existence for all unequal values remains separate."
+        }
+      ],
+      "reboundFrom": "cc8e1b11d0198ee7bce55643f7de5a7e075ef8189b1434e2219ecdf85b4aa711",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "006",
+      "recordSha256": "babc312b4788b0f8ae6ecfeb321d2d2d875f8ff7093753f736e49b17b192f2c9",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.neighbours_sound",
+            "Formal.Gadgets.unsorted_neighbours_unsound"
+          ],
+          "finding": "Sorted-neighbour route only; authenticated neighbour openings, boundary cases and accumulator route need correspondence review."
+        }
+      ],
+      "reboundFrom": "f479124399540728c960422d2729557e264ee20c8eedde1af5acc56e30c9c0d0",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "007",
+      "recordSha256": "e5088a47cdfa6ec1b88efad2c10431581ca0f2cf2804a6886a7aea0d698d890b",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.distinct_secrets_unsat",
+            "Formal.Gadgets.common_control_complete"
+          ],
+          "finding": "Shared-secret openings and different-secret unsatisfiability under injective derivation. This supports the refined derivation-qualified relation, not arbitrary independently generated or hardware-held keys. It proves neither knowledge extraction nor secrecy/non-correlation, natural-person identity, credential validity, or cross-party issuer/subject chain equality."
+        }
+      ],
+      "reboundFrom": "504474188575a4b5465bcc62c24e48f7000a245b0cb18194cbfc62696e70b861",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "008",
+      "recordSha256": "c1fa6beba683e184031955d28fea87c057194a38c8873f0930ced8ff1e0af934",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.binder_opens_once",
+            "Formal.Gadgets.visible_value_links"
+          ],
+          "finding": "Route 1 opening uniqueness only; route 2 and issuer authentication are not established by these roots."
+        }
+      ],
+      "reboundFrom": "b0afdf9a1deaa32970d49e8e97287fac9d11878f4e33b6f74f29e60b0e29e695",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "009",
+      "recordSha256": "985e5d2e7c3e4b876be1da58983d8a6ca7dc764eecdbd69eb850bba2582fb3d7",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.sub_zero_iff_eq"
+          ],
+          "finding": "Arithmetic equality only; authenticated openings and hidden-value privacy are external."
+        }
+      ],
+      "reboundFrom": "d61ff8f670102b24f20108d9560ec68b1e6a2d915928a147d0b40758e96eb398",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "010",
+      "recordSha256": "dfb219afbf6e034245e2cced97c1a8097977250e5895dc79bf653706551ede82",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "assumed-relation",
+          "roots": [
+            "Formal.R010.soundness"
+          ],
+          "finding": "VRC membership is an assumed authenticated list (H-sig); no signature security proof."
+        },
+        {
+          "number": 2,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R010.soundness"
+          ],
+          "finding": "The supplied presenter leaf is a member of the tree under hash hypotheses. No model relation binds that leaf to presenterGrantId, presenterVrcId or presenterKey."
+        },
+        {
+          "number": 3,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R010.soundness"
+          ],
+          "finding": "The supplied voucher leaf is a member of the tree. No relation ties this leaf to vrcIssuer; membership plus a separately supplied issued VRC does not establish a VRC between these members."
+        },
+        {
+          "number": 4,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R010.soundness"
+          ],
+          "finding": "Only CommonControl of presenterVrcId and presenterGrantId is carried through. Voucher-side linkage is absent, and neither presenter identifier is extracted from the authenticated leaf/VRC. Full two-sided clause is not established."
+        },
+        {
+          "number": 5,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R010.soundness",
+            "Formal.R010.self_vouch_unsat"
+          ],
+          "finding": "Distinct supplied member leaves and rejection of identical leaves are proved. This does not exclude a shared controller/person or connect the leaves to the VRC endpoints."
+        },
+        {
+          "number": 6,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Explicitly outside R010 counting model: presentation key, optional nullifier and transcript need composition proofs."
+        },
+        {
+          "number": 7,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R010.soundness"
+          ],
+          "finding": "Non-revocation holds for each supplied handle under sortedness. The handles list may be empty; it is neither required to contain all three credential handles nor tied to those credentials. Currentness of the presented credentials is not established."
+        },
+        {
+          "number": 8,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Explicitly outside R010 counting model: presentation key, optional nullifier and transcript need composition proofs."
+        },
+        {
+          "number": 9,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Explicitly outside R010 counting model: presentation key, optional nullifier and transcript need composition proofs."
+        },
+        {
+          "number": 10,
+          "disposition": "outside-current-model",
+          "roots": [
+            "Formal.R025.rotated_secret_retired",
+            "Formal.R025.rotated_leaf_still_member"
+          ],
+          "finding": "Clause 10 (rotation-tag absence under a rotation-capable profile) is not in R010. R025.rotated_secret_retired shows the check retires a rotated-away secret, and R025.rotated_leaf_still_member shows membership (clauses 2–3) does not; composing the check into R010 is open."
+        }
+      ],
+      "reboundFrom": "92906871ab6a353f59960d96c84e75623b59e83ef71954eee774c36859a9843a",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; scope narrowed (F3); clause 10 added (F8); existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "011",
+      "recordSha256": "97e39f3f37e30cf7a0fc694af5c3dbd6065d8c75d43aabdae7777ccdc808d800",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "VRC signature, revocation and transcript are not proved by the persona/key roots."
+        },
+        {
+          "number": 2,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R011.key_behind_persona",
+            "Formal.R011.persona_linkage_needed"
+          ],
+          "finding": "Under injective derivation, the presenter persona/pairwise relation connects the key to the persona secret. No counterparty attestation authentication or corresponding linkage theorem is supplied; signature, privacy and anti-correlation claims are separate."
+        },
+        {
+          "number": 3,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R011.key_behind_persona"
+          ],
+          "finding": "HolderRel plus presenter CommonControl and an opening of the persona imply the key derives from that opening secret. Actual key possession, proof-system extraction and authenticated VRC field correspondence remain outside this theorem."
+        },
+        {
+          "number": 4,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "VRC signature, revocation and transcript are not proved by the persona/key roots."
+        },
+        {
+          "number": 5,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "VRC signature, revocation and transcript are not proved by the persona/key roots."
+        }
+      ],
+      "reboundFrom": "1307acb9428a95dfbb5523f75c60e1184442a103f13ae971a91231bb83944ea5",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "012",
+      "recordSha256": "df2353de4ef8195c84c3b81afcf959c975904c4cea2ce3d0eac87c04c5b9585d",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R012.star_to_clique",
+            "Formal.R012.star_without_binding_not_clique"
+          ],
+          "finding": "For at least two identifiers, pairwise common-control with the first identifier implies all pairs share a secret under injective derivation. The non-binding counterexample validates the hypothesis. k=1 establishes no opening; credential authentication, revocation, hiding and transcript composition remain separate."
+        },
+        {
+          "number": 2,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Revocation and transcript composition are outside the star-to-clique theorem."
+        },
+        {
+          "number": 3,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Revocation and transcript composition are outside the star-to-clique theorem."
+        }
+      ],
+      "reboundFrom": "d85513bce3e1c89f9da4aeb1caed731c72232c8e45142e6c9baad6ceab8c2e36",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "013",
+      "recordSha256": "8c950d2ca74c7fb63c9cd78540b5a0e001ff500e08c40e72430782fc9fb1c5af",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R013.soundness",
+            "Formal.R013.commit_frozen"
+          ],
+          "finding": "Commitment opening uniqueness is proved under injectivity; commitment update refusal after an answer is proved in the separate state machine. Accepts has no decoding relation connecting bytes to form or subjectLeaf, and no bridge ties its c to either state commitment or the revealed bytes. The claim that the committed half is the one whose form was proven is not established. Checked counterexamples: formal/review/R013Binding.lean."
+        },
+        {
+          "number": 2,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R013.soundness"
+          ],
+          "finding": "The independently supplied form belongs to the policy tree under hash/domain hypotheses. It is not shown to be the form encoded in the committed half. A committed member=true half is accepted with a supplied member=false form; no policy freshness or signature authentication is proved."
+        },
+        {
+          "number": 3,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R013.soundness"
+          ],
+          "finding": "If the supplied form.member is true, the independently supplied subjectLeaf belongs to the own-community tree. There is no extraction/binding from bytes to that leaf; an unrelated member leaf suffices. Setting the independent form.member=false bypasses the check."
+        },
+        {
+          "number": 4,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "No transcript digest, challenge or proof-verification relation occurs in R013. exchange_safe establishes ordering of supplied Boolean answers only; commit_frozen forbids recommitment; no_fairness shows both yes answers do not force reveal. Binding either answer to a checked proof, both commitments and this exchange remains open."
+        }
+      ],
+      "reboundFrom": "8e16adef987726d4aebd6086da4134a0c61319c50d4c3a8bae9f94927131f4d5",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; scope and theorem wording narrowed (F1, F2); existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "020",
+      "recordSha256": "fdd3de0fb10545e47355bd0ac22df3d46210cca71ef892d97bb2b0537f745a22",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Chains.r020_soundness",
+            "Formal.Gadgets.scope_within_every_ancestor",
+            "Formal.Gadgets.validity_within_every_ancestor",
+            "Formal.Gadgets.depth_within_every_ancestor"
+          ],
+          "finding": "Scope/expiry/depth propagation holds for supplied Hop fields; omitted depth is represented by zero, not parsed from credentials. Root provenance and principal-issued delegation are not checked by this relation. All-status is an explicit additional premise of r020_soundness."
+        },
+        {
+          "number": 2,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Chains.linked_of_constraint"
+          ],
+          "finding": "Proves issuer=parent subject over Fin n. Canonical identifier encoding and extraction of those values from signed credentials remain obligations; no common-control claim is involved."
+        },
+        {
+          "number": 3,
+          "disposition": "assumed-relation",
+          "roots": [
+            "Formal.Chains.soundness"
+          ],
+          "finding": "sigOK is supplied as a proposition; signature/countersignature verification and correct signed bytes remain obligations."
+        },
+        {
+          "number": 4,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Chains.soundness"
+          ],
+          "finding": "Proves membership of leafOf root.issuer under hash/domain hypotheses. Authenticating the issuer-to-grant mapping and recognizing the principal/governing-party authority are external premises."
+        },
+        {
+          "number": 5,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Presentation key and transcript composition remain outside the chain model."
+        },
+        {
+          "number": 6,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Chains.r020_soundness"
+          ],
+          "finding": "With hAllStatus, every supplied hop handle is unrevoked under sortedness. Bind handles and status flags to authenticated credentials, and validate the root/epoch externally."
+        },
+        {
+          "number": 7,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Presentation key and transcript composition remain outside the chain model."
+        }
+      ],
+      "reboundFrom": "b5b660e54616be8c2ec2489a837f66729ae212c897e317636d358a96690ab982",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "021",
+      "recordSha256": "21090e4588af949232c468b0d2be432dae547c3733917f1589504b178bee0d0e",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Chains.r021_soundness",
+            "Formal.Gadgets.scope_within_every_ancestor",
+            "Formal.Gadgets.validity_within_every_ancestor",
+            "Formal.Gadgets.depth_within_every_ancestor"
+          ],
+          "finding": "Scope/expiry/depth propagation holds for supplied Hop fields; omitted depth is represented by zero, not parsed from credentials. Root provenance and authority.parent absence are not checked by this relation. The ceiling bounds rest.length (links below the root), not total root-inclusive length; align profile depth convention."
+        },
+        {
+          "number": 2,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Chains.linked_of_constraint"
+          ],
+          "finding": "Proves issuer=parent subject over Fin n. There is no authority.parent digest field or equality in VHop: that half of clause 2 is absent. Canonical identifier encoding and authenticated field extraction remain obligations."
+        },
+        {
+          "number": 3,
+          "disposition": "assumed-relation",
+          "roots": [
+            "Formal.Chains.soundness"
+          ],
+          "finding": "sigOK is supplied as a proposition; signature/countersignature verification and correct signed bytes remain obligations."
+        },
+        {
+          "number": 4,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Chains.soundness"
+          ],
+          "finding": "Proves membership of leafOf root.issuer under hash/domain hypotheses. Authenticating the issuer-to-grant mapping and recognizing the principal/governing-party authority are external premises."
+        },
+        {
+          "number": 5,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Presentation key and transcript composition remain outside the chain model."
+        },
+        {
+          "number": 6,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Chains.r021_soundness"
+          ],
+          "finding": "Every supplied hop whose hasStatus=true is unrevoked under sortedness. Whether a signed credential carries status and which handle/epoch it names must be authenticated externally; a free status flag is not enough."
+        },
+        {
+          "number": 7,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Chains.r021_soundness"
+          ],
+          "finding": "The same-identifier route explicitly uses hLeafSubj to tie subj to the leaf subject, then proves leafOf subj membership when requireMember=true. The alternative different-identifier common-control route is not modelled. Authenticating leafOf and the governing policy flag remains external."
+        },
+        {
+          "number": 8,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Presentation key and transcript composition remain outside the chain model."
+        }
+      ],
+      "reboundFrom": "0752199e80f30275949b8113499ee57ddecbc28e29d3645521a7b2ced18c8a86",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; scope narrowed (F5); existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "022",
+      "recordSha256": "d9b8f33b00e1b14c015d3fcd0b8cf91d730eddd892473e62568925187bce1e13",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.reference_opens_once",
+            "Formal.Gadgets.two_credential_gap"
+          ],
+          "finding": "Abstract reference binding; canonical bytes, concrete digest, encodings and enclosing predicate binding require correspondence."
+        }
+      ],
+      "reboundFrom": "ca51ebea159131ae6242d143921f8050c6e210c8718c987aae44ed642ddc5746",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "023",
+      "recordSha256": "eb28c282facd94df7127983bb83afe012411e8365ade8954c1a7b6b701a11477",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "assumed-relation",
+          "roots": [
+            "Formal.R023.soundness"
+          ],
+          "finding": "VRC issuance is assumed (H-sig); no signature implementation proof."
+        },
+        {
+          "number": 2,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R023.soundness"
+          ],
+          "finding": "Membership of C.grantLeaf w.member is proved. C.grantId and C.handle are separate member-indexed functions; their extraction from the actual authenticated grant remains a correspondence obligation."
+        },
+        {
+          "number": 3,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R023.soundness"
+          ],
+          "finding": "CommonControl between VRC issuer and C.grantId member passes through the accepted relation. Voucher issuance-time attestation verification and identifier extraction from its grant are not proved."
+        },
+        {
+          "number": 4,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R023.soundness",
+            "Formal.R023.self_vouch_counted"
+          ],
+          "finding": "Distinct mapped grant leaves imply distinct Member values. Neither distinct controllers/people nor applicant exclusion follows; self_vouch_counted confirms acceptance with an already-member applicant. Admission must enforce any stronger exclusion."
+        },
+        {
+          "number": 5,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R023.soundness"
+          ],
+          "finding": "Only subj=adm or CommonControl subj adm is modelled. There is no presentation-key field or derivation check, so the presentation-key requirement of clause 5 is absent. Injective derivation is needed to interpret multiple identifier relations as the same secret; runtime correspondence is separate."
+        },
+        {
+          "number": 6,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R023.soundness"
+          ],
+          "finding": "Sorted-neighbour checks prove C.handle member is unrevoked. Authenticating that member-to-handle mapping and current epoch/root is external."
+        },
+        {
+          "number": 7,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Transcript/context binding remains outside the counting theorem."
+        },
+        {
+          "number": 8,
+          "disposition": "outside-current-model",
+          "roots": [
+            "Formal.R025.rotated_secret_retired",
+            "Formal.R025.rotated_leaf_still_member"
+          ],
+          "finding": "Clause 8 (rotation-tag absence under a rotation-capable profile) is not in R023. R025.rotated_secret_retired shows the check retires a rotated-away secret, and R025.rotated_leaf_still_member shows membership (clause 2) does not; composing the check into R023 is open."
+        }
+      ],
+      "reboundFrom": "e77349a9fca18886d3971fb1b8e1565ec45de685add4ae81200745d20942ee2d",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; scope narrowed (F4); clause 8 added (F8); existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "024",
+      "recordSha256": "0460e4bf9426a00732979ca45d94e35727066f154e74b2b593d2a6087e8efa21",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "assumed-relation",
+          "roots": [
+            "Formal.R024.soundness"
+          ],
+          "finding": "Extractable supplies an issued credential under a live label for each counted tag; proof knowledge soundness, unforgeability and group validation are obligations, not proved cryptography. Eligibility after a within-period withdrawal is not ensured merely by a live label."
+        },
+        {
+          "number": 2,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R024.soundness",
+            "Formal.R024.rekey_counts_twice"
+          ],
+          "finding": "tag is a deterministic function of secret and applicant identifier, with provenance assumed by Extractable. SecretStable supports one tag per member across labels. No unlinkability, public non-recomputability or cryptographic PRF claim is proved."
+        },
+        {
+          "number": 3,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R024.soundness",
+            "Formal.R024.completeness"
+          ],
+          "finding": "Distinct tags imply distinct Member values under Extractable and SecretStable; completeness additionally needs SecretFresh and TagInjective. This is a class-credential counting model, not established equivalence to every record profile or the Groth16 implementation."
+        },
+        {
+          "number": 4,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.Gadgets.run_once",
+            "Formal.Gadgets.replay_refused",
+            "Formal.R024.batch_over_cap_refused"
+          ],
+          "finding": "Sequential spent-set acceptance counts a supplied value at most once; drip refuses one over-cap issuance batch. Scope/profile/interval authorization is delegated to an admissible Boolean and value encoding. Aggregate budget across issuers/batches, per-vetter attribution, idempotent acknowledgement, durable atomic concurrency and coupling spends to the attestation count are not modelled."
+        },
+        {
+          "number": 5,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "Applicant identifier a and secret aSec are separate parameters, with no derivation or possession relation between them. ApplicantSecret constrains credential secrets for the applicant Member only; it does not prove this holder-binding clause."
+        },
+        {
+          "number": 6,
+          "disposition": "outside-model",
+          "roots": [],
+          "finding": "No transcriptDigest or complete submission binding is modelled. not_minted_refused checks a challenge against a supplied minted list and verification Boolean; single-use is a separate machine, not a transcript proof."
+        },
+        {
+          "number": 7,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R024.soundness",
+            "Formal.R024.distinct_members_not_distinct_people"
+          ],
+          "finding": "Member-level exclusion follows from Extractable secret inequality and ApplicantSecret. H-applicant can hold vacuously for an applicant with no class credential. Person-level self-vetting remains possible across Member identities; the Groth16 route has no established clause-7 correspondence."
+        },
+        {
+          "number": 8,
+          "disposition": "outside-current-model",
+          "roots": [
+            "Formal.R025.rotated_secret_retired"
+          ],
+          "finding": "Clause 8 (rotation-tag absence under a rotation-capable profile) is not in R024. R025.rotated_secret_retired shows the check retires a rotated-away secret; composing the check into the counting model is open."
+        }
+      ],
+      "reboundFrom": "4842541b07e6b242574107cb2394d8951ca0e3b0b91f4b430d977ba0ad93498a",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; clause 8 added (F8); existing clause statements and runtime references unchanged"
+    },
+    {
+      "id": "025",
+      "recordSha256": "d192aaa3b4122be70f81d0c14cf40da22e3091ac704f3deef4db351911b753e5",
+      "reviewedOn": "2026-10-27",
+      "clauses": [
+        {
+          "number": 1,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R025.soundness"
+          ],
+          "finding": "Leaf membership follows from path_sound under H-leaf, H-node and H-domain (record 001). The opening of L to (s, N; r) is modelled as L = com s N r; commitment binding (H-com) is a hypothesis used only by replacement_fixed, and hiding is outside the model."
+        },
+        {
+          "number": 2,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R025.soundness"
+          ],
+          "finding": "Handle absence follows from neighbours_sound under H-sorted (record 006). The proof speaks for the stated epoch only (stale_root_passes in record 006 applies unchanged); revocation-list freshness is the verifier's."
+        },
+        {
+          "number": 3,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R025.soundness",
+            "Formal.R025.replacement_fixed",
+            "Formal.R025.colliding_predigest_two_replacements"
+          ],
+          "finding": "With H-com and H-pre, one enrolment leaf admits exactly one replacement, so a holder of a stolen s can move the enrolment only to the committed L'. colliding_predigest_two_replacements shows H-pre is necessary. That the member can open L' is not established (does-not-establish 2)."
+        },
+        {
+          "number": 4,
+          "disposition": "partial-model",
+          "roots": [
+            "Formal.R025.replacement_fixed",
+            "Formal.R025.second_rotation_refused",
+            "Formal.R025.tag_not_nullifier"
+          ],
+          "finding": "The tag is a function of the secret, so a second rotation from the same secret repeats it and the spent-tag set refuses it (Spent.replay_refused). tag_not_nullifier proves issuance 3 under H-prf. PRF pseudorandomness and rotation unlinkability are computational and not modelled."
+        },
+        {
+          "number": 5,
+          "disposition": "outside-current-model",
+          "roots": [],
+          "finding": "No transcriptDigest is modelled in R025; record 003 (swap_fails, digest_reduction_collides) applies by composition but is not proven here."
+        }
+      ],
+      "negativeSpace": [
+        {
+          "item": "does-not-establish 3",
+          "roots": [
+            "Formal.R025.rotated_leaf_still_member",
+            "Formal.R025.rotated_secret_retired"
+          ],
+          "finding": "Membership alone still accepts a rotated-away leaf; retirement depends on the issuance clause that adds tag absence to records 010, 023 and 024. Those records do not yet carry that clause in their formal models."
+        },
+        {
+          "item": "does-not-establish 4",
+          "roots": [
+            "Formal.R025.straddling_epoch_two_nullifiers",
+            "Formal.R025.next_epoch_one_nullifier"
+          ],
+          "finding": "A context epoch spanning the rotation sees two nullifiers; the next-epoch default leaves one live secret per context epoch. WG-17 alternative (carried-forward nullifier) not modelled."
+        }
+      ],
+      "reboundFrom": "65c0bac2fda38e5a1929efb78920c9770bf62acef3c627a6aac5ccb0e754be1d",
+      "reboundOn": "2026-10-27",
+      "reboundReason": "run 2 publication pass: formal location names the pinned evidence revision; revision row added; formal block folded in from the run 2 model; existing clause statements and runtime references unchanged"
+    }
+  ]
+}

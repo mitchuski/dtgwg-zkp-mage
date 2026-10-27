@@ -72,6 +72,11 @@
       "clause": "no attester is the applicant",
       "gadget": "distinctness",
       "component": "005"
+    },
+    {
+      "clause": "under a rotation-capable profile (record 025), no attester's enrolment leaf has its rotation tag in the community's spent-tag set at the epoch — an attestation under a secret rotated away does not count",
+      "gadget": "non-revocation",
+      "component": "025"
     }
   ],
   "disclosureSet": [
@@ -247,11 +252,16 @@
       "date": "2026-10-02",
       "by": "mitchuski",
       "note": "an issuance line for DID-rooted enrolment (task-force discussion of 2 October; DenisPopov15's 28 September point that the PCS secret is set at enrolment with no DID verification-method commitment): the binding is an enrolment-time act, rotation lands at the period boundary, record 025 for rotation inside a period. No clause, option or figure changes. State unchanged."
+    },
+    {
+      "date": "2026-10-27",
+      "by": "mitchuski",
+      "note": "formal review run 2: clause 8 added from record 025's issuance — the rotation-tag check under a rotation-capable profile (F8); no state change"
     }
   ],
   "formal": {
     "system": "Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom",
-    "location": "formal/Formal/R024/Soundness.lean (with Model.lean, SingleUse.lean, NegativeSpace.lean) in the evidence repository (uncommitted at this revision)",
+    "location": "formal/Formal/R024/Soundness.lean (with Model.lean, SingleUse.lean, NegativeSpace.lean) in the evidence repository, at the evidence revision Appendix B pins",
     "reproduce": "sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom",
     "statement": "Formal.R024.Statement, read for a class-credential construction — at least k pairwise-distinct members, none the applicant, each holding a credential under a live label whose tag on the applicant's identifier is among those counted",
     "theorems": [
@@ -302,6 +312,6 @@
         "carries": "completeness only: two members never share a secret; tags do not collide for one applicant"
       }
     ],
-    "scope": "the counting rule and the single-use rules over abstract primitives; not the construction's cryptography, unlinkability or the adversary claims; per-vetter cap attribution (DG-024-4) is not modelled"
+    "scope": "the counting rule and the single-use rules over abstract primitives; not the construction's cryptography, unlinkability or the adversary claims; per-vetter cap attribution (DG-024-4) is not modelled; clause 8 is covered generically by record 025's model, not by this one"
   }
 }

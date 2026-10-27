@@ -153,7 +153,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P001Membership.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P001Membership.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.Gadgets.pathRoot over Formal.Gadgets.MTree — the membership clause as a Merkle path recomputation from the leaf hash to the root
 - scope: the membership clause over abstract hashes; not the hash function's collision resistance, and not which registry state the root is (that the verifier recognises the root is registry policy)
@@ -282,7 +282,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P002Nullifier.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P002Nullifier.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.Gadgets.NullifierRel — some secret behind this leaf gives this nullifier in this context
 - scope: reuse detection over abstract hashes; unlinkability across contexts is a computational claim outside this model; does-not-establish 2 is governance
@@ -416,7 +416,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P003Transcript.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P003Transcript.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: the proof's public transcript scalar; H-bind states that a verifying proof was made for the scalar it verifies against
 - scope: binding of the scalar only; canonical encoding, audience, freshness and replay policy are the profile's (does-not-establish 1, 2, 5, 6, 7 out of scope by construction; the replay remedy is a verifier spent set)
@@ -536,7 +536,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P004HolderBinding.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P004HolderBinding.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.Gadgets.HolderRel — pk = PRF(s, context) for an s the credential commitment opens to
 - scope: derivation from the credential secret; non-transfer, coercion and sharing (does-not-establish 1, 2) are out of scope by construction — the relation reads a secret and names no party
@@ -658,7 +658,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P005Distinct.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P005Distinct.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: the inverse constraint (a − b) · inv = 1 over the circuit field Fin n; and Formal.Gadgets.owners_distinct, the k-ary form composed records use
 - scope: unsatisfiability of the duplicate case, proved without cryptographic assumption; independence and honesty (does-not-establish 1, 2) are declarations outside any clause
@@ -787,7 +787,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P006NonRevocation.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P006NonRevocation.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.Gadgets.Sorted and adjacent neighbours lo < h < hi in the committed revocation list
 - scope: non-membership against the committed list; the registry's decision and live-lookup behaviour (does-not-establish 2, 3) are out of scope
@@ -929,7 +929,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P007CommonControl.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P007CommonControl.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.Gadgets.CommonControl — one secret behind both identifiers under the derivation
 - scope: one secret behind two identifiers; one natural person, validity, intent, the counterparty's control and the chain predicate (does-not-establish 1–6) are out of scope by construction — the clause reads a secret
@@ -1084,7 +1084,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P008Binder.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P008Binder.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.Gadgets.BinderRel — the commitment C opens to the taskContext (route 1)
 - scope: route 1 only; route 2 (context pseudonym) is proposed and unmodelled; completion, plaintext custody and outcome status (does-not-establish 2–4) are out of scope
@@ -1212,7 +1212,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P009HiddenEquality.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P009HiddenEquality.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: the constraint field_a − field_b = 0 over the circuit field Fin n
 - scope: the equality clause alone; common control, authenticity, intent and meaning (does-not-establish 1–4) are out of scope by construction — the clause compares two witnesses
@@ -1277,6 +1277,7 @@ A maintainer checks authenticated evidence of a relationship between two distinc
 7. C1–C3 — neither VMC handle nor the VRC handle is in the set under rl_root at epoch — [[ref: non-revocation]] ([[ref: construction record]] 006, [Non-revocation against a status root](#construction-006-%C2%B7-non-revocation-against-a-status-root))
 8. P4 (parameterised) — if the context declares reuse detection, emit the scoped nullifier; else emit none — [[ref: nullifier]] ([[ref: construction record]] 002, [Scoped nullifier (reuse detection)](#construction-002-%C2%B7-scoped-nullifier-(reuse-detection)))
 9. S5 — the whole show is bound to transcriptDigest — [[ref: transcript-bind]] ([[ref: construction record]] 003, [Transcript binding](#construction-003-%C2%B7-transcript-binding))
+10. under a rotation-capable profile (record 025), neither member leaf's rotation tag is in the community's spent-tag set at the epoch — a secret rotated away no longer presents — [[ref: non-revocation]] ([[ref: construction record]] 025, [Secret rotation with enrolment continuity — a member replaces the secret behind its enrolment with the one it pre-committed, retiring the old enrolment without disclosing which it was](#construction-025-%C2%B7-secret-rotation-with-enrolment-continuity-%E2%80%94-a-member-replaces-the-secret-behind-its-enrolment-with-the-one-it-pre-committed%2C-retiring-the-old-enrolment-without-disclosing-which-it-was))
 
 #### Disclosure set
 
@@ -1373,20 +1374,21 @@ Revisions within a state:
 | 2026-09-13 | mitchuski | cred-spec PR #50 (vetting as a statement predicate, superseding #49): negative-space line — vetting evidence is not the voucher linkage; three fixture requirements recorded as rejection codes without vectors; provenance. State unchanged. |
 | 2026-09-21 | mitchuski | Review of 2026-09-16: the credential maintainer's answer to question 2 of #23 recorded; the example set's Ed25519 `did:key` identifiers found unable to carry the commitment record 007 requires (WG-14). Citations by section title. State unchanged. |
 | 2026-09-23 | mitchuski | formal model built (Lean, composed from the gadget library); no state change |
+| 2026-10-27 | mitchuski | formal review run 2: scope narrowed to the encoded relation (F3); clause 10 added from record 025's issuance — the rotation-tag check under a rotation-capable profile (F8); no state change |
 
 #### Formal verification
 
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Composed/R010.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Composed/R010.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.R010.Accepts and soundness — two distinct members, both grants under the membership root, every handle unrevoked, a VRC from the voucher over the presenter's key
-- scope: clauses 1–5 and 7; the presentation key (clause 6), the nullifier (clause 8) and the transcript (clause 9) are records 004, 002 and 003; distinct controllers from unequal leaves (does-not-establish 9) is record 005's negative space
+- scope: clauses 2, 3, 5 and 7 over supplied leaves and handles; clauses 1 and 4 as supplied relations — voucher-side common control and the binding of leaves, VRC endpoints and identifiers to the presented credentials are open obligations, and the handle list is not required to contain the three credential handles (formal review run 1, finding F3); the presentation key (clause 6), the nullifier (clause 8) and the transcript (clause 9) are records 004, 002 and 003; clause 10 is covered generically by record 025's model, not by this one; distinct controllers from unequal leaves (does-not-establish 9) is record 005's negative space
 
 | theorem | proves |
 |---|---|
-| `Formal.R010.soundness` | clauses 1–5 and 7 as gadget relations establish two distinct current members related by a VRC (record 001 twice, record 006 per handle) |
+| `Formal.R010.soundness` | clauses 2, 3, 5 and 7 as gadget relations over supplied member leaves, VRC endpoints and handles (record 001 twice, record 006 per supplied handle); clauses 1 and 4 enter as supplied relations without extraction bindings |
 | `Formal.R010.self_vouch_unsat` | the rejection code self-vouch: one member leaf in both roles is never accepted (contrast record 023) |
 
 | hypothesis | carries |
@@ -1513,7 +1515,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Composed/R011.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Composed/R011.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: clauses 2 and 3 composed: the presenter's key (record 004) and the persona ↔ pairwise linkage (record 007)
 - scope: the composition of clauses 2 and 3; the VRC signature (1), revocation (4) and transcript (5) are records' own gadgets; the counterparty's linkage rests on its attestation
@@ -1641,7 +1643,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Composed/R012.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Composed/R012.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: clause 1: k − 1 common-control clauses against identifier_1
 - scope: clause 1; non-revocation (2) and the transcript (3) are records 006 and 003
@@ -1767,20 +1769,26 @@ Rejection codes: `half-inadmissible (unsat: the half's form is not a leaf of the
 | 2026-09-11 | `requested` | mitchuski (on cred-spec #25, 2026-08-25) — requested by stormer78's issue and geoffturk's 2026-09-07 restatement | cred-spec #25: 'There is a stronger form the ZKP task force can carry as future work: proving my half would be admissible under the counterparty's policy without revealing the policy or the member' — placed on the request register 2026-09-11 (open item D23); every field above is a placeholder until specified |
 | 2026-09-23 | `specified` | mitchuski | statement, witness, public inputs, four clauses composed from 001 · 003 · 022, disclosure set, six doesNotEstablish lines (policy privacy and fairness named), two adversary claims, horizon, seven rejection codes (three for the exchange), two options, four issuance lines; formal model of one direction and of the exchange ordering |
 
+Revisions within a state:
+
+| date | by | note |
+|---|---|---|
+| 2026-10-27 | mitchuski | formal review run 2: scope narrowed to what the model encodes — the half's form and subject are supplied separately (F1) and the exchange answers are supplied Booleans (F2); no state change |
+
 #### Formal verification
 
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Composed/R013.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Composed/R013.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.R013.Accepts for one direction; the exchange as a state machine (Formal.R013.step, Safe)
-- scope: clauses 1–3 as a model and the exchange ordering; clause 4 (transcript) is record 003's; the commitment's hiding and the policy's privacy are outside the model
+- scope: clause 1 (opening uniqueness) and clauses 2–3 over a separately supplied form and subject leaf: their binding to the committed half is an open obligation (formal review run 1, finding F1); the exchange ordering over supplied Boolean answers, not answers derived from verified proofs (F2); clause 4 (transcript) is record 003's; the commitment's hiding and the policy's privacy are outside the model
 
 | theorem | proves |
 |---|---|
-| `Formal.R013.soundness` | clauses 1–3: the committed half is the one whose form was proven, the form is a leaf of the counterparty's policy tree, and a claimed membership is a leaf of the prover's tree (records 022 and 001 twice) |
-| `Formal.R013.exchange_safe` | over any sequence of events, a half is revealed only after both answers are yes, and no answer exists before both commitments |
+| `Formal.R013.soundness` | opening uniqueness of the committed bytes, membership of a separately supplied policy form in the counterparty's policy tree, and conditional membership of a separately supplied subject leaf in the prover's tree (records 022 and 001 twice); that the form and subject are the committed half's is not established |
+| `Formal.R013.exchange_safe` | over any sequence of events with supplied answers, a half is revealed only after both answers are yes, and no answer exists before both commitments |
 | `Formal.R013.commit_frozen` | no commitment changes once an answer exists |
 | `Formal.R013.no_fairness` | does-not-establish 3: after both yes answers the exchange can stop with nothing revealed |
 
@@ -1920,7 +1928,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Chains/Records.lean (with Presentation.lean and Gadgets/ChainResolve.lean) in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Chains/Records.lean (with Presentation.lean and Gadgets/ChainResolve.lean) in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.Chains.Statement with the root's own depth — the act conferred and unexpired at every hop, depth within the root, every issuer its parent's subject, the root's issuer a member, no hop revoked
 - scope: clauses 1–4 and 6; the agent's key (5) and the transcript (7) are records 004 and 003; chain-length hiding is a profile property
@@ -2069,16 +2077,17 @@ Revisions within a state:
 | date | by | note |
 |---|---|---|
 | 2026-09-23 | mitchuski | formal model built (Lean, composed from the gadget library); no state change |
+| 2026-10-27 | mitchuski | formal review run 2: scope narrowed — the parent digest and the common-control route of clause 7 are not in the model (F5); no state change |
 
 #### Formal verification
 
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Chains/Records.lean (with Presentation.lean and Gadgets/ChainResolve.lean) in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Chains/Records.lean (with Presentation.lean and Gadgets/ChainResolve.lean) in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.Chains.Statement with the depth ceiling 8, plus clause 7's leaf membership where the governing party requires it
-- scope: clauses 1–4, 6 and 7; the presenter's key (5) and the transcript (8) are records 004 and 003; distinct controllers along the chain (does-not-establish 7) are outside any clause
+- scope: clauses 1, 3, 4 and 6, clause 2's issuer/parent-subject equality and clause 7's same-identifier route; clause 2's parent digest (`authority.parent`) and clause 7's different-identifier common-control route are not modelled (formal review run 1, finding F5); the presenter's key (5) and the transcript (8) are records 004 and 003; distinct controllers along the chain (does-not-establish 7) are outside any clause
 
 | theorem | proves |
 |---|---|
@@ -2223,7 +2232,7 @@ Revisions within a state:
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/Gadgets/P022DigestRef.lean in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/Gadgets/P022DigestRef.lean in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.Gadgets.RefRel — the reference opens to (the bytes the enclosing clauses read, u)
 - scope: the opening and the one-credential clause; validity, entitlement and salt placement (does-not-establish 1, 2, 4) are out of scope; route 1 linkability (line 3) is record 008's visible_value_links
@@ -2287,6 +2296,7 @@ The issuing community learns that the applicant — the subject named in a pendi
 5. the applicant's presentation key derives from the secret the VRCs' subject identifier(s) bind to; where the VRCs name different `pairwise` identifiers of the applicant, those identifiers open to the same secret — [[ref: key-binding]] ([[ref: construction record]] 004, [Holder binding (key from secret)](#construction-004-%C2%B7-holder-binding-(key-from-secret)))
 6. no voucher's membership handle is in the set under rl_root at the epoch — a vouch from a revoked member does not count — [[ref: non-revocation]] ([[ref: construction record]] 006, [Non-revocation against a status root](#construction-006-%C2%B7-non-revocation-against-a-status-root))
 7. the whole show is bound to transcriptDigest and to the context descriptor of this community and this join request — [[ref: transcript-bind]] ([[ref: construction record]] 003, [Transcript binding](#construction-003-%C2%B7-transcript-binding))
+8. under a rotation-capable profile (record 025), no voucher's leaf has its rotation tag in the community's spent-tag set at the epoch — a vouch under a secret rotated away does not count — [[ref: non-revocation]] ([[ref: construction record]] 025, [Secret rotation with enrolment continuity — a member replaces the secret behind its enrolment with the one it pre-committed, retiring the old enrolment without disclosing which it was](#construction-025-%C2%B7-secret-rotation-with-enrolment-continuity-%E2%80%94-a-member-replaces-the-secret-behind-its-enrolment-with-the-one-it-pre-committed%2C-retiring-the-old-enrolment-without-disclosing-which-it-was))
 
 #### Disclosure set
 
@@ -2375,20 +2385,21 @@ Revisions within a state:
 | 2026-09-23 | mitchuski | doesNotEstablish line added from the formal model: no clause excludes a self-vouch by an applicant who is already a member; the refusal is placed on the admission check; no state change |
 | 2026-09-23 | mitchuski | formal model built (Lean, composed from the gadget library); no state change |
 | 2026-09-29 | mitchuski | PR #11 inline review (DenisPopov15, 28 Sept): options 0 and 3 folded into one blind-signature option that points to record 024; new does-not-establish line for the 007 bypass under that route; figures unchanged (none recorded). State unchanged. |
+| 2026-10-27 | mitchuski | formal review run 2: scope narrowed — clause 5's key derivation is not in the model (F4); clause 8 added from record 025's issuance — the rotation-tag check under a rotation-capable profile (F8); no state change |
 
 #### Formal verification
 
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/R023/Soundness.lean (with Model.lean, NegativeSpace.lean) in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/R023/Soundness.lean (with Model.lean, NegativeSpace.lean) in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.R023.Statement — at least k pairwise-distinct members, each with its grant leaf in the membership tree and its handle unrevoked, each linked through one controller to a VRC whose subject is the applicant's admission identifier or opens to it
-- scope: clauses 1–6 as a counting model; clause 7 (transcript) is record 003's; consent, invitation, identity check and admission are outside any clause
+- scope: clauses 1–4 and 6 as a counting model; clause 5 only as an identifier relation (`subj = adm` or common control) — its presentation-key derivation is not modelled (formal review run 1, finding F4); clause 7 (transcript) is record 003's; clause 8 is covered generically by record 025's model, not by this one; consent, invitation, identity check and admission are outside any clause
 
 | theorem | proves |
 |---|---|
-| `Formal.R023.soundness` | the verifier's relation (clauses 1–6 as gadget relations) establishes the statement, through record 001's path_sound, record 005's distinct-leaves lemma and record 006's neighbours_sound |
+| `Formal.R023.soundness` | the verifier's relation (clauses 1–4 and 6 as gadget relations, and clause 5's identifier relation) establishes the statement, through record 001's path_sound, record 005's distinct-leaves lemma and record 006's neighbours_sound |
 | `Formal.R023.no_vrc_no_statement` | does-not-establish 8: an admission path that issues no VRC can never satisfy the statement, for any k ≥ 1 |
 | `Formal.R023.self_vouch_counted` | does-not-establish 3: an applicant who is already a member vouches for itself through its own grant — the relation accepts k = 2 and the statement holds |
 
@@ -2447,6 +2458,7 @@ The issuing community learns that k pairwise-distinct eligible vetters of the li
 5. the attested identifier derives from the applicant's per-application secret, which the applicant holds — [[ref: key-binding]] ([[ref: construction record]] 004, [Holder binding (key from secret)](#construction-004-%C2%B7-holder-binding-(key-from-secret))) · runtime `runtimes/circom-gadget/circuits/vetting_bind.circom`
 6. the submission is bound to transcriptDigest — the community's challenge, the requirements digest, the join DID and every attestation's public values — [[ref: transcript-bind]] ([[ref: construction record]] 003, [Transcript binding](#construction-003-%C2%B7-transcript-binding)) · runtime `runtimes/circom-gadget/circuits/vetting_bind.circom`
 7. no attester is the applicant — [[ref: distinctness]] ([[ref: construction record]] 005, [Distinct member / distinct issuer](#construction-005-%C2%B7-distinct-member-%2F-distinct-issuer))
+8. under a rotation-capable profile (record 025), no attester's enrolment leaf has its rotation tag in the community's spent-tag set at the epoch — an attestation under a secret rotated away does not count — [[ref: non-revocation]] ([[ref: construction record]] 025, [Secret rotation with enrolment continuity — a member replaces the secret behind its enrolment with the one it pre-committed, retiring the old enrolment without disclosing which it was](#construction-025-%C2%B7-secret-rotation-with-enrolment-continuity-%E2%80%94-a-member-replaces-the-secret-behind-its-enrolment-with-the-one-it-pre-committed%2C-retiring-the-old-enrolment-without-disclosing-which-it-was))
 
 #### Disclosure set
 
@@ -2546,16 +2558,17 @@ Revisions within a state:
 | 2026-09-29 | mitchuski | PCS source public at OpenVTC/predicate-credential-system 4f4edf5 (28 Sept): option 1 pinned to that revision with the README sizes (1,392 B proof at k = 5) as constructor-reported, running times not recorded; provenance line. State unchanged (constructed, unmeasured). |
 | 2026-09-30 | mitchuski | the named-statement path beside this record moved to registry predicates (cred-spec PR #70, registry `vetted/1`; trust-tasks-tf PR #691 in draft): the eligible-vetter set is derived from community-issued authority credentials rather than role endorsements. Provenance only; no clause, option or figure changes. State unchanged. |
 | 2026-10-02 | mitchuski | an issuance line for DID-rooted enrolment (task-force discussion of 2 October; DenisPopov15's 28 September point that the PCS secret is set at enrolment with no DID verification-method commitment): the binding is an enrolment-time act, rotation lands at the period boundary, record 025 for rotation inside a period. No clause, option or figure changes. State unchanged. |
+| 2026-10-27 | mitchuski | formal review run 2: clause 8 added from record 025's issuance — the rotation-tag check under a rotation-capable profile (F8); no state change |
 
 #### Formal verification
 
 *A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
 
 - system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
-- location: formal/Formal/R024/Soundness.lean (with Model.lean, SingleUse.lean, NegativeSpace.lean) in the evidence repository (uncommitted at this revision)
+- location: formal/Formal/R024/Soundness.lean (with Model.lean, SingleUse.lean, NegativeSpace.lean) in the evidence repository, at the evidence revision Appendix B pins
 - reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
 - statement: Formal.R024.Statement, read for a class-credential construction — at least k pairwise-distinct members, none the applicant, each holding a credential under a live label whose tag on the applicant's identifier is among those counted
-- scope: the counting rule and the single-use rules over abstract primitives; not the construction's cryptography, unlinkability or the adversary claims; per-vetter cap attribution (DG-024-4) is not modelled
+- scope: the counting rule and the single-use rules over abstract primitives; not the construction's cryptography, unlinkability or the adversary claims; per-vetter cap attribution (DG-024-4) is not modelled; clause 8 is covered generically by record 025's model, not by this one
 
 | theorem | proves |
 |---|---|
@@ -2696,4 +2709,40 @@ Rejection codes: `replacement-not-precommitted (unsat: H(L′) ≠ N)`, `leaf-re
 |---|---|---|---|
 | 2026-10-02 | `requested` | ScottJeezey (chair, task-force discussion) | the chair's question on a DID as the starting point of the admission proof: DIDs carry several identifiers and key rotation; the proofs are rooted in a holder secret |
 | 2026-10-02 | `specified` | mitchuski | statement, witness, public inputs and five clauses bound to the lab gadget set (membership, non-revocation, a pre-rotation opening, a rotation tag, transcript binding); three options including the no-proof DID-method route for public identifiers; the enclosing records' spent-tag clause stated as an issuance line; the cross-rotation nullifier question left open as WG-17; privacy read across the DID log, the enrolment root and the presentations together: the registry-operator claim scoped to enrolments not bound to a public DID, batching and the next-epoch nullifier default stated as issuance lines, cross-community binding named |
+
+Revisions within a state:
+
+| date | by | note |
+|---|---|---|
+| 2026-10-27 | mitchuski | formal model built (Lean, composed from records 001, 006 and 002): the relation as a definition, its soundness, the counter-deployment showing H-pre necessary, and does-not-establish 3 and 4 classified (formal review run 2); no state change |
+
+#### Formal verification
+
+*A machine-checked model of this record. It proves the listed properties of the abstract relation or policy model; it is not evidence of the construction's cryptography — the hypotheses name what remains to discharge against the construction. It confers no evidence state.*
+
+- system: Lean 4.33.1, core library only (no Mathlib); axiom footprint within propext, Classical.choice and Quot.sound — no sorry, no added axiom
+- location: formal/Formal/Composed/R025.lean in the evidence repository, at the evidence revision Appendix B pins
+- reproduce: sh formal/scripts/check-axioms.sh — builds, prints each theorem's axiom footprint, fails on sorry or a non-standard axiom
+- statement: Formal.R025.Rotates — the leaf L = com s N r is under root_C, its handle lies between sorted revocation neighbours, its pre-rotation digest N is the hash of the replacement presented, and the tag is the PRF of s; all four read from the one opening
+- scope: clauses 1–4 and issuance lines 2, 3 and 6 as a model; clause 5 (transcript) is record 003's; that the holder can open L′, batch unlinkability, timing and the PRF's pseudorandomness are outside the model
+
+| theorem | proves |
+|---|---|
+| `Formal.R025.soundness` | clauses 1–4: the presenter's leaf is enrolled, its handle is not revoked at the epoch, its pre-rotation digest names the replacement presented, and the tag is its secret's (records 001, 006 and 002's shape) |
+| `Formal.R025.replacement_fixed` | clause 3: one enrolment leaf admits one replacement and one tag — a party holding a stolen s moves the enrolment only to the leaf the member chose |
+| `Formal.R025.colliding_predigest_two_replacements` | H-pre is necessary: with a colliding pre-rotation hash one digest names two replacements |
+| `Formal.R025.second_rotation_refused` | clause 4: a second rotation from the same secret repeats the tag and is refused by the spent-tag set, whichever leaf it opens |
+| `Formal.R025.rotated_leaf_still_member` | does-not-establish 3: the membership tree is append-only, so membership alone still accepts a rotated-away leaf |
+| `Formal.R025.rotated_secret_retired` | issuance 2: the tag-absence clause carried by records 010, 023 and 024 is what retires the old secret |
+| `Formal.R025.tag_not_nullifier` | issuance 3: with the rotation context outside every presentation context, a rotation tag never equals a presentation nullifier |
+| `Formal.R025.straddling_epoch_two_nullifiers` | does-not-establish 4: a context epoch spanning the rotation sees two nullifiers |
+| `Formal.R025.next_epoch_one_nullifier` | issuance 6: the next-epoch default leaves one live secret, and so one nullifier, per context epoch |
+
+| hypothesis | carries |
+|---|---|
+| H-leaf, H-node, H-domain (record 001) | clause 1: the tree's hashes are collision-free, leaves and nodes under separate domains |
+| H-sorted (record 006) | clause 2: rl_root commits a strictly sorted handle list |
+| H-com | clause 3: the leaf commitment is binding over (s, N, r) |
+| H-pre | clause 3: the pre-rotation hash is collision-free |
+| H-prf | issuance 3: the PRF is collision-free over (secret, context) |
 

@@ -1,0 +1,46 @@
+# Model-only evidence checks; no registry acceptance or publication.
+name: formal-model-evidence
+on:
+  push:
+    paths: ['formal/**', 'board/cards/**', '.github/workflows/formal.yml']
+  pull_request:
+    paths: ['formal/**', 'board/cards/**', 'runtimes/**', '.github/workflows/formal.yml']
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  formal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: formal
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+          use-github-cache: 'false'
+      - name: Inventory, review and audit guard tests
+        run: |
+          node formal/scripts/check-coverage.mjs
+          node formal/scripts/test-coverage.mjs
+          node formal/scripts/check-clause-review.mjs
+          node formal/scripts/test-clause-review.mjs
+          node formal/scripts/test-audit.mjs
+      - name: Build and audit exact Lean roots and the review witnesses
+        run: node formal/scripts/audit.mjs
+      - name: Independent kernel replay of every declaration
+        working-directory: formal
+        run: lake env leanchecker --fresh Formal
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: formal-model-audit
+          path: formal/evidence/axiom-audit.json
+          if-no-files-found: error
